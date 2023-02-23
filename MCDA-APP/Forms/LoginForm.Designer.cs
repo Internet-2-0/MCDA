@@ -168,6 +168,7 @@
             this.lblError.Size = new System.Drawing.Size(371, 30);
             this.lblError.TabIndex = 5;
             this.lblError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblError.UseMnemonic = false;
             // 
             // panel3
             // 

@@ -15,6 +15,10 @@ namespace MCDA_APP.Forms
         public SettingsForm()
         {
             InitializeComponent();
+
+            // set apikey and user email
+            labelEmail.Text = Program.USEREMAIL;
+            txtApikey.Text = Program.APIKEY;
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)

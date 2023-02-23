@@ -48,7 +48,7 @@
             this.textMinScore = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.txtApikey = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -272,22 +272,23 @@
             this.label5.TabIndex = 13;
             this.label5.Text = "Currently Using ApiKey";
             // 
-            // txtEmail
+            // txtApikey
             // 
-            this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
-            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtEmail.Font = new System.Drawing.Font("Roboto Condensed", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtEmail.ForeColor = System.Drawing.Color.White;
-            this.txtEmail.Location = new System.Drawing.Point(4, 5);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(469, 21);
-            this.txtEmail.TabIndex = 2;
+            this.txtApikey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
+            this.txtApikey.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtApikey.Font = new System.Drawing.Font("Roboto Condensed", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtApikey.ForeColor = System.Drawing.Color.White;
+            this.txtApikey.Location = new System.Drawing.Point(4, 5);
+            this.txtApikey.Name = "txtApikey";
+            this.txtApikey.ReadOnly = true;
+            this.txtApikey.Size = new System.Drawing.Size(469, 21);
+            this.txtApikey.TabIndex = 2;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.txtEmail);
+            this.panel2.Controls.Add(this.txtApikey);
             this.panel2.Location = new System.Drawing.Point(28, 314);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(480, 35);
@@ -395,7 +396,7 @@
         private TextBox textMinScore;
         private Button btnAdd;
         private Label label5;
-        private TextBox txtEmail;
+        private TextBox txtApikey;
         private Panel panel2;
         private Button btnSave;
         private Button btnCancel;

@@ -1,13 +1,14 @@
 using MCDA_APP.Forms;
 using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
 namespace MCDA_APP
 {
     internal static class Program
     {
-        public static string APIKEY = "APIKEY here";
-        public static string USEREMAIL = "USEREMAIL here";
+        public static string APIKEY = "";
+        public static string USEREMAIL = "";
 
         /// <summary>
         ///  The main entry point for the application.
@@ -20,24 +21,39 @@ namespace MCDA_APP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-
-            // Check if user authentication 
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"MCDA\AUTH");
-            if (key != null)
+            try
             {
-                var API_KEY = key.GetValue("API_KEY");
-                APIKEY = "test api key1";
-                USEREMAIL = "test USEREMAIL1";
-                Debug.WriteLine("APIKEY: " + API_KEY);
-
-                if(API_KEY != null)
+                // Check if user authentication 
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"MCDA\AUTH");
+                if (key != null)
                 {
-                    Application.Run(new SettingsForm());
+                    var API_KEY = key.GetValue("API_KEY");
+                    if (API_KEY != null)
+                    {
+                        JObject json = JObject.Parse(API_KEY.ToString());
+                        APIKEY = json["apiKey"].ToString(); 
+                        USEREMAIL = json["email"].ToString();
+
+                        Debug.WriteLine("APIKEY: " + APIKEY+USEREMAIL);
+
+                        Application.Run(new SettingsForm());
+                    } else
+                    {
+                        Application.Run(new LoginForm());
+                    }
                 }
-            } else
+                else
+                {
+                    Application.Run(new LoginForm());
+                }
+            }
+            catch (Exception ex)
             {
+                // Write out any exceptions.
+                Debug.WriteLine(ex);
                 Application.Run(new LoginForm());
             }
+            
         }
 
     }
