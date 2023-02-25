@@ -21,23 +21,35 @@ namespace MCDA_APP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
+            Application.Run(new TestForm());
+            return;
+
             try
             {
                 // Check if user authentication 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"MCDA\AUTH");
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
                 if (key != null)
                 {
                     var API_KEY = key.GetValue("API_KEY");
                     if (API_KEY != null)
                     {
                         JObject json = JObject.Parse(API_KEY.ToString());
-                        APIKEY = json["apiKey"].ToString(); 
+                        APIKEY = json["apiKey"].ToString();
                         USEREMAIL = json["email"].ToString();
 
-                        Debug.WriteLine("APIKEY: " + APIKEY+USEREMAIL);
+                        Debug.WriteLine("APIKEY: " + APIKEY + USEREMAIL);
 
-                        Application.Run(new SettingsForm());
-                    } else
+                        var SETTINGS = key.GetValue("SETTINGS");
+                        if (SETTINGS != null && SETTINGS != "")
+                        {
+                            Application.Run(new MonitoringForm());
+                        }
+                        else
+                        {
+                            Application.Run(new SettingsForm());
+                        }
+                    }
+                    else
                     {
                         Application.Run(new LoginForm());
                     }
@@ -53,7 +65,7 @@ namespace MCDA_APP
                 Debug.WriteLine(ex);
                 Application.Run(new LoginForm());
             }
-            
+
         }
 
     }

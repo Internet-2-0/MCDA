@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -36,7 +37,7 @@ namespace MCDA_APP
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
-        } 
+        }
 
         private async void btnLogin_Click_1(object sender, EventArgs e)
         {
@@ -63,13 +64,14 @@ namespace MCDA_APP
                 lblError.Visible = true;
                 lblError.Text = "Please agree terms & conditions";
                 return;
-            } 
+            }
 
             try
             {
-                HttpClient client = new HttpClient(); 
-                var url = "https://api.malcore.io/auth/login";
-                var data = new Userdata() { email = username, password = password };
+                HttpClient client = new HttpClient();
+                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/auth/login";
+
+                var data = new UserData() { email = username, password = password };
                 var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 
                 var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
@@ -84,7 +86,7 @@ namespace MCDA_APP
                     var authdata = "";
                     var userdata = json["data"];
                     Boolean success = json["success"] != null ? (Boolean)json["success"] : false;
-                    Debug.WriteLine("userdata=>"+userdata);
+                    Debug.WriteLine("userdata=>" + userdata);
 
 
                     if (success == true && userdata != null)
@@ -93,10 +95,13 @@ namespace MCDA_APP
 
                         if (authdata != "")
                         {
-                            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"MCDA\AUTH");
-                            //storing the values  
+                            RegistryKey key = Registry.CurrentUser.CreateSubKey(@".malcore");
                             key.SetValue("API_KEY", authdata);
+                            key.SetValue("SETTINGS", "");
                             key.Close();
+                            
+                            Program.APIKEY = userdata["user"]["apiKey"].ToString(); 
+                            Program.USEREMAIL = userdata["user"]["email"].ToString();
 
                             Hide();
                             SettingsForm settingsForm = new SettingsForm();
@@ -111,18 +116,19 @@ namespace MCDA_APP
                     else
                     {
                         var errorMsg = json["messages"][0]["message"];
-                        Debug.WriteLine(errorMsg); 
+                        Debug.WriteLine(errorMsg);
                         lblError.Visible = true;
-                        lblError.Text = errorMsg.ToString(); 
+                        lblError.Text = errorMsg.ToString();
                     }
 
-                    Debug.WriteLine(authdata); 
-                } else
-                { 
+                    Debug.WriteLine(authdata);
+                }
+                else
+                {
                     lblError.Visible = true;
                     lblError.Text = "Something went wrong";
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -140,7 +146,7 @@ namespace MCDA_APP
         }
     }
 
-    public class Userdata
+    public class UserData
     {
         public string email { get; set; }
         public string password { get; set; }

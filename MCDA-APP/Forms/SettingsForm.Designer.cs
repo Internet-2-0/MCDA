@@ -40,7 +40,6 @@
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.checkEnableMonitor = new System.Windows.Forms.CheckBox();
             this.checkSendStatistics = new System.Windows.Forms.CheckBox();
             this.checkOpenOnStartup = new System.Windows.Forms.CheckBox();
@@ -53,6 +52,9 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.flowLayoutPanelForFolders = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -112,22 +114,22 @@
             // labelEmail
             // 
             this.labelEmail.AutoSize = true;
-            this.labelEmail.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelEmail.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
             this.labelEmail.Location = new System.Drawing.Point(17, 10);
             this.labelEmail.Name = "labelEmail";
-            this.labelEmail.Size = new System.Drawing.Size(184, 25);
+            this.labelEmail.Size = new System.Drawing.Size(201, 26);
             this.labelEmail.TabIndex = 13;
             this.labelEmail.Text = "mkovalch@gmail.com";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
             this.label1.Location = new System.Drawing.Point(18, 37);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 22);
+            this.label1.Size = new System.Drawing.Size(141, 21);
             this.label1.TabIndex = 13;
             this.label1.Text = "Enterprise 2.0 Plan";
             // 
@@ -152,6 +154,7 @@
             this.btnSettings.TabIndex = 14;
             this.btnSettings.Text = "Settings";
             this.btnSettings.UseVisualStyleBackColor = false;
+            this.btnSettings.Visible = false;
             // 
             // btnLogout
             // 
@@ -178,16 +181,6 @@
             this.label2.Size = new System.Drawing.Size(124, 21);
             this.label2.TabIndex = 13;
             this.label2.Text = "Monitor Folders";
-            // 
-            // listBox1
-            // 
-            this.listBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(24, 108);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(240, 139);
-            this.listBox1.TabIndex = 16;
             // 
             // checkEnableMonitor
             // 
@@ -230,7 +223,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(341, 216);
+            this.label4.Location = new System.Drawing.Point(338, 214);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(147, 21);
             this.label4.TabIndex = 13;
@@ -242,10 +235,12 @@
             this.textMinScore.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textMinScore.Font = new System.Drawing.Font("Carlito", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textMinScore.ForeColor = System.Drawing.Color.White;
-            this.textMinScore.Location = new System.Drawing.Point(3, 4);
+            this.textMinScore.Location = new System.Drawing.Point(4, 4);
             this.textMinScore.Name = "textMinScore";
-            this.textMinScore.Size = new System.Drawing.Size(22, 20);
+            this.textMinScore.Size = new System.Drawing.Size(20, 20);
             this.textMinScore.TabIndex = 18;
+            this.textMinScore.Text = "15";
+            this.textMinScore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnAdd
             // 
@@ -260,6 +255,7 @@
             this.btnAdd.TabIndex = 14;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // label5
             // 
@@ -326,10 +322,25 @@
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel4.Controls.Add(this.textMinScore);
-            this.panel4.Location = new System.Drawing.Point(300, 210);
+            this.panel4.Location = new System.Drawing.Point(297, 208);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(32, 32);
             this.panel4.TabIndex = 21;
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog1";
+            // 
+            // flowLayoutPanelForFolders
+            // 
+            this.flowLayoutPanelForFolders.AutoScroll = true;
+            this.flowLayoutPanelForFolders.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flowLayoutPanelForFolders.Font = new System.Drawing.Font("Cascadia Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.flowLayoutPanelForFolders.Location = new System.Drawing.Point(23, 108);
+            this.flowLayoutPanelForFolders.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanelForFolders.Name = "flowLayoutPanelForFolders";
+            this.flowLayoutPanelForFolders.Size = new System.Drawing.Size(241, 132);
+            this.flowLayoutPanelForFolders.TabIndex = 22;
             // 
             // SettingsForm
             // 
@@ -338,6 +349,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(527, 504);
+            this.Controls.Add(this.flowLayoutPanelForFolders);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
@@ -345,7 +357,6 @@
             this.Controls.Add(this.checkOpenOnStartup);
             this.Controls.Add(this.checkSendStatistics);
             this.Controls.Add(this.checkEnableMonitor);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnSettings);
@@ -360,6 +371,7 @@
             this.Controls.Add(this.lblTerms);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblMalcore);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "SettingsForm";
@@ -388,7 +400,6 @@
         private Button btnSettings;
         private Button btnLogout;
         private Label label2;
-        private ListBox listBox1;
         private CheckBox checkEnableMonitor;
         private CheckBox checkSendStatistics;
         private CheckBox checkOpenOnStartup;
@@ -401,5 +412,8 @@
         private Button btnSave;
         private Button btnCancel;
         private Panel panel4;
+        private OpenFileDialog openFileDialog;
+        private FolderBrowserDialog folderBrowserDialog;
+        private FlowLayoutPanel flowLayoutPanelForFolders;
     }
 }

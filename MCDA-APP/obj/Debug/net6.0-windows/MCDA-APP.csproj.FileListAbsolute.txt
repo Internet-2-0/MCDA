@@ -21,3 +21,5 @@ D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Forms.MonitoringForm.res
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Forms.DetailsForm.resources
 D:\WORK\MCDA\MCDA-APP\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA-APP.csproj.CopyComplete
+D:\WORK\MCDA\MCDA-APP\bin\Debug\net6.0-windows\MCDA-APP.dll.config
+D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Forms.TestForm.resources
