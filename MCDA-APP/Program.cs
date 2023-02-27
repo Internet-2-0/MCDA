@@ -21,8 +21,8 @@ namespace MCDA_APP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            Application.Run(new TestForm());
-            return;
+            // Application.Run(new TestForm());
+            // return;
 
             try
             {
