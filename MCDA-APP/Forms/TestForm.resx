@@ -57,4 +57,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="labelEntropyDescription.Text" xml:space="preserve">
+    <value>File entropy is the randomness of a file measured on a scale of 1-8. Higher entropy potentially indicates packed or encrypted data such as payloads or hidden PE files within the program. The higher the entropy the more likely it is that that program is encrypted or packed.</value>
+  </data>
+  <data name="labelImportDescription.Text" xml:space="preserve">
+    <value>The file statically imports commonly known malicious Windows API endpoints, or imports Windows libraries that have been used by multiple malware samples over time. It is possible that these imports are never used.</value>
+  </data>
 </root>

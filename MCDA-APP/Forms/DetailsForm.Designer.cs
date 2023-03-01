@@ -33,12 +33,12 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnRelease = new System.Windows.Forms.Button();
-            this.lblFolderName = new System.Windows.Forms.Label();
-            this.lblPercent = new System.Windows.Forms.Label();
-            this.lblFileName = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.removeButton = new System.Windows.Forms.Button();
+            this.releaseButton = new System.Windows.Forms.Button();
+            this.folderLabel = new System.Windows.Forms.Label();
+            this.percentLabel = new System.Windows.Forms.Label();
+            this.fileLabel = new System.Windows.Forms.Label();
+            this.colorPanel = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,6 +47,10 @@
             this.lblTerms = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblMalcore = new System.Windows.Forms.Label();
+            this.flowLayoutPanelDetails = new System.Windows.Forms.FlowLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelFullPath = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -74,89 +78,88 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-            this.panel2.Controls.Add(this.btnDelete);
-            this.panel2.Controls.Add(this.btnRelease);
-            this.panel2.Controls.Add(this.lblFolderName);
-            this.panel2.Controls.Add(this.lblPercent);
-            this.panel2.Controls.Add(this.lblFileName);
-            this.panel2.Controls.Add(this.panel4);
+            this.panel2.Controls.Add(this.removeButton);
+            this.panel2.Controls.Add(this.releaseButton);
+            this.panel2.Controls.Add(this.folderLabel);
+            this.panel2.Controls.Add(this.percentLabel);
+            this.panel2.Controls.Add(this.fileLabel);
+            this.panel2.Controls.Add(this.colorPanel);
             this.panel2.Location = new System.Drawing.Point(6, 82);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(516, 44);
             this.panel2.TabIndex = 36;
             // 
-            // btnDelete
+            // removeButton
             // 
-            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(5)))), ((int)(((byte)(5)))));
-            this.btnDelete.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnDelete.FlatAppearance.BorderSize = 0;
-            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDelete.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(333, 7);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(85, 31);
-            this.btnDelete.TabIndex = 37;
-            this.btnDelete.Text = "DELETE";
-            this.btnDelete.UseVisualStyleBackColor = false;
+            this.removeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(5)))), ((int)(((byte)(5)))));
+            this.removeButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.removeButton.FlatAppearance.BorderSize = 0;
+            this.removeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.removeButton.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.removeButton.ForeColor = System.Drawing.Color.White;
+            this.removeButton.Location = new System.Drawing.Point(333, 7);
+            this.removeButton.Name = "removeButton";
+            this.removeButton.Size = new System.Drawing.Size(85, 31);
+            this.removeButton.TabIndex = 37;
+            this.removeButton.Text = "DELETE";
+            this.removeButton.UseVisualStyleBackColor = false;
             // 
-            // btnRelease
+            // releaseButton
             // 
-            this.btnRelease.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(144)))), ((int)(((byte)(24)))));
-            this.btnRelease.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnRelease.FlatAppearance.BorderSize = 0;
-            this.btnRelease.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRelease.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnRelease.ForeColor = System.Drawing.Color.White;
-            this.btnRelease.Location = new System.Drawing.Point(424, 7);
-            this.btnRelease.Name = "btnRelease";
-            this.btnRelease.Size = new System.Drawing.Size(85, 31);
-            this.btnRelease.TabIndex = 37;
-            this.btnRelease.Text = "RELEASE";
-            this.btnRelease.UseVisualStyleBackColor = false;
+            this.releaseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(144)))), ((int)(((byte)(24)))));
+            this.releaseButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.releaseButton.FlatAppearance.BorderSize = 0;
+            this.releaseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.releaseButton.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.releaseButton.ForeColor = System.Drawing.Color.White;
+            this.releaseButton.Location = new System.Drawing.Point(424, 7);
+            this.releaseButton.Name = "releaseButton";
+            this.releaseButton.Size = new System.Drawing.Size(85, 31);
+            this.releaseButton.TabIndex = 37;
+            this.releaseButton.Text = "RELEASE";
+            this.releaseButton.UseVisualStyleBackColor = false;
             // 
-            // lblFolderName
+            // folderLabel
             // 
-            this.lblFolderName.AutoSize = true;
-            this.lblFolderName.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblFolderName.ForeColor = System.Drawing.Color.White;
-            this.lblFolderName.Location = new System.Drawing.Point(33, 22);
-            this.lblFolderName.Name = "lblFolderName";
-            this.lblFolderName.Size = new System.Drawing.Size(88, 15);
-            this.lblFolderName.TabIndex = 32;
-            this.lblFolderName.Text = "My Documents";
+            this.folderLabel.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.folderLabel.ForeColor = System.Drawing.Color.White;
+            this.folderLabel.Location = new System.Drawing.Point(33, 22);
+            this.folderLabel.Name = "folderLabel";
+            this.folderLabel.Size = new System.Drawing.Size(210, 15);
+            this.folderLabel.TabIndex = 32;
+            this.folderLabel.Text = "My Documents";
             // 
-            // lblPercent
+            // percentLabel
             // 
-            this.lblPercent.AutoSize = true;
-            this.lblPercent.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblPercent.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.lblPercent.Location = new System.Drawing.Point(248, 4);
-            this.lblPercent.Name = "lblPercent";
-            this.lblPercent.Size = new System.Drawing.Size(66, 36);
-            this.lblPercent.TabIndex = 31;
-            this.lblPercent.Text = "33%";
-            this.lblPercent.Click += new System.EventHandler(this.lblFileName_Click);
+            this.percentLabel.AutoSize = true;
+            this.percentLabel.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.percentLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.percentLabel.Location = new System.Drawing.Point(248, 4);
+            this.percentLabel.Name = "percentLabel";
+            this.percentLabel.Size = new System.Drawing.Size(66, 36);
+            this.percentLabel.TabIndex = 31;
+            this.percentLabel.Text = "33%";
+            this.percentLabel.Click += new System.EventHandler(this.lblFileName_Click);
             // 
-            // lblFileName
+            // fileLabel
             // 
-            this.lblFileName.AutoSize = true;
-            this.lblFileName.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblFileName.ForeColor = System.Drawing.Color.White;
-            this.lblFileName.Location = new System.Drawing.Point(32, 5);
-            this.lblFileName.Name = "lblFileName";
-            this.lblFileName.Size = new System.Drawing.Size(83, 19);
-            this.lblFileName.TabIndex = 31;
-            this.lblFileName.Text = "Duolin.apk";
-            this.lblFileName.Click += new System.EventHandler(this.lblFileName_Click);
+            this.fileLabel.AutoSize = true;
+            this.fileLabel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.fileLabel.ForeColor = System.Drawing.Color.White;
+            this.fileLabel.Location = new System.Drawing.Point(32, 5);
+            this.fileLabel.Name = "fileLabel";
+            this.fileLabel.Size = new System.Drawing.Size(83, 19);
+            this.fileLabel.TabIndex = 31;
+            this.fileLabel.Text = "Duolin.apk";
+            this.fileLabel.Click += new System.EventHandler(this.lblFileName_Click);
             // 
-            // panel4
+            // colorPanel
             // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.panel4.Location = new System.Drawing.Point(1, 2);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(26, 44);
-            this.panel4.TabIndex = 0;
+            this.colorPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
+            this.colorPanel.Location = new System.Drawing.Point(1, 2);
+            this.colorPanel.Name = "colorPanel";
+            this.colorPanel.Size = new System.Drawing.Size(26, 44);
+            this.colorPanel.TabIndex = 0;
             // 
             // btnLogout
             // 
@@ -252,12 +255,56 @@
             this.lblMalcore.TabIndex = 39;
             this.lblMalcore.Text = "malcore.io";
             // 
+            // flowLayoutPanelDetails
+            // 
+            this.flowLayoutPanelDetails.AutoScroll = true;
+            this.flowLayoutPanelDetails.ForeColor = System.Drawing.Color.White;
+            this.flowLayoutPanelDetails.Location = new System.Drawing.Point(7, 158);
+            this.flowLayoutPanelDetails.Name = "flowLayoutPanelDetails";
+            this.flowLayoutPanelDetails.Size = new System.Drawing.Size(511, 263);
+            this.flowLayoutPanelDetails.TabIndex = 45;
+            this.flowLayoutPanelDetails.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(51, 133);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 18);
+            this.label2.TabIndex = 46;
+            this.label2.Text = "File Path";
+            // 
+            // labelFullPath
+            // 
+            this.labelFullPath.AutoSize = true;
+            this.labelFullPath.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelFullPath.ForeColor = System.Drawing.Color.White;
+            this.labelFullPath.Location = new System.Drawing.Point(152, 133);
+            this.labelFullPath.Name = "labelFullPath";
+            this.labelFullPath.Size = new System.Drawing.Size(209, 18);
+            this.labelFullPath.TabIndex = 38;
+            this.labelFullPath.Text = "C:/Users/username/Downloads/";
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
+            this.panel6.Location = new System.Drawing.Point(15, 155);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(501, 1);
+            this.panel6.TabIndex = 28;
+            // 
             // DetailsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(527, 504);
+            this.Controls.Add(this.panel6);
+            this.Controls.Add(this.labelFullPath);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.flowLayoutPanelDetails);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.label1);
@@ -287,12 +334,12 @@
         private Panel panel3;
         private OpenFileDialog openFileDialog1;
         private Panel panel2;
-        private Panel panel4;
-        private Label lblFileName;
-        private Button btnDelete;
-        private Button btnRelease;
-        private Label lblFolderName;
-        private Label lblPercent;
+        private Panel colorPanel;
+        private Label fileLabel;
+        private Button removeButton;
+        private Button releaseButton;
+        private Label folderLabel;
+        private Label percentLabel;
         private Button btnLogout;
         private Button btnSettings;
         private Label label1;
@@ -301,5 +348,9 @@
         private Label lblTerms;
         private Label label3;
         private Label lblMalcore;
+        private FlowLayoutPanel flowLayoutPanelDetails;
+        private Label label2;
+        private Label labelFullPath;
+        private Panel panel6;
     }
 }
