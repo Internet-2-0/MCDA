@@ -46,8 +46,6 @@ namespace MCDA_APP.Forms
             }
             string score = "";
             double score_num = 0;
-            string discovered = "";
-            string entropyDescription = "";
             if (success)
             {
                 flowLayoutPanelDetails.Visible = true;
@@ -64,10 +62,10 @@ namespace MCDA_APP.Forms
                     {
                         Debug.WriteLine("DETAILS---------------------------........................." + signatures[i]);
 
-                        Panel panel = new Panel();
+                        FlowLayoutPanel panel = new FlowLayoutPanel();
                         panel.AutoSize = true;
                         panel.MaximumSize = new System.Drawing.Size(480, 0);
-                        
+
                         Panel linePanel = new Panel();
                         linePanel.Size = new System.Drawing.Size(480, 1);
                         linePanel.BackColor = Color.Gray;
@@ -75,41 +73,79 @@ namespace MCDA_APP.Forms
                         Label lblSignatureTitle = new Label();
                         lblSignatureTitle.Font = new Font("Calibri", 14, FontStyle.Bold);
                         lblSignatureTitle.ForeColor = Color.Orange;
-                        lblSignatureTitle.Text = (string)signatures[i]["info"]["title"];
+                        string title = (string)signatures[i]["info"]["title"];
+                        lblSignatureTitle.Text = title.ToUpper();
 
                         Label lblEntropyDescription = new Label();
                         lblEntropyDescription.Font = new Font("Calibri", 11, FontStyle.Regular);
                         lblEntropyDescription.ForeColor = Color.White;
                         lblEntropyDescription.Text = (string)signatures[i]["info"]["description"];
-                        lblEntropyDescription.Location = new System.Drawing.Point(0, 23);
                         lblEntropyDescription.AutoSize = true;
                         lblEntropyDescription.MaximumSize = new System.Drawing.Size(480, 0);
-                        // Size = new System.Drawing.Size(500, 100);
 
-                        // labelDiscovery.Text = (string)jObject["discovered"];
+                        Label lblDiscovered = new Label();
+                        lblDiscovered.Text = "Discovered:";
+                        lblDiscovered.ForeColor = Color.Red;
+                        lblDiscovered.Font = new Font("Calibri", 12, FontStyle.Italic);
+                        lblDiscovered.Width = 480;
+
+                        Label lblDiscoveredContent = new Label();
+                        var discovered = signatures[i]["discovered"];
+
+                        if (typeof(JValue).Equals(discovered.GetType()))
+                        {
+                            lblDiscoveredContent.Text = (string)discovered;
+                        }
+                        else if (typeof(JObject).Equals(discovered.GetType()))
+                        {
+                            lblDiscoveredContent.Text = Newtonsoft.Json.JsonConvert.SerializeObject(discovered).Replace('{', ' ').Replace('}', ' ');
+                        }
+                        else if (typeof(JArray).Equals(discovered.GetType()))
+                        {
+                            // lblDiscoveredContent.Text = '"' + (string)string.Join("\", \"", discovered).Replace('{', ' ').Replace('}', ' ') + '"';
+                            string discoveredContent = "";
+                            int idx = 0;
+                            foreach (var item in discovered)
+                            {
+                                if (typeof(JValue).Equals(item.GetType()))
+                                {
+                                    if (idx == 0)
+                                    {
+                                        discoveredContent += "\"" + (string)item + '"';
+                                    }
+                                    else
+                                    {
+                                        discoveredContent += ", \"" + (string)item + '"';
+                                    }
+                                }
+                                else if (typeof(JObject).Equals(item.GetType()))
+                                {
+                                    discoveredContent += Newtonsoft.Json.JsonConvert.SerializeObject(item).Replace('{', ' ').Replace('}', ' ');
+                                }
+                                else if (typeof(JArray).Equals(discovered.GetType()))
+                                {
+                                    discoveredContent += '"' + (string)string.Join("\", \"", discovered).Replace('{', ' ').Replace('}', ' ') + '"';
+                                }
+                                idx++;
+                            }
+                            lblDiscoveredContent.Text = discoveredContent;
+                        }
+
+                        lblDiscoveredContent.Font = new Font("Calibri", 11, FontStyle.Regular);
+                        lblDiscoveredContent.ForeColor = Color.White;
+                        lblDiscoveredContent.AutoSize = true;
+                        lblDiscoveredContent.MaximumSize = new System.Drawing.Size(480, 0);
 
                         panel.Controls.Add(lblSignatureTitle);
                         panel.Controls.Add(lblEntropyDescription);
+                        panel.Controls.Add(lblDiscovered);
+                        panel.Controls.Add(lblDiscoveredContent);
 
                         flowLayoutPanelDetails.Controls.Add(panel);
                         flowLayoutPanelDetails.Controls.Add(linePanel);
 
                     }
-                    // foreach (var jObject in signatures)
-                    // {
-                    //     Debug.WriteLine("DETAILS---------------------------........................." + jObject);
-
-                    //     // labelDiscovery.Text = (string)jObject["discovered"];
-                    //     lblSignatureTitle.Text = (string)jObject["info"]["title"];
-                    //     lblEntropyDescription.Text = (string)jObject["info"]["description"];
-                    //     panel.Controls.Add(lblSignatureTitle);
-                    //     panel.Controls.Add(lblEntropyDescription);
-
-                    //     flowLayoutPanelDetails.Controls.Add(panel);
-                    // }
                 }
-
-
             }
             else
             {
@@ -185,11 +221,37 @@ namespace MCDA_APP.Forms
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        } 
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            Hide();
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.Show(this);
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        private void btnLogout_Click(object sender, EventArgs e)
         {
+            try
+            {
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
+                key.DeleteValue("API_KEY");
+                key.DeleteValue("SETTINGS");
+                key.Close();
 
+                Program.APIKEY = "";
+                Program.USEREMAIL = "";
+
+            }
+            catch (Exception ex)
+            {
+                // Write out any exceptions.
+                Debug.WriteLine(ex);
+            }
+
+            Hide();
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show(this);
         }
     }
 }

@@ -174,6 +174,7 @@
             this.btnLogout.TabIndex = 44;
             this.btnLogout.Text = "Log Out";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // btnSettings
             // 
@@ -188,7 +189,7 @@
             this.btnSettings.TabIndex = 43;
             this.btnSettings.Text = "Settings";
             this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.Visible = false;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // label1
             // 
@@ -318,8 +319,11 @@
             this.Controls.Add(this.panel3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "DetailsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DetailsForm";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.DetailsForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

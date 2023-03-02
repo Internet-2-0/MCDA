@@ -116,18 +116,15 @@ namespace MCDA_APP.Forms
                         using (
                            var response = await client.PostAsync(url, content))
                         {
-                            Debug.WriteLine("response...." + response);
+                            // Debug.WriteLine("getThreatScore response.........................." + response);
+
                             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                             {
                                 string responseString = await response.Content.ReadAsStringAsync();
-                                // updateMonitoringUI(responseString, true);
-
-                                Debug.WriteLine("threat...." + responseString);
                                 return responseString;
                             }
                             else
                             {
-                                // updateMonitoringUI("", false);
                                 return "";
                             }
                         }
@@ -137,57 +134,36 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 // Write out any exceptions.
-                Debug.WriteLine(ex);
+                Debug.WriteLine("getThreatScore.........................." + ex);
                 return "";
             }
         }
 
-        private void updateMonitoringUI(string response, bool status)
+        private void addItemToMonitoringPanel(string responseString, string folderName, string fileName, bool succeed)
         {
-            try
-            {
-                if (status)
-                {
-                    JObject json = JObject.Parse(response);
-                    if (json["data"] != null && (bool)json["data"]["success"] == true)
-                    {
-                        string score = (string)json["data"]["data"]["score"];
-
-                        // addItemToMonitoringPanel();
-
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-        private void addItemToMonitoringPanel(string responseString, string folderName, string fileName)
-        {
-            JObject jsonObject = JObject.Parse(responseString);
-            bool success = (bool)jsonObject["success"];
-            Debug.WriteLine("........................." + jsonObject["data"]["data"].ToString());
-
-            if (jsonObject["data"]["data"].ToString() == "{}")
-            {
-                success = false;
-            }
+            bool success = false;
             string score = "";
             double score_num = 0;
-            if (success)
-            {
-                score = (string)jsonObject["data"]["data"]["score"];
-                string[] scores = score.Split('/');
-                score_num = Convert.ToDouble(scores[0]);
-                score = Convert.ToString(Math.Round(score_num)) + "%";
 
+            if (succeed == true)
+            {
+                JObject jsonObject = JObject.Parse(responseString);
+
+                success = (bool)jsonObject["success"];
+                if (jsonObject["data"]["data"].ToString() == "{}")
+                {
+                    success = false;
+                }
+
+                if (success)
+                {
+                    score = (string)jsonObject["data"]["data"]["score"];
+                    string[] scores = score.Split('/');
+                    score_num = Convert.ToDouble(scores[0]);
+                    score = Convert.ToString(Math.Round(score_num)) + "%";
+
+                }
             }
-            Debug.WriteLine("score........................." + score + score_num);
 
             // item panel
             Panel panel = new Panel();
@@ -347,7 +323,6 @@ namespace MCDA_APP.Forms
                 ProcessDirectory(subdirectory);
         }
 
-        // Insert logic for processing found files here.
         public async void ProcessFile(string path)
         {
             try
@@ -356,56 +331,67 @@ namespace MCDA_APP.Forms
                 string folderName = Directory.GetParent(path) != null ? Directory.GetParent(path).FullName : path;
 
                 string hashFileName = fileName + "-hash.json";
-                // check if the file is already scanned
-                if (File.Exists("/" + hashFileName))
+                // check if the hash file is already scanned
+                if (File.Exists("./malcore/" + hashFileName))
                 {
                     Debug.WriteLine("hash file exist----------------" + hashFileName);
 
-                    string fileString = File.ReadAllText("/" + hashFileName);
-                    JObject jsonObject = JObject.Parse(fileString);
+                    string fileString = File.ReadAllText("./malcore/" + hashFileName);
+                    bool succeed = true;
+                    if (fileString == "")
+                    {
+                        succeed = false;
+                    }
+                    // JObject jsonObject = JObject.Parse(fileString);
 
-                    addItemToMonitoringPanel(fileString, folderName, fileName);
+                    addItemToMonitoringPanel(fileString, folderName, fileName, succeed);
                 }
                 else
                 {
+                    // check if the file is allowed
+                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    {
+                        using (var reader = new BinaryReader(fs, new ASCIIEncoding()))
+                        {
+                            byte[] buffer = new byte[10];
+                            buffer = reader.ReadBytes(10);
+                            Debug.WriteLine("buffer----------------" + path + "-----------" + buffer[0] + buffer[1] + buffer[2] + buffer[3]);
+                            // exe file
+                            if (buffer[0] == 77 && buffer[1] == 90)
+                            {
+                                HttpClient client = new HttpClient();
+                                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
+                                string responseString = await getThreatScore(path, fileName);
+                                // Debug.WriteLine("responseString----------------" + path + "-----------" + responseString);
 
-                    Console.WriteLine("Processed file '{0}'.", path);
-                    HttpClient client = new HttpClient();
-                    string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
-                    Debug.WriteLine("serveruri----------------" + url);
+                                // save to hash file
+                                File.WriteAllText(@"./malcore/" + hashFileName, responseString);
+                                // JObject jsonObject = JObject.Parse(responseString);
 
-                    // string filePath = "C:/Users/Administrator/Documents/notepad.exe";
-                    // string folderName = Directory.GetParent(path) != null ? Directory.GetParent(path).FullName : path;
-                    string responseString = await getThreatScore(path, fileName);
+                                bool succeed = true;
+                                if (responseString == "")
+                                {
+                                    succeed = false;
+                                }
+                                addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
+                            }
+                            else
+                            {
+                            }
 
-                    // save to hash file
-                    File.WriteAllText(@"/" + hashFileName, responseString);
+                            // if (buffer[0] == 31 && buffer[1] == 139 && buffer[2] == 8)
+                            // {
 
-                    JObject jsonObject = JObject.Parse(responseString);
+                            // }
+                        }
+                    }
 
-                    Debug.WriteLine("getThreatScore----------------" + jsonObject);
-
-                    addItemToMonitoringPanel(responseString, folderName, fileName);
                 }
-
-                // using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-                // {
-                //     using (var reader = new BinaryReader(fs, new ASCIIEncoding()))
-                //     {
-                //         byte[] buffer = new byte[10];
-                //         buffer = reader.ReadBytes(10);
-                //         Debug.WriteLine("buffer----------------" + buffer[0]);
-
-                //         // if (buffer[0] == 31 && buffer[1] == 139 && buffer[2] == 8)
-                //         // {
-
-                //         // }
-                //     }
-                // }
 
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("failed----------------" + path + "-----------" + ex);
             }
         }
 
