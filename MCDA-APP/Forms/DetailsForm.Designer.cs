@@ -32,7 +32,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.panelDetailItem = new System.Windows.Forms.Panel();
             this.removeButton = new System.Windows.Forms.Button();
             this.releaseButton = new System.Windows.Forms.Button();
             this.folderLabel = new System.Windows.Forms.Label();
@@ -51,7 +51,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.labelFullPath = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.panel2.SuspendLayout();
+            this.panelDetailItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,19 +75,19 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // panel2
+            // panelDetailItem
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-            this.panel2.Controls.Add(this.removeButton);
-            this.panel2.Controls.Add(this.releaseButton);
-            this.panel2.Controls.Add(this.folderLabel);
-            this.panel2.Controls.Add(this.percentLabel);
-            this.panel2.Controls.Add(this.fileLabel);
-            this.panel2.Controls.Add(this.colorPanel);
-            this.panel2.Location = new System.Drawing.Point(6, 82);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(516, 44);
-            this.panel2.TabIndex = 36;
+            this.panelDetailItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.panelDetailItem.Controls.Add(this.removeButton);
+            this.panelDetailItem.Controls.Add(this.releaseButton);
+            this.panelDetailItem.Controls.Add(this.folderLabel);
+            this.panelDetailItem.Controls.Add(this.percentLabel);
+            this.panelDetailItem.Controls.Add(this.fileLabel);
+            this.panelDetailItem.Controls.Add(this.colorPanel);
+            this.panelDetailItem.Location = new System.Drawing.Point(6, 82);
+            this.panelDetailItem.Name = "panelDetailItem";
+            this.panelDetailItem.Size = new System.Drawing.Size(516, 44);
+            this.panelDetailItem.TabIndex = 36;
             // 
             // removeButton
             // 
@@ -143,12 +143,11 @@
             // 
             // fileLabel
             // 
-            this.fileLabel.AutoSize = true;
             this.fileLabel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.fileLabel.ForeColor = System.Drawing.Color.White;
             this.fileLabel.Location = new System.Drawing.Point(32, 5);
             this.fileLabel.Name = "fileLabel";
-            this.fileLabel.Size = new System.Drawing.Size(83, 19);
+            this.fileLabel.Size = new System.Drawing.Size(200, 19);
             this.fileLabel.TabIndex = 31;
             this.fileLabel.Text = "Duolin.apk";
             this.fileLabel.Click += new System.EventHandler(this.lblFileName_Click);
@@ -314,7 +313,7 @@
             this.Controls.Add(this.lblTerms);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblMalcore);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panelDetailItem);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -325,8 +324,8 @@
             this.Text = "DetailsForm";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.DetailsForm_Load);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.panelDetailItem.ResumeLayout(false);
+            this.panelDetailItem.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -337,7 +336,7 @@
         private Panel panel1;
         private Panel panel3;
         private OpenFileDialog openFileDialog1;
-        private Panel panel2;
+        private Panel panelDetailItem;
         private Panel colorPanel;
         private Label fileLabel;
         private Button removeButton;

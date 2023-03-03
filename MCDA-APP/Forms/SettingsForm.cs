@@ -22,6 +22,8 @@ namespace MCDA_APP.Forms
             InitializeComponent();
         }
 
+        List<string> paths = new List<string>();
+
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             try
@@ -43,22 +45,24 @@ namespace MCDA_APP.Forms
                         checkSendStatistics.Checked = (bool)json["sendStatistics"];
                         checkOpenOnStartup.Checked = (bool)json["openOnStartup"];
                         textMinScore.Text = json["minThreatScore"].ToString();
-                        // monitorFolders = "";
 
-                        Debug.WriteLine("SETTINGS::::::::::: " + json + SETTINGS);
-
+                        // add folders to mornitoring folder list from settings
+                        string settings_paths = (string)json["paths"];
+                        List<string> paths = settings_paths.Split(',').ToList();
+                        this.paths = paths;
+                        foreach (string folderPath in paths)
+                        {
+                            if (folderPath != "")
+                            {
+                                addPathToFoldersList(folderPath);
+                            }
+                        }
                     }
                 }
-
-                // flowLayoutPanelForFolders.HorizontalScroll.Maximum = 0;
-                // flowLayoutPanelForFolders.AutoScroll = false;
-                // flowLayoutPanelForFolders.VerticalScroll.Visible = false;
-                // flowLayoutPanelForFolders.AutoScroll = true;
 
             }
             catch (Exception ex)
             {
-                // Write out any exceptions.
                 Debug.WriteLine(ex);
             }
         }
@@ -86,7 +90,8 @@ namespace MCDA_APP.Forms
                     sendStatistics = sendStatistics,
                     openOnStartup = openOnStartup,
                     minThreatScore = minThreatScore,
-                    monitorFolders = monitorFolders
+                    monitorFolders = monitorFolders,
+                    paths = string.Join(",", this.paths.ToArray())
                 };
                 var settingsData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
                 Debug.WriteLine("Settings write::" + settingsData);
@@ -114,7 +119,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true); 
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
@@ -143,64 +148,56 @@ namespace MCDA_APP.Forms
             if (result == DialogResult.OK)
             {
                 string folderPath = folderDlg.SelectedPath;
-                Debug.WriteLine("file dialog:::::::::::::" + folderPath);
-                // listMonitorFolders.Items.Add(folderPath); 
-                Panel panel = new Panel();
-                panel.Width = 220;
-                panel.Height = 18;
+                this.paths.Add(folderPath);
 
-                Panel borderPanel = new Panel();
-                borderPanel.Height = 1;
-                borderPanel.Width = 220;
-                borderPanel.BackColor = Color.WhiteSmoke;
-
-                Label label = new Label();
-                label.Text = folderPath;
-                label.ForeColor = Color.White;
-                label.AutoSize = false;
-                label.Width = 200;
-
-                Button removeButton = new Button();
-                removeButton.Text = "X";
-                removeButton.Size = new System.Drawing.Size(18, 23);
-                removeButton.ForeColor = Color.DarkRed;
-                removeButton.FlatStyle = FlatStyle.Flat;
-                removeButton.FlatAppearance.BorderSize = 0;
-                removeButton.Padding = new Padding(0, 0, 0, 0);
-                removeButton.Location = new System.Drawing.Point(200, -4);
-                removeButton.Click += delegate (object obj, EventArgs ea)
+                if (this.paths.Count != this.paths.Distinct().Count())
                 {
-                    panel.Dispose();
-                    borderPanel.Dispose();
-                };
-
-                panel.Controls.Add(label);
-                panel.Controls.Add(removeButton);
-
-                flowLayoutPanelForFolders.Controls.Add(panel);
-                flowLayoutPanelForFolders.Controls.Add(borderPanel);
-
-                // Environment.SpecialFolder root = folderDlg.RootFolder;
+                    this.paths.Remove(folderPath);
+                }
+                else
+                {
+                    addPathToFoldersList(folderPath);
+                }
             }
+        }
 
-            // this.openFileDialog.Filter = "All files (*.*)|*.*";
-            // this.openFileDialog.Multiselect = true;
-            // this.openFileDialog.Title = "Select Photos";
-            // DialogResult dr = this.openFileDialog.ShowDialog();
-            // if (dr == System.Windows.Forms.DialogResult.OK)
-            // {
-            //     foreach (String file in openFileDialog.FileNames)
-            //     {
-            //         try
-            //         {
-            //             Debug.WriteLine("file dialog:::::::::::::" + file);
-            //         }
-            //         catch (Exception ex)
-            //         {
-            //             MessageBox.Show("Error: " + ex.Message);
-            //         }
-            //     }
-            // }
+        private void addPathToFoldersList(string folderPath)
+        {
+            Panel panel = new Panel();
+            panel.Width = 210;
+            panel.Height = 18;
+
+            Panel borderPanel = new Panel();
+            borderPanel.Height = 1;
+            borderPanel.Width = 210;
+            borderPanel.BackColor = Color.WhiteSmoke;
+
+            Label label = new Label();
+            label.Text = folderPath;
+            label.ForeColor = Color.White;
+            label.AutoSize = true;
+            label.MaximumSize = new System.Drawing.Size(190, 0);
+
+            Button removeButton = new Button();
+            removeButton.Text = "X";
+            removeButton.Size = new System.Drawing.Size(18, 23);
+            removeButton.ForeColor = Color.DarkRed;
+            removeButton.FlatStyle = FlatStyle.Flat;
+            removeButton.FlatAppearance.BorderSize = 0;
+            removeButton.Padding = new Padding(0, 0, 0, 0);
+            removeButton.Location = new System.Drawing.Point(192, -4);
+            removeButton.Click += delegate (object obj, EventArgs ea)
+            {
+                panel.Dispose();
+                borderPanel.Dispose();
+                this.paths.Remove(folderPath);
+            };
+
+            panel.Controls.Add(label);
+            panel.Controls.Add(removeButton);
+
+            flowLayoutPanelForFolders.Controls.Add(panel);
+            flowLayoutPanelForFolders.Controls.Add(borderPanel);
         }
     }
 
@@ -211,5 +208,6 @@ namespace MCDA_APP.Forms
         public bool openOnStartup { get; set; }
         public string minThreatScore { get; set; }
         public string monitorFolders { get; set; }
+        public string paths { get; set; }
     }
 }

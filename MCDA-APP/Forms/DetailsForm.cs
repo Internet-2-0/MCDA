@@ -15,178 +15,187 @@ namespace MCDA_APP.Forms
 {
     public partial class DetailsForm : Form
     {
+        string type = "";
         string responseString = "";
         string folderName = "";
         string fileName = "";
 
-        public DetailsForm(string responseString, string folderName, string fileName)
+        public DetailsForm(string type, string responseString, string folderName, string fileName, MonitoringForm monitoringForm, Panel panel)
         {
             InitializeComponent();
             this.responseString = responseString;
             this.folderName = folderName;
             this.fileName = fileName;
+            this.type = type;
             Debug.WriteLine("DetailsForm........................." + this.responseString + this.folderName + this.fileName);
-            initDetailFormUI();
+            if (type == "threat")
+            {
+                initDetailFormUI(monitoringForm, panel);
+            }
+            else
+            {
+                initDetailFormUIForDoc(monitoringForm, panel);
+            }
 
         }
 
-        private void initDetailFormUI()
+        private void initDetailFormUI(MonitoringForm monitoringForm, Panel listPanel)
         {
-            JObject jsonObject = JObject.Parse(responseString);
-            bool success = (bool)jsonObject["success"];
-            Debug.WriteLine("........................." + jsonObject["data"]["data"].ToString());
+            Debug.WriteLine("responseString in detailsform........................." + this.responseString);
 
             // folder label 
             folderLabel.Text = this.folderName;
             labelFullPath.Text = this.folderName;
 
-            if (jsonObject["data"]["data"].ToString() == "{}")
+            bool success = true;
+
+            if (this.responseString == "" || this.responseString == null)
             {
                 success = false;
             }
-            string score = "";
-            double score_num = 0;
-            if (success)
+            else
             {
-                flowLayoutPanelDetails.Visible = true;
+                JObject jsonObject = JObject.Parse(this.responseString);
+                success = (bool)jsonObject["success"];
+                Debug.WriteLine("........................." + jsonObject["data"]["data"].ToString());
 
-                score = (string)jsonObject["data"]["data"]["score"];
-                string[] scores = score.Split('/');
-                score_num = Convert.ToDouble(scores[0]);
-                score = Convert.ToString(Math.Round(score_num)) + "%";
 
-                if (jsonObject["data"]["data"]["signatures"] != null)
+                if (jsonObject["data"]["data"].ToString() == "{}")
                 {
-                    JArray signatures = (JArray)jsonObject["data"]["data"]["signatures"];
-                    for (int i = 0; i < signatures.Count; i++)
+                    success = false;
+                }
+                string score = "";
+                double score_num = 0;
+                if (success)
+                {
+                    flowLayoutPanelDetails.Visible = true;
+
+                    score = (string)jsonObject["data"]["data"]["score"];
+                    string[] scores = score.Split('/');
+                    score_num = Convert.ToDouble(scores[0]);
+                    score = Convert.ToString(Math.Round(score_num)) + "%";
+
+                    if (jsonObject["data"]["data"]["signatures"] != null)
                     {
-                        Debug.WriteLine("DETAILS---------------------------........................." + signatures[i]);
-
-                        FlowLayoutPanel panel = new FlowLayoutPanel();
-                        panel.AutoSize = true;
-                        panel.MaximumSize = new System.Drawing.Size(480, 0);
-
-                        Panel linePanel = new Panel();
-                        linePanel.Size = new System.Drawing.Size(480, 1);
-                        linePanel.BackColor = Color.Gray;
-
-                        Label lblSignatureTitle = new Label();
-                        lblSignatureTitle.Font = new Font("Calibri", 14, FontStyle.Bold);
-                        lblSignatureTitle.ForeColor = Color.Orange;
-                        string title = (string)signatures[i]["info"]["title"];
-                        lblSignatureTitle.Text = title.ToUpper();
-
-                        Label lblEntropyDescription = new Label();
-                        lblEntropyDescription.Font = new Font("Calibri", 11, FontStyle.Regular);
-                        lblEntropyDescription.ForeColor = Color.White;
-                        lblEntropyDescription.Text = (string)signatures[i]["info"]["description"];
-                        lblEntropyDescription.AutoSize = true;
-                        lblEntropyDescription.MaximumSize = new System.Drawing.Size(480, 0);
-
-                        Label lblDiscovered = new Label();
-                        lblDiscovered.Text = "Discovered:";
-                        lblDiscovered.ForeColor = Color.Red;
-                        lblDiscovered.Font = new Font("Calibri", 12, FontStyle.Italic);
-                        lblDiscovered.Width = 480;
-
-                        Label lblDiscoveredContent = new Label();
-                        var discovered = signatures[i]["discovered"];
-
-                        if (typeof(JValue).Equals(discovered.GetType()))
+                        JArray signatures = (JArray)jsonObject["data"]["data"]["signatures"];
+                        for (int i = 0; i < signatures.Count; i++)
                         {
-                            lblDiscoveredContent.Text = (string)discovered;
-                        }
-                        else if (typeof(JObject).Equals(discovered.GetType()))
-                        {
-                            lblDiscoveredContent.Text = Newtonsoft.Json.JsonConvert.SerializeObject(discovered).Replace('{', ' ').Replace('}', ' ');
-                        }
-                        else if (typeof(JArray).Equals(discovered.GetType()))
-                        {
-                            // lblDiscoveredContent.Text = '"' + (string)string.Join("\", \"", discovered).Replace('{', ' ').Replace('}', ' ') + '"';
-                            string discoveredContent = "";
-                            int idx = 0;
-                            foreach (var item in discovered)
+                            Debug.WriteLine("DETAILS---------------------------........................." + signatures[i]);
+
+                            FlowLayoutPanel panel = new FlowLayoutPanel();
+                            panel.AutoSize = true;
+                            panel.MaximumSize = new System.Drawing.Size(480, 0);
+
+                            Panel linePanel = new Panel();
+                            linePanel.Size = new System.Drawing.Size(480, 1);
+                            linePanel.BackColor = Color.Gray;
+
+                            Label lblSignatureTitle = new Label();
+                            lblSignatureTitle.Font = new Font("Calibri", 14, FontStyle.Bold);
+                            lblSignatureTitle.ForeColor = Color.Orange;
+                            string title = (string)signatures[i]["info"]["title"];
+                            lblSignatureTitle.Text = title.ToUpper();
+
+                            Label lblEntropyDescription = new Label();
+                            lblEntropyDescription.Font = new Font("Calibri", 11, FontStyle.Regular);
+                            lblEntropyDescription.ForeColor = Color.White;
+                            lblEntropyDescription.Text = (string)signatures[i]["info"]["description"];
+                            lblEntropyDescription.AutoSize = true;
+                            lblEntropyDescription.MaximumSize = new System.Drawing.Size(480, 0);
+
+                            Label lblDiscovered = new Label();
+                            lblDiscovered.Text = "Discovered:";
+                            lblDiscovered.ForeColor = Color.Red;
+                            lblDiscovered.Font = new Font("Calibri", 12, FontStyle.Italic);
+                            lblDiscovered.Width = 480;
+
+                            Label lblDiscoveredContent = new Label();
+                            var discovered = signatures[i]["discovered"];
+
+                            if (typeof(JValue).Equals(discovered.GetType()))
                             {
-                                if (typeof(JValue).Equals(item.GetType()))
-                                {
-                                    if (idx == 0)
-                                    {
-                                        discoveredContent += "\"" + (string)item + '"';
-                                    }
-                                    else
-                                    {
-                                        discoveredContent += ", \"" + (string)item + '"';
-                                    }
-                                }
-                                else if (typeof(JObject).Equals(item.GetType()))
-                                {
-                                    discoveredContent += Newtonsoft.Json.JsonConvert.SerializeObject(item).Replace('{', ' ').Replace('}', ' ');
-                                }
-                                else if (typeof(JArray).Equals(discovered.GetType()))
-                                {
-                                    discoveredContent += '"' + (string)string.Join("\", \"", discovered).Replace('{', ' ').Replace('}', ' ') + '"';
-                                }
-                                idx++;
+                                lblDiscoveredContent.Text = (string)discovered;
                             }
-                            lblDiscoveredContent.Text = discoveredContent;
+                            else if (typeof(JObject).Equals(discovered.GetType()))
+                            {
+                                lblDiscoveredContent.Text = Newtonsoft.Json.JsonConvert.SerializeObject(discovered).Replace('{', ' ').Replace('}', ' ');
+                            }
+                            else if (typeof(JArray).Equals(discovered.GetType()))
+                            {
+                                // lblDiscoveredContent.Text = '"' + (string)string.Join("\", \"", discovered).Replace('{', ' ').Replace('}', ' ') + '"';
+                                string discoveredContent = "";
+                                int idx = 0;
+                                foreach (var item in discovered)
+                                {
+                                    if (typeof(JValue).Equals(item.GetType()))
+                                    {
+                                        if (idx == 0)
+                                        {
+                                            discoveredContent += "\"" + (string)item + '"';
+                                        }
+                                        else
+                                        {
+                                            discoveredContent += ", \"" + (string)item + '"';
+                                        }
+                                    }
+                                    else if (typeof(JObject).Equals(item.GetType()))
+                                    {
+                                        discoveredContent += Newtonsoft.Json.JsonConvert.SerializeObject(item).Replace('{', ' ').Replace('}', ' ');
+                                    }
+                                    else if (typeof(JArray).Equals(discovered.GetType()))
+                                    {
+                                        discoveredContent += '"' + (string)string.Join("\", \"", discovered).Replace('{', ' ').Replace('}', ' ') + '"';
+                                    }
+                                    idx++;
+                                }
+                                lblDiscoveredContent.Text = discoveredContent;
+                            }
+
+                            lblDiscoveredContent.Font = new Font("Calibri", 11, FontStyle.Regular);
+                            lblDiscoveredContent.ForeColor = Color.White;
+                            lblDiscoveredContent.AutoSize = true;
+                            lblDiscoveredContent.MaximumSize = new System.Drawing.Size(480, 0);
+
+                            panel.Controls.Add(lblSignatureTitle);
+                            panel.Controls.Add(lblEntropyDescription);
+                            panel.Controls.Add(lblDiscovered);
+                            panel.Controls.Add(lblDiscoveredContent);
+
+                            flowLayoutPanelDetails.Controls.Add(panel);
+                            flowLayoutPanelDetails.Controls.Add(linePanel);
+
                         }
-
-                        lblDiscoveredContent.Font = new Font("Calibri", 11, FontStyle.Regular);
-                        lblDiscoveredContent.ForeColor = Color.White;
-                        lblDiscoveredContent.AutoSize = true;
-                        lblDiscoveredContent.MaximumSize = new System.Drawing.Size(480, 0);
-
-                        panel.Controls.Add(lblSignatureTitle);
-                        panel.Controls.Add(lblEntropyDescription);
-                        panel.Controls.Add(lblDiscovered);
-                        panel.Controls.Add(lblDiscoveredContent);
-
-                        flowLayoutPanelDetails.Controls.Add(panel);
-                        flowLayoutPanelDetails.Controls.Add(linePanel);
-
                     }
                 }
-            }
-            else
-            {
-                flowLayoutPanelDetails.Visible = false;
-            }
+                else
+                {
+                    flowLayoutPanelDetails.Visible = false;
+                }
 
-            // percent label
-            percentLabel.Text = score;
-            removeButton.Click += delegate (object obj, EventArgs ea)
-            {
-                // panel.Dispose();
-            };
+                // percent label
+                percentLabel.Text = score;
 
-            // rerunButton.Click += delegate (object obj, EventArgs ea)
-            // {
-            // };
-
-            releaseButton.Click += delegate (object obj, EventArgs ea)
-            {
-            };
-
-            // update colors based on score
-            if (score_num < 20.0)
-            {
-                colorPanel.BackColor = Color.Green;
-                percentLabel.ForeColor = Color.Green;
-            }
-            else if (score_num >= 20.0 && score_num < 40.0)
-            {
-                colorPanel.BackColor = Color.Yellow;
-                percentLabel.ForeColor = Color.Yellow;
-            }
-            else if (score_num >= 40.0 && score_num < 60.0)
-            {
-                colorPanel.BackColor = Color.Orange;
-                percentLabel.ForeColor = Color.Orange;
-            }
-            else
-            {
-                colorPanel.BackColor = Color.Red;
-                percentLabel.ForeColor = Color.Red;
+                // update colors based on score
+                if (score_num < 20.0)
+                {
+                    colorPanel.BackColor = Color.Green;
+                    percentLabel.ForeColor = Color.Green;
+                }
+                else if (score_num >= 20.0 && score_num < 40.0)
+                {
+                    colorPanel.BackColor = Color.Yellow;
+                    percentLabel.ForeColor = Color.Yellow;
+                }
+                else if (score_num >= 40.0 && score_num < 60.0)
+                {
+                    colorPanel.BackColor = Color.Orange;
+                    percentLabel.ForeColor = Color.Orange;
+                }
+                else
+                {
+                    colorPanel.BackColor = Color.Red;
+                    percentLabel.ForeColor = Color.Red;
+                }
             }
 
             if (success)
@@ -199,13 +208,193 @@ namespace MCDA_APP.Forms
                 fileLabel.Text = "[FAILED] " + this.fileName;
                 fileLabel.ForeColor = Color.Yellow;
                 colorPanel.BackColor = Color.Yellow;
+                panelDetailItem.BackColor = Color.DarkRed;
+
+                Button rerunButton = new Button();
+                rerunButton.Text = "RERUN";
+                rerunButton.Font = new Font("Calibri", 12, FontStyle.Bold);
+                rerunButton.BackColor = Color.Yellow;
+                rerunButton.ForeColor = Color.Black;
+                rerunButton.FlatStyle = FlatStyle.Flat;
+                rerunButton.FlatAppearance.BorderSize = 0;
+                rerunButton.Width = 70;
+                rerunButton.Height = 31;
+                rerunButton.Location = new System.Drawing.Point(255, 7);
+                rerunButton.Click += delegate (object obj, EventArgs ea)
+                {
+                    this.Hide();
+                    monitoringForm.rerunScanFile(folderName, fileName, listPanel, true);
+                };
+                panelDetailItem.Controls.Add(rerunButton);
+                percentLabel.Visible = false;
             }
 
+            removeButton.Click += delegate (object obj, EventArgs ea)
+            {
+                if (File.Exists(folderName + "\\" + fileName))
+                {
+                    File.Delete(folderName + "\\" + fileName);
+                }
+                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                if (File.Exists("./malcore/threat/" + hashFileName))
+                {
+
+                    File.Delete("./malcore/threat/" + hashFileName);
+                }
+                listPanel.Dispose();
+                this.Hide();
+            };
+
+            releaseButton.Click += delegate (object obj, EventArgs ea)
+            {
+            };
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        private void initDetailFormUIForDoc(MonitoringForm monitoringForm, Panel listPanel)
         {
 
+            // folder label 
+            folderLabel.Text = this.folderName;
+            labelFullPath.Text = this.folderName;
+
+            bool success = true;
+
+            if (this.responseString == "" || this.responseString == null)
+            {
+                success = false;
+            }
+            else
+            {
+
+                JObject jsonObject = JObject.Parse(this.responseString);
+                success = (bool)jsonObject["success"];
+                Debug.WriteLine("........................." + jsonObject["data"]["data"].ToString());
+
+                if (jsonObject["data"]["data"].ToString() == "{}")
+                {
+                    success = false;
+                }
+                string score = "";
+                double score_num = 0;
+                if (success)
+                {
+                    flowLayoutPanelDetails.Visible = true;
+
+                    score = (string)jsonObject["data"]["data"]["dfi"]["results"]["dfi_results"]["score"];
+                    score_num = Convert.ToDouble(score);
+                    score = Convert.ToString(Math.Round(score_num)) + "%";
+
+                    if (jsonObject["data"]["data"]["dfi"]["results"]["dfi_results"]["details"] != null)
+                    {
+                        JArray details = (JArray)jsonObject["data"]["data"]["dfi"]["results"]["dfi_results"]["details"];
+                        for (int i = 0; i < details.Count; i++)
+                        {
+                            Debug.WriteLine("DETAILS---------------------------........................." + details[i]);
+
+                            FlowLayoutPanel panel = new FlowLayoutPanel();
+                            panel.AutoSize = true;
+                            panel.MaximumSize = new System.Drawing.Size(480, 0);
+
+                            Panel linePanel = new Panel();
+                            linePanel.Size = new System.Drawing.Size(480, 1);
+                            linePanel.BackColor = Color.Gray;
+
+                            Label lblSignatureTitle = new Label();
+                            lblSignatureTitle.Font = new Font("Calibri", 14, FontStyle.Bold);
+                            lblSignatureTitle.ForeColor = Color.Orange;
+                            string title = (string)details[i]["title"];
+                            lblSignatureTitle.Text = title.ToUpper();
+                            lblSignatureTitle.AutoSize = true;
+
+                            panel.Controls.Add(lblSignatureTitle);
+
+                            flowLayoutPanelDetails.Controls.Add(panel);
+                            flowLayoutPanelDetails.Controls.Add(linePanel);
+
+                        }
+                    }
+                }
+                else
+                {
+                    flowLayoutPanelDetails.Visible = false;
+                }
+
+                // percent label
+                percentLabel.Text = score;
+
+                // update colors based on score
+                if (score_num < 20.0)
+                {
+                    colorPanel.BackColor = Color.Green;
+                    percentLabel.ForeColor = Color.Green;
+                }
+                else if (score_num >= 20.0 && score_num < 40.0)
+                {
+                    colorPanel.BackColor = Color.Yellow;
+                    percentLabel.ForeColor = Color.Yellow;
+                }
+                else if (score_num >= 40.0 && score_num < 60.0)
+                {
+                    colorPanel.BackColor = Color.Orange;
+                    percentLabel.ForeColor = Color.Orange;
+                }
+                else
+                {
+                    colorPanel.BackColor = Color.Red;
+                    percentLabel.ForeColor = Color.Red;
+                }
+            }
+
+            if (success)
+            {
+                fileLabel.Text = this.fileName;
+                fileLabel.ForeColor = Color.White;
+            }
+            else
+            {
+                fileLabel.Text = "[FAILED] " + this.fileName;
+                fileLabel.ForeColor = Color.Yellow;
+                colorPanel.BackColor = Color.Yellow;
+                panelDetailItem.BackColor = Color.DarkRed;
+
+                Button rerunButton = new Button();
+                rerunButton.Text = "RERUN";
+                rerunButton.Font = new Font("Calibri", 12, FontStyle.Bold);
+                rerunButton.BackColor = Color.Yellow;
+                rerunButton.ForeColor = Color.Black;
+                rerunButton.FlatStyle = FlatStyle.Flat;
+                rerunButton.FlatAppearance.BorderSize = 0;
+                rerunButton.Width = 70;
+                rerunButton.Height = 31;
+                rerunButton.Location = new System.Drawing.Point(255, 7);
+                rerunButton.Click += delegate (object obj, EventArgs ea)
+                {
+                    this.Hide();
+                    monitoringForm.rerunScanFile(folderName, fileName, listPanel, false);
+                };
+                panelDetailItem.Controls.Add(rerunButton);
+                percentLabel.Visible = false;
+            }
+
+            removeButton.Click += delegate (object obj, EventArgs ea)
+            {
+                if (File.Exists(folderName + "\\" + fileName))
+                {
+                    File.Delete(folderName + "\\" + fileName);
+                }
+                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                if (File.Exists("./malcore/doc/" + hashFileName))
+                {
+
+                    File.Delete("./malcore/doc/" + hashFileName);
+                }
+                listPanel.Dispose();
+                this.Hide();
+            };
+
+            releaseButton.Click += delegate (object obj, EventArgs ea)
+            {
+            };
         }
 
         private void DetailsForm_Load(object sender, EventArgs e)
@@ -221,7 +410,7 @@ namespace MCDA_APP.Forms
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
-        } 
+        }
 
         private void btnSettings_Click(object sender, EventArgs e)
         {

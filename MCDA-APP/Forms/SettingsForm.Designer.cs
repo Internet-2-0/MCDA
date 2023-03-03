@@ -185,6 +185,8 @@
             // checkEnableMonitor
             // 
             this.checkEnableMonitor.AutoSize = true;
+            this.checkEnableMonitor.Checked = true;
+            this.checkEnableMonitor.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkEnableMonitor.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.checkEnableMonitor.ForeColor = System.Drawing.Color.White;
             this.checkEnableMonitor.Location = new System.Drawing.Point(299, 104);
@@ -209,6 +211,8 @@
             // checkOpenOnStartup
             // 
             this.checkOpenOnStartup.AutoSize = true;
+            this.checkOpenOnStartup.Checked = true;
+            this.checkOpenOnStartup.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkOpenOnStartup.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.checkOpenOnStartup.ForeColor = System.Drawing.Color.White;
             this.checkOpenOnStartup.Location = new System.Drawing.Point(299, 170);
