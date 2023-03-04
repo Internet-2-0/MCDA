@@ -45,7 +45,6 @@ namespace MCDA_APP
 
             string username = txtEmail.Text;
             string password = txtPassword.Text;
-            Debug.WriteLine(Program.APIKEY, username + ":" + password);
 
             if (username == "" || username == null)
             {
@@ -76,7 +75,6 @@ namespace MCDA_APP
 
                 var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
                 var response = await client.PostAsync(url, requestContent);
-                Debug.WriteLine(response.StatusCode);
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -86,8 +84,6 @@ namespace MCDA_APP
                     var authdata = "";
                     var userdata = json["data"];
                     Boolean success = json["success"] != null ? (Boolean)json["success"] : false;
-                    Debug.WriteLine("userdata=>" + userdata);
-
 
                     if (success == true && userdata != null)
                     {
@@ -116,12 +112,9 @@ namespace MCDA_APP
                     else
                     {
                         var errorMsg = json["messages"][0]["message"];
-                        Debug.WriteLine(errorMsg);
                         lblError.Visible = true;
                         lblError.Text = errorMsg.ToString();
                     }
-
-                    Debug.WriteLine(authdata);
                 }
                 else
                 {
@@ -132,7 +125,6 @@ namespace MCDA_APP
             }
             catch (Exception ex)
             {
-                // Write out any exceptions.
                 Debug.WriteLine(ex);
 
                 lblError.Visible = true;

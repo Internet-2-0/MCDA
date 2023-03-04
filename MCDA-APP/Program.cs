@@ -10,9 +10,7 @@ namespace MCDA_APP
         public static string APIKEY = "";
         public static string USEREMAIL = "";
 
-        /// <summary>
         ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
 
         static void Main()
@@ -20,9 +18,6 @@ namespace MCDA_APP
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-
-            // Application.Run(new TestForm());
-            // return;
 
             try
             {
@@ -37,9 +32,9 @@ namespace MCDA_APP
                         APIKEY = json["apiKey"].ToString();
                         USEREMAIL = json["email"].ToString();
 
-                        Debug.WriteLine("APIKEY: " + APIKEY + USEREMAIL);
-
                         var SETTINGS = key.GetValue("SETTINGS");
+                        Debug.WriteLine(SETTINGS);
+
                         if (SETTINGS != null && SETTINGS != "")
                         {
                             Application.Run(new MonitoringForm());
@@ -66,7 +61,6 @@ namespace MCDA_APP
                 Application.Run(new LoginForm());
             }
 
-        }
-
+        } 
     }
 }

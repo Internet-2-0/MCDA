@@ -94,7 +94,6 @@ namespace MCDA_APP.Forms
                     paths = string.Join(",", this.paths.ToArray())
                 };
                 var settingsData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-                Debug.WriteLine("Settings write::" + settingsData);
 
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
                 key.SetValue("SETTINGS", settingsData.ToString());
@@ -106,9 +105,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                // Write out any exceptions.
                 Debug.WriteLine(ex);
-
                 Hide();
                 MonitoringForm monitoringForm = new MonitoringForm();
                 monitoringForm.Show(this);
@@ -130,7 +127,6 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                // Write out any exceptions.
                 Debug.WriteLine(ex);
             }
 

@@ -47,8 +47,48 @@
             this.labelInactiveDescription = new System.Windows.Forms.Label();
             this.panelInactive = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
+            this.fileSystemWatcherMain = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher2 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher3 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher4 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher5 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher6 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher7 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher8 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher9 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher10 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher11 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher12 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher13 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher14 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher15 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher16 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher17 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher18 = new System.IO.FileSystemWatcher();
+            this.fileSystemWatcher19 = new System.IO.FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelInactive.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcherMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher17)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher19)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -125,6 +165,7 @@
             this.btnLogout.TabIndex = 38;
             this.btnLogout.Text = "Log Out";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click_1);
             // 
             // btnSettings
             // 
@@ -249,6 +290,147 @@
             this.label5.TabIndex = 41;
             this.label5.Text = "You are out of requests on your plan.\r\n";
             // 
+            // fileSystemWatcherMain
+            // 
+            this.fileSystemWatcherMain.EnableRaisingEvents = true;
+            this.fileSystemWatcherMain.IncludeSubdirectories = true;
+            this.fileSystemWatcherMain.SynchronizingObject = this;
+            this.fileSystemWatcherMain.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Changed);
+            this.fileSystemWatcherMain.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.IncludeSubdirectories = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher2
+            // 
+            this.fileSystemWatcher2.EnableRaisingEvents = true;
+            this.fileSystemWatcher2.IncludeSubdirectories = true;
+            this.fileSystemWatcher2.SynchronizingObject = this;
+            this.fileSystemWatcher2.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher3
+            // 
+            this.fileSystemWatcher3.EnableRaisingEvents = true;
+            this.fileSystemWatcher3.IncludeSubdirectories = true;
+            this.fileSystemWatcher3.SynchronizingObject = this;
+            this.fileSystemWatcher3.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher4
+            // 
+            this.fileSystemWatcher4.EnableRaisingEvents = true;
+            this.fileSystemWatcher4.IncludeSubdirectories = true;
+            this.fileSystemWatcher4.SynchronizingObject = this;
+            this.fileSystemWatcher4.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher5
+            // 
+            this.fileSystemWatcher5.EnableRaisingEvents = true;
+            this.fileSystemWatcher5.IncludeSubdirectories = true;
+            this.fileSystemWatcher5.SynchronizingObject = this;
+            this.fileSystemWatcher5.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher6
+            // 
+            this.fileSystemWatcher6.EnableRaisingEvents = true;
+            this.fileSystemWatcher6.IncludeSubdirectories = true;
+            this.fileSystemWatcher6.SynchronizingObject = this;
+            this.fileSystemWatcher6.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher7
+            // 
+            this.fileSystemWatcher7.EnableRaisingEvents = true;
+            this.fileSystemWatcher7.IncludeSubdirectories = true;
+            this.fileSystemWatcher7.SynchronizingObject = this;
+            this.fileSystemWatcher7.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher8
+            // 
+            this.fileSystemWatcher8.EnableRaisingEvents = true;
+            this.fileSystemWatcher8.IncludeSubdirectories = true;
+            this.fileSystemWatcher8.SynchronizingObject = this;
+            this.fileSystemWatcher8.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher9
+            // 
+            this.fileSystemWatcher9.EnableRaisingEvents = true;
+            this.fileSystemWatcher9.IncludeSubdirectories = true;
+            this.fileSystemWatcher9.SynchronizingObject = this;
+            this.fileSystemWatcher9.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher10
+            // 
+            this.fileSystemWatcher10.EnableRaisingEvents = true;
+            this.fileSystemWatcher10.IncludeSubdirectories = true;
+            this.fileSystemWatcher10.SynchronizingObject = this;
+            this.fileSystemWatcher10.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher11
+            // 
+            this.fileSystemWatcher11.EnableRaisingEvents = true;
+            this.fileSystemWatcher11.IncludeSubdirectories = true;
+            this.fileSystemWatcher11.SynchronizingObject = this;
+            this.fileSystemWatcher11.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher12
+            // 
+            this.fileSystemWatcher12.EnableRaisingEvents = true;
+            this.fileSystemWatcher12.IncludeSubdirectories = true;
+            this.fileSystemWatcher12.SynchronizingObject = this;
+            this.fileSystemWatcher12.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher13
+            // 
+            this.fileSystemWatcher13.EnableRaisingEvents = true;
+            this.fileSystemWatcher13.IncludeSubdirectories = true;
+            this.fileSystemWatcher13.SynchronizingObject = this;
+            this.fileSystemWatcher13.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher14
+            // 
+            this.fileSystemWatcher14.EnableRaisingEvents = true;
+            this.fileSystemWatcher14.IncludeSubdirectories = true;
+            this.fileSystemWatcher14.SynchronizingObject = this;
+            this.fileSystemWatcher14.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher15
+            // 
+            this.fileSystemWatcher15.EnableRaisingEvents = true;
+            this.fileSystemWatcher15.IncludeSubdirectories = true;
+            this.fileSystemWatcher15.SynchronizingObject = this;
+            this.fileSystemWatcher15.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher16
+            // 
+            this.fileSystemWatcher16.EnableRaisingEvents = true;
+            this.fileSystemWatcher16.IncludeSubdirectories = true;
+            this.fileSystemWatcher16.SynchronizingObject = this;
+            this.fileSystemWatcher16.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher17
+            // 
+            this.fileSystemWatcher17.EnableRaisingEvents = true;
+            this.fileSystemWatcher17.IncludeSubdirectories = true;
+            this.fileSystemWatcher17.SynchronizingObject = this;
+            this.fileSystemWatcher17.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher18
+            // 
+            this.fileSystemWatcher18.EnableRaisingEvents = true;
+            this.fileSystemWatcher18.IncludeSubdirectories = true;
+            this.fileSystemWatcher18.SynchronizingObject = this;
+            this.fileSystemWatcher18.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
+            // fileSystemWatcher19
+            // 
+            this.fileSystemWatcher19.EnableRaisingEvents = true;
+            this.fileSystemWatcher19.IncludeSubdirectories = true;
+            this.fileSystemWatcher19.SynchronizingObject = this;
+            this.fileSystemWatcher19.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            // 
             // MonitoringForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -282,6 +464,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelInactive.ResumeLayout(false);
             this.panelInactive.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcherMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher17)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher19)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,5 +509,25 @@
         private Label labelInactiveDescription;
         private Panel panelInactive;
         private Label label5;
+        private FileSystemWatcher fileSystemWatcherMain;
+        private FileSystemWatcher fileSystemWatcher1;
+        private FileSystemWatcher fileSystemWatcher2;
+        private FileSystemWatcher fileSystemWatcher3;
+        private FileSystemWatcher fileSystemWatcher4;
+        private FileSystemWatcher fileSystemWatcher5;
+        private FileSystemWatcher fileSystemWatcher6;
+        private FileSystemWatcher fileSystemWatcher7;
+        private FileSystemWatcher fileSystemWatcher8;
+        private FileSystemWatcher fileSystemWatcher9;
+        private FileSystemWatcher fileSystemWatcher10;
+        private FileSystemWatcher fileSystemWatcher11;
+        private FileSystemWatcher fileSystemWatcher12;
+        private FileSystemWatcher fileSystemWatcher13;
+        private FileSystemWatcher fileSystemWatcher14;
+        private FileSystemWatcher fileSystemWatcher15;
+        private FileSystemWatcher fileSystemWatcher16;
+        private FileSystemWatcher fileSystemWatcher17;
+        private FileSystemWatcher fileSystemWatcher18;
+        private FileSystemWatcher fileSystemWatcher19;
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace MCDA_APP.Forms
 {
@@ -19,10 +20,23 @@ namespace MCDA_APP.Forms
         public MonitoringForm()
         {
             InitializeComponent();
+            if (!Directory.Exists(@"./malcore"))
+            {
+                Directory.CreateDirectory(@"./malcore");
+            }
+            if (!Directory.Exists(@"./malcore/threat"))
+            {
+                Directory.CreateDirectory(@"./malcore/threat");
+            }
+            if (!Directory.Exists(@"./malcore/doc"))
+            {
+                Directory.CreateDirectory(@"./malcore/doc");
+            }
         }
 
         private async void MonitoringForm_Load(object sender, EventArgs e)
         {
+            this.Visible = true;
             try
             {
                 // check if active or inactive
@@ -53,6 +67,7 @@ namespace MCDA_APP.Forms
                                 // this.paths = settings_paths.Split(',').ToList();
 
                                 List<string> paths = settings_paths.Split(',').ToList();
+                                int num = 0;
                                 foreach (string path in paths)
                                 {
                                     if (File.Exists(path))
@@ -62,11 +77,80 @@ namespace MCDA_APP.Forms
                                     else if (Directory.Exists(path))
                                     {
                                         ProcessDirectory(path);
+                                        switch (num)
+                                        {
+                                            case 0:
+                                                fileSystemWatcherMain.Path = path;
+                                                break;
+                                            case 1:
+                                                fileSystemWatcher1.Path = path;
+                                                break;
+                                            case 2:
+                                                fileSystemWatcher2.Path = path;
+                                                break;
+                                            case 3:
+                                                fileSystemWatcher3.Path = path;
+                                                break;
+                                            case 4:
+                                                fileSystemWatcher4.Path = path;
+                                                break;
+                                            case 5:
+                                                fileSystemWatcher5.Path = path;
+                                                break;
+                                            case 6:
+                                                fileSystemWatcher6.Path = path;
+                                                break;
+                                            case 7:
+                                                fileSystemWatcher7.Path = path;
+                                                break;
+                                            case 8:
+                                                fileSystemWatcher8.Path = path;
+                                                break;
+                                            case 9:
+                                                fileSystemWatcher9.Path = path;
+                                                break;
+                                            case 10:
+                                                fileSystemWatcher10.Path = path;
+                                                break;
+                                            case 11:
+                                                fileSystemWatcher11.Path = path;
+                                                break;
+                                            case 12:
+                                                fileSystemWatcher12.Path = path;
+                                                break;
+                                            case 13:
+                                                fileSystemWatcher13.Path = path;
+                                                break;
+                                            case 14:
+                                                fileSystemWatcher14.Path = path;
+                                                break;
+                                            case 15:
+                                                fileSystemWatcher15.Path = path;
+                                                break;
+                                            case 16:
+                                                fileSystemWatcher16.Path = path;
+                                                break;
+                                            case 17:
+                                                fileSystemWatcher17.Path = path;
+                                                break;
+                                            case 18:
+                                                fileSystemWatcher18.Path = path;
+                                                break;
+                                            case 19:
+                                                fileSystemWatcher19.Path = path;
+                                                break;
+                                            default:
+                                                fileSystemWatcherMain.Path = path;
+                                                break;
+                                        }
+
+                                        num++;
                                     }
                                     else
                                     {
-                                        Console.WriteLine("{0} is not a valid file or directory.", path);
+                                        // Console.WriteLine("{0} is not a valid file or directory.", path);
                                     }
+
                                 }
                             }
                         }
@@ -91,6 +175,7 @@ namespace MCDA_APP.Forms
             }
         }
 
+
         private async Task<string> getThreatScore(string url, string pathFile, string fileName)
         {
             try
@@ -99,8 +184,6 @@ namespace MCDA_APP.Forms
                 {
                     using (var content = new MultipartFormDataContent())
                     {
-                        // string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
-
                         byte[] fileData = File.ReadAllBytes(pathFile);
                         content.Add(new StreamContent(new MemoryStream(fileData)), "filename1", fileName);
                         content.Headers.Add("apiKey", Program.APIKEY);
@@ -109,8 +192,6 @@ namespace MCDA_APP.Forms
                         using (
                            var response = await client.PostAsync(url, content))
                         {
-                            // Debug.WriteLine("getThreatScore response.........................." + response);
-
                             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                             {
                                 string responseString = await response.Content.ReadAsStringAsync();
@@ -150,11 +231,14 @@ namespace MCDA_APP.Forms
 
                 if (success)
                 {
-                    score = (string)jsonObject["data"]["data"]["score"];
-                    string[] scores = score.Split('/');
-                    score_num = Convert.ToDouble(scores[0]);
-                    score = Convert.ToString(Math.Round(score_num)) + "%";
-
+                    success = (bool)jsonObject["data"]["success"];
+                    if (success)
+                    {
+                        score = (string)jsonObject["data"]["data"]["score"];
+                        string[] scores = score.Split('/');
+                        score_num = Convert.ToDouble(scores[0]);
+                        score = Convert.ToString(Math.Round(score_num)) + "%";
+                    }
                 }
             }
 
@@ -345,7 +429,6 @@ namespace MCDA_APP.Forms
                 {
                     string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
                     responseString = await getThreatScore(url, path, fileName);
-                    Debug.WriteLine("rerun responseString threat----------------" + path + "-----------" + responseString);
                     File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
 
                     Label fileLabel = (Label)panel.Controls.Find("fileLabel", true)[0];
@@ -365,7 +448,6 @@ namespace MCDA_APP.Forms
                 {
                     string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/docfile";
                     responseString = await getThreatScore(url, path, fileName);
-                    Debug.WriteLine("rerun responseString doc----------------" + path + "-----------" + responseString);
                     File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
 
                     Label fileLabel = (Label)panel.Controls.Find("fileLabel", true)[0];
@@ -685,27 +767,21 @@ namespace MCDA_APP.Forms
             {
                 string fileName = Path.GetFileName(path);
                 string folderName = Directory.GetParent(path) != null ? Directory.GetParent(path).FullName : path;
-                Debug.WriteLine("folderName----------------" + path + ":::" + folderName);
 
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
                 // check if the hash file is already scanned
                 if (File.Exists("./malcore/threat/" + hashFileName))
                 {
-                    Debug.WriteLine("hash file exist----------------" + hashFileName);
-
                     string fileString = File.ReadAllText("./malcore/threat/" + hashFileName);
                     bool succeed = true;
                     if (fileString == "")
                     {
                         succeed = false;
                     }
-
                     addItemToMonitoringPanel(fileString, folderName, fileName, succeed);
                 }
                 else if (File.Exists("./malcore/doc/" + hashFileName))
                 {
-                    Debug.WriteLine("hash doc file exist----------------" + hashFileName);
-
                     string fileString = File.ReadAllText("./malcore/doc/" + hashFileName);
                     bool succeed = true;
                     if (fileString == "")
@@ -723,48 +799,44 @@ namespace MCDA_APP.Forms
                         {
                             byte[] buffer = new byte[10];
                             buffer = reader.ReadBytes(10);
-                            Debug.WriteLine("buffer----------------" + path + "-----------" + buffer[0] + buffer[1] + buffer[2] + buffer[3]);
-                            // exe file
-                            if (buffer[0] == 77 && buffer[1] == 90)
+                            if (buffer.Length > 9)
                             {
-                                HttpClient client = new HttpClient();
-                                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
-                                string responseString = await getThreatScore(url, path, fileName);
-                                // Debug.WriteLine("responseString----------------" + path + "-----------" + responseString);
-
-                                // save to hash file
-                                File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
-                                // JObject jsonObject = JObject.Parse(responseString);
-
-                                bool succeed = true;
-                                if (responseString == "")
+                                // exe file
+                                if (buffer[0] == 77 && buffer[1] == 90)
                                 {
-                                    succeed = false;
+                                    HttpClient client = new HttpClient();
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
+                                    string responseString = await getThreatScore(url, path, fileName);
+
+                                    // save to hash file
+                                    File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
+
+                                    bool succeed = true;
+                                    if (responseString == "")
+                                    {
+                                        succeed = false;
+                                    }
+
+                                    // add to mornitoring list 
+                                    addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
                                 }
-
-                                // add to mornitoring list 
-                                addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
-                            }
-                            else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
-                            (buffer[0] == 80 && buffer[1] == 75))
-                            {
-                                Debug.WriteLine("responseString--PDF--------------" + path);
-
-                                HttpClient client = new HttpClient();
-                                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/docfile";
-                                string responseString = await getThreatScore(url, path, fileName);
-                                // Debug.WriteLine("responseString----------------" + path + "-----------" + responseString);
-
-                                // save to hash file
-                                File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
-                                // JObject jsonObject = JObject.Parse(responseString);
-
-                                bool succeed = true;
-                                if (responseString == "")
+                                else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
+                                (buffer[0] == 80 && buffer[1] == 75))
                                 {
-                                    succeed = false;
+                                    HttpClient client = new HttpClient();
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/docfile";
+                                    string responseString = await getThreatScore(url, path, fileName);
+
+                                    // save to hash file
+                                    File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
+
+                                    bool succeed = true;
+                                    if (responseString == "")
+                                    {
+                                        succeed = false;
+                                    }
+                                    addItemToMonitoringPanelForDoc(responseString, folderName, fileName, succeed);
                                 }
-                                addItemToMonitoringPanelForDoc(responseString, folderName, fileName, succeed);
                             }
                         }
                     }
@@ -774,52 +846,13 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("failed----------------" + path + "-----------" + ex);
+                Debug.WriteLine("ProcessFile failed----------------" + path + "-----------" + ex);
             }
         }
 
-        private async void getAgentUsuage()
+        private void btnLogout_Click_1(object sender, EventArgs e)
         {
-            try
-            {
-                Debug.WriteLine("getAgentUsuage::::::::::: ");
-                string apiKey = Program.APIKEY;
 
-                HttpClient client = new HttpClient();
-                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/usage";
-
-                HttpClient httpClient = new HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage();
-                request.RequestUri = new Uri(url);
-                request.Method = HttpMethod.Post;
-                request.Headers.Add("apiKey", apiKey);
-                HttpResponseMessage response = await httpClient.SendAsync(request);
-                var responseString = await response.Content.ReadAsStringAsync();
-
-                Debug.WriteLine(response.StatusCode, responseString);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                // Write out any exceptions.
-                Debug.WriteLine(ex);
-            }
-        }
-
-        private void btnSettings_Click(object sender, EventArgs e)
-        {
-            Hide();
-            SettingsForm settingsForm = new SettingsForm();
-            settingsForm.Show(this);
-        }
-
-        private void btnLogout_Click(object sender, EventArgs e)
-        {
             try
             {
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
@@ -833,7 +866,6 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                // Write out any exceptions.
                 Debug.WriteLine(ex);
             }
 
@@ -856,6 +888,24 @@ namespace MCDA_APP.Forms
             Hide();
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.Show(this);
+        }
+
+        private void fileSystemWatcherMain_Created_1(object sender, FileSystemEventArgs e)
+        {
+            string value = "Created::::::: " + e.FullPath;
+            Debug.WriteLine(value);
+
+            if (File.Exists(e.FullPath))
+            {
+                ProcessFile(e.FullPath);
+            }
+        }
+
+        private void fileSystemWatcherMain_Changed(object sender, FileSystemEventArgs e)
+        {
+            string value = "Changed::::::: " + e.FullPath;
+            Debug.WriteLine(value);
+
         }
     }
 }

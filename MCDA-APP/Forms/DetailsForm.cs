@@ -27,7 +27,7 @@ namespace MCDA_APP.Forms
             this.folderName = folderName;
             this.fileName = fileName;
             this.type = type;
-            Debug.WriteLine("DetailsForm........................." + this.responseString + this.folderName + this.fileName);
+
             if (type == "threat")
             {
                 initDetailFormUI(monitoringForm, panel);
@@ -41,8 +41,6 @@ namespace MCDA_APP.Forms
 
         private void initDetailFormUI(MonitoringForm monitoringForm, Panel listPanel)
         {
-            Debug.WriteLine("responseString in detailsform........................." + this.responseString);
-
             // folder label 
             folderLabel.Text = this.folderName;
             labelFullPath.Text = this.folderName;
@@ -57,8 +55,6 @@ namespace MCDA_APP.Forms
             {
                 JObject jsonObject = JObject.Parse(this.responseString);
                 success = (bool)jsonObject["success"];
-                Debug.WriteLine("........................." + jsonObject["data"]["data"].ToString());
-
 
                 if (jsonObject["data"]["data"].ToString() == "{}")
                 {
@@ -80,8 +76,6 @@ namespace MCDA_APP.Forms
                         JArray signatures = (JArray)jsonObject["data"]["data"]["signatures"];
                         for (int i = 0; i < signatures.Count; i++)
                         {
-                            Debug.WriteLine("DETAILS---------------------------........................." + signatures[i]);
-
                             FlowLayoutPanel panel = new FlowLayoutPanel();
                             panel.AutoSize = true;
                             panel.MaximumSize = new System.Drawing.Size(480, 0);
@@ -122,7 +116,6 @@ namespace MCDA_APP.Forms
                             }
                             else if (typeof(JArray).Equals(discovered.GetType()))
                             {
-                                // lblDiscoveredContent.Text = '"' + (string)string.Join("\", \"", discovered).Replace('{', ' ').Replace('}', ' ') + '"';
                                 string discoveredContent = "";
                                 int idx = 0;
                                 foreach (var item in discovered)
@@ -222,7 +215,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Location = new System.Drawing.Point(255, 7);
                 rerunButton.Click += delegate (object obj, EventArgs ea)
                 {
-                    this.Hide();
+                    this.Close();
                     monitoringForm.rerunScanFile(folderName, fileName, listPanel, true);
                 };
                 panelDetailItem.Controls.Add(rerunButton);
@@ -242,7 +235,7 @@ namespace MCDA_APP.Forms
                     File.Delete("./malcore/threat/" + hashFileName);
                 }
                 listPanel.Dispose();
-                this.Hide();
+                this.Dispose();
             };
 
             releaseButton.Click += delegate (object obj, EventArgs ea)
@@ -268,7 +261,6 @@ namespace MCDA_APP.Forms
 
                 JObject jsonObject = JObject.Parse(this.responseString);
                 success = (bool)jsonObject["success"];
-                Debug.WriteLine("........................." + jsonObject["data"]["data"].ToString());
 
                 if (jsonObject["data"]["data"].ToString() == "{}")
                 {
@@ -289,8 +281,6 @@ namespace MCDA_APP.Forms
                         JArray details = (JArray)jsonObject["data"]["data"]["dfi"]["results"]["dfi_results"]["details"];
                         for (int i = 0; i < details.Count; i++)
                         {
-                            Debug.WriteLine("DETAILS---------------------------........................." + details[i]);
-
                             FlowLayoutPanel panel = new FlowLayoutPanel();
                             panel.AutoSize = true;
                             panel.MaximumSize = new System.Drawing.Size(480, 0);
@@ -369,7 +359,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Location = new System.Drawing.Point(255, 7);
                 rerunButton.Click += delegate (object obj, EventArgs ea)
                 {
-                    this.Hide();
+                    this.Close();
                     monitoringForm.rerunScanFile(folderName, fileName, listPanel, false);
                 };
                 panelDetailItem.Controls.Add(rerunButton);
@@ -389,7 +379,7 @@ namespace MCDA_APP.Forms
                     File.Delete("./malcore/doc/" + hashFileName);
                 }
                 listPanel.Dispose();
-                this.Hide();
+                this.Dispose();
             };
 
             releaseButton.Click += delegate (object obj, EventArgs ea)
@@ -434,7 +424,6 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                // Write out any exceptions.
                 Debug.WriteLine(ex);
             }
 
