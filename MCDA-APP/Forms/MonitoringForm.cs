@@ -419,7 +419,6 @@ namespace MCDA_APP.Forms
                 percentLabel.ForeColor = Color.White;
                 percentLabel.Text = "Scanning...";
 
-                HttpClient client = new HttpClient();
                 string path = folderName + "\\" + fileName;
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
 
@@ -765,6 +764,23 @@ namespace MCDA_APP.Forms
         {
             try
             {
+                // tempcode file lock
+                
+
+                FileInfo fileInfo = new System.IO.FileInfo(path);
+                // if (!fileInfo.IsReadOnly) fileInfo.IsReadOnly = true;
+                Debug.Write(path + " fileInfo.IsReadOnly ..................." + fileInfo.IsReadOnly);
+                fileInfo.IsReadOnly = true;
+
+
+                // using (var foo = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
+                // { // must include Write access in order to lock file 
+                //     foo.Lock(0, 0); // 0,0 has special meaning to lock entire file regardless of length 
+                //     Debug.Write(path + " is locked...................");
+                // }
+
+                // tempcode file lock
+
                 string fileName = Path.GetFileName(path);
                 string folderName = Directory.GetParent(path) != null ? Directory.GetParent(path).FullName : path;
 
@@ -778,6 +794,7 @@ namespace MCDA_APP.Forms
                     {
                         succeed = false;
                     }
+
                     addItemToMonitoringPanel(fileString, folderName, fileName, succeed);
                 }
                 else if (File.Exists("./malcore/doc/" + hashFileName))
@@ -804,26 +821,24 @@ namespace MCDA_APP.Forms
                                 // exe file
                                 if (buffer[0] == 77 && buffer[1] == 90)
                                 {
-                                    HttpClient client = new HttpClient();
-                                    string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
-                                    string responseString = await getThreatScore(url, path, fileName);
+                                    // string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
+                                    // string responseString = await getThreatScore(url, path, fileName);
 
-                                    // save to hash file
-                                    File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
+                                    // // save to hash file
+                                    // File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
 
-                                    bool succeed = true;
-                                    if (responseString == "")
-                                    {
-                                        succeed = false;
-                                    }
+                                    // bool succeed = true;
+                                    // if (responseString == "")
+                                    // {
+                                    //     succeed = false;
+                                    // }                                    
 
-                                    // add to mornitoring list 
-                                    addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
+                                    // // add to mornitoring list 
+                                    // addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
                                 }
                                 else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
                                 (buffer[0] == 80 && buffer[1] == 75))
                                 {
-                                    HttpClient client = new HttpClient();
                                     string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/docfile";
                                     string responseString = await getThreatScore(url, path, fileName);
 

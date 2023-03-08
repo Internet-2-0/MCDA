@@ -99,6 +99,17 @@ namespace MCDA_APP.Forms
                 key.SetValue("SETTINGS", settingsData.ToString());
                 key.Close();
 
+                RegistryKey startkey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if (openOnStartup)
+                {
+                    startkey.SetValue("malcore", "C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe");
+                }
+                else
+                {
+                    startkey.DeleteValue("malcore");
+                }
+                startkey.Close();
+
                 Hide();
                 MonitoringForm monitoringForm = new MonitoringForm();
                 monitoringForm.Show(this);
