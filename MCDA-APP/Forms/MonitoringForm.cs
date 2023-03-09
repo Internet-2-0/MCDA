@@ -17,6 +17,8 @@ namespace MCDA_APP.Forms
 {
     public partial class MonitoringForm : Form
     {
+        double minThreatScore = 15.0;
+        bool sendStatistics = true;
         public MonitoringForm()
         {
             InitializeComponent();
@@ -37,6 +39,7 @@ namespace MCDA_APP.Forms
         private async void MonitoringForm_Load(object sender, EventArgs e)
         {
             this.Visible = true;
+
             try
             {
                 // check if active or inactive
@@ -57,6 +60,8 @@ namespace MCDA_APP.Forms
                         if (SETTINGS != null)
                         {
                             JObject json = JObject.Parse(SETTINGS.ToString());
+                            this.minThreatScore = (double)(json["minThreatScore"]);
+                            this.sendStatistics = (bool)(json["sendStatistics"]);
 
                             if ((bool)json["enableMornitoring"])
                             {
@@ -180,6 +185,9 @@ namespace MCDA_APP.Forms
         {
             try
             {
+                string payload = "{\"type\":\"file_submitted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File submitted\"}}";
+                await agentStat(payload);
+
                 using (var client = new HttpClient())
                 {
                     using (var content = new MultipartFormDataContent())
@@ -199,6 +207,8 @@ namespace MCDA_APP.Forms
                             }
                             else
                             {
+                                string payload2 = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"response\":\"timeout/api_error/other_error\",\"message\":\"API Error/Timeout/Other\"}}";
+                                await agentStat(payload2);
                                 return "";
                             }
                         }
@@ -209,6 +219,52 @@ namespace MCDA_APP.Forms
             {
                 // Write out any exceptions.
                 Debug.WriteLine("getThreatScore.........................." + ex);
+
+                string payload = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"response\":\"timeout/api_error/other_error\",\"message\":\"API Error/Timeout/Other\"}}";
+                await agentStat(payload);
+                return "";
+            }
+        }
+
+        private async Task<string> agentStat(string jsonData)
+        {
+            try
+            {
+                if (this.sendStatistics == false)
+                {
+                    return "";
+                }
+                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/stat";
+                Debug.WriteLine("agentStat.........................." + jsonData);
+
+                using (var client = new HttpClient())
+                {
+                    // string jsonData = "{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}";
+
+                    var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
+                    client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
+                    client.DefaultRequestHeaders.Add("source", "agent");
+                    client.DefaultRequestHeaders.Add("agentVersion", "1.0");
+
+                    using (
+                          var response = await client.PostAsync(url, requestContent))
+                    {
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            var content = await response.Content.ReadAsStringAsync();
+                            return content;
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Write out any exceptions.
+                Debug.WriteLine("agentStat dug.........................." + ex);
                 return "";
             }
         }
@@ -315,6 +371,9 @@ namespace MCDA_APP.Forms
                     File.Delete("./malcore/threat/" + hashFileName);
                 }
                 panel.Dispose();
+
+                string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File deleted\"}}";
+                agentStat(payload);
             };
 
             Button rerunButton = new Button();
@@ -332,6 +391,9 @@ namespace MCDA_APP.Forms
             {
                 rerunButton.Visible = false;
                 rerunScanFile(folderName, fileName, panel, true);
+
+                string payload = "{\"type\":\"file_reran\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File reran\"}}";
+                agentStat(payload);
             };
 
             Button releaseButton = new Button();
@@ -347,6 +409,8 @@ namespace MCDA_APP.Forms
             releaseButton.Location = new System.Drawing.Point(414, 6);
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
+                string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
+                agentStat(payload);
             };
 
             // update colors based on score
@@ -393,14 +457,19 @@ namespace MCDA_APP.Forms
             {
                 // panel.Controls.Add(percentLabel);
                 rerunButton.Visible = false;
+                if (score_num > this.minThreatScore)
+                {
+                    panel.Controls.Add(removeButton);
+                    panel.Controls.Add(releaseButton);
+                }
             }
             else
             {
                 // panel.Controls.Add(rerunButton);
                 percentLabel.Visible = false;
+                panel.Controls.Add(removeButton);
+                panel.Controls.Add(releaseButton);
             }
-            panel.Controls.Add(removeButton);
-            panel.Controls.Add(releaseButton);
 
             monitoringFlowLayoutPanel.Controls.Add(panel);
         }
@@ -658,6 +727,9 @@ namespace MCDA_APP.Forms
                     File.Delete("./malcore/doc/" + hashFileName);
                 }
                 panel.Dispose();
+
+                string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File deleted\"}}";
+                agentStat(payload);
             };
 
             Button rerunButton = new Button();
@@ -675,6 +747,9 @@ namespace MCDA_APP.Forms
             {
                 rerunButton.Visible = false;
                 rerunScanFile(folderName, fileName, panel, false);
+
+                string payload = "{\"type\":\"file_reran\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File reran\"}}";
+                agentStat(payload);
             };
 
             Button releaseButton = new Button();
@@ -690,7 +765,8 @@ namespace MCDA_APP.Forms
             releaseButton.Location = new System.Drawing.Point(414, 6);
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
-
+                string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
+                agentStat(payload);
             };
 
             // update colors based on score
@@ -736,13 +812,18 @@ namespace MCDA_APP.Forms
             if (success)
             {
                 rerunButton.Visible = false;
+                if (score_num > this.minThreatScore)
+                {
+                    panel.Controls.Add(removeButton);
+                    panel.Controls.Add(releaseButton);
+                }
             }
             else
             {
                 percentLabel.Visible = false;
+                panel.Controls.Add(removeButton);
+                panel.Controls.Add(releaseButton);
             }
-            panel.Controls.Add(removeButton);
-            panel.Controls.Add(releaseButton);
 
             monitoringFlowLayoutPanel.Controls.Add(panel);
         }
@@ -765,12 +846,11 @@ namespace MCDA_APP.Forms
             try
             {
                 // tempcode file lock
-                
 
                 FileInfo fileInfo = new System.IO.FileInfo(path);
                 // if (!fileInfo.IsReadOnly) fileInfo.IsReadOnly = true;
-                Debug.Write(path + " fileInfo.IsReadOnly ..................." + fileInfo.IsReadOnly);
-                fileInfo.IsReadOnly = true;
+                // Debug.Write(path + " fileInfo.IsReadOnly ..................." + fileInfo.IsReadOnly);
+                fileInfo.IsReadOnly = false;
 
 
                 // using (var foo = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
@@ -821,20 +901,20 @@ namespace MCDA_APP.Forms
                                 // exe file
                                 if (buffer[0] == 77 && buffer[1] == 90)
                                 {
-                                    // string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
-                                    // string responseString = await getThreatScore(url, path, fileName);
+                                    string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
+                                    string responseString = await getThreatScore(url, path, fileName);
 
-                                    // // save to hash file
-                                    // File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
+                                    // save to hash file
+                                    File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
 
-                                    // bool succeed = true;
-                                    // if (responseString == "")
-                                    // {
-                                    //     succeed = false;
-                                    // }                                    
+                                    bool succeed = true;
+                                    if (responseString == "")
+                                    {
+                                        succeed = false;
+                                    }
 
-                                    // // add to mornitoring list 
-                                    // addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
+                                    // add to mornitoring list 
+                                    addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
                                 }
                                 else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
                                 (buffer[0] == 80 && buffer[1] == 75))

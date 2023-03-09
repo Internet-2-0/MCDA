@@ -19,6 +19,7 @@ namespace MCDA_APP.Forms
         string responseString = "";
         string folderName = "";
         string fileName = "";
+        double minThreatScore = 15.0;
 
         public DetailsForm(string type, string responseString, string folderName, string fileName, MonitoringForm monitoringForm, Panel panel)
         {
@@ -27,6 +28,18 @@ namespace MCDA_APP.Forms
             this.folderName = folderName;
             this.fileName = fileName;
             this.type = type;
+
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
+            if (key != null)
+            {
+                var SETTINGS = key.GetValue("SETTINGS");
+                if (SETTINGS != null)
+                {
+                    JObject json = JObject.Parse(SETTINGS.ToString());
+                    this.minThreatScore = (double)(json["minThreatScore"]);
+                }
+            }
+
 
             if (type == "threat")
             {
@@ -158,6 +171,17 @@ namespace MCDA_APP.Forms
                             flowLayoutPanelDetails.Controls.Add(linePanel);
 
                         }
+                    }
+
+                    if (score_num > this.minThreatScore)
+                    {
+                        removeButton.Visible = true;
+                        releaseButton.Visible = true;
+                    }
+                    else
+                    {
+                        removeButton.Visible = false;
+                        releaseButton.Visible = false;
                     }
                 }
                 else
@@ -303,6 +327,17 @@ namespace MCDA_APP.Forms
 
                         }
                     }
+
+                    if (score_num > this.minThreatScore)
+                    {
+                        removeButton.Visible = true;
+                        releaseButton.Visible = true;
+                    }
+                    else
+                    {
+                        removeButton.Visible = false;
+                        releaseButton.Visible = false;
+                    }
                 }
                 else
                 {
@@ -375,7 +410,6 @@ namespace MCDA_APP.Forms
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
                 if (File.Exists("./malcore/doc/" + hashFileName))
                 {
-
                     File.Delete("./malcore/doc/" + hashFileName);
                 }
                 listPanel.Dispose();
