@@ -12,6 +12,9 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Security.Permissions;
+using System.Security;
+using System.Security.AccessControl;
 
 namespace MCDA_APP.Forms
 {
@@ -188,6 +191,8 @@ namespace MCDA_APP.Forms
                 string payload = "{\"type\":\"file_submitted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File submitted\"}}";
                 await agentStat(payload);
 
+                handleRelease(pathFile, false);
+
                 using (var client = new HttpClient())
                 {
                     using (var content = new MultipartFormDataContent())
@@ -200,6 +205,8 @@ namespace MCDA_APP.Forms
                         using (
                            var response = await client.PostAsync(url, content))
                         {
+                            handleRelease(pathFile, true);
+
                             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                             {
                                 string responseString = await response.Content.ReadAsStringAsync();
@@ -219,6 +226,7 @@ namespace MCDA_APP.Forms
             {
                 // Write out any exceptions.
                 Debug.WriteLine("getThreatScore.........................." + ex);
+                handleRelease(pathFile, false);
 
                 string payload = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"response\":\"timeout/api_error/other_error\",\"message\":\"API Error/Timeout/Other\"}}";
                 await agentStat(payload);
@@ -363,6 +371,7 @@ namespace MCDA_APP.Forms
             {
                 if (File.Exists(folderName + "\\" + fileName))
                 {
+                    handleRelease(folderName + "\\" + fileName, false);
                     File.Delete(folderName + "\\" + fileName);
                 }
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
@@ -409,8 +418,10 @@ namespace MCDA_APP.Forms
             releaseButton.Location = new System.Drawing.Point(414, 6);
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
+                handleRelease(folderName + "\\" + fileName, false);
                 string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
                 agentStat(payload);
+                releaseButton.Visible = false;
             };
 
             // update colors based on score
@@ -461,6 +472,10 @@ namespace MCDA_APP.Forms
                 {
                     panel.Controls.Add(removeButton);
                     panel.Controls.Add(releaseButton);
+                }
+                else
+                {
+                    handleRelease(folderName + "\\" + fileName, false);
                 }
             }
             else
@@ -600,6 +615,11 @@ namespace MCDA_APP.Forms
                             percentLabel.ForeColor = Color.Red;
                         }
 
+                        if (score_num <= this.minThreatScore)
+                        {
+                            handleRelease(path, false);
+                        }
+
                     }
 
                 }
@@ -718,6 +738,7 @@ namespace MCDA_APP.Forms
             {
                 if (File.Exists(folderName + "\\" + fileName))
                 {
+                    handleRelease(folderName + "\\" + fileName, false);
                     File.Delete(folderName + "\\" + fileName);
                 }
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
@@ -765,8 +786,10 @@ namespace MCDA_APP.Forms
             releaseButton.Location = new System.Drawing.Point(414, 6);
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
+                handleRelease(folderName + "\\" + fileName, false);
                 string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
                 agentStat(payload);
+                releaseButton.Visible = false;
             };
 
             // update colors based on score
@@ -817,6 +840,10 @@ namespace MCDA_APP.Forms
                     panel.Controls.Add(removeButton);
                     panel.Controls.Add(releaseButton);
                 }
+                else
+                {
+                    handleRelease(folderName + "\\" + fileName, false);
+                }
             }
             else
             {
@@ -845,22 +872,6 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                // tempcode file lock
-
-                FileInfo fileInfo = new System.IO.FileInfo(path);
-                // if (!fileInfo.IsReadOnly) fileInfo.IsReadOnly = true;
-                // Debug.Write(path + " fileInfo.IsReadOnly ..................." + fileInfo.IsReadOnly);
-                fileInfo.IsReadOnly = false;
-
-
-                // using (var foo = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
-                // { // must include Write access in order to lock file 
-                //     foo.Lock(0, 0); // 0,0 has special meaning to lock entire file regardless of length 
-                //     Debug.Write(path + " is locked...................");
-                // }
-
-                // tempcode file lock
-
                 string fileName = Path.GetFileName(path);
                 string folderName = Directory.GetParent(path) != null ? Directory.GetParent(path).FullName : path;
 
@@ -889,6 +900,7 @@ namespace MCDA_APP.Forms
                 }
                 else
                 {
+                    handleRelease(path, false);
                     // check if the file is allowed
                     using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                     {
@@ -945,9 +957,26 @@ namespace MCDA_APP.Forms
             }
         }
 
+        private void handleRelease(string path, bool locking)
+        {
+            string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            FileInfo fInfo = new FileInfo(path);
+            FileSecurity fSecurity = fInfo.GetAccessControl();
+
+            if (locking)
+            {
+                fSecurity.AddAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                fInfo.SetAccessControl(fSecurity);
+            }
+            else
+            {
+                fSecurity.RemoveAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                fInfo.SetAccessControl(fSecurity);
+            }
+        }
+
         private void btnLogout_Click_1(object sender, EventArgs e)
         {
-
             try
             {
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);

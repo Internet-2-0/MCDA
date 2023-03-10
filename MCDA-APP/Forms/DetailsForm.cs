@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
+using System.Security.AccessControl;
 
 namespace MCDA_APP.Forms
 {
@@ -250,6 +251,7 @@ namespace MCDA_APP.Forms
             {
                 if (File.Exists(folderName + "\\" + fileName))
                 {
+                    handleRelease(folderName + "\\" + fileName, false);
                     File.Delete(folderName + "\\" + fileName);
                 }
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
@@ -264,6 +266,8 @@ namespace MCDA_APP.Forms
 
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
+                handleRelease(folderName + "\\" + fileName, false);
+                releaseButton.Visible = false;
             };
         }
 
@@ -405,6 +409,7 @@ namespace MCDA_APP.Forms
             {
                 if (File.Exists(folderName + "\\" + fileName))
                 {
+                    handleRelease(folderName + "\\" + fileName, false);
                     File.Delete(folderName + "\\" + fileName);
                 }
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
@@ -418,7 +423,27 @@ namespace MCDA_APP.Forms
 
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
+                handleRelease(folderName + "\\" + fileName, false);
+                releaseButton.Visible = false;
             };
+        }
+
+        private void handleRelease(string path, bool locking)
+        {
+            string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            FileInfo fInfo = new FileInfo(path);
+            FileSecurity fSecurity = fInfo.GetAccessControl();
+
+            if (locking)
+            {
+                fSecurity.AddAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                fInfo.SetAccessControl(fSecurity);
+            }
+            else
+            {
+                fSecurity.RemoveAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                fInfo.SetAccessControl(fSecurity);
+            }
         }
 
         private void DetailsForm_Load(object sender, EventArgs e)
