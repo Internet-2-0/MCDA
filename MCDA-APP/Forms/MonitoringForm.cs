@@ -184,14 +184,15 @@ namespace MCDA_APP.Forms
         }
 
 
-        private async Task<string> getThreatScore(string url, string pathFile, string fileName)
+        private async Task<string> getThreatScore(string pathFile, string fileName, string type)
         {
             try
             {
-                string payload = "{\"type\":\"file_submitted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File submitted\"}}";
+                string payload = "{\"type\":\"file_submitted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"message\":\"File submitted\"}}";
                 await agentStat(payload);
 
                 handleRelease(pathFile, false);
+                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/" + type;
 
                 using (var client = new HttpClient())
                 {
@@ -214,7 +215,7 @@ namespace MCDA_APP.Forms
                             }
                             else
                             {
-                                string payload2 = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"response\":\"timeout/api_error/other_error\",\"message\":\"API Error/Timeout/Other\"}}";
+                                string payload2 = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"api_error\",\"message\":\"API Error\"}}";
                                 await agentStat(payload2);
                                 return "";
                             }
@@ -225,10 +226,10 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 // Write out any exceptions.
-                Debug.WriteLine("getThreatScore.........................." + ex);
+                Debug.WriteLine("getThreatScore Exception.........................." + ex);
                 handleRelease(pathFile, false);
 
-                string payload = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"response\":\"timeout/api_error/other_error\",\"message\":\"API Error/Timeout/Other\"}}";
+                string payload = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"timeout/api_error/other_error\",\"message\":\"API Error/Timeout/Other\"}}";
                 await agentStat(payload);
                 return "";
             }
@@ -381,7 +382,7 @@ namespace MCDA_APP.Forms
                 }
                 panel.Dispose();
 
-                string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File deleted\"}}";
+                string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"threatscore\",\"message\":\"File deleted\"}}";
                 agentStat(payload);
             };
 
@@ -401,7 +402,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Visible = false;
                 rerunScanFile(folderName, fileName, panel, true);
 
-                string payload = "{\"type\":\"file_reran\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File reran\"}}";
+                string payload = "{\"type\":\"file_reran\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"threatscore\",\"message\":\"File reran\"}}";
                 agentStat(payload);
             };
 
@@ -510,8 +511,7 @@ namespace MCDA_APP.Forms
                 // save to hash file
                 if (isThreat == true)
                 {
-                    string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
-                    responseString = await getThreatScore(url, path, fileName);
+                    responseString = await getThreatScore(path, fileName, "threatscore");
                     File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
 
                     Label fileLabel = (Label)panel.Controls.Find("fileLabel", true)[0];
@@ -529,8 +529,7 @@ namespace MCDA_APP.Forms
                 }
                 else
                 {
-                    string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/docfile";
-                    responseString = await getThreatScore(url, path, fileName);
+                    responseString = await getThreatScore(path, fileName, "docfile");
                     File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
 
                     Label fileLabel = (Label)panel.Controls.Find("fileLabel", true)[0];
@@ -749,7 +748,7 @@ namespace MCDA_APP.Forms
                 }
                 panel.Dispose();
 
-                string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File deleted\"}}";
+                string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File deleted\"}}";
                 agentStat(payload);
             };
 
@@ -769,7 +768,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Visible = false;
                 rerunScanFile(folderName, fileName, panel, false);
 
-                string payload = "{\"type\":\"file_reran\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile/threatscore\",\"message\":\"File reran\"}}";
+                string payload = "{\"type\":\"file_reran\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File reran\"}}";
                 agentStat(payload);
             };
 
@@ -913,8 +912,7 @@ namespace MCDA_APP.Forms
                                 // exe file
                                 if (buffer[0] == 77 && buffer[1] == 90)
                                 {
-                                    string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/threatscore";
-                                    string responseString = await getThreatScore(url, path, fileName);
+                                    string responseString = await getThreatScore(path, fileName, "threatscore");
 
                                     // save to hash file
                                     File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
@@ -931,8 +929,7 @@ namespace MCDA_APP.Forms
                                 else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
                                 (buffer[0] == 80 && buffer[1] == 75))
                                 {
-                                    string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/docfile";
-                                    string responseString = await getThreatScore(url, path, fileName);
+                                    string responseString = await getThreatScore(path, fileName, "docfile");
 
                                     // save to hash file
                                     File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
@@ -966,11 +963,13 @@ namespace MCDA_APP.Forms
             if (locking)
             {
                 fSecurity.AddAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                fSecurity.AddAccessRule(new FileSystemAccessRule(@"SYSTEM", FileSystemRights.ReadAndExecute, AccessControlType.Deny));
                 fInfo.SetAccessControl(fSecurity);
             }
             else
             {
                 fSecurity.RemoveAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                fSecurity.RemoveAccessRule(new FileSystemAccessRule(@"SYSTEM", FileSystemRights.ReadAndExecute, AccessControlType.Deny));
                 fInfo.SetAccessControl(fSecurity);
             }
         }

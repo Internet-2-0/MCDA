@@ -55,9 +55,11 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.flowLayoutPanelForFolders = new System.Windows.Forms.FlowLayoutPanel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -276,12 +278,12 @@
             // 
             this.txtApikey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
             this.txtApikey.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtApikey.Font = new System.Drawing.Font("Roboto Condensed", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtApikey.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtApikey.ForeColor = System.Drawing.Color.White;
             this.txtApikey.Location = new System.Drawing.Point(4, 5);
             this.txtApikey.Name = "txtApikey";
             this.txtApikey.ReadOnly = true;
-            this.txtApikey.Size = new System.Drawing.Size(469, 21);
+            this.txtApikey.Size = new System.Drawing.Size(469, 16);
             this.txtApikey.TabIndex = 2;
             // 
             // panel2
@@ -346,6 +348,17 @@
             this.flowLayoutPanelForFolders.Size = new System.Drawing.Size(241, 132);
             this.flowLayoutPanelForFolders.TabIndex = 22;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(422, 272);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(20, 22);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 23;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Visible = false;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -353,6 +366,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(527, 504);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.flowLayoutPanelForFolders);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.btnCancel);
@@ -387,6 +401,7 @@
             this.panel2.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -420,5 +435,6 @@
         private OpenFileDialog openFileDialog;
         private FolderBrowserDialog folderBrowserDialog;
         private FlowLayoutPanel flowLayoutPanelForFolders;
+        private PictureBox pictureBox2;
     }
 }

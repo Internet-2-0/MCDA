@@ -59,5 +59,14 @@ namespace MCDA_APP.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to img/close.png.
+        /// </summary>
+        internal static string closeImage {
+            get {
+                return ResourceManager.GetString("closeImage", resourceCulture);
+            }
+        }
     }
 }

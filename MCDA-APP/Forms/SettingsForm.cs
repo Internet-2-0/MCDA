@@ -185,23 +185,39 @@ namespace MCDA_APP.Forms
             label.AutoSize = true;
             label.MaximumSize = new System.Drawing.Size(190, 0);
 
-            Button removeButton = new Button();
-            removeButton.Text = "X";
-            removeButton.Size = new System.Drawing.Size(18, 23);
-            removeButton.ForeColor = Color.DarkRed;
-            removeButton.FlatStyle = FlatStyle.Flat;
-            removeButton.FlatAppearance.BorderSize = 0;
-            removeButton.Padding = new Padding(0, 0, 0, 0);
-            removeButton.Location = new System.Drawing.Point(192, -4);
-            removeButton.Click += delegate (object obj, EventArgs ea)
+            // Button removeButton = new Button();
+            // removeButton.Text = "X";
+            // removeButton.Size = new System.Drawing.Size(18, 23);
+            // removeButton.ForeColor = Color.DarkRed;
+            // removeButton.FlatStyle = FlatStyle.Flat;
+            // removeButton.FlatAppearance.BorderSize = 0;
+            // removeButton.Padding = new Padding(0, 0, 0, 0);
+            // removeButton.Location = new System.Drawing.Point(192, -4);
+            // removeButton.BackgroundImage = Image.FromFile("./img/close.png");
+            // removeButton.Click += delegate (object obj, EventArgs ea)
+            // {
+            //     panel.Dispose();
+            //     borderPanel.Dispose();
+            //     this.paths.Remove(folderPath);
+            // };
+
+            PictureBox removePicture = new PictureBox();
+            removePicture.Size = new System.Drawing.Size(18, 18);
+            removePicture.Padding = new Padding(0, 0, 0, 0);
+            removePicture.Location = new System.Drawing.Point(192, 2);
+            removePicture.Image = pictureBox2.Image;
+            // removePicture.Image = Image.FromFile("img/close.png");
+            removePicture.SizeMode = PictureBoxSizeMode.StretchImage;
+            removePicture.Click += delegate (object obj, EventArgs ea)
             {
                 panel.Dispose();
                 borderPanel.Dispose();
                 this.paths.Remove(folderPath);
             };
+            Debug.WriteLine(Path.Combine(Application.StartupPath, "img/close.png"));
 
             panel.Controls.Add(label);
-            panel.Controls.Add(removeButton);
+            panel.Controls.Add(removePicture);
 
             flowLayoutPanelForFolders.Controls.Add(panel);
             flowLayoutPanelForFolders.Controls.Add(borderPanel);
