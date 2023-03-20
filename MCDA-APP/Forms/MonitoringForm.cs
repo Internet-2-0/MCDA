@@ -22,9 +22,12 @@ namespace MCDA_APP.Forms
     {
         double minThreatScore = 15.0;
         bool sendStatistics = true;
+        bool closing = false;
+
         public MonitoringForm()
         {
-            InitializeComponent();
+            InitializeComponent(); 
+
             if (!Directory.Exists(@"./malcore"))
             {
                 Directory.CreateDirectory(@"./malcore");
@@ -905,43 +908,50 @@ namespace MCDA_APP.Forms
                     {
                         using (var reader = new BinaryReader(fs, new ASCIIEncoding()))
                         {
-                            byte[] buffer = new byte[10];
-                            buffer = reader.ReadBytes(10);
-                            if (buffer.Length > 9)
+                            FileInfo fInfo = new FileInfo(path);
+
+                            // only allow files their size is smaller than 15M
+                            if (fInfo.Length < 15728640)
                             {
-                                // exe file
-                                if (buffer[0] == 77 && buffer[1] == 90)
+                                byte[] buffer = new byte[10];
+                                buffer = reader.ReadBytes(10);
+                                if (buffer.Length > 9)
                                 {
-                                    string responseString = await getThreatScore(path, fileName, "threatscore");
-
-                                    // save to hash file
-                                    File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
-
-                                    bool succeed = true;
-                                    if (responseString == "")
+                                    // exe file
+                                    if (buffer[0] == 77 && buffer[1] == 90)
                                     {
-                                        succeed = false;
+                                        string responseString = await getThreatScore(path, fileName, "threatscore");
+
+                                        // save to hash file
+                                        File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
+
+                                        bool succeed = true;
+                                        if (responseString == "")
+                                        {
+                                            succeed = false;
+                                        }
+
+                                        // add to mornitoring list 
+                                        addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
                                     }
-
-                                    // add to mornitoring list 
-                                    addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
-                                }
-                                else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
-                                (buffer[0] == 80 && buffer[1] == 75))
-                                {
-                                    string responseString = await getThreatScore(path, fileName, "docfile");
-
-                                    // save to hash file
-                                    File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
-
-                                    bool succeed = true;
-                                    if (responseString == "")
+                                    else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
+                                    (buffer[0] == 80 && buffer[1] == 75))
                                     {
-                                        succeed = false;
+                                        string responseString = await getThreatScore(path, fileName, "docfile");
+
+                                        // save to hash file
+                                        File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
+
+                                        bool succeed = true;
+                                        if (responseString == "")
+                                        {
+                                            succeed = false;
+                                        }
+                                        addItemToMonitoringPanelForDoc(responseString, folderName, fileName, succeed);
                                     }
-                                    addItemToMonitoringPanelForDoc(responseString, folderName, fileName, succeed);
                                 }
                             }
+
                         }
                     }
 
@@ -1029,6 +1039,44 @@ namespace MCDA_APP.Forms
             string value = "Changed::::::: " + e.FullPath;
             Debug.WriteLine(value);
 
+        }
+
+        private void MonitoringForm_Resize(object sender, EventArgs e)
+        {
+            //if the form is minimized  
+            //hide it from the task bar  
+            //and show the system tray icon (represented by the NotifyIcon control)  
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+                notifyIcon1.Visible = true;
+                // this is for notification
+                // notifyIcon1.ShowBalloonTip(500);
+            }
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon1.Visible = false;
+        }
+
+        private void MonitoringForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(this.closing == false) { 
+                e.Cancel = true;
+                Hide();
+                notifyIcon1.Visible = true;
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.closing = true;
+            notifyIcon1.Visible = false;
+            notifyIcon1.Dispose();
+            Application.Exit(); 
         }
     }
 }

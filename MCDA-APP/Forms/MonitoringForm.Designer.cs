@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonitoringForm));
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -67,6 +68,9 @@
             this.fileSystemWatcher17 = new System.IO.FileSystemWatcher();
             this.fileSystemWatcher18 = new System.IO.FileSystemWatcher();
             this.fileSystemWatcher19 = new System.IO.FileSystemWatcher();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelInactive.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcherMain)).BeginInit();
@@ -89,6 +93,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher19)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -431,6 +436,30 @@
             this.fileSystemWatcher19.SynchronizingObject = this;
             this.fileSystemWatcher19.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon1.BalloonTipText = "Malcore Agent";
+            this.notifyIcon1.BalloonTipTitle = "MCDA";
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Malcore Agent";
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Quit Malcore Agent";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // MonitoringForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -457,11 +486,12 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MonitoringForm";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Malcore Agent 1.0.0 | Monitoring";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MonitoringForm_FormClosing);
             this.Load += new System.EventHandler(this.MonitoringForm_Load);
+            this.Resize += new System.EventHandler(this.MonitoringForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelInactive.ResumeLayout(false);
             this.panelInactive.PerformLayout();
@@ -485,6 +515,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher19)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -530,5 +561,8 @@
         private FileSystemWatcher fileSystemWatcher17;
         private FileSystemWatcher fileSystemWatcher18;
         private FileSystemWatcher fileSystemWatcher19;
+        private NotifyIcon notifyIcon1;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem exitToolStripMenuItem;
     }
 }

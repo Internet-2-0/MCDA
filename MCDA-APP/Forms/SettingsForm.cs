@@ -17,12 +17,13 @@ namespace MCDA_APP.Forms
 {
     public partial class SettingsForm : Form
     {
+        bool closing = false;
+        List<string> paths = new List<string>();
+
         public SettingsForm()
         {
             InitializeComponent();
         }
-
-        List<string> paths = new List<string>();
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
@@ -222,7 +223,44 @@ namespace MCDA_APP.Forms
             flowLayoutPanelForFolders.Controls.Add(panel);
             flowLayoutPanelForFolders.Controls.Add(borderPanel);
         }
+
+        private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(this.closing == false) { 
+                e.Cancel = true;
+                Hide();
+                notifyIcon1.Visible = true;
+            } 
+        }
+
+        private void SettingsForm_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+                notifyIcon1.Visible = true;
+                // this is for notification
+                // notifyIcon1.ShowBalloonTip(500);
+            }
+
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon1.Visible = false;
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.closing = true;
+            notifyIcon1.Visible = false;
+            notifyIcon1.Dispose();
+            Application.Exit(); 
+        }
     }
+
 
     public class SettingsData
     {
