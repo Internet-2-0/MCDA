@@ -26,7 +26,7 @@ namespace MCDA_APP.Forms
 
         public MonitoringForm()
         {
-            InitializeComponent(); 
+            InitializeComponent();
 
             if (!Directory.Exists(@"./malcore"))
             {
@@ -49,7 +49,8 @@ namespace MCDA_APP.Forms
             try
             {
                 // check if active or inactive
-                bool active = true;
+                bool active =  await agentUsuage();
+
                 if (active)
                 {
                     panelInactive.Visible = false;
@@ -72,8 +73,6 @@ namespace MCDA_APP.Forms
                             if ((bool)json["enableMornitoring"])
                             {
                                 // start monitoring
-                                Debug.WriteLine("start monitoring::::::::::: ");
-
                                 string settings_paths = (string)json["paths"];
                                 // this.paths = settings_paths.Split(',').ToList();
 
@@ -247,7 +246,6 @@ namespace MCDA_APP.Forms
                     return "";
                 }
                 string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/stat";
-                Debug.WriteLine("agentStat.........................." + jsonData);
 
                 using (var client = new HttpClient())
                 {
@@ -278,6 +276,53 @@ namespace MCDA_APP.Forms
                 // Write out any exceptions.
                 Debug.WriteLine("agentStat dug.........................." + ex);
                 return "";
+            }
+        }
+
+        private async Task<bool> agentUsuage()
+        {
+            try
+            {
+                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/usage";
+
+                using (var client = new HttpClient())
+                {
+
+                    var requestContent = new StringContent("", Encoding.Unicode, "application/json");
+                    client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
+                    client.DefaultRequestHeaders.Add("source", "agent");
+                    client.DefaultRequestHeaders.Add("agentVersion", "1.0");
+
+                    using (
+                          var response = await client.PostAsync(url, requestContent))
+                    {
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            var content = await response.Content.ReadAsStringAsync();
+                            JObject jsonObject = JObject.Parse(content);
+
+                            if ((bool)jsonObject["success"] == true)
+                            {
+                                lblRequestNumber.Text = (string)jsonObject["data"]["remaining"];
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Write out any exceptions.
+                Debug.WriteLine("agentStat dug.........................." + ex);
+                return false;
             }
         }
 
@@ -1025,9 +1070,6 @@ namespace MCDA_APP.Forms
 
         private void fileSystemWatcherMain_Created_1(object sender, FileSystemEventArgs e)
         {
-            string value = "Created::::::: " + e.FullPath;
-            Debug.WriteLine(value);
-
             if (File.Exists(e.FullPath))
             {
                 ProcessFile(e.FullPath);
@@ -1036,9 +1078,6 @@ namespace MCDA_APP.Forms
 
         private void fileSystemWatcherMain_Changed(object sender, FileSystemEventArgs e)
         {
-            string value = "Changed::::::: " + e.FullPath;
-            Debug.WriteLine(value);
-
         }
 
         private void MonitoringForm_Resize(object sender, EventArgs e)
@@ -1064,7 +1103,8 @@ namespace MCDA_APP.Forms
 
         private void MonitoringForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(this.closing == false) { 
+            if (this.closing == false)
+            {
                 e.Cancel = true;
                 Hide();
                 notifyIcon1.Visible = true;
@@ -1076,7 +1116,7 @@ namespace MCDA_APP.Forms
             this.closing = true;
             notifyIcon1.Visible = false;
             notifyIcon1.Dispose();
-            Application.Exit(); 
+            Application.Exit();
         }
     }
 }

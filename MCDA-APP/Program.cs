@@ -41,7 +41,6 @@ namespace MCDA_APP
                         USEREMAIL = json["email"].ToString();
 
                         var SETTINGS = key.GetValue("SETTINGS");
-                        Debug.WriteLine(SETTINGS);
 
                         if (SETTINGS != null && SETTINGS != "")
                         {

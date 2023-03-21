@@ -215,7 +215,6 @@ namespace MCDA_APP.Forms
                 borderPanel.Dispose();
                 this.paths.Remove(folderPath);
             };
-            Debug.WriteLine(Path.Combine(Application.StartupPath, "img/close.png"));
 
             panel.Controls.Add(label);
             panel.Controls.Add(removePicture);

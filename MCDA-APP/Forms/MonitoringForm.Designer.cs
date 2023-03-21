@@ -153,9 +153,8 @@
             this.lblRequestNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(215)))), ((int)(((byte)(161)))));
             this.lblRequestNumber.Location = new System.Drawing.Point(455, 79);
             this.lblRequestNumber.Name = "lblRequestNumber";
-            this.lblRequestNumber.Size = new System.Drawing.Size(59, 21);
+            this.lblRequestNumber.Size = new System.Drawing.Size(0, 21);
             this.lblRequestNumber.TabIndex = 30;
-            this.lblRequestNumber.Text = "20,000";
             // 
             // btnLogout
             // 
@@ -451,12 +450,12 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(179, 26);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.exitToolStripMenuItem.Text = "Quit Malcore Agent";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
