@@ -16,6 +16,7 @@ namespace MCDA_APP
 
         static void Main()
         {
+            // Kill current process if there is already process that is running
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
 
             agentStat("{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}");
@@ -24,16 +25,14 @@ namespace MCDA_APP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            // Application.Run(new LoginForm());
-            // return;
-
             try
             {
-                // Check if user authentication 
+                // Check user authentication status
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
                 if (key != null)
                 {
                     var API_KEY = key.GetValue("API_KEY");
+                    // if user already log in
                     if (API_KEY != null)
                     {
                         JObject json = JObject.Parse(API_KEY.ToString());
@@ -42,6 +41,7 @@ namespace MCDA_APP
 
                         var SETTINGS = key.GetValue("SETTINGS");
 
+                        // if user have saved settings, go to monitoring
                         if (SETTINGS != null && SETTINGS != "")
                         {
                             Application.Run(new MonitoringForm());
@@ -100,7 +100,6 @@ namespace MCDA_APP
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("agentStat.........................." + ex);
                 return "";
             }
         }

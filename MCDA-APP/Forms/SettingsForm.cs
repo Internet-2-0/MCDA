@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Diagnostics;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-using System.Windows;
 
 namespace MCDA_APP.Forms
 {
@@ -72,6 +61,7 @@ namespace MCDA_APP.Forms
         {
             Hide();
             MonitoringForm monitoringForm = new MonitoringForm();
+            monitoringForm.Visible = false;
             monitoringForm.Show(this);
         }
 
@@ -113,6 +103,7 @@ namespace MCDA_APP.Forms
 
                 Hide();
                 MonitoringForm monitoringForm = new MonitoringForm();
+                monitoringForm.Visible = false;
                 monitoringForm.Show(this);
             }
             catch (Exception ex)
@@ -120,6 +111,7 @@ namespace MCDA_APP.Forms
                 Debug.WriteLine(ex);
                 Hide();
                 MonitoringForm monitoringForm = new MonitoringForm();
+                monitoringForm.Visible = false;
                 monitoringForm.Show(this);
             }
         }
@@ -186,22 +178,6 @@ namespace MCDA_APP.Forms
             label.AutoSize = true;
             label.MaximumSize = new System.Drawing.Size(190, 0);
 
-            // Button removeButton = new Button();
-            // removeButton.Text = "X";
-            // removeButton.Size = new System.Drawing.Size(18, 23);
-            // removeButton.ForeColor = Color.DarkRed;
-            // removeButton.FlatStyle = FlatStyle.Flat;
-            // removeButton.FlatAppearance.BorderSize = 0;
-            // removeButton.Padding = new Padding(0, 0, 0, 0);
-            // removeButton.Location = new System.Drawing.Point(192, -4);
-            // removeButton.BackgroundImage = Image.FromFile("./img/close.png");
-            // removeButton.Click += delegate (object obj, EventArgs ea)
-            // {
-            //     panel.Dispose();
-            //     borderPanel.Dispose();
-            //     this.paths.Remove(folderPath);
-            // };
-
             PictureBox removePicture = new PictureBox();
             removePicture.Size = new System.Drawing.Size(18, 18);
             removePicture.Padding = new Padding(0, 0, 0, 0);
@@ -225,11 +201,12 @@ namespace MCDA_APP.Forms
 
         private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(this.closing == false) { 
+            if (this.closing == false)
+            {
                 e.Cancel = true;
                 Hide();
                 notifyIcon1.Visible = true;
-            } 
+            }
         }
 
         private void SettingsForm_Resize(object sender, EventArgs e)
@@ -256,7 +233,7 @@ namespace MCDA_APP.Forms
             this.closing = true;
             notifyIcon1.Visible = false;
             notifyIcon1.Dispose();
-            Application.Exit(); 
+            Application.Exit();
         }
     }
 

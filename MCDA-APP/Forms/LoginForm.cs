@@ -1,23 +1,8 @@
 ﻿using MCDA_APP.Forms;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Reflection.Metadata;
-using System.Security.Policy;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.DataFormats;
-// using Windows.Web.Http;
 
 namespace MCDA_APP
 {
@@ -29,14 +14,8 @@ namespace MCDA_APP
             this.ActiveControl = txtEmail;
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private async void btnLogin_Click_1(object sender, EventArgs e)
@@ -79,7 +58,6 @@ namespace MCDA_APP
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    // var userdata = JsonConvert.DeserializeObject(content);
                     JObject json = JObject.Parse(content);
                     var authdata = "";
                     var userdata = json["data"];
@@ -91,12 +69,13 @@ namespace MCDA_APP
 
                         if (authdata != "")
                         {
+                            // store API Key and settings info to registory
                             RegistryKey key = Registry.CurrentUser.CreateSubKey(@".malcore");
                             key.SetValue("API_KEY", authdata);
                             key.SetValue("SETTINGS", "");
                             key.Close();
-                            
-                            Program.APIKEY = userdata["user"]["apiKey"].ToString(); 
+
+                            Program.APIKEY = userdata["user"]["apiKey"].ToString();
                             Program.USEREMAIL = userdata["user"]["email"].ToString();
 
                             Hide();

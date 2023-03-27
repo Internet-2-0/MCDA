@@ -379,12 +379,12 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.quitMalcoreAgentToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(179, 26);
             // 
             // quitMalcoreAgentToolStripMenuItem
             // 
             this.quitMalcoreAgentToolStripMenuItem.Name = "quitMalcoreAgentToolStripMenuItem";
-            this.quitMalcoreAgentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quitMalcoreAgentToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.quitMalcoreAgentToolStripMenuItem.Text = "Quit Malcore Agent";
             this.quitMalcoreAgentToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -420,6 +420,7 @@
             this.Controls.Add(this.lblMalcore);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Malcore Agent 1.0.0 | Settings";

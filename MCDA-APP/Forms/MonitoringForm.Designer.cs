@@ -133,7 +133,6 @@
             this.lblStatus.Size = new System.Drawing.Size(60, 21);
             this.lblStatus.TabIndex = 30;
             this.lblStatus.Text = "ACTIVE";
-            this.lblStatus.Click += new System.EventHandler(this.lblStatus_Click);
             // 
             // labelRemaining
             // 
@@ -271,7 +270,6 @@
             this.labelInactiveDescription.Size = new System.Drawing.Size(333, 38);
             this.labelInactiveDescription.TabIndex = 40;
             this.labelInactiveDescription.Text = "Go to Settings to enable or disable monitoring. \r\n \r\n";
-            this.labelInactiveDescription.Click += new System.EventHandler(this.labelInactiveDescription_Click);
             // 
             // panelInactive
             // 
@@ -489,7 +487,6 @@
             this.Text = "Malcore Agent 1.0.0 | Monitoring";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MonitoringForm_FormClosing);
-            this.Load += new System.EventHandler(this.MonitoringForm_Load);
             this.Resize += new System.EventHandler(this.MonitoringForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelInactive.ResumeLayout(false);

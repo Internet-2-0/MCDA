@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
-using System.IO;
-using System.Security.Permissions;
-using System.Security;
 using System.Security.AccessControl;
 
 namespace MCDA_APP.Forms
@@ -28,6 +16,7 @@ namespace MCDA_APP.Forms
         {
             InitializeComponent();
 
+            // Create directories for caching
             if (!Directory.Exists(@"./malcore"))
             {
                 Directory.CreateDirectory(@"./malcore");
@@ -40,16 +29,23 @@ namespace MCDA_APP.Forms
             {
                 Directory.CreateDirectory(@"./malcore/doc");
             }
+
+            startMonitoring();
         }
 
-        private async void MonitoringForm_Load(object sender, EventArgs e)
+
+        /**
+        * @Description: Start monitoring and update monitoring form with result
+        * @return void.
+        **/
+        private async void startMonitoring()
         {
             this.Visible = true;
 
             try
             {
-                // check if active or inactive
-                bool active =  await agentUsuage();
+                // Check if active or inactive based on usuage
+                bool active = await agentUsuage();
 
                 if (active)
                 {
@@ -186,6 +182,13 @@ namespace MCDA_APP.Forms
         }
 
 
+        /**
+        * @Description: Call api/threatscore or api/docfile to get scan result
+        * @param pathFile: full file path of target file
+        * @param fileName: target file name
+        * @param type: file type - threatscore / docfile
+        * @return api response as string.
+        **/
         private async Task<string> getThreatScore(string pathFile, string fileName, string type)
         {
             try
@@ -237,6 +240,12 @@ namespace MCDA_APP.Forms
             }
         }
 
+
+        /**
+        * @Description: Call agent/stat for log on the server
+        * @param jsonData: json string for request data of the api 
+        * @return api response as string.
+        **/
         private async Task<string> agentStat(string jsonData)
         {
             try
@@ -279,6 +288,11 @@ namespace MCDA_APP.Forms
             }
         }
 
+
+        /**
+        * @Description: Call agent/usage API
+        * @return true if remaining > 0, else false
+        **/
         private async Task<bool> agentUsuage()
         {
             try
@@ -320,12 +334,20 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                // Write out any exceptions.
-                Debug.WriteLine("agentStat dug.........................." + ex);
+                // Write out any exceptions. 
                 return false;
             }
         }
 
+
+        /**
+        * @Description: add exe files report to monitoring panel
+        * @param responseString: json string of api/threatscore or api/docfile api
+        * @param folderName: full path of the target file excluding it's name 
+        * @param fileName: target file name
+        * @param succeed:  api result
+        * @return void
+        **/
         private void addItemToMonitoringPanel(string responseString, string folderName, string fileName, bool succeed)
         {
             bool success = false;
@@ -538,6 +560,15 @@ namespace MCDA_APP.Forms
             monitoringFlowLayoutPanel.Controls.Add(panel);
         }
 
+
+        /**
+        * @Description: recall api/threatscore or api/docfile api and update UI accordingly
+        * @param folderName: full path of the target file excluding it's name 
+        * @param fileName: target file name
+        * @param panel: color panel object
+        * @param isThreat:  true if api/threatscore or false if api/docfile
+        * @return void
+        **/
         public async void rerunScanFile(string folderName, string fileName, Panel panel, bool isThreat)
         {
             try
@@ -694,6 +725,15 @@ namespace MCDA_APP.Forms
 
         }
 
+
+        /**
+        * @Description: add doc files report to monitoring panel
+        * @param responseString: json string of api/threatscore or api/docfile api
+        * @param folderName: full path of the target file excluding it's name 
+        * @param fileName: target file name
+        * @param succeed:  api result
+        * @return void
+        **/
         private void addItemToMonitoringPanelForDoc(string responseString, string folderName, string fileName, bool succeed)
         {
             bool success = false;
@@ -902,6 +942,12 @@ namespace MCDA_APP.Forms
             monitoringFlowLayoutPanel.Controls.Add(panel);
         }
 
+
+        /**
+        * @Description: Scan all sub directories of the target directory and process if it's an end file
+        * @param targetDirectory: full path of the target file 
+        * @return void
+        **/
         public void ProcessDirectory(string targetDirectory)
         {
             // Process the list of files found in the directory.
@@ -915,6 +961,13 @@ namespace MCDA_APP.Forms
                 ProcessDirectory(subdirectory);
         }
 
+
+        /**
+        * @Description: Check if file is already scanned based on cache folder 
+        * and process updating UI or hande scan
+        * @param path: full path of the target file  
+        * @return void
+        **/
         public async void ProcessFile(string path)
         {
             try
@@ -955,7 +1008,7 @@ namespace MCDA_APP.Forms
                         {
                             FileInfo fInfo = new FileInfo(path);
 
-                            // only allow files their size is smaller than 15M
+                            // only allow files their size is smaller than 15M **tempcode**
                             if (fInfo.Length < 15728640)
                             {
                                 byte[] buffer = new byte[10];
@@ -1009,6 +1062,13 @@ namespace MCDA_APP.Forms
             }
         }
 
+
+        /**
+        * @Description: Update file access rule based on locking param
+        * @param path: full path of the target file  
+        * @param locking: true if file is currently Allow, false if file is Deny now
+        * @return void
+        **/
         private void handleRelease(string path, bool locking)
         {
             string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -1029,6 +1089,10 @@ namespace MCDA_APP.Forms
             }
         }
 
+
+        /**
+        * @Description: handle logout
+        **/
         private void btnLogout_Click_1(object sender, EventArgs e)
         {
             try
@@ -1052,15 +1116,9 @@ namespace MCDA_APP.Forms
             loginForm.Show(this);
         }
 
-        private void lblStatus_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void labelInactiveDescription_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        /**
+        * @Description: show settings form
+        **/
         private void btnSettings_Click_1(object sender, EventArgs e)
         {
             Hide();
@@ -1068,6 +1126,9 @@ namespace MCDA_APP.Forms
             settingsForm.Show(this);
         }
 
+        /**
+        * @Description: watch target folder and process a file if there is any file created new
+        **/
         private void fileSystemWatcherMain_Created_1(object sender, FileSystemEventArgs e)
         {
             if (File.Exists(e.FullPath))
@@ -1080,8 +1141,13 @@ namespace MCDA_APP.Forms
         {
         }
 
+        /**
+        * @Description: move app to windows icon tray
+        **/
         private void MonitoringForm_Resize(object sender, EventArgs e)
         {
+            Debug.WriteLine("mornitoring form resize");
+
             //if the form is minimized  
             //hide it from the task bar  
             //and show the system tray icon (represented by the NotifyIcon control)  
@@ -1094,6 +1160,9 @@ namespace MCDA_APP.Forms
             }
         }
 
+        /**
+        * @Description: show app from windows icon tray when double click it in icon tray
+        **/
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Show();
@@ -1101,6 +1170,9 @@ namespace MCDA_APP.Forms
             notifyIcon1.Visible = false;
         }
 
+        /**
+        * @Description: move app to windows icon tray when click Close button
+        **/
         private void MonitoringForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.closing == false)
@@ -1111,6 +1183,9 @@ namespace MCDA_APP.Forms
             }
         }
 
+        /**
+        * @Description: exit application 
+        **/
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.closing = true;
