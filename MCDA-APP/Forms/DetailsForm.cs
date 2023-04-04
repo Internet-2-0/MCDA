@@ -32,7 +32,6 @@ namespace MCDA_APP.Forms
                 }
             }
 
-
             if (type == "threat")
             {
                 initDetailFormUI(monitoringForm, panel);
@@ -44,6 +43,13 @@ namespace MCDA_APP.Forms
 
         }
 
+
+        /**
+        * @Description: draw detail form for exe files
+        * @param monitoringForm: MonitoringForm object
+        * @param listPanel: monitoring form's panel of selected file
+        * @return void
+        **/
         private void initDetailFormUI(MonitoringForm monitoringForm, Panel listPanel)
         {
             // folder label 
@@ -262,6 +268,13 @@ namespace MCDA_APP.Forms
             };
         }
 
+
+        /**
+        * @Description: draw detail form for doc files
+        * @param monitoringForm: MonitoringForm object
+        * @param listPanel: monitoring form's panel of selected file
+        * @return void
+        **/
         private void initDetailFormUIForDoc(MonitoringForm monitoringForm, Panel listPanel)
         {
 
@@ -419,6 +432,13 @@ namespace MCDA_APP.Forms
             };
         }
 
+
+        /**
+        * @Description: Update file access rule based on locking param
+        * @param path: full path of the target file  
+        * @param locking: true if file is currently Allow, false if file is Deny now
+        * @return void
+        **/
         private void handleRelease(string path, bool locking)
         {
             string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -439,17 +459,14 @@ namespace MCDA_APP.Forms
 
         private void DetailsForm_Load(object sender, EventArgs e)
         {
-
         }
 
         private void lblFileName_Click(object sender, EventArgs e)
         {
-
         }
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -459,6 +476,9 @@ namespace MCDA_APP.Forms
             settingsForm.Show(this);
         }
 
+        /**
+        * @Description: handle logout
+        **/
         private void btnLogout_Click(object sender, EventArgs e)
         {
             try

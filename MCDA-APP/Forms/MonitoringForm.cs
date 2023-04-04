@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
+using System.ComponentModel;
 
 namespace MCDA_APP.Forms
 {
@@ -11,6 +12,9 @@ namespace MCDA_APP.Forms
         double minThreatScore = 15.0;
         bool sendStatistics = true;
         bool closing = false;
+        Queue<string> filePool = new Queue<string>();
+        Queue<FileData> fileQueue = new Queue<FileData>();
+        int numberOfProcessing = 0;
 
         public MonitoringForm()
         {
@@ -38,8 +42,136 @@ namespace MCDA_APP.Forms
         * @Description: Start monitoring and update monitoring form with result
         * @return void.
         **/
+        private async Task<bool> initFilePool()
+        {
+
+            try
+            {
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
+                if (key != null)
+                {
+                    var SETTINGS = key.GetValue("SETTINGS");
+                    if (SETTINGS != null)
+                    {
+                        JObject json = JObject.Parse(SETTINGS.ToString());
+                        this.minThreatScore = (double)(json["minThreatScore"]);
+                        this.sendStatistics = (bool)(json["sendStatistics"]);
+
+                        if ((bool)json["enableMornitoring"])
+                        {
+                            // start monitoring
+                            string settings_paths = (string)json["paths"];
+
+                            List<string> paths = settings_paths.Split(',').ToList();
+                            int num = 0;
+                            foreach (string path in paths)
+                            {
+                                if (File.Exists(path))
+                                {
+                                    // await ProcessFile(path);
+                                    this.filePool.Enqueue(path);
+                                }
+                                else if (Directory.Exists(path))
+                                {
+                                    ProcessDirectory(path);
+                                    switch (num)
+                                    {
+                                        case 0:
+                                            fileSystemWatcherMain.Path = path;
+                                            break;
+                                        case 1:
+                                            fileSystemWatcher1.Path = path;
+                                            break;
+                                        case 2:
+                                            fileSystemWatcher2.Path = path;
+                                            break;
+                                        case 3:
+                                            fileSystemWatcher3.Path = path;
+                                            break;
+                                        case 4:
+                                            fileSystemWatcher4.Path = path;
+                                            break;
+                                        case 5:
+                                            fileSystemWatcher5.Path = path;
+                                            break;
+                                        case 6:
+                                            fileSystemWatcher6.Path = path;
+                                            break;
+                                        case 7:
+                                            fileSystemWatcher7.Path = path;
+                                            break;
+                                        case 8:
+                                            fileSystemWatcher8.Path = path;
+                                            break;
+                                        case 9:
+                                            fileSystemWatcher9.Path = path;
+                                            break;
+                                        case 10:
+                                            fileSystemWatcher10.Path = path;
+                                            break;
+                                        case 11:
+                                            fileSystemWatcher11.Path = path;
+                                            break;
+                                        case 12:
+                                            fileSystemWatcher12.Path = path;
+                                            break;
+                                        case 13:
+                                            fileSystemWatcher13.Path = path;
+                                            break;
+                                        case 14:
+                                            fileSystemWatcher14.Path = path;
+                                            break;
+                                        case 15:
+                                            fileSystemWatcher15.Path = path;
+                                            break;
+                                        case 16:
+                                            fileSystemWatcher16.Path = path;
+                                            break;
+                                        case 17:
+                                            fileSystemWatcher17.Path = path;
+                                            break;
+                                        case 18:
+                                            fileSystemWatcher18.Path = path;
+                                            break;
+                                        case 19:
+                                            fileSystemWatcher19.Path = path;
+                                            break;
+                                        default:
+                                            fileSystemWatcherMain.Path = path;
+                                            break;
+                                    }
+                                    num++;
+                                }
+                                else
+                                {
+                                    // Console.WriteLine("{0} is not a valid file or directory.", path);
+                                }
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Write out any exceptions.
+                Debug.WriteLine(ex);
+                return false;
+            }
+        }
+
+
+        /**
+        * @Description: Start monitoring and update monitoring form with result
+        * @return void.
+        **/
         private async void startMonitoring()
         {
+            Debug.WriteLine("init file pool" + this.filePool.Count);
+
+            await initFilePool();
+            Debug.WriteLine("start monitoring" + this.filePool.Count);
+
             this.Visible = true;
 
             try
@@ -69,95 +201,30 @@ namespace MCDA_APP.Forms
                             if ((bool)json["enableMornitoring"])
                             {
                                 // start monitoring
-                                string settings_paths = (string)json["paths"];
-                                // this.paths = settings_paths.Split(',').ToList();
-
-                                List<string> paths = settings_paths.Split(',').ToList();
-                                int num = 0;
-                                foreach (string path in paths)
+                                while (this.filePool.Count > 0)
                                 {
-                                    if (File.Exists(path))
-                                    {
-                                        ProcessFile(path);
-                                    }
-                                    else if (Directory.Exists(path))
-                                    {
-                                        ProcessDirectory(path);
-                                        switch (num)
-                                        {
-                                            case 0:
-                                                fileSystemWatcherMain.Path = path;
-                                                break;
-                                            case 1:
-                                                fileSystemWatcher1.Path = path;
-                                                break;
-                                            case 2:
-                                                fileSystemWatcher2.Path = path;
-                                                break;
-                                            case 3:
-                                                fileSystemWatcher3.Path = path;
-                                                break;
-                                            case 4:
-                                                fileSystemWatcher4.Path = path;
-                                                break;
-                                            case 5:
-                                                fileSystemWatcher5.Path = path;
-                                                break;
-                                            case 6:
-                                                fileSystemWatcher6.Path = path;
-                                                break;
-                                            case 7:
-                                                fileSystemWatcher7.Path = path;
-                                                break;
-                                            case 8:
-                                                fileSystemWatcher8.Path = path;
-                                                break;
-                                            case 9:
-                                                fileSystemWatcher9.Path = path;
-                                                break;
-                                            case 10:
-                                                fileSystemWatcher10.Path = path;
-                                                break;
-                                            case 11:
-                                                fileSystemWatcher11.Path = path;
-                                                break;
-                                            case 12:
-                                                fileSystemWatcher12.Path = path;
-                                                break;
-                                            case 13:
-                                                fileSystemWatcher13.Path = path;
-                                                break;
-                                            case 14:
-                                                fileSystemWatcher14.Path = path;
-                                                break;
-                                            case 15:
-                                                fileSystemWatcher15.Path = path;
-                                                break;
-                                            case 16:
-                                                fileSystemWatcher16.Path = path;
-                                                break;
-                                            case 17:
-                                                fileSystemWatcher17.Path = path;
-                                                break;
-                                            case 18:
-                                                fileSystemWatcher18.Path = path;
-                                                break;
-                                            case 19:
-                                                fileSystemWatcher19.Path = path;
-                                                break;
-                                            default:
-                                                fileSystemWatcherMain.Path = path;
-                                                break;
-                                        }
+                                    // this.numberOfProcessing++;
+                                    Debug.WriteLine("doing monitoring" + this.filePool.Count + "::" + this.numberOfProcessing);
 
-                                        num++;
+                                    if (this.numberOfProcessing > 5)
+                                    {
+                                        await ProcessFile(this.filePool.Dequeue());
                                     }
                                     else
                                     {
-                                        // Console.WriteLine("{0} is not a valid file or directory.", path);
+                                        ProcessFile(this.filePool.Dequeue());
                                     }
-
                                 }
+                                Debug.WriteLine("end monitoring");
+
+                                // string settings_paths = (string)json["paths"];
+
+                                // List<string> paths = settings_paths.Split(',').ToList();
+                                // int num = 0;
+                                // foreach (string path in paths)
+                                // { 
+
+                                // }
                             }
                         }
                     }
@@ -171,8 +238,6 @@ namespace MCDA_APP.Forms
                     lblStatus.Text = "INACTIVE";
                     lblStatus.ForeColor = Color.Red;
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -191,6 +256,13 @@ namespace MCDA_APP.Forms
         **/
         private async Task<string> getThreatScore(string pathFile, string fileName, string type)
         {
+            // FileData fileQueueData = new FileData() { pathFile = pathFile, fileName = fileName, type = type };
+            // filePool.Enqueue(fileQueueData);
+            // NotifyPropertyChanged("filePool");
+            // Debug.WriteLine("getThreatScore start.........................." + pathFile + fileName + "::" + type + "....................." + fileQueueData.fileName);
+            // return "";
+            Debug.WriteLine("getThreatScore start.........................." + pathFile + fileName + "::" + type);
+
             try
             {
                 string payload = "{\"type\":\"file_submitted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"message\":\"File submitted\"}}";
@@ -224,6 +296,7 @@ namespace MCDA_APP.Forms
                                 await agentStat(payload2);
                                 return "";
                             }
+                            this.numberOfProcessing++;
                         }
                     }
                 }
@@ -231,6 +304,7 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 // Write out any exceptions.
+                this.numberOfProcessing++;
                 Debug.WriteLine("getThreatScore Exception.........................." + ex);
                 handleRelease(pathFile, false);
 
@@ -948,12 +1022,13 @@ namespace MCDA_APP.Forms
         * @param targetDirectory: full path of the target file 
         * @return void
         **/
-        public void ProcessDirectory(string targetDirectory)
+        public async void ProcessDirectory(string targetDirectory)
         {
             // Process the list of files found in the directory.
             string[] fileEntries = Directory.GetFiles(targetDirectory);
             foreach (string fileName in fileEntries)
-                ProcessFile(fileName);
+                this.filePool.Enqueue(fileName);
+            // await ProcessFile(fileName);
 
             // Recurse into subdirectories of this directory.
             string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
@@ -964,11 +1039,11 @@ namespace MCDA_APP.Forms
 
         /**
         * @Description: Check if file is already scanned based on cache folder 
-        * and process updating UI or hande scan
+        * and update UI or call scan API
         * @param path: full path of the target file  
         * @return void
         **/
-        public async void ProcessFile(string path)
+        public async Task<bool> ProcessFile(string path)
         {
             try
             {
@@ -1049,16 +1124,15 @@ namespace MCDA_APP.Forms
                                     }
                                 }
                             }
-
                         }
                     }
-
                 }
-
+                return true;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("ProcessFile failed----------------" + path + "-----------" + ex);
+                Debug.WriteLine("Process File failed----------------" + path + "-----------" + ex);
+                return false;
             }
         }
 
@@ -1193,5 +1267,12 @@ namespace MCDA_APP.Forms
             notifyIcon1.Dispose();
             Application.Exit();
         }
+    }
+
+    public class FileData
+    {
+        public string pathFile { get; set; }
+        public string fileName { get; set; }
+        public string type { get; set; }
     }
 }
