@@ -45,6 +45,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblMalcore = new System.Windows.Forms.Label();
             this.monitoringFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.queuePanel = new System.Windows.Forms.Panel();
+            this.labelQueuedFiles = new System.Windows.Forms.Label();
+            this.btnViewQueue = new System.Windows.Forms.Button();
             this.labelInactiveDescription = new System.Windows.Forms.Label();
             this.panelInactive = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
@@ -72,6 +75,8 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.monitoringFlowLayoutPanel.SuspendLayout();
+            this.queuePanel.SuspendLayout();
             this.panelInactive.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcherMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -253,12 +258,51 @@
             // monitoringFlowLayoutPanel
             // 
             this.monitoringFlowLayoutPanel.AutoScroll = true;
+            this.monitoringFlowLayoutPanel.Controls.Add(this.queuePanel);
             this.monitoringFlowLayoutPanel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.monitoringFlowLayoutPanel.Location = new System.Drawing.Point(0, 106);
             this.monitoringFlowLayoutPanel.Name = "monitoringFlowLayoutPanel";
             this.monitoringFlowLayoutPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.monitoringFlowLayoutPanel.Size = new System.Drawing.Size(525, 322);
             this.monitoringFlowLayoutPanel.TabIndex = 39;
+            // 
+            // queuePanel
+            // 
+            this.queuePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.queuePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.queuePanel.Controls.Add(this.labelQueuedFiles);
+            this.queuePanel.Controls.Add(this.btnViewQueue);
+            this.queuePanel.Location = new System.Drawing.Point(3, 3);
+            this.queuePanel.Name = "queuePanel";
+            this.queuePanel.Size = new System.Drawing.Size(500, 38);
+            this.queuePanel.TabIndex = 9;
+            // 
+            // labelQueuedFiles
+            // 
+            this.labelQueuedFiles.AutoSize = true;
+            this.labelQueuedFiles.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelQueuedFiles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(239)))), ((int)(((byte)(123)))));
+            this.labelQueuedFiles.Location = new System.Drawing.Point(21, 8);
+            this.labelQueuedFiles.Name = "labelQueuedFiles";
+            this.labelQueuedFiles.Size = new System.Drawing.Size(236, 20);
+            this.labelQueuedFiles.TabIndex = 6;
+            this.labelQueuedFiles.Text = "3 files were queued for processing";
+            // 
+            // btnViewQueue
+            // 
+            this.btnViewQueue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
+            this.btnViewQueue.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnViewQueue.FlatAppearance.BorderSize = 0;
+            this.btnViewQueue.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnViewQueue.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnViewQueue.ForeColor = System.Drawing.Color.White;
+            this.btnViewQueue.Location = new System.Drawing.Point(317, 6);
+            this.btnViewQueue.Name = "btnViewQueue";
+            this.btnViewQueue.Size = new System.Drawing.Size(170, 25);
+            this.btnViewQueue.TabIndex = 5;
+            this.btnViewQueue.Text = "VIEW QUEUE";
+            this.btnViewQueue.UseVisualStyleBackColor = false;
+            this.btnViewQueue.Click += new System.EventHandler(this.btnViewQueue_Click);
             // 
             // labelInactiveDescription
             // 
@@ -489,6 +533,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MonitoringForm_FormClosing);
             this.Resize += new System.EventHandler(this.MonitoringForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.monitoringFlowLayoutPanel.ResumeLayout(false);
+            this.queuePanel.ResumeLayout(false);
+            this.queuePanel.PerformLayout();
             this.panelInactive.ResumeLayout(false);
             this.panelInactive.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcherMain)).EndInit();
@@ -560,5 +607,8 @@
         private NotifyIcon notifyIcon1;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private Panel queuePanel;
+        private Label labelQueuedFiles;
+        private Button btnViewQueue;
     }
 }

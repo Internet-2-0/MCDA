@@ -13,6 +13,9 @@
     <Compile Update="Forms\MonitoringForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\QueueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -13,7 +13,7 @@ namespace MCDA_APP.Forms
         bool sendStatistics = true;
         bool closing = false;
         Queue<string> filePool = new Queue<string>();
-        Queue<FileData> fileQueue = new Queue<FileData>();
+        // Queue<FileData> fileQueue = new Queue<FileData>();
         int numberOfProcessing = 0;
 
         public MonitoringForm()
@@ -42,9 +42,97 @@ namespace MCDA_APP.Forms
         * @Description: Start monitoring and update monitoring form with result
         * @return void.
         **/
+        private async void startMonitoring()
+        {
+            Debug.WriteLine("init file pool" + this.filePool.Count);
+            queuePanel.Visible = false;
+
+            await initFilePool();
+            Debug.WriteLine("start monitoring" + this.filePool.Count);
+
+            this.Visible = true;
+
+            try
+            {
+                // Check if active or inactive based on usuage
+                bool active = await agentUsuage();
+
+                if (active)
+                {
+                    panelInactive.Visible = false;
+                    monitoringFlowLayoutPanel.Visible = true;
+                    labelRemaining.Visible = true;
+                    lblRequestNumber.Visible = true;
+                    lblStatus.Text = "ACTIVE";
+                    lblStatus.ForeColor = Color.Green;
+
+                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
+                    if (key != null)
+                    {
+                        var SETTINGS = key.GetValue("SETTINGS");
+                        if (SETTINGS != null)
+                        {
+                            JObject json = JObject.Parse(SETTINGS.ToString());
+                            this.minThreatScore = (double)(json["minThreatScore"]);
+                            this.sendStatistics = (bool)(json["sendStatistics"]);
+
+                            if ((bool)json["enableMornitoring"])
+                            {
+                                // start monitoring
+                                while (this.filePool.Count > 0)
+                                {
+                                    this.numberOfProcessing++;
+
+                                    if (this.numberOfProcessing > 5)
+                                    {
+                                        Debug.WriteLine("doing monitoring await" + this.filePool.Count + "::" + this.numberOfProcessing);
+                                        await ProcessFile(this.filePool.Dequeue());
+                                    }
+                                    else
+                                    {
+                                        Debug.WriteLine("doing monitoring" + this.filePool.Count + "::" + this.numberOfProcessing);
+                                        ProcessFile(this.filePool.Dequeue());
+                                    }
+                                }
+                                Debug.WriteLine("end monitoring");
+
+                                // string settings_paths = (string)json["paths"];
+
+                                // List<string> paths = settings_paths.Split(',').ToList();
+                                // int num = 0;
+                                // foreach (string path in paths)
+                                // { 
+
+                                // }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    panelInactive.Visible = true;
+                    monitoringFlowLayoutPanel.Visible = false;
+                    labelRemaining.Visible = false;
+                    lblRequestNumber.Visible = false;
+                    lblStatus.Text = "INACTIVE";
+                    lblStatus.ForeColor = Color.Red;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Write out any exceptions.
+                Debug.WriteLine(ex);
+            }
+        }
+
+
+
+        /**
+        * @Description: Scan files and add them to the pool
+        * @return void.
+        **/
         private async Task<bool> initFilePool()
         {
-
             try
             {
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
@@ -68,8 +156,12 @@ namespace MCDA_APP.Forms
                             {
                                 if (File.Exists(path))
                                 {
-                                    // await ProcessFile(path);
-                                    this.filePool.Enqueue(path);
+                                    bool result = checkFileExtentionIsAllowed(path);
+                                    Debug.WriteLine("checkFileExtentionIsAllowed----------------" + path + "-----------" + result);
+                                    if (result)
+                                    {
+                                        this.filePool.Enqueue(path);
+                                    }
                                 }
                                 else if (Directory.Exists(path))
                                 {
@@ -162,92 +254,6 @@ namespace MCDA_APP.Forms
 
 
         /**
-        * @Description: Start monitoring and update monitoring form with result
-        * @return void.
-        **/
-        private async void startMonitoring()
-        {
-            Debug.WriteLine("init file pool" + this.filePool.Count);
-
-            await initFilePool();
-            Debug.WriteLine("start monitoring" + this.filePool.Count);
-
-            this.Visible = true;
-
-            try
-            {
-                // Check if active or inactive based on usuage
-                bool active = await agentUsuage();
-
-                if (active)
-                {
-                    panelInactive.Visible = false;
-                    monitoringFlowLayoutPanel.Visible = true;
-                    labelRemaining.Visible = true;
-                    lblRequestNumber.Visible = true;
-                    lblStatus.Text = "ACTIVE";
-                    lblStatus.ForeColor = Color.Green;
-
-                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
-                    if (key != null)
-                    {
-                        var SETTINGS = key.GetValue("SETTINGS");
-                        if (SETTINGS != null)
-                        {
-                            JObject json = JObject.Parse(SETTINGS.ToString());
-                            this.minThreatScore = (double)(json["minThreatScore"]);
-                            this.sendStatistics = (bool)(json["sendStatistics"]);
-
-                            if ((bool)json["enableMornitoring"])
-                            {
-                                // start monitoring
-                                while (this.filePool.Count > 0)
-                                {
-                                    // this.numberOfProcessing++;
-                                    Debug.WriteLine("doing monitoring" + this.filePool.Count + "::" + this.numberOfProcessing);
-
-                                    if (this.numberOfProcessing > 5)
-                                    {
-                                        await ProcessFile(this.filePool.Dequeue());
-                                    }
-                                    else
-                                    {
-                                        ProcessFile(this.filePool.Dequeue());
-                                    }
-                                }
-                                Debug.WriteLine("end monitoring");
-
-                                // string settings_paths = (string)json["paths"];
-
-                                // List<string> paths = settings_paths.Split(',').ToList();
-                                // int num = 0;
-                                // foreach (string path in paths)
-                                // { 
-
-                                // }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    panelInactive.Visible = true;
-                    monitoringFlowLayoutPanel.Visible = false;
-                    labelRemaining.Visible = false;
-                    lblRequestNumber.Visible = false;
-                    lblStatus.Text = "INACTIVE";
-                    lblStatus.ForeColor = Color.Red;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Write out any exceptions.
-                Debug.WriteLine(ex);
-            }
-        }
-
-
-        /**
         * @Description: Call api/threatscore or api/docfile to get scan result
         * @param pathFile: full file path of target file
         * @param fileName: target file name
@@ -261,10 +267,21 @@ namespace MCDA_APP.Forms
             // NotifyPropertyChanged("filePool");
             // Debug.WriteLine("getThreatScore start.........................." + pathFile + fileName + "::" + type + "....................." + fileQueueData.fileName);
             // return "";
-            Debug.WriteLine("getThreatScore start.........................." + pathFile + fileName + "::" + type);
+
+            Debug.WriteLine("getThreatScore start.........................." + pathFile + fileName + "::" + type + "=>" + this.filePool.Count + "==>" + this.filePool.Count.ToString());
 
             try
             {
+                if (this.filePool.Count > 1)
+                {
+                    queuePanel.Visible = true;
+                    labelQueuedFiles.Text = this.filePool.Count.ToString() + " files were queued for processing";
+                }
+                else
+                {
+                    queuePanel.Visible = false;
+                }
+
                 string payload = "{\"type\":\"file_submitted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"message\":\"File submitted\"}}";
                 await agentStat(payload);
 
@@ -288,23 +305,28 @@ namespace MCDA_APP.Forms
                             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                             {
                                 string responseString = await response.Content.ReadAsStringAsync();
+                                this.numberOfProcessing--;
+
+                                Debug.WriteLine("getThreatScore end.........................." + pathFile + fileName + "::" + type + "=>" + this.filePool.Count + "==>" + this.filePool.Count.ToString());
                                 return responseString;
                             }
                             else
                             {
                                 string payload2 = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"api_error\",\"message\":\"API Error\"}}";
                                 await agentStat(payload2);
+                                this.numberOfProcessing--;
+
+                                Debug.WriteLine("getThreatScore end.........................." + pathFile + fileName + "::" + type + "=>" + this.filePool.Count + "==>" + this.filePool.Count.ToString());
                                 return "";
-                            }
-                            this.numberOfProcessing++;
+                            } 
                         }
                     }
-                }
+                } 
             }
             catch (Exception ex)
             {
                 // Write out any exceptions.
-                this.numberOfProcessing++;
+                this.numberOfProcessing--;
                 Debug.WriteLine("getThreatScore Exception.........................." + ex);
                 handleRelease(pathFile, false);
 
@@ -1027,8 +1049,14 @@ namespace MCDA_APP.Forms
             // Process the list of files found in the directory.
             string[] fileEntries = Directory.GetFiles(targetDirectory);
             foreach (string fileName in fileEntries)
-                this.filePool.Enqueue(fileName);
-            // await ProcessFile(fileName);
+            {
+                bool result = checkFileExtentionIsAllowed(fileName);
+                Debug.WriteLine("checkFileExtentionIsAllowed----------------" + fileName + "-----------" + result);
+                if (result)
+                {
+                    this.filePool.Enqueue(fileName);
+                }
+            }
 
             // Recurse into subdirectories of this directory.
             string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
@@ -1164,6 +1192,41 @@ namespace MCDA_APP.Forms
         }
 
 
+        private bool checkFileExtentionIsAllowed(string path)
+        {
+            handleRelease(path, false);
+
+            // check if the file is allowed
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = new BinaryReader(fs, new ASCIIEncoding()))
+                {
+                    FileInfo fInfo = new FileInfo(path);
+
+                    // only allow files their size is smaller than 15M **tempcode**
+                    if (fInfo.Length < 15728640)
+                    {
+                        byte[] buffer = new byte[10];
+                        buffer = reader.ReadBytes(10);
+                        if (buffer.Length > 9)
+                        {
+                            // exe file
+                            if (buffer[0] == 77 && buffer[1] == 90)
+                            {
+                                return true;
+                            }
+                            else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
+                            (buffer[0] == 80 && buffer[1] == 75))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+
         /**
         * @Description: handle logout
         **/
@@ -1266,6 +1329,13 @@ namespace MCDA_APP.Forms
             notifyIcon1.Visible = false;
             notifyIcon1.Dispose();
             Application.Exit();
+        }
+
+        private void btnViewQueue_Click(object sender, EventArgs e)
+        {
+            // Hide();
+            QueueForm queueForm = new QueueForm();
+            queueForm.Show(this);
         }
     }
 
