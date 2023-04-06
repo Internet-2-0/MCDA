@@ -3,7 +3,7 @@ using System.Text;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
-using System.ComponentModel;
+// using System.ComponentModel;
 
 namespace MCDA_APP.Forms
 {
@@ -12,7 +12,7 @@ namespace MCDA_APP.Forms
         double minThreatScore = 15.0;
         bool sendStatistics = true;
         bool closing = false;
-        Queue<string> filePool = new Queue<string>();
+        // Queue<string> filePool = new Queue<string>();
         // Queue<FileData> fileQueue = new Queue<FileData>();
         int numberOfProcessing = 0;
 
@@ -44,11 +44,11 @@ namespace MCDA_APP.Forms
         **/
         private async void startMonitoring()
         {
-            Debug.WriteLine("init file pool" + this.filePool.Count);
+            Debug.WriteLine("init file pool" + Program.filePool.Count);
             queuePanel.Visible = false;
 
             await initFilePool();
-            Debug.WriteLine("start monitoring" + this.filePool.Count);
+            Debug.WriteLine("start monitoring" + Program.filePool.Count);
 
             this.Visible = true;
 
@@ -79,19 +79,19 @@ namespace MCDA_APP.Forms
                             if ((bool)json["enableMornitoring"])
                             {
                                 // start monitoring
-                                while (this.filePool.Count > 0)
+                                while (Program.filePool.Count > 0)
                                 {
                                     this.numberOfProcessing++;
 
                                     if (this.numberOfProcessing > 5)
                                     {
-                                        Debug.WriteLine("doing monitoring await" + this.filePool.Count + "::" + this.numberOfProcessing);
-                                        await ProcessFile(this.filePool.Dequeue());
+                                        Debug.WriteLine("doing monitoring await" + Program.filePool.Count + "::" + this.numberOfProcessing);
+                                        await ProcessFile(Program.filePool.Dequeue());
                                     }
                                     else
                                     {
-                                        Debug.WriteLine("doing monitoring" + this.filePool.Count + "::" + this.numberOfProcessing);
-                                        ProcessFile(this.filePool.Dequeue());
+                                        Debug.WriteLine("doing monitoring" + Program.filePool.Count + "::" + this.numberOfProcessing);
+                                        ProcessFile(Program.filePool.Dequeue());
                                     }
                                 }
                                 Debug.WriteLine("end monitoring");
@@ -160,7 +160,7 @@ namespace MCDA_APP.Forms
                                     Debug.WriteLine("checkFileExtentionIsAllowed----------------" + path + "-----------" + result);
                                     if (result)
                                     {
-                                        this.filePool.Enqueue(path);
+                                        Program.filePool.Enqueue(path);
                                     }
                                 }
                                 else if (Directory.Exists(path))
@@ -262,20 +262,16 @@ namespace MCDA_APP.Forms
         **/
         private async Task<string> getThreatScore(string pathFile, string fileName, string type)
         {
-            // FileData fileQueueData = new FileData() { pathFile = pathFile, fileName = fileName, type = type };
-            // filePool.Enqueue(fileQueueData);
-            // NotifyPropertyChanged("filePool");
-            // Debug.WriteLine("getThreatScore start.........................." + pathFile + fileName + "::" + type + "....................." + fileQueueData.fileName);
-            // return "";
+            // NotifyPropertyChanged("filePool"); 
 
-            Debug.WriteLine("getThreatScore start.........................." + pathFile + fileName + "::" + type + "=>" + this.filePool.Count + "==>" + this.filePool.Count.ToString());
+            Debug.WriteLine("getThreatScore start.........................." + pathFile + fileName + "::" + type + "=>" + Program.filePool.Count + "==>" + Program.filePool.Count.ToString());
 
             try
             {
-                if (this.filePool.Count > 1)
+                if (Program.filePool.Count > 0)
                 {
                     queuePanel.Visible = true;
-                    labelQueuedFiles.Text = this.filePool.Count.ToString() + " files were queued for processing";
+                    labelQueuedFiles.Text = Program.filePool.Count.ToString() + " files were queued for processing";
                 }
                 else
                 {
@@ -307,7 +303,7 @@ namespace MCDA_APP.Forms
                                 string responseString = await response.Content.ReadAsStringAsync();
                                 this.numberOfProcessing--;
 
-                                Debug.WriteLine("getThreatScore end.........................." + pathFile + fileName + "::" + type + "=>" + this.filePool.Count + "==>" + this.filePool.Count.ToString());
+                                Debug.WriteLine("getThreatScore end.........................." + pathFile + fileName + "::" + type + "=>" + Program.filePool.Count + "==>" + Program.filePool.Count.ToString());
                                 return responseString;
                             }
                             else
@@ -316,12 +312,12 @@ namespace MCDA_APP.Forms
                                 await agentStat(payload2);
                                 this.numberOfProcessing--;
 
-                                Debug.WriteLine("getThreatScore end.........................." + pathFile + fileName + "::" + type + "=>" + this.filePool.Count + "==>" + this.filePool.Count.ToString());
+                                Debug.WriteLine("getThreatScore end.........................." + pathFile + fileName + "::" + type + "=>" + Program.filePool.Count + "==>" + Program.filePool.Count.ToString());
                                 return "";
-                            } 
+                            }
                         }
                     }
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -1054,7 +1050,7 @@ namespace MCDA_APP.Forms
                 Debug.WriteLine("checkFileExtentionIsAllowed----------------" + fileName + "-----------" + result);
                 if (result)
                 {
-                    this.filePool.Enqueue(fileName);
+                    Program.filePool.Enqueue(fileName);
                 }
             }
 
