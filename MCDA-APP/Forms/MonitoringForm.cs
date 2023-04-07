@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
+using System.Security.Principal;
 // using System.ComponentModel;
 
 namespace MCDA_APP.Forms
@@ -585,7 +586,11 @@ namespace MCDA_APP.Forms
                 string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
                 agentStat(payload);
                 releaseButton.Visible = false;
-            };
+            };            
+            // if (HasWritePermission(folderName + "\\" + fileName))
+            // {
+            //     releaseButton.Visible = false;
+            // }
 
             // update colors based on score
             if (score_num < 20.0)
@@ -970,6 +975,10 @@ namespace MCDA_APP.Forms
                 agentStat(payload);
                 releaseButton.Visible = false;
             };
+            // if (HasWritePermission(folderName + "\\" + fileName))
+            // {
+            //     releaseButton.Visible = false;
+            // }
 
             // update colors based on score
             if (score_num < 20.0)
@@ -1184,6 +1193,36 @@ namespace MCDA_APP.Forms
                 fSecurity.RemoveAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
                 fSecurity.RemoveAccessRule(new FileSystemAccessRule(@"SYSTEM", FileSystemRights.ReadAndExecute, AccessControlType.Deny));
                 fInfo.SetAccessControl(fSecurity);
+            }
+        }
+
+        
+        private bool HasWritePermission(string FilePath)
+        {
+            try
+            {
+                FileInfo fInfo = new FileInfo(FilePath);
+                FileSecurity security = fInfo.GetAccessControl();
+
+                var rules = security.GetAccessRules(true, true, typeof(NTAccount));
+
+                var currentuser = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+                bool result = false;
+                foreach (FileSystemAccessRule rule in rules)
+                {
+                    if (rule.AccessControlType == AccessControlType.Deny)
+                        return false;
+                    if (rule.AccessControlType == AccessControlType.Allow)
+                    {
+                        result = true;
+                        return result;
+                    }
+                }
+                return result;
+            }
+            catch
+            {
+                return false;
             }
         }
 

@@ -2,18 +2,18 @@
 using Microsoft.Win32;
 using System.Security.AccessControl;
 using System.Text;
+using System.Security.Principal;
 
 namespace MCDA_APP.Forms
 {
     public partial class QueueForm : Form
     {
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer drawTimer;
         public QueueForm()
         {
             InitializeComponent();
 
-            AddItemToViewQueueFlowLayoutPanel(true, true);
-            // CheckItemIsDrawed();
+            AddItemToViewQueueFlowLayoutPanel(true);
             InitTimer();
         }
 
@@ -54,17 +54,17 @@ namespace MCDA_APP.Forms
 
         public void InitTimer()
         {
-            timer1 = new System.Windows.Forms.Timer();
-            timer1.Tick += new EventHandler(timer1_Tick);
-            timer1.Interval = 2000; // in miliseconds
-            timer1.Start();
+            drawTimer = new System.Windows.Forms.Timer();
+            drawTimer.Tick += new EventHandler(redrawPanel);
+            drawTimer.Interval = 2000; // in miliseconds
+            drawTimer.Start();
         }
-        private void timer1_Tick(object sender, EventArgs e)
+        private void redrawPanel(object sender, EventArgs e)
         {
             CheckItemIsDrawed();
         }
 
-        private void AddItemToViewQueueFlowLayoutPanel(bool permission, bool setPermission)
+        private void AddItemToViewQueueFlowLayoutPanel(bool setPermission)
         {
             viewQueueFlowLayoutPanel.Controls.Clear();
             int index = 0;
@@ -72,7 +72,7 @@ namespace MCDA_APP.Forms
             {
                 if (setPermission)
                 {
-                    handleRelease(fileName, permission);
+                    handleRelease(fileName, true);
                 }
 
                 DrawViewQueueFlowLayoutPanel(fileName, index);
@@ -100,7 +100,6 @@ namespace MCDA_APP.Forms
             fileLabel.Width = 200;
             fileLabel.Location = new System.Drawing.Point(12, 6);
 
-
             Button totopButton = new Button();
             totopButton.Name = "totopButton";
             totopButton.Text = "TO TOP";
@@ -121,7 +120,7 @@ namespace MCDA_APP.Forms
                 Program.filePool = queue;
 
                 Debug.WriteLine("totopButton.................." + Program.filePool);
-                AddItemToViewQueueFlowLayoutPanel(true, false);
+                AddItemToViewQueueFlowLayoutPanel(false);
 
             };
             if (index == 0)
@@ -141,25 +140,18 @@ namespace MCDA_APP.Forms
             releaseButton.Height = 28;
             releaseButton.Location = new System.Drawing.Point(315, 2);
             releaseButton.Click += delegate (object obj, EventArgs ea)
-            {
-
-                var file = new FileInfo(filePath);
-                Debug.WriteLine(file.Attributes);
-                if ((file.Attributes & FileAttributes.ReadOnly) != 0)
-                {
-                    // Do whatever you want for a read-only file
-                }
-
-
+            { 
 
                 handleRelease(filePath, false);
                 releaseButton.Visible = false;
 
-
-
                 string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
                 agentStat(payload);
             };
+            if (HasWritePermission(filePath))
+            {
+                releaseButton.Visible = false;
+            }
 
             Button removeButton = new Button();
             removeButton.Name = "removeButton";
@@ -192,7 +184,7 @@ namespace MCDA_APP.Forms
                 var queue = new Queue<string>(list);
                 Program.filePool = queue;
 
-                AddItemToViewQueueFlowLayoutPanel(true, false);
+                AddItemToViewQueueFlowLayoutPanel(false);
 
                 string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File deleted\"}}";
                 agentStat(payload);
@@ -280,6 +272,34 @@ namespace MCDA_APP.Forms
             }
         }
 
+        private bool HasWritePermission(string FilePath)
+        {
+            try
+            {
+                FileInfo fInfo = new FileInfo(FilePath);
+                FileSecurity security = fInfo.GetAccessControl();
+
+                var rules = security.GetAccessRules(true, true, typeof(NTAccount));
+
+                var currentuser = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+                bool result = false;
+                foreach (FileSystemAccessRule rule in rules)
+                {
+                    if (rule.AccessControlType == AccessControlType.Deny)
+                        return false;
+                    if (rule.AccessControlType == AccessControlType.Allow)
+                    {
+                        result = true;
+                        return result;
+                    }
+                }
+                return result;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
