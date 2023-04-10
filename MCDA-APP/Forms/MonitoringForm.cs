@@ -586,7 +586,7 @@ namespace MCDA_APP.Forms
                 string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
                 agentStat(payload);
                 releaseButton.Visible = false;
-            };            
+            };
             // if (HasWritePermission(folderName + "\\" + fileName))
             // {
             //     releaseButton.Visible = false;
@@ -1124,7 +1124,7 @@ namespace MCDA_APP.Forms
                                 if (buffer.Length > 9)
                                 {
                                     // exe file
-                                    if (buffer[0] == 77 && buffer[1] == 90)
+                                    if ((buffer[0] == 77 && buffer[1] == 90) || (buffer[0] == 90 && buffer[1] == 77))
                                     {
                                         string responseString = await getThreatScore(path, fileName, "threatscore");
 
@@ -1141,7 +1141,17 @@ namespace MCDA_APP.Forms
                                         addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
                                     }
                                     else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
-                                    (buffer[0] == 80 && buffer[1] == 75))
+                                    (buffer[0] == 80 && buffer[1] == 75) ||
+                                    (buffer[0] == 208 && buffer[1] == 207) ||
+                                    (buffer[0] == 20 && buffer[1] == 0) ||
+                                    (buffer[0] == 29 && buffer[1] == 125) ||
+                                    (buffer[0] == 219 && buffer[1] == 165 && buffer[2] == 45 && buffer[3] == 0) ||
+                                    (buffer[0] == 13 && buffer[1] == 68 && buffer[2] == 79 && buffer[3] == 67) ||
+                                    (buffer[0] == 123 && buffer[1] == 114 && buffer[2] == 116 && buffer[3] == 102) ||
+                                    (buffer[0] == 123 && buffer[1] == 92 && buffer[2] == 114 && buffer[3] == 116 && buffer[4] == 102) ||
+                                    (buffer[0] == 123 && buffer[1] == 92 && buffer[2] == 123 && buffer[3] == 92 && buffer[4] == 114 && buffer[5] == 116 && buffer[6] == 102) ||
+                                    (buffer[0] == 80 && buffer[1] == 75 && buffer[2] == 3 && buffer[3] == 4 && buffer[4] == 20 && buffer[5] == 0 && buffer[6] == 6 && buffer[7] == 0) ||
+                                    (buffer[0] == 228 && buffer[1] == 82 && buffer[2] == 92 && buffer[3] == 123 && buffer[4] == 140 && buffer[5] == 216 && buffer[6] == 167 && buffer[7] == 77 && buffer[8] == 174 && buffer[9] == 177))
                                     {
                                         string responseString = await getThreatScore(path, fileName, "docfile");
 
@@ -1196,7 +1206,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        
+
         private bool HasWritePermission(string FilePath)
         {
             try
@@ -1246,12 +1256,22 @@ namespace MCDA_APP.Forms
                         if (buffer.Length > 9)
                         {
                             // exe file
-                            if (buffer[0] == 77 && buffer[1] == 90)
+                            if ((buffer[0] == 77 && buffer[1] == 90) || (buffer[0] == 90 && buffer[1] == 77))
                             {
                                 return true;
                             }
                             else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
-                            (buffer[0] == 80 && buffer[1] == 75))
+                                    (buffer[0] == 80 && buffer[1] == 75) ||
+                                    (buffer[0] == 208 && buffer[1] == 207) ||
+                                    (buffer[0] == 20 && buffer[1] == 0) ||
+                                    (buffer[0] == 29 && buffer[1] == 125) ||
+                                    (buffer[0] == 219 && buffer[1] == 165 && buffer[2] == 45 && buffer[3] == 0) ||
+                                    (buffer[0] == 13 && buffer[1] == 68 && buffer[2] == 79 && buffer[3] == 67) ||
+                                    (buffer[0] == 123 && buffer[1] == 114 && buffer[2] == 116 && buffer[3] == 102) ||
+                                    (buffer[0] == 123 && buffer[1] == 92 && buffer[2] == 114 && buffer[3] == 116 && buffer[4] == 102) ||
+                                    (buffer[0] == 123 && buffer[1] == 92 && buffer[2] == 123 && buffer[3] == 92 && buffer[4] == 114 && buffer[5] == 116 && buffer[6] == 102) ||
+                                    (buffer[0] == 80 && buffer[1] == 75 && buffer[2] == 3 && buffer[3] == 4 && buffer[4] == 20 && buffer[5] == 0 && buffer[6] == 6 && buffer[7] == 0) ||
+                                    (buffer[0] == 228 && buffer[1] == 82 && buffer[2] == 92 && buffer[3] == 123 && buffer[4] == 140 && buffer[5] == 216 && buffer[6] == 167 && buffer[7] == 77 && buffer[8] == 174 && buffer[9] == 177))
                             {
                                 return true;
                             }
