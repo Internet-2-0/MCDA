@@ -82,7 +82,7 @@
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
             this.panel3.Location = new System.Drawing.Point(2, 425);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(543, 1);
+            this.panel3.Size = new System.Drawing.Size(800, 1);
             this.panel3.TabIndex = 11;
             // 
             // lblTerms
@@ -90,7 +90,7 @@
             this.lblTerms.AutoSize = true;
             this.lblTerms.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblTerms.ForeColor = System.Drawing.Color.White;
-            this.lblTerms.Location = new System.Drawing.Point(324, 460);
+            this.lblTerms.Location = new System.Drawing.Point(598, 460);
             this.lblTerms.Name = "lblTerms";
             this.lblTerms.Size = new System.Drawing.Size(74, 15);
             this.lblTerms.TabIndex = 8;
@@ -101,7 +101,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(417, 460);
+            this.label3.Location = new System.Drawing.Point(691, 460);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(81, 15);
             this.label3.TabIndex = 9;
@@ -112,7 +112,7 @@
             this.lblMalcore.AutoSize = true;
             this.lblMalcore.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblMalcore.ForeColor = System.Drawing.Color.White;
-            this.lblMalcore.Location = new System.Drawing.Point(242, 460);
+            this.lblMalcore.Location = new System.Drawing.Point(516, 460);
             this.lblMalcore.Name = "lblMalcore";
             this.lblMalcore.Size = new System.Drawing.Size(63, 15);
             this.lblMalcore.TabIndex = 10;
@@ -142,10 +142,11 @@
             // 
             // panel1
             // 
+            this.panel1.AutoSize = true;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
             this.panel1.Location = new System.Drawing.Point(1, 70);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(540, 1);
+            this.panel1.Size = new System.Drawing.Size(800, 1);
             this.panel1.TabIndex = 11;
             // 
             // btnSettings
@@ -155,7 +156,7 @@
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSettings.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSettings.ForeColor = System.Drawing.Color.White;
-            this.btnSettings.Location = new System.Drawing.Point(320, 21);
+            this.btnSettings.Location = new System.Drawing.Point(581, 21);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(85, 31);
             this.btnSettings.TabIndex = 14;
@@ -170,7 +171,7 @@
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.btnLogout.Location = new System.Drawing.Point(428, 21);
+            this.btnLogout.Location = new System.Drawing.Point(689, 21);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(85, 31);
             this.btnLogout.TabIndex = 15;
@@ -196,7 +197,7 @@
             this.checkEnableMonitor.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkEnableMonitor.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.checkEnableMonitor.ForeColor = System.Drawing.Color.White;
-            this.checkEnableMonitor.Location = new System.Drawing.Point(299, 104);
+            this.checkEnableMonitor.Location = new System.Drawing.Point(528, 101);
             this.checkEnableMonitor.Name = "checkEnableMonitor";
             this.checkEnableMonitor.Size = new System.Drawing.Size(156, 23);
             this.checkEnableMonitor.TabIndex = 17;
@@ -206,9 +207,11 @@
             // checkSendStatistics
             // 
             this.checkSendStatistics.AutoSize = true;
+            this.checkSendStatistics.Checked = true;
+            this.checkSendStatistics.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkSendStatistics.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.checkSendStatistics.ForeColor = System.Drawing.Color.White;
-            this.checkSendStatistics.Location = new System.Drawing.Point(299, 137);
+            this.checkSendStatistics.Location = new System.Drawing.Point(528, 134);
             this.checkSendStatistics.Name = "checkSendStatistics";
             this.checkSendStatistics.Size = new System.Drawing.Size(125, 23);
             this.checkSendStatistics.TabIndex = 17;
@@ -222,7 +225,7 @@
             this.checkOpenOnStartup.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkOpenOnStartup.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.checkOpenOnStartup.ForeColor = System.Drawing.Color.White;
-            this.checkOpenOnStartup.Location = new System.Drawing.Point(299, 170);
+            this.checkOpenOnStartup.Location = new System.Drawing.Point(528, 167);
             this.checkOpenOnStartup.Name = "checkOpenOnStartup";
             this.checkOpenOnStartup.Size = new System.Drawing.Size(209, 23);
             this.checkOpenOnStartup.TabIndex = 17;
@@ -234,7 +237,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(338, 214);
+            this.label4.Location = new System.Drawing.Point(564, 207);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(147, 21);
             this.label4.TabIndex = 13;
@@ -246,7 +249,7 @@
             this.textMinScore.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textMinScore.Font = new System.Drawing.Font("Carlito", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textMinScore.ForeColor = System.Drawing.Color.White;
-            this.textMinScore.Location = new System.Drawing.Point(4, 4);
+            this.textMinScore.Location = new System.Drawing.Point(6, 4);
             this.textMinScore.Name = "textMinScore";
             this.textMinScore.Size = new System.Drawing.Size(20, 20);
             this.textMinScore.TabIndex = 18;
@@ -260,7 +263,7 @@
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(179, 253);
+            this.btnAdd.Location = new System.Drawing.Point(397, 255);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(85, 28);
             this.btnAdd.TabIndex = 14;
@@ -298,7 +301,7 @@
             this.panel2.Controls.Add(this.txtApikey);
             this.panel2.Location = new System.Drawing.Point(28, 314);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(480, 35);
+            this.panel2.Size = new System.Drawing.Size(745, 35);
             this.panel2.TabIndex = 19;
             // 
             // btnSave
@@ -307,7 +310,7 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Carlito", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSave.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnSave.Location = new System.Drawing.Point(379, 370);
+            this.btnSave.Location = new System.Drawing.Point(644, 371);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(129, 39);
             this.btnSave.TabIndex = 20;
@@ -321,7 +324,7 @@
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Carlito", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCancel.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnCancel.Location = new System.Drawing.Point(227, 370);
+            this.btnCancel.Location = new System.Drawing.Point(492, 371);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(129, 39);
             this.btnCancel.TabIndex = 20;
@@ -333,7 +336,7 @@
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel4.Controls.Add(this.textMinScore);
-            this.panel4.Location = new System.Drawing.Point(297, 208);
+            this.panel4.Location = new System.Drawing.Point(523, 201);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(32, 32);
             this.panel4.TabIndex = 21;
@@ -350,13 +353,13 @@
             this.flowLayoutPanelForFolders.Location = new System.Drawing.Point(23, 108);
             this.flowLayoutPanelForFolders.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanelForFolders.Name = "flowLayoutPanelForFolders";
-            this.flowLayoutPanelForFolders.Size = new System.Drawing.Size(241, 132);
+            this.flowLayoutPanelForFolders.Size = new System.Drawing.Size(459, 125);
             this.flowLayoutPanelForFolders.TabIndex = 22;
             // 
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(422, 272);
+            this.pictureBox2.Location = new System.Drawing.Point(615, 281);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(20, 22);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -394,7 +397,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(527, 504);
+            this.ClientSize = new System.Drawing.Size(800, 504);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.flowLayoutPanelForFolders);
             this.Controls.Add(this.panel4);
@@ -424,7 +427,6 @@
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Malcore Agent 1.0.0 | Settings";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.Resize += new System.EventHandler(this.SettingsForm_Resize);

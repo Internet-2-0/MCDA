@@ -115,9 +115,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.panel1.Location = new System.Drawing.Point(-9, 72);
+            this.panel1.Location = new System.Drawing.Point(-1, 72);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(540, 1);
+            this.panel1.Size = new System.Drawing.Size(800, 1);
             this.panel1.TabIndex = 26;
             // 
             // panel3
@@ -144,7 +144,7 @@
             this.labelRemaining.AutoSize = true;
             this.labelRemaining.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelRemaining.ForeColor = System.Drawing.Color.White;
-            this.labelRemaining.Location = new System.Drawing.Point(310, 78);
+            this.labelRemaining.Location = new System.Drawing.Point(522, 78);
             this.labelRemaining.Name = "labelRemaining";
             this.labelRemaining.Size = new System.Drawing.Size(149, 21);
             this.labelRemaining.TabIndex = 30;
@@ -167,7 +167,7 @@
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.btnLogout.Location = new System.Drawing.Point(428, 21);
+            this.btnLogout.Location = new System.Drawing.Point(690, 21);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(85, 31);
             this.btnLogout.TabIndex = 38;
@@ -182,7 +182,7 @@
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSettings.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSettings.ForeColor = System.Drawing.Color.White;
-            this.btnSettings.Location = new System.Drawing.Point(320, 21);
+            this.btnSettings.Location = new System.Drawing.Point(582, 21);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(85, 31);
             this.btnSettings.TabIndex = 37;
@@ -227,7 +227,7 @@
             this.lblTerms.AutoSize = true;
             this.lblTerms.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblTerms.ForeColor = System.Drawing.Color.White;
-            this.lblTerms.Location = new System.Drawing.Point(324, 460);
+            this.lblTerms.Location = new System.Drawing.Point(597, 460);
             this.lblTerms.Name = "lblTerms";
             this.lblTerms.Size = new System.Drawing.Size(74, 15);
             this.lblTerms.TabIndex = 31;
@@ -238,7 +238,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(417, 460);
+            this.label3.Location = new System.Drawing.Point(690, 460);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(81, 15);
             this.label3.TabIndex = 32;
@@ -249,7 +249,7 @@
             this.lblMalcore.AutoSize = true;
             this.lblMalcore.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblMalcore.ForeColor = System.Drawing.Color.White;
-            this.lblMalcore.Location = new System.Drawing.Point(242, 460);
+            this.lblMalcore.Location = new System.Drawing.Point(515, 460);
             this.lblMalcore.Name = "lblMalcore";
             this.lblMalcore.Size = new System.Drawing.Size(63, 15);
             this.lblMalcore.TabIndex = 33;
@@ -263,7 +263,7 @@
             this.monitoringFlowLayoutPanel.Location = new System.Drawing.Point(0, 106);
             this.monitoringFlowLayoutPanel.Name = "monitoringFlowLayoutPanel";
             this.monitoringFlowLayoutPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.monitoringFlowLayoutPanel.Size = new System.Drawing.Size(525, 322);
+            this.monitoringFlowLayoutPanel.Size = new System.Drawing.Size(797, 328);
             this.monitoringFlowLayoutPanel.TabIndex = 39;
             // 
             // queuePanel
@@ -274,7 +274,7 @@
             this.queuePanel.Controls.Add(this.btnViewQueue);
             this.queuePanel.Location = new System.Drawing.Point(3, 3);
             this.queuePanel.Name = "queuePanel";
-            this.queuePanel.Size = new System.Drawing.Size(500, 38);
+            this.queuePanel.Size = new System.Drawing.Size(770, 38);
             this.queuePanel.TabIndex = 9;
             // 
             // labelQueuedFiles
@@ -296,7 +296,7 @@
             this.btnViewQueue.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnViewQueue.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnViewQueue.ForeColor = System.Drawing.Color.White;
-            this.btnViewQueue.Location = new System.Drawing.Point(317, 6);
+            this.btnViewQueue.Location = new System.Drawing.Point(593, 6);
             this.btnViewQueue.Name = "btnViewQueue";
             this.btnViewQueue.Size = new System.Drawing.Size(170, 25);
             this.btnViewQueue.TabIndex = 5;
@@ -321,7 +321,7 @@
             this.panelInactive.Controls.Add(this.labelInactiveDescription);
             this.panelInactive.Location = new System.Drawing.Point(12, 109);
             this.panelInactive.Name = "panelInactive";
-            this.panelInactive.Size = new System.Drawing.Size(483, 217);
+            this.panelInactive.Size = new System.Drawing.Size(776, 223);
             this.panelInactive.TabIndex = 0;
             this.panelInactive.Visible = false;
             // 
@@ -506,7 +506,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(527, 504);
+            this.ClientSize = new System.Drawing.Size(800, 504);
             this.Controls.Add(this.panelInactive);
             this.Controls.Add(this.monitoringFlowLayoutPanel);
             this.Controls.Add(this.btnLogout);
@@ -529,7 +529,6 @@
             this.Name = "MonitoringForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Malcore Agent 1.0.0 | Monitoring";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MonitoringForm_FormClosing);
             this.Resize += new System.EventHandler(this.MonitoringForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

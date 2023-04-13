@@ -21,6 +21,8 @@ namespace MCDA_APP.Forms
         {
             InitializeComponent();
 
+            labelEmail.Text = Program.USEREMAIL;
+
             // Create directories for caching
             if (!Directory.Exists(@"./malcore"))
             {
@@ -64,6 +66,8 @@ namespace MCDA_APP.Forms
                     monitoringFlowLayoutPanel.Visible = true;
                     labelRemaining.Visible = true;
                     lblRequestNumber.Visible = true;
+                    lblRequestNumber.Location = new System.Drawing.Point(680, 79);
+
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
 
@@ -472,7 +476,7 @@ namespace MCDA_APP.Forms
 
             // item panel
             Panel panel = new Panel();
-            panel.Width = 501;
+            panel.Width = 770;
             panel.Height = 44;
             panel.BackColor = Color.Black;
 
@@ -488,7 +492,7 @@ namespace MCDA_APP.Forms
             fileLabel.Name = "fileLabel";
             fileLabel.Font = new Font("Calibri", 12, FontStyle.Bold);
             fileLabel.AutoSize = false;
-            fileLabel.Width = 200;
+            fileLabel.Width = 400;
             fileLabel.Location = new System.Drawing.Point(22, 1);
             fileLabel.Click += delegate (object obj, EventArgs ea)
             {
@@ -503,7 +507,7 @@ namespace MCDA_APP.Forms
             folderLabel.ForeColor = Color.White;
             folderLabel.Font = new Font("Calibri", 11, FontStyle.Regular);
             folderLabel.AutoSize = false;
-            folderLabel.Width = 200;
+            folderLabel.Width = 400;
             folderLabel.Location = new System.Drawing.Point(24, 22);
             folderLabel.Click += delegate (object obj, EventArgs ea)
             {
@@ -518,7 +522,7 @@ namespace MCDA_APP.Forms
             percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
             percentLabel.Width = 76;
             percentLabel.Height = 40;
-            percentLabel.Location = new System.Drawing.Point(252, 4);
+            percentLabel.Location = new System.Drawing.Point(512, 4);
 
             Button removeButton = new Button();
             removeButton.Name = "removeButton";
@@ -530,7 +534,7 @@ namespace MCDA_APP.Forms
             removeButton.FlatAppearance.BorderSize = 0;
             removeButton.Width = 85;
             removeButton.Height = 31;
-            removeButton.Location = new System.Drawing.Point(325, 6);
+            removeButton.Location = new System.Drawing.Point(590, 6);
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
                 if (File.Exists(folderName + "\\" + fileName))
@@ -559,7 +563,7 @@ namespace MCDA_APP.Forms
             rerunButton.FlatAppearance.BorderSize = 0;
             rerunButton.Width = 70;
             rerunButton.Height = 31;
-            rerunButton.Location = new System.Drawing.Point(251, 6);
+            rerunButton.Location = new System.Drawing.Point(515, 6);
             rerunButton.Click += delegate (object obj, EventArgs ea)
             {
                 rerunButton.Visible = false;
@@ -579,7 +583,7 @@ namespace MCDA_APP.Forms
             releaseButton.FlatAppearance.BorderSize = 0;
             releaseButton.Width = 85;
             releaseButton.Height = 31;
-            releaseButton.Location = new System.Drawing.Point(414, 6);
+            releaseButton.Location = new System.Drawing.Point(679, 6);
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);
@@ -676,7 +680,7 @@ namespace MCDA_APP.Forms
                 Label percentLabel = (Label)panel.Controls.Find("percentLabel", true)[0];
                 percentLabel.Visible = true;
                 percentLabel.Font = new Font("Calibri", 11, FontStyle.Regular);
-                percentLabel.Location = new System.Drawing.Point(248, 14);
+                percentLabel.Location = new System.Drawing.Point(508, 14);
                 percentLabel.ForeColor = Color.White;
                 percentLabel.Text = "Scanning...";
 
@@ -764,7 +768,7 @@ namespace MCDA_APP.Forms
 
                         percentLabel.Text = score;
                         percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
-                        percentLabel.Location = new System.Drawing.Point(252, 4);
+                        percentLabel.Location = new System.Drawing.Point(512, 4);
 
                         fileLabel.Text = fileName;
                         fileLabel.ForeColor = Color.White;
@@ -816,7 +820,7 @@ namespace MCDA_APP.Forms
                 Label percentLabel = (Label)panel.Controls.Find("percentLabel", true)[0];
                 percentLabel.Visible = false;
                 percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
-                percentLabel.Location = new System.Drawing.Point(252, 4);
+                percentLabel.Location = new System.Drawing.Point(512, 4);
                 panel.BackColor = Color.DarkRed;
             }
 
@@ -857,7 +861,7 @@ namespace MCDA_APP.Forms
 
             // item panel
             Panel panel = new Panel();
-            panel.Width = 501;
+            panel.Width = 770;
             panel.Height = 44;
             panel.BackColor = Color.Black;
 
@@ -873,7 +877,7 @@ namespace MCDA_APP.Forms
             fileLabel.Name = "fileLabel";
             fileLabel.Font = new Font("Calibri", 12, FontStyle.Bold);
             fileLabel.AutoSize = false;
-            fileLabel.Width = 200;
+            fileLabel.Width = 400;
             fileLabel.Location = new System.Drawing.Point(22, 1);
             fileLabel.Click += delegate (object obj, EventArgs ea)
             {
@@ -888,7 +892,7 @@ namespace MCDA_APP.Forms
             folderLabel.ForeColor = Color.White;
             folderLabel.Font = new Font("Calibri", 11, FontStyle.Regular);
             folderLabel.AutoSize = false;
-            folderLabel.Width = 220;
+            folderLabel.Width = 400;
             // folderLabel.MaximumSize = new System.Drawing.Size(200, 0);
             folderLabel.Location = new System.Drawing.Point(24, 22);
             folderLabel.Click += delegate (object obj, EventArgs ea)
@@ -905,7 +909,7 @@ namespace MCDA_APP.Forms
             percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
             percentLabel.Width = 76;
             percentLabel.Height = 40;
-            percentLabel.Location = new System.Drawing.Point(252, 4);
+            percentLabel.Location = new System.Drawing.Point(512, 4);
 
             Button removeButton = new Button();
             removeButton.Name = "removeButton";
@@ -917,7 +921,7 @@ namespace MCDA_APP.Forms
             removeButton.FlatAppearance.BorderSize = 0;
             removeButton.Width = 85;
             removeButton.Height = 31;
-            removeButton.Location = new System.Drawing.Point(325, 6);
+            removeButton.Location = new System.Drawing.Point(590, 6);
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
                 if (File.Exists(folderName + "\\" + fileName))
@@ -947,7 +951,7 @@ namespace MCDA_APP.Forms
             rerunButton.FlatAppearance.BorderSize = 0;
             rerunButton.Width = 70;
             rerunButton.Height = 31;
-            rerunButton.Location = new System.Drawing.Point(251, 6);
+            rerunButton.Location = new System.Drawing.Point(515, 6);
             rerunButton.Click += delegate (object obj, EventArgs ea)
             {
                 rerunButton.Visible = false;
@@ -967,7 +971,7 @@ namespace MCDA_APP.Forms
             releaseButton.FlatAppearance.BorderSize = 0;
             releaseButton.Width = 85;
             releaseButton.Height = 31;
-            releaseButton.Location = new System.Drawing.Point(414, 6);
+            releaseButton.Location = new System.Drawing.Point(679, 6);
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);

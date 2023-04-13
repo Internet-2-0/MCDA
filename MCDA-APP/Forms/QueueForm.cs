@@ -13,6 +13,7 @@ namespace MCDA_APP.Forms
         {
             InitializeComponent();
 
+            labelEmail.Text = Program.USEREMAIL;
             AddItemToViewQueueFlowLayoutPanel(true);
             InitTimer();
         }

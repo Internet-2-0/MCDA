@@ -164,24 +164,24 @@ namespace MCDA_APP.Forms
         private void addPathToFoldersList(string folderPath)
         {
             Panel panel = new Panel();
-            panel.Width = 210;
+            panel.Width = 425;
             panel.Height = 18;
 
             Panel borderPanel = new Panel();
             borderPanel.Height = 1;
-            borderPanel.Width = 210;
+            borderPanel.Width = 425;
             borderPanel.BackColor = Color.WhiteSmoke;
 
             Label label = new Label();
             label.Text = folderPath;
             label.ForeColor = Color.White;
             label.AutoSize = true;
-            label.MaximumSize = new System.Drawing.Size(190, 0);
+            label.MaximumSize = new System.Drawing.Size(398, 0);
 
             PictureBox removePicture = new PictureBox();
             removePicture.Size = new System.Drawing.Size(18, 18);
             removePicture.Padding = new Padding(0, 0, 0, 0);
-            removePicture.Location = new System.Drawing.Point(192, 2);
+            removePicture.Location = new System.Drawing.Point(400, 2);
             removePicture.Image = pictureBox2.Image;
             // removePicture.Image = Image.FromFile("img/close.png");
             removePicture.SizeMode = PictureBoxSizeMode.StretchImage;

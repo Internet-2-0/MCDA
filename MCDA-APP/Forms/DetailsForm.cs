@@ -20,6 +20,7 @@ namespace MCDA_APP.Forms
             this.folderName = folderName;
             this.fileName = fileName;
             this.type = type;
+            labelEmail.Text = Program.USEREMAIL;
 
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
             if (key != null)
