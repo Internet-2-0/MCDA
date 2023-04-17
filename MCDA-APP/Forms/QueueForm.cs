@@ -39,6 +39,7 @@ namespace MCDA_APP.Forms
                 listControls = viewQueueFlowLayoutPanel.Controls.Cast<Control>().ToList();
                 if (listControls.Count() > 0)
                 {
+                    // Remove to top button from first element
                     Panel firstPanel = (Panel)listControls[0];
                     List<Control> buttonControls = firstPanel.Controls.Cast<Control>().ToList();
                     for (int i = 0; i < buttonControls.Count(); i++)
@@ -49,6 +50,10 @@ namespace MCDA_APP.Forms
                         }
                     }
 
+                }
+                else
+                {
+                    this.Dispose();
                 }
             }
         }
@@ -62,6 +67,7 @@ namespace MCDA_APP.Forms
         }
         private void redrawPanel(object sender, EventArgs e)
         {
+            // AddItemToViewQueueFlowLayoutPanel(false);
             CheckItemIsDrawed();
         }
 
@@ -120,7 +126,6 @@ namespace MCDA_APP.Forms
                 var queue = new Queue<string>(list);
                 Program.filePool = queue;
 
-                Debug.WriteLine("totopButton.................." + Program.filePool);
                 AddItemToViewQueueFlowLayoutPanel(false);
 
             };
@@ -141,7 +146,7 @@ namespace MCDA_APP.Forms
             releaseButton.Height = 28;
             releaseButton.Location = new System.Drawing.Point(315, 2);
             releaseButton.Click += delegate (object obj, EventArgs ea)
-            { 
+            {
 
                 handleRelease(filePath, false);
                 releaseButton.Visible = false;

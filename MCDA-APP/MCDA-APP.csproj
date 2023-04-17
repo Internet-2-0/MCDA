@@ -11,6 +11,16 @@
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <FileAlignment>512</FileAlignment>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <FileAlignment>512</FileAlignment>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Include="img\icon.ico" />
   </ItemGroup>

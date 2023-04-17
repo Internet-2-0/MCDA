@@ -190,6 +190,13 @@
         }
         "LaunchCondition"
         {
+            "{836E08B8-0285-4809-BA42-01DB6754A45D}:_29A5CEA25195425FB08A0DA1C2B946AC"
+            {
+            "Name" = "8:AdminUser"
+            "Condition" = "8:AdminUser"
+            "Message" = "8:<Error Message>"
+            "InstallUrl" = "8:"
+            }
         }
         "Locator"
         {

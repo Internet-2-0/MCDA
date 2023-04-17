@@ -247,25 +247,34 @@ namespace MCDA_APP.Forms
 
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
-                if (File.Exists(folderName + "\\" + fileName))
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    handleRelease(folderName + "\\" + fileName, false);
-                    File.Delete(folderName + "\\" + fileName);
-                }
-                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
-                if (File.Exists("./malcore/threat/" + hashFileName))
-                {
+                    if (File.Exists(folderName + "\\" + fileName))
+                    {
+                        handleRelease(folderName + "\\" + fileName, false);
+                        File.Delete(folderName + "\\" + fileName);
+                    }
+                    string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                    if (File.Exists("./malcore/threat/" + hashFileName))
+                    {
 
-                    File.Delete("./malcore/threat/" + hashFileName);
+                        File.Delete("./malcore/threat/" + hashFileName);
+                    }
+                    listPanel.Dispose();
+                    this.Dispose();
                 }
-                listPanel.Dispose();
-                this.Dispose();
             };
 
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);
                 releaseButton.Visible = false;
+                listPanel.Dispose();
+
+                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                string responseString = "released";
+                File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
             };
         }
 
@@ -412,24 +421,33 @@ namespace MCDA_APP.Forms
 
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
-                if (File.Exists(folderName + "\\" + fileName))
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    handleRelease(folderName + "\\" + fileName, false);
-                    File.Delete(folderName + "\\" + fileName);
+                    if (File.Exists(folderName + "\\" + fileName))
+                    {
+                        handleRelease(folderName + "\\" + fileName, false);
+                        File.Delete(folderName + "\\" + fileName);
+                    }
+                    string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                    if (File.Exists("./malcore/doc/" + hashFileName))
+                    {
+                        File.Delete("./malcore/doc/" + hashFileName);
+                    }
+                    listPanel.Dispose();
+                    this.Dispose();
                 }
-                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
-                if (File.Exists("./malcore/doc/" + hashFileName))
-                {
-                    File.Delete("./malcore/doc/" + hashFileName);
-                }
-                listPanel.Dispose();
-                this.Dispose();
             };
 
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);
                 releaseButton.Visible = false;
+                listPanel.Dispose();
+
+                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                string responseString = "released";
+                File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
             };
         }
 

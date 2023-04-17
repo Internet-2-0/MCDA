@@ -13,9 +13,9 @@ namespace MCDA_APP.Forms
         double minThreatScore = 15.0;
         bool sendStatistics = true;
         bool closing = false;
-        // Queue<string> filePool = new Queue<string>();
-        // Queue<FileData> fileQueue = new Queue<FileData>();
+
         int numberOfProcessing = 0;
+        private System.Windows.Forms.Timer monitorTimer;
 
         public MonitoringForm()
         {
@@ -47,11 +47,9 @@ namespace MCDA_APP.Forms
         **/
         private async void startMonitoring()
         {
-            Debug.WriteLine("init file pool" + Program.filePool.Count);
             queuePanel.Visible = false;
 
             await initFilePool();
-            Debug.WriteLine("start monitoring" + Program.filePool.Count);
 
             this.Visible = true;
 
@@ -90,25 +88,15 @@ namespace MCDA_APP.Forms
 
                                     if (this.numberOfProcessing > 5)
                                     {
-                                        Debug.WriteLine("doing monitoring await" + Program.filePool.Count + "::" + this.numberOfProcessing);
                                         await ProcessFile(Program.filePool.Dequeue());
                                     }
                                     else
                                     {
-                                        Debug.WriteLine("doing monitoring" + Program.filePool.Count + "::" + this.numberOfProcessing);
                                         ProcessFile(Program.filePool.Dequeue());
                                     }
                                 }
                                 Debug.WriteLine("end monitoring");
-
-                                // string settings_paths = (string)json["paths"];
-
-                                // List<string> paths = settings_paths.Split(',').ToList();
-                                // int num = 0;
-                                // foreach (string path in paths)
-                                // { 
-
-                                // }
+                                InitTimer();
                             }
                         }
                     }
@@ -130,6 +118,78 @@ namespace MCDA_APP.Forms
             }
         }
 
+
+
+        /**
+        * @Description: Start monitoring and update monitoring form with result
+        * @return void.
+        **/
+        private async void handleMonitoring()
+        {
+
+            try
+            {
+                // Check if active or inactive based on usuage
+                bool active = await agentUsuage();
+
+                if (active)
+                {
+                    panelInactive.Visible = false;
+                    monitoringFlowLayoutPanel.Visible = true;
+                    labelRemaining.Visible = true;
+                    lblRequestNumber.Visible = true;
+                    lblRequestNumber.Location = new System.Drawing.Point(680, 79);
+
+                    lblStatus.Text = "ACTIVE";
+                    lblStatus.ForeColor = Color.Green;
+
+                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
+                    if (key != null)
+                    {
+                        var SETTINGS = key.GetValue("SETTINGS");
+                        if (SETTINGS != null)
+                        {
+                            JObject json = JObject.Parse(SETTINGS.ToString());
+                            this.minThreatScore = (double)(json["minThreatScore"]);
+                            this.sendStatistics = (bool)(json["sendStatistics"]);
+
+                            if ((bool)json["enableMornitoring"])
+                            {
+                                // start monitoring
+                                while (Program.filePool.Count > 0)
+                                {
+                                    this.numberOfProcessing++;
+
+                                    if (this.numberOfProcessing > 5)
+                                    {
+                                        await ProcessFile(Program.filePool.Dequeue());
+                                    }
+                                    else
+                                    {
+                                        ProcessFile(Program.filePool.Dequeue());
+                                    }
+                                }
+                                Debug.WriteLine("end handleMonitoring");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    panelInactive.Visible = true;
+                    monitoringFlowLayoutPanel.Visible = false;
+                    labelRemaining.Visible = false;
+                    lblRequestNumber.Visible = false;
+                    lblStatus.Text = "INACTIVE";
+                    lblStatus.ForeColor = Color.Red;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Write out any exceptions.
+                Debug.WriteLine(ex);
+            }
+        }
 
 
         /**
@@ -162,10 +222,14 @@ namespace MCDA_APP.Forms
                                 if (File.Exists(path))
                                 {
                                     bool result = checkFileExtentionIsAllowed(path);
-                                    Debug.WriteLine("checkFileExtentionIsAllowed----------------" + path + "-----------" + result);
                                     if (result)
                                     {
-                                        Program.filePool.Enqueue(path);
+
+                                        if (!Program.filePool.Contains(path))
+                                        {
+                                            Program.filePool.Enqueue(path);
+                                        }
+
                                     }
                                 }
                                 else if (Directory.Exists(path))
@@ -269,8 +333,6 @@ namespace MCDA_APP.Forms
         {
             // NotifyPropertyChanged("filePool"); 
 
-            Debug.WriteLine("getThreatScore start.........................." + pathFile + fileName + "::" + type + "=>" + Program.filePool.Count + "==>" + Program.filePool.Count.ToString());
-
             try
             {
                 if (Program.filePool.Count > 0)
@@ -307,8 +369,6 @@ namespace MCDA_APP.Forms
                             {
                                 string responseString = await response.Content.ReadAsStringAsync();
                                 this.numberOfProcessing--;
-
-                                Debug.WriteLine("getThreatScore end.........................." + pathFile + fileName + "::" + type + "=>" + Program.filePool.Count + "==>" + Program.filePool.Count.ToString());
                                 return responseString;
                             }
                             else
@@ -316,8 +376,6 @@ namespace MCDA_APP.Forms
                                 string payload2 = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"api_error\",\"message\":\"API Error\"}}";
                                 await agentStat(payload2);
                                 this.numberOfProcessing--;
-
-                                Debug.WriteLine("getThreatScore end.........................." + pathFile + fileName + "::" + type + "=>" + Program.filePool.Count + "==>" + Program.filePool.Count.ToString());
                                 return "";
                             }
                         }
@@ -537,20 +595,29 @@ namespace MCDA_APP.Forms
             removeButton.Location = new System.Drawing.Point(590, 6);
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
-                if (File.Exists(folderName + "\\" + fileName))
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    handleRelease(folderName + "\\" + fileName, false);
-                    File.Delete(folderName + "\\" + fileName);
-                }
-                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
-                if (File.Exists("./malcore/threat/" + hashFileName))
-                {
-                    File.Delete("./malcore/threat/" + hashFileName);
-                }
-                panel.Dispose();
+                    if (File.Exists(folderName + "\\" + fileName))
+                    {
+                        handleRelease(folderName + "\\" + fileName, false);
+                        File.Delete(folderName + "\\" + fileName);
+                    }
+                    string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                    if (File.Exists("./malcore/threat/" + hashFileName))
+                    {
+                        File.Delete("./malcore/threat/" + hashFileName);
+                    }
+                    panel.Dispose();
 
-                string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"threatscore\",\"message\":\"File deleted\"}}";
-                agentStat(payload);
+                    string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"threatscore\",\"message\":\"File deleted\"}}";
+                    agentStat(payload);
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    //do something else
+                }
+
             };
 
             Button rerunButton = new Button();
@@ -590,6 +657,11 @@ namespace MCDA_APP.Forms
                 string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
                 agentStat(payload);
                 releaseButton.Visible = false;
+                panel.Dispose();
+
+                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                string responseString = "released";
+                File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
             };
             // if (HasWritePermission(folderName + "\\" + fileName))
             // {
@@ -924,21 +996,30 @@ namespace MCDA_APP.Forms
             removeButton.Location = new System.Drawing.Point(590, 6);
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
-                if (File.Exists(folderName + "\\" + fileName))
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    handleRelease(folderName + "\\" + fileName, false);
-                    File.Delete(folderName + "\\" + fileName);
+                    if (File.Exists(folderName + "\\" + fileName))
+                    {
+                        handleRelease(folderName + "\\" + fileName, false);
+                        File.Delete(folderName + "\\" + fileName);
+                    }
+                    string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                    if (File.Exists("./malcore/doc/" + hashFileName))
+                    {
+
+                        File.Delete("./malcore/doc/" + hashFileName);
+                    }
+                    panel.Dispose();
+
+                    string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File deleted\"}}";
+                    agentStat(payload);
                 }
-                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
-                if (File.Exists("./malcore/doc/" + hashFileName))
+                else if (dialogResult == DialogResult.No)
                 {
-
-                    File.Delete("./malcore/doc/" + hashFileName);
+                    //do something else
                 }
-                panel.Dispose();
 
-                string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File deleted\"}}";
-                agentStat(payload);
             };
 
             Button rerunButton = new Button();
@@ -978,6 +1059,11 @@ namespace MCDA_APP.Forms
                 string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
                 agentStat(payload);
                 releaseButton.Visible = false;
+                panel.Dispose();
+
+                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                string responseString = "released";
+                File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
             };
             // if (HasWritePermission(folderName + "\\" + fileName))
             // {
@@ -1060,10 +1146,12 @@ namespace MCDA_APP.Forms
             foreach (string fileName in fileEntries)
             {
                 bool result = checkFileExtentionIsAllowed(fileName);
-                Debug.WriteLine("checkFileExtentionIsAllowed----------------" + fileName + "-----------" + result);
                 if (result)
                 {
-                    Program.filePool.Enqueue(fileName);
+                    if (!Program.filePool.Contains(fileName))
+                    {
+                        Program.filePool.Enqueue(fileName);
+                    }
                 }
             }
 
@@ -1093,6 +1181,11 @@ namespace MCDA_APP.Forms
                 {
                     string fileString = File.ReadAllText("./malcore/threat/" + hashFileName);
                     bool succeed = true;
+                    if (fileString == "released")
+                    {
+                        return false;
+                    }
+
                     if (fileString == "")
                     {
                         succeed = false;
@@ -1104,6 +1197,11 @@ namespace MCDA_APP.Forms
                 {
                     string fileString = File.ReadAllText("./malcore/doc/" + hashFileName);
                     bool succeed = true;
+                    if (fileString == "released")
+                    {
+                        return false;
+                    }
+
                     if (fileString == "")
                     {
                         succeed = false;
@@ -1285,6 +1383,17 @@ namespace MCDA_APP.Forms
                 }
             }
         }
+        public void InitTimer()
+        {
+            monitorTimer = new System.Windows.Forms.Timer();
+            monitorTimer.Tick += new EventHandler(detectFileChange);
+            monitorTimer.Interval = 3000; // in miliseconds
+            monitorTimer.Start();
+        }
+        private void detectFileChange(object sender, EventArgs e)
+        {
+            handleMonitoring();
+        }
 
         /**
         * @Description: handle logout
@@ -1329,7 +1438,11 @@ namespace MCDA_APP.Forms
         {
             if (File.Exists(e.FullPath))
             {
-                ProcessFile(e.FullPath);
+                // ProcessFile(e.FullPath);
+                if (!Program.filePool.Contains(e.FullPath))
+                {
+                    Program.filePool.Enqueue(e.FullPath);
+                }
             }
         }
 
@@ -1342,8 +1455,6 @@ namespace MCDA_APP.Forms
         **/
         private void MonitoringForm_Resize(object sender, EventArgs e)
         {
-            Debug.WriteLine("mornitoring form resize");
-
             //if the form is minimized  
             //hide it from the task bar  
             //and show the system tray icon (represented by the NotifyIcon control)  
@@ -1392,7 +1503,16 @@ namespace MCDA_APP.Forms
 
         private void btnViewQueue_Click(object sender, EventArgs e)
         {
-            // Hide();
+            FormCollection fc = Application.OpenForms;
+            foreach (Form frm in fc)
+            {
+                if (frm.Name == "QueueForm")
+                {
+                    frm.Close();
+                    break;
+                }
+            }
+
             QueueForm queueForm = new QueueForm();
             queueForm.Show(this);
         }
