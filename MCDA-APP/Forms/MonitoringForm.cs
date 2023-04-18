@@ -43,6 +43,7 @@ namespace MCDA_APP.Forms
 
         /**
         * @Description: Start monitoring and update monitoring form with result
+        * This function works only once when the app starts
         * @return void.
         **/
         private async void startMonitoring()
@@ -121,7 +122,8 @@ namespace MCDA_APP.Forms
 
 
         /**
-        * @Description: Start monitoring and update monitoring form with result
+        * @Description: monitoring file changes in the target directory
+        * Update Queue status and UI
         * @return void.
         **/
         private async void handleMonitoring()
@@ -1338,7 +1340,11 @@ namespace MCDA_APP.Forms
             }
         }
 
-
+        /**
+        * @Description: Check if file extention is in the allowed list
+        * @param path: full path of the target file  
+        * @return true if available, false if not allowed
+        **/
         private bool checkFileExtentionIsAllowed(string path)
         {
             handleRelease(path, false);
@@ -1383,6 +1389,12 @@ namespace MCDA_APP.Forms
                 }
             }
         }
+
+
+        /**
+        * @Description: Start monitoring file change and add to the Queue
+        * @return void
+        **/
         public void InitTimer()
         {
             monitorTimer = new System.Windows.Forms.Timer();
@@ -1475,7 +1487,7 @@ namespace MCDA_APP.Forms
             Show();
             this.WindowState = FormWindowState.Normal;
             notifyIcon1.Visible = false;
-        }
+        } 
 
         /**
         * @Description: move app to windows icon tray when click Close button
@@ -1501,6 +1513,9 @@ namespace MCDA_APP.Forms
             Application.Exit();
         }
 
+        /**
+        * @Description: View Queue. If QueueForm is already opened, close it and open new one
+        **/
         private void btnViewQueue_Click(object sender, EventArgs e)
         {
             FormCollection fc = Application.OpenForms;
@@ -1516,12 +1531,5 @@ namespace MCDA_APP.Forms
             QueueForm queueForm = new QueueForm();
             queueForm.Show(this);
         }
-    }
-
-    public class FileData
-    {
-        public string pathFile { get; set; }
-        public string fileName { get; set; }
-        public string type { get; set; }
-    }
+    } 
 }

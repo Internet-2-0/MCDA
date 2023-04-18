@@ -18,6 +18,9 @@ namespace MCDA_APP.Forms
             InitTimer();
         }
 
+        /**
+        * @Description: Redraw the queue items in QueueForm 
+        **/
         private void CheckItemIsDrawed()
         {
 
@@ -25,6 +28,7 @@ namespace MCDA_APP.Forms
             {
                 List<Control> listControls = viewQueueFlowLayoutPanel.Controls.Cast<Control>().ToList();
 
+                // Check if queued files are submitted to the api and update the view
                 if (listControls.Count() > Program.filePool.Count())
                 {
                     int removed = listControls.Count() - Program.filePool.Count();
@@ -58,19 +62,27 @@ namespace MCDA_APP.Forms
             }
         }
 
+        /**
+        * @Description: Start monitoring queue file changes
+        **/
         public void InitTimer()
         {
             drawTimer = new System.Windows.Forms.Timer();
-            drawTimer.Tick += new EventHandler(redrawPanel);
+            drawTimer.Tick += new EventHandler(RedrawPanel);
             drawTimer.Interval = 2000; // in miliseconds
             drawTimer.Start();
         }
-        private void redrawPanel(object sender, EventArgs e)
+        private void RedrawPanel(object sender, EventArgs e)
         {
             // AddItemToViewQueueFlowLayoutPanel(false);
             CheckItemIsDrawed();
         }
 
+        /**
+        * @Description: Add all queue files to QueueFlowLayout to display
+        * @param setPermission: If true, enable file permission before perform draw 
+        * @return void
+        **/
         private void AddItemToViewQueueFlowLayoutPanel(bool setPermission)
         {
             viewQueueFlowLayoutPanel.Controls.Clear();
@@ -88,6 +100,11 @@ namespace MCDA_APP.Forms
 
         }
 
+        /**
+        * @Description: Draw a queue files in QueueFlowLayout
+        * @param setPermission: If true, enable file permission before perform draw 
+        * @return void
+        **/
         private void DrawViewQueueFlowLayoutPanel(string filePath, int index)
         {
             string fileName = Path.GetFileName(filePath) + " (Queued)";
@@ -278,6 +295,11 @@ namespace MCDA_APP.Forms
             }
         }
 
+        /**
+        * @Description: Check if file has write permission
+        * @param FilePath: full file path
+        * @return true if allowed
+        **/
         private bool HasWritePermission(string FilePath)
         {
             try
