@@ -9,11 +9,16 @@ namespace MCDA_APP.Forms
     public partial class QueueForm : Form
     {
         private System.Windows.Forms.Timer drawTimer;
+        int screenWidth = 820;
+
         public QueueForm()
         {
             InitializeComponent();
 
             labelEmail.Text = Program.USEREMAIL;
+            this.screenWidth = this.Size.Width;
+            viewQueueFlowLayoutPanel.Width = this.screenWidth;
+
             AddItemToViewQueueFlowLayoutPanel(true);
             InitTimer();
         }
@@ -29,10 +34,10 @@ namespace MCDA_APP.Forms
                 List<Control> listControls = viewQueueFlowLayoutPanel.Controls.Cast<Control>().ToList();
 
                 // Check if queued files are submitted to the api and update the view
-                if (listControls.Count() > Program.filePool.Count())
+                if (listControls.Count() > Program.FilePool.Count())
                 {
-                    int removed = listControls.Count() - Program.filePool.Count();
-                    for (int i = 0; i < listControls.Count() - Program.filePool.Count(); i++)
+                    int removed = listControls.Count() - Program.FilePool.Count();
+                    for (int i = 0; i < listControls.Count() - Program.FilePool.Count(); i++)
                     {
                         Control control = listControls[i];
                         viewQueueFlowLayoutPanel.Controls.Remove(control);
@@ -87,7 +92,7 @@ namespace MCDA_APP.Forms
         {
             viewQueueFlowLayoutPanel.Controls.Clear();
             int index = 0;
-            foreach (string fileName in Program.filePool)
+            foreach (string fileName in Program.FilePool)
             {
                 if (setPermission)
                 {
@@ -111,7 +116,7 @@ namespace MCDA_APP.Forms
 
             // item panel
             Panel panel = new Panel();
-            panel.Width = 501;
+            panel.Width = this.screenWidth - 27;
             panel.Height = 32;
             panel.BackColor = Color.Black;
             panel.BorderStyle = BorderStyle.FixedSingle;
@@ -134,14 +139,14 @@ namespace MCDA_APP.Forms
             totopButton.FlatAppearance.BorderSize = 0;
             totopButton.Width = 85;
             totopButton.Height = 28;
-            totopButton.Location = new System.Drawing.Point(215, 2);
+            totopButton.Location = new System.Drawing.Point(this.screenWidth - 310, 2); // 215
             totopButton.Click += delegate (object obj, EventArgs ea)
             {
-                var list = Program.filePool.ToList();
+                var list = Program.FilePool.ToList();
                 list.Remove(filePath);
                 list.Insert(0, filePath);
                 var queue = new Queue<string>(list);
-                Program.filePool = queue;
+                Program.FilePool = queue;
 
                 AddItemToViewQueueFlowLayoutPanel(false);
 
@@ -161,7 +166,7 @@ namespace MCDA_APP.Forms
             releaseButton.FlatAppearance.BorderSize = 0;
             releaseButton.Width = 85;
             releaseButton.Height = 28;
-            releaseButton.Location = new System.Drawing.Point(315, 2);
+            releaseButton.Location = new System.Drawing.Point(this.screenWidth - 215, 2); // 315
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
 
@@ -186,7 +191,7 @@ namespace MCDA_APP.Forms
             removeButton.FlatAppearance.BorderSize = 0;
             removeButton.Width = 85;
             removeButton.Height = 28;
-            removeButton.Location = new System.Drawing.Point(415, 2);
+            removeButton.Location = new System.Drawing.Point(this.screenWidth - 120, 2); // 415
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
                 if (File.Exists(filePath))
@@ -202,10 +207,10 @@ namespace MCDA_APP.Forms
                 }
                 panel.Dispose();
 
-                var list = Program.filePool.ToList();
+                var list = Program.FilePool.ToList();
                 list.Remove(filePath);
                 var queue = new Queue<string>(list);
-                Program.filePool = queue;
+                Program.FilePool = queue;
 
                 AddItemToViewQueueFlowLayoutPanel(false);
 

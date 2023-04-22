@@ -10,7 +10,8 @@ namespace MCDA_APP
     {
         public static string APIKEY = "";
         public static string USEREMAIL = "";
-        public static Queue<string> filePool = new Queue<string>();
+        public static Queue<string> FilePool = new Queue<string>();
+        public static Queue<string> PrecessedFilePool = new Queue<string>();
 
 
         ///  The main entry point for the application.

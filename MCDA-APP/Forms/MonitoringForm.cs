@@ -13,6 +13,7 @@ namespace MCDA_APP.Forms
         double minThreatScore = 15.0;
         bool sendStatistics = true;
         bool closing = false;
+        int screenWidth = 820;
 
         int numberOfProcessing = 0;
         private System.Windows.Forms.Timer monitorTimer;
@@ -21,6 +22,7 @@ namespace MCDA_APP.Forms
         {
             InitializeComponent();
 
+            this.screenWidth = this.Size.Width;
             labelEmail.Text = Program.USEREMAIL;
 
             // Create directories for caching
@@ -46,9 +48,13 @@ namespace MCDA_APP.Forms
         * This function works only once when the app starts
         * @return void.
         **/
-        private async void startMonitoring()
+        public async void startMonitoring()
         {
             queuePanel.Visible = false;
+            queuePanel.Width = this.screenWidth - 30;
+            btnViewQueue.Location = new System.Drawing.Point(this.screenWidth - 210, 6);
+
+            monitoringFlowLayoutPanel.Width = this.screenWidth;
 
             await initFilePool();
 
@@ -65,7 +71,7 @@ namespace MCDA_APP.Forms
                     monitoringFlowLayoutPanel.Visible = true;
                     labelRemaining.Visible = true;
                     lblRequestNumber.Visible = true;
-                    lblRequestNumber.Location = new System.Drawing.Point(680, 79);
+                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 140, 79); // 680
 
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
@@ -83,17 +89,17 @@ namespace MCDA_APP.Forms
                             if ((bool)json["enableMornitoring"])
                             {
                                 // start monitoring
-                                while (Program.filePool.Count > 0)
+                                while (Program.FilePool.Count > 0)
                                 {
                                     this.numberOfProcessing++;
 
                                     if (this.numberOfProcessing > 5)
                                     {
-                                        await ProcessFile(Program.filePool.Dequeue());
+                                        await ProcessFile(Program.FilePool.Dequeue());
                                     }
                                     else
                                     {
-                                        ProcessFile(Program.filePool.Dequeue());
+                                        ProcessFile(Program.FilePool.Dequeue());
                                     }
                                 }
                                 Debug.WriteLine("end monitoring");
@@ -119,8 +125,6 @@ namespace MCDA_APP.Forms
             }
         }
 
-
-
         /**
         * @Description: monitoring file changes in the target directory
         * Update Queue status and UI
@@ -140,7 +144,7 @@ namespace MCDA_APP.Forms
                     monitoringFlowLayoutPanel.Visible = true;
                     labelRemaining.Visible = true;
                     lblRequestNumber.Visible = true;
-                    lblRequestNumber.Location = new System.Drawing.Point(680, 79);
+                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 140, 79); // 680
 
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
@@ -158,17 +162,17 @@ namespace MCDA_APP.Forms
                             if ((bool)json["enableMornitoring"])
                             {
                                 // start monitoring
-                                while (Program.filePool.Count > 0)
+                                while (Program.FilePool.Count > 0)
                                 {
                                     this.numberOfProcessing++;
 
                                     if (this.numberOfProcessing > 5)
                                     {
-                                        await ProcessFile(Program.filePool.Dequeue());
+                                        await ProcessFile(Program.FilePool.Dequeue());
                                     }
                                     else
                                     {
-                                        ProcessFile(Program.filePool.Dequeue());
+                                        ProcessFile(Program.FilePool.Dequeue());
                                     }
                                 }
                                 Debug.WriteLine("end handleMonitoring");
@@ -202,6 +206,8 @@ namespace MCDA_APP.Forms
         {
             try
             {
+                Program.FilePool.Clear();
+
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
                 if (key != null)
                 {
@@ -223,15 +229,15 @@ namespace MCDA_APP.Forms
                             {
                                 if (File.Exists(path))
                                 {
+                                    Debug.WriteLine("process init...." + path);
+
                                     bool result = checkFileExtentionIsAllowed(path);
                                     if (result)
                                     {
-
-                                        if (!Program.filePool.Contains(path))
+                                        if (!Program.FilePool.Contains(path) && !Program.PrecessedFilePool.Contains(path))
                                         {
-                                            Program.filePool.Enqueue(path);
+                                            Program.FilePool.Enqueue(path);
                                         }
-
                                     }
                                 }
                                 else if (Directory.Exists(path))
@@ -337,10 +343,10 @@ namespace MCDA_APP.Forms
 
             try
             {
-                if (Program.filePool.Count > 0)
+                if (Program.FilePool.Count > 0)
                 {
                     queuePanel.Visible = true;
-                    labelQueuedFiles.Text = Program.filePool.Count.ToString() + " files were queued for processing";
+                    labelQueuedFiles.Text = Program.FilePool.Count.ToString() + " files were queued for processing";
                 }
                 else
                 {
@@ -536,7 +542,7 @@ namespace MCDA_APP.Forms
 
             // item panel
             Panel panel = new Panel();
-            panel.Width = 770;
+            panel.Width = this.Size.Width - 30;
             panel.Height = 44;
             panel.BackColor = Color.Black;
 
@@ -582,7 +588,7 @@ namespace MCDA_APP.Forms
             percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
             percentLabel.Width = 76;
             percentLabel.Height = 40;
-            percentLabel.Location = new System.Drawing.Point(512, 4);
+            percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4);  // 512
 
             Button removeButton = new Button();
             removeButton.Name = "removeButton";
@@ -594,7 +600,7 @@ namespace MCDA_APP.Forms
             removeButton.FlatAppearance.BorderSize = 0;
             removeButton.Width = 85;
             removeButton.Height = 31;
-            removeButton.Location = new System.Drawing.Point(590, 6);
+            removeButton.Location = new System.Drawing.Point(this.screenWidth - 210, 6); // 590
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
@@ -632,7 +638,7 @@ namespace MCDA_APP.Forms
             rerunButton.FlatAppearance.BorderSize = 0;
             rerunButton.Width = 70;
             rerunButton.Height = 31;
-            rerunButton.Location = new System.Drawing.Point(515, 6);
+            rerunButton.Location = new System.Drawing.Point(this.screenWidth - 285, 6);  // 515
             rerunButton.Click += delegate (object obj, EventArgs ea)
             {
                 rerunButton.Visible = false;
@@ -652,7 +658,7 @@ namespace MCDA_APP.Forms
             releaseButton.FlatAppearance.BorderSize = 0;
             releaseButton.Width = 85;
             releaseButton.Height = 31;
-            releaseButton.Location = new System.Drawing.Point(679, 6);
+            releaseButton.Location = new System.Drawing.Point(this.screenWidth - 121, 6);
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);
@@ -754,7 +760,7 @@ namespace MCDA_APP.Forms
                 Label percentLabel = (Label)panel.Controls.Find("percentLabel", true)[0];
                 percentLabel.Visible = true;
                 percentLabel.Font = new Font("Calibri", 11, FontStyle.Regular);
-                percentLabel.Location = new System.Drawing.Point(508, 14);
+                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 292, 14);
                 percentLabel.ForeColor = Color.White;
                 percentLabel.Text = "Scanning...";
 
@@ -842,7 +848,7 @@ namespace MCDA_APP.Forms
 
                         percentLabel.Text = score;
                         percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
-                        percentLabel.Location = new System.Drawing.Point(512, 4);
+                        percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4); // 512
 
                         fileLabel.Text = fileName;
                         fileLabel.ForeColor = Color.White;
@@ -894,7 +900,7 @@ namespace MCDA_APP.Forms
                 Label percentLabel = (Label)panel.Controls.Find("percentLabel", true)[0];
                 percentLabel.Visible = false;
                 percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
-                percentLabel.Location = new System.Drawing.Point(512, 4);
+                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4); // 512
                 panel.BackColor = Color.DarkRed;
             }
 
@@ -935,7 +941,7 @@ namespace MCDA_APP.Forms
 
             // item panel
             Panel panel = new Panel();
-            panel.Width = 770;
+            panel.Width = this.Size.Width - 30;
             panel.Height = 44;
             panel.BackColor = Color.Black;
 
@@ -944,7 +950,6 @@ namespace MCDA_APP.Forms
             colorPanel.Name = "colorPanel";
             colorPanel.Width = 20;
             colorPanel.Height = 44;
-            // colorPanel.BackColor = Color.Red;
 
             // file label
             Label fileLabel = new Label();
@@ -979,11 +984,10 @@ namespace MCDA_APP.Forms
             Label percentLabel = new Label();
             percentLabel.Name = "percentLabel";
             percentLabel.Text = score;
-            // percentLabel.ForeColor = Color.Red;
             percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
             percentLabel.Width = 76;
             percentLabel.Height = 40;
-            percentLabel.Location = new System.Drawing.Point(512, 4);
+            percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4); // 512
 
             Button removeButton = new Button();
             removeButton.Name = "removeButton";
@@ -995,7 +999,7 @@ namespace MCDA_APP.Forms
             removeButton.FlatAppearance.BorderSize = 0;
             removeButton.Width = 85;
             removeButton.Height = 31;
-            removeButton.Location = new System.Drawing.Point(590, 6);
+            removeButton.Location = new System.Drawing.Point(this.screenWidth - 210, 6);
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
@@ -1034,7 +1038,7 @@ namespace MCDA_APP.Forms
             rerunButton.FlatAppearance.BorderSize = 0;
             rerunButton.Width = 70;
             rerunButton.Height = 31;
-            rerunButton.Location = new System.Drawing.Point(515, 6);
+            rerunButton.Location = new System.Drawing.Point(this.screenWidth - 285, 6); // 515
             rerunButton.Click += delegate (object obj, EventArgs ea)
             {
                 rerunButton.Visible = false;
@@ -1054,7 +1058,7 @@ namespace MCDA_APP.Forms
             releaseButton.FlatAppearance.BorderSize = 0;
             releaseButton.Width = 85;
             releaseButton.Height = 31;
-            releaseButton.Location = new System.Drawing.Point(679, 6);
+            releaseButton.Location = new System.Drawing.Point(this.screenWidth - 121, 6); // 679
             releaseButton.Click += delegate (object obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);
@@ -1147,12 +1151,13 @@ namespace MCDA_APP.Forms
             string[] fileEntries = Directory.GetFiles(targetDirectory);
             foreach (string fileName in fileEntries)
             {
+                Debug.WriteLine("process directory...." + fileName);
                 bool result = checkFileExtentionIsAllowed(fileName);
                 if (result)
                 {
-                    if (!Program.filePool.Contains(fileName))
+                    if (!Program.FilePool.Contains(fileName) && !Program.PrecessedFilePool.Contains(fileName))
                     {
-                        Program.filePool.Enqueue(fileName);
+                        Program.FilePool.Enqueue(fileName);
                     }
                 }
             }
@@ -1174,6 +1179,8 @@ namespace MCDA_APP.Forms
         {
             try
             {
+                Program.PrecessedFilePool.Enqueue(path);
+
                 string fileName = Path.GetFileName(path);
                 string folderName = Directory.GetParent(path) != null ? Directory.GetParent(path).FullName : path;
 
@@ -1363,11 +1370,11 @@ namespace MCDA_APP.Forms
                         buffer = reader.ReadBytes(10);
                         if (buffer.Length > 9)
                         {
-                            // exe file
+                            // exe files
                             if ((buffer[0] == 77 && buffer[1] == 90) || (buffer[0] == 90 && buffer[1] == 77))
                             {
                                 return true;
-                            }
+                            } // doc type files
                             else if ((buffer[0] == 37 && buffer[1] == 80 && buffer[2] == 68 && buffer[3] == 70) ||
                                     (buffer[0] == 80 && buffer[1] == 75) ||
                                     (buffer[0] == 208 && buffer[1] == 207) ||
@@ -1438,9 +1445,8 @@ namespace MCDA_APP.Forms
         **/
         private void btnSettings_Click_1(object sender, EventArgs e)
         {
-            Hide();
             SettingsForm settingsForm = new SettingsForm();
-            settingsForm.Show(this);
+            settingsForm.ShowDialog(this);
         }
 
         /**
@@ -1450,10 +1456,9 @@ namespace MCDA_APP.Forms
         {
             if (File.Exists(e.FullPath))
             {
-                // ProcessFile(e.FullPath);
-                if (!Program.filePool.Contains(e.FullPath))
+                if (!Program.FilePool.Contains(e.FullPath))
                 {
-                    Program.filePool.Enqueue(e.FullPath);
+                    Program.FilePool.Enqueue(e.FullPath);
                 }
             }
         }
@@ -1464,12 +1469,11 @@ namespace MCDA_APP.Forms
 
         /**
         * @Description: move app to windows icon tray
+        * @Description: if the form is minimized hide it from the task bar
+        * @Description: and show the system tray icon (represented by the NotifyIcon control) 
         **/
         private void MonitoringForm_Resize(object sender, EventArgs e)
         {
-            //if the form is minimized  
-            //hide it from the task bar  
-            //and show the system tray icon (represented by the NotifyIcon control)  
             if (this.WindowState == FormWindowState.Minimized)
             {
                 Hide();
@@ -1487,7 +1491,7 @@ namespace MCDA_APP.Forms
             Show();
             this.WindowState = FormWindowState.Normal;
             notifyIcon1.Visible = false;
-        } 
+        }
 
         /**
         * @Description: move app to windows icon tray when click Close button
@@ -1531,5 +1535,5 @@ namespace MCDA_APP.Forms
             QueueForm queueForm = new QueueForm();
             queueForm.Show(this);
         }
-    } 
+    }
 }
