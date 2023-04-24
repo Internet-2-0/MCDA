@@ -4,7 +4,6 @@ D:\WORK\MCDA\MCDA-APP\bin\Debug\net6.0-windows\MCDA-APP.deps.json
 D:\WORK\MCDA\MCDA-APP\bin\Debug\net6.0-windows\MCDA-APP.runtimeconfig.json
 D:\WORK\MCDA\MCDA-APP\bin\Debug\net6.0-windows\MCDA-APP.dll
 D:\WORK\MCDA\MCDA-APP\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
-D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA-APP.csproj.AssemblyReference.cache
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Forms.DetailsForm.resources
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.LoginForm.resources
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Forms.MonitoringForm.resources
@@ -22,3 +21,4 @@ D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA-APP.dll
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\refint\MCDA-APP.dll
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA-APP.genruntimeconfig.cache
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\ref\MCDA-APP.dll
+D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA-APP.csproj.AssemblyReference.cache
