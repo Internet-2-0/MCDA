@@ -209,7 +209,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Malcore Agent"
         "ProductCode" = "8:{1F7F5B17-F197-4C03-B1EC-DA1FB1F3618A}"
-        "PackageCode" = "8:{05ADF59A-0B38-457B-8D6B-36952525FF55}"
+        "PackageCode" = "8:{E8D19D36-5E73-41E8-84F7-03338257B160}"
         "UpgradeCode" = "8:{91668132-A35E-48E3-A302-8502C208E65F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

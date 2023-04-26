@@ -53,6 +53,7 @@ namespace MCDA_APP.Forms
             queuePanel.Visible = false;
             queuePanel.Width = this.screenWidth - 30;
             btnViewQueue.Location = new System.Drawing.Point(this.screenWidth - 210, 6);
+            labelRemaining.Location = new System.Drawing.Point(this.screenWidth - 248, 78); // 680
 
             monitoringFlowLayoutPanel.Width = this.screenWidth;
 
@@ -71,7 +72,7 @@ namespace MCDA_APP.Forms
                     monitoringFlowLayoutPanel.Visible = true;
                     labelRemaining.Visible = true;
                     lblRequestNumber.Visible = true;
-                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 140, 79); // 680
+                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 90, 79); // 680
 
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
@@ -144,7 +145,7 @@ namespace MCDA_APP.Forms
                     monitoringFlowLayoutPanel.Visible = true;
                     labelRemaining.Visible = true;
                     lblRequestNumber.Visible = true;
-                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 140, 79); // 680
+                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 90, 79); // 680
 
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
@@ -558,7 +559,7 @@ namespace MCDA_APP.Forms
             fileLabel.Name = "fileLabel";
             fileLabel.Font = new Font("Calibri", 12, FontStyle.Bold);
             fileLabel.AutoSize = false;
-            fileLabel.Width = 400;
+            // fileLabel.Width = 400;
             fileLabel.Location = new System.Drawing.Point(22, 1);
             fileLabel.Click += delegate (object obj, EventArgs ea)
             {
@@ -956,7 +957,7 @@ namespace MCDA_APP.Forms
             fileLabel.Name = "fileLabel";
             fileLabel.Font = new Font("Calibri", 12, FontStyle.Bold);
             fileLabel.AutoSize = false;
-            fileLabel.Width = 400;
+            // fileLabel.Width = 400;
             fileLabel.Location = new System.Drawing.Point(22, 1);
             fileLabel.Click += delegate (object obj, EventArgs ea)
             {

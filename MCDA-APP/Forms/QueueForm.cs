@@ -18,6 +18,7 @@ namespace MCDA_APP.Forms
             labelEmail.Text = Program.USEREMAIL;
             this.screenWidth = this.Size.Width;
             viewQueueFlowLayoutPanel.Width = this.screenWidth;
+            labelInQueueFiles.Location = new System.Drawing.Point(this.screenWidth - 180, 84); 
 
             AddItemToViewQueueFlowLayoutPanel(true);
             InitTimer();
@@ -44,6 +45,7 @@ namespace MCDA_APP.Forms
                         control.Dispose();
                     }
                 }
+                labelInQueueFiles.Text = Program.FilePool.Count() + " IN QUEUE FILES";
 
                 listControls = viewQueueFlowLayoutPanel.Controls.Cast<Control>().ToList();
                 if (listControls.Count() > 0)
@@ -238,21 +240,27 @@ namespace MCDA_APP.Forms
         **/
         private void handleRelease(string path, bool locking)
         {
-            string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            FileInfo fInfo = new FileInfo(path);
-            FileSecurity fSecurity = fInfo.GetAccessControl();
+            try
+            {
+                string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                FileInfo fInfo = new FileInfo(path);
+                FileSecurity fSecurity = fInfo.GetAccessControl();
 
-            if (locking)
-            {
-                fSecurity.AddAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
-                fSecurity.AddAccessRule(new FileSystemAccessRule(@"SYSTEM", FileSystemRights.ReadAndExecute, AccessControlType.Deny));
-                fInfo.SetAccessControl(fSecurity);
+                if (locking)
+                {
+                    fSecurity.AddAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                    fSecurity.AddAccessRule(new FileSystemAccessRule(@"SYSTEM", FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                    fInfo.SetAccessControl(fSecurity);
+                }
+                else
+                {
+                    fSecurity.RemoveAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                    fSecurity.RemoveAccessRule(new FileSystemAccessRule(@"SYSTEM", FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                    fInfo.SetAccessControl(fSecurity);
+                }
             }
-            else
+            catch (System.Exception)
             {
-                fSecurity.RemoveAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
-                fSecurity.RemoveAccessRule(new FileSystemAccessRule(@"SYSTEM", FileSystemRights.ReadAndExecute, AccessControlType.Deny));
-                fInfo.SetAccessControl(fSecurity);
             }
         }
 

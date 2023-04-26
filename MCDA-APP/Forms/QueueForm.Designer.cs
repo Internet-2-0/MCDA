@@ -53,7 +53,7 @@
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.btnLogout.Location = new System.Drawing.Point(430, 23);
+            this.btnLogout.Location = new System.Drawing.Point(695, 23);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(85, 31);
             this.btnLogout.TabIndex = 48;
@@ -101,9 +101,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.panel1.Location = new System.Drawing.Point(-4, 74);
+            this.panel1.Location = new System.Drawing.Point(1, 74);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(540, 1);
+            this.panel1.Size = new System.Drawing.Size(798, 1);
             this.panel1.TabIndex = 49;
             // 
             // pictureBox1
@@ -165,7 +165,7 @@
             this.labelInQueueFiles.AutoSize = true;
             this.labelInQueueFiles.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelInQueueFiles.ForeColor = System.Drawing.Color.White;
-            this.labelInQueueFiles.Location = new System.Drawing.Point(398, 84);
+            this.labelInQueueFiles.Location = new System.Drawing.Point(660, 84);
             this.labelInQueueFiles.Name = "labelInQueueFiles";
             this.labelInQueueFiles.Size = new System.Drawing.Size(120, 21);
             this.labelInQueueFiles.TabIndex = 55;
@@ -185,9 +185,9 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.panel2.Location = new System.Drawing.Point(-5, 429);
+            this.panel2.Location = new System.Drawing.Point(2, 429);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(540, 1);
+            this.panel2.Size = new System.Drawing.Size(798, 1);
             this.panel2.TabIndex = 57;
             // 
             // viewQueueFlowLayoutPanel
@@ -197,7 +197,7 @@
             this.viewQueueFlowLayoutPanel.Location = new System.Drawing.Point(3, 116);
             this.viewQueueFlowLayoutPanel.Name = "viewQueueFlowLayoutPanel";
             this.viewQueueFlowLayoutPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewQueueFlowLayoutPanel.Size = new System.Drawing.Size(525, 307);
+            this.viewQueueFlowLayoutPanel.Size = new System.Drawing.Size(795, 307);
             this.viewQueueFlowLayoutPanel.TabIndex = 58;
             // 
             // QueueForm
@@ -205,7 +205,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(531, 508);
+            this.ClientSize = new System.Drawing.Size(804, 508);
             this.Controls.Add(this.viewQueueFlowLayoutPanel);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.lblStatus);

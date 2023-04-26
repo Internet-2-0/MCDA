@@ -460,19 +460,25 @@ namespace MCDA_APP.Forms
         **/
         private void handleRelease(string path, bool locking)
         {
-            string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            FileInfo fInfo = new FileInfo(path);
-            FileSecurity fSecurity = fInfo.GetAccessControl();
+            try
+            {
+                string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                FileInfo fInfo = new FileInfo(path);
+                FileSecurity fSecurity = fInfo.GetAccessControl();
 
-            if (locking)
-            {
-                fSecurity.AddAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
-                fInfo.SetAccessControl(fSecurity);
+                if (locking)
+                {
+                    fSecurity.AddAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                    fInfo.SetAccessControl(fSecurity);
+                }
+                else
+                {
+                    fSecurity.RemoveAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                    fInfo.SetAccessControl(fSecurity);
+                }
             }
-            else
+            catch (System.Exception)
             {
-                fSecurity.RemoveAccessRule(new FileSystemAccessRule(userName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
-                fInfo.SetAccessControl(fSecurity);
             }
         }
 
