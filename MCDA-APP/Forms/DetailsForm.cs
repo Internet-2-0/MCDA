@@ -526,5 +526,20 @@ namespace MCDA_APP.Forms
             LoginForm loginForm = new LoginForm();
             loginForm.Show(this);
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/policy");
+        }
+
+        private void lblTerms_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/terms");
+        }
+
+        private void lblMalcore_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io");
+        }
     }
 }

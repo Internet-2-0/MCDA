@@ -44,6 +44,8 @@
             this.lblMalcore = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblTerms = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.labelSignup = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -162,7 +164,7 @@
             // 
             this.lblError.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.lblError.Location = new System.Drawing.Point(79, 344);
+            this.lblError.Location = new System.Drawing.Point(79, 321);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(371, 30);
             this.lblError.TabIndex = 5;
@@ -197,6 +199,7 @@
             this.lblMalcore.Size = new System.Drawing.Size(63, 15);
             this.lblMalcore.TabIndex = 0;
             this.lblMalcore.Text = "malcore.io";
+            this.lblMalcore.Click += new System.EventHandler(this.lblMalcore_Click);
             // 
             // label3
             // 
@@ -208,6 +211,7 @@
             this.label3.Size = new System.Drawing.Size(81, 15);
             this.label3.TabIndex = 0;
             this.label3.Text = "Privacy Policy";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // lblTerms
             // 
@@ -219,6 +223,30 @@
             this.lblTerms.Size = new System.Drawing.Size(74, 15);
             this.lblTerms.TabIndex = 0;
             this.lblTerms.Text = "Terms of Use";
+            this.lblTerms.Click += new System.EventHandler(this.lblTerms_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label4.Location = new System.Drawing.Point(208, 364);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(131, 15);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Don\'t have an account?";
+            // 
+            // labelSignup
+            // 
+            this.labelSignup.AutoSize = true;
+            this.labelSignup.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelSignup.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(14)))));
+            this.labelSignup.Location = new System.Drawing.Point(342, 360);
+            this.labelSignup.Name = "labelSignup";
+            this.labelSignup.Size = new System.Drawing.Size(63, 19);
+            this.labelSignup.TabIndex = 9;
+            this.labelSignup.TabStop = true;
+            this.labelSignup.Text = "Sign Up!";
+            this.labelSignup.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labelSignup_LinkClicked);
             // 
             // LoginForm
             // 
@@ -226,6 +254,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(523, 500);
+            this.Controls.Add(this.labelSignup);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.lblError);
@@ -272,5 +302,7 @@
         private Label lblMalcore;
         private Label label3;
         private Label lblTerms;
+        private Label label4;
+        private LinkLabel labelSignup;
     }
 }

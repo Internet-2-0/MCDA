@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using System;
 // using System.ComponentModel;
 
 namespace MCDA_APP.Forms
@@ -103,7 +104,7 @@ namespace MCDA_APP.Forms
                                         ProcessFile(Program.FilePool.Dequeue());
                                     }
                                 }
-                                Debug.WriteLine("end monitoring");
+                                // Debug.WriteLine("end monitoring");
                                 InitTimer();
                             }
                         }
@@ -176,7 +177,7 @@ namespace MCDA_APP.Forms
                                         ProcessFile(Program.FilePool.Dequeue());
                                     }
                                 }
-                                Debug.WriteLine("end handleMonitoring");
+                                // Debug.WriteLine("end handleMonitoring");
                             }
                         }
                     }
@@ -230,7 +231,7 @@ namespace MCDA_APP.Forms
                             {
                                 if (File.Exists(path))
                                 {
-                                    Debug.WriteLine("process init...." + path);
+                                    // Debug.WriteLine("process init...." + path);
 
                                     bool result = checkFileExtentionIsAllowed(path);
                                     if (result)
@@ -1152,7 +1153,7 @@ namespace MCDA_APP.Forms
             string[] fileEntries = Directory.GetFiles(targetDirectory);
             foreach (string fileName in fileEntries)
             {
-                Debug.WriteLine("process directory...." + fileName);
+                // Debug.WriteLine("process directory...." + fileName);
                 bool result = checkFileExtentionIsAllowed(fileName);
                 if (result)
                 {
@@ -1542,6 +1543,21 @@ namespace MCDA_APP.Forms
 
             QueueForm queueForm = new QueueForm();
             queueForm.Show(this);
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/policy");
+        }
+
+        private void lblTerms_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/terms");
+        }
+
+        private void lblMalcore_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io");
         }
     }
 }

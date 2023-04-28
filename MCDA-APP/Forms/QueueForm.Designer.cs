@@ -121,33 +121,36 @@
             this.lblTerms.AutoSize = true;
             this.lblTerms.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblTerms.ForeColor = System.Drawing.Color.White;
-            this.lblTerms.Location = new System.Drawing.Point(326, 462);
+            this.lblTerms.Location = new System.Drawing.Point(567, 461);
             this.lblTerms.Name = "lblTerms";
             this.lblTerms.Size = new System.Drawing.Size(74, 15);
             this.lblTerms.TabIndex = 50;
             this.lblTerms.Text = "Terms of Use";
+            this.lblTerms.Click += new System.EventHandler(this.lblTerms_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(419, 462);
+            this.label3.Location = new System.Drawing.Point(660, 461);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(81, 15);
             this.label3.TabIndex = 51;
             this.label3.Text = "Privacy Policy";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // lblMalcore
             // 
             this.lblMalcore.AutoSize = true;
             this.lblMalcore.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblMalcore.ForeColor = System.Drawing.Color.White;
-            this.lblMalcore.Location = new System.Drawing.Point(244, 462);
+            this.lblMalcore.Location = new System.Drawing.Point(485, 461);
             this.lblMalcore.Name = "lblMalcore";
             this.lblMalcore.Size = new System.Drawing.Size(63, 15);
             this.lblMalcore.TabIndex = 52;
             this.lblMalcore.Text = "malcore.io";
+            this.lblMalcore.Click += new System.EventHandler(this.lblMalcore_Click);
             // 
             // lblStatus
             // 
@@ -220,6 +223,7 @@
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelEmail);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "QueueForm";

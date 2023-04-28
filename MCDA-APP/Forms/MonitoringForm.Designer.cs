@@ -232,6 +232,7 @@
             this.lblTerms.Size = new System.Drawing.Size(74, 15);
             this.lblTerms.TabIndex = 31;
             this.lblTerms.Text = "Terms of Use";
+            this.lblTerms.Click += new System.EventHandler(this.lblTerms_Click);
             // 
             // label3
             // 
@@ -243,6 +244,7 @@
             this.label3.Size = new System.Drawing.Size(81, 15);
             this.label3.TabIndex = 32;
             this.label3.Text = "Privacy Policy";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // lblMalcore
             // 
@@ -254,6 +256,7 @@
             this.lblMalcore.Size = new System.Drawing.Size(63, 15);
             this.lblMalcore.TabIndex = 33;
             this.lblMalcore.Text = "malcore.io";
+            this.lblMalcore.Click += new System.EventHandler(this.lblMalcore_Click);
             // 
             // monitoringFlowLayoutPanel
             // 

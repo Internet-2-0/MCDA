@@ -108,18 +108,27 @@ namespace MCDA_APP.Forms
                 Hide();
 
                 // If settings is updated, restart monitoring
-                if ((OldSettings != null && (OldSettings.ToString() != settingsData.ToString()))
-                || OldSettings == null)
+                if (OldSettings == null || OldSettings.ToString() == "")
                 {
-                    Debug.Write("settings is changed1................");
-                    FormCollection fc = Application.OpenForms;
-                    foreach (Form frm in fc)
+                    // if first start the app after install, open monitoring form
+                    MonitoringForm monitoringForm = new MonitoringForm();
+                    monitoringForm.Visible = false;
+                    monitoringForm.Show(this);
+                }
+                else
+                {
+                    // if settings are updated, restart monitoring
+                    if ((OldSettings.ToString() != settingsData.ToString()))
                     {
-                        if (frm.Name == "MonitoringForm")
+                        FormCollection fc = Application.OpenForms;
+                        foreach (Form frm in fc)
                         {
-                            MonitoringForm monitoringForm = (MonitoringForm)frm;
-                            monitoringForm.startMonitoring();
-                            break;
+                            if (frm.Name == "MonitoringForm")
+                            {
+                                MonitoringForm monitoringForm = (MonitoringForm)frm;
+                                monitoringForm.startMonitoring();
+                                break;
+                            }
                         }
                     }
                 }
@@ -249,6 +258,21 @@ namespace MCDA_APP.Forms
             notifyIcon1.Visible = false;
             notifyIcon1.Dispose();
             Application.Exit();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/policy");
+        }
+
+        private void lblTerms_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/terms");
+        }
+
+        private void lblMalcore_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io");
         }
     }
 

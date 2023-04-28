@@ -115,6 +115,27 @@ namespace MCDA_APP
         {
             this.chkAgree.Checked = true;
         }
+
+        private void lblTerms_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/terms");
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/policy");
+        }
+
+        private void lblMalcore_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io");
+        }
+
+        private void labelSignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // this link should be updated based on app version
+            Program.OpenBrowser("https://malcore.io/register?utm_source=agent&utm_medium=login&utm_campaign=v1.0.0&utm_content=win");
+        }
     }
 
     public class UserData

@@ -45,7 +45,7 @@ namespace MCDA_APP
                         var SETTINGS = key.GetValue("SETTINGS");
 
                         // if user have saved settings, go to monitoring
-                        if (SETTINGS != null && SETTINGS != "")
+                        if (SETTINGS != null && SETTINGS.ToString() != "")
                         {
                             Application.Run(new MonitoringForm());
                         }
@@ -107,5 +107,25 @@ namespace MCDA_APP
             }
         }
 
+
+        public static void OpenBrowser(string url)
+        {
+            try
+            {
+                Process.Start("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", url);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    Process.Start("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", url);
+                }
+                catch (Exception ex1)
+                {
+                    Process.Start("C:\\Program Files\\Internet Explorer\\iexplore.exe", url);
+                    Debug.Write(ex1);
+                }
+            }
+        }
     }
 }

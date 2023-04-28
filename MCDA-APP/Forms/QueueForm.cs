@@ -18,7 +18,7 @@ namespace MCDA_APP.Forms
             labelEmail.Text = Program.USEREMAIL;
             this.screenWidth = this.Size.Width;
             viewQueueFlowLayoutPanel.Width = this.screenWidth;
-            labelInQueueFiles.Location = new System.Drawing.Point(this.screenWidth - 180, 84); 
+            labelInQueueFiles.Location = new System.Drawing.Point(this.screenWidth - 180, 84);
 
             AddItemToViewQueueFlowLayoutPanel(true);
             InitTimer();
@@ -363,6 +363,21 @@ namespace MCDA_APP.Forms
             Hide();
             LoginForm loginForm = new LoginForm();
             loginForm.Show(this);
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/policy");
+        }
+
+        private void lblTerms_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io/terms");
+        }
+
+        private void lblMalcore_Click(object sender, EventArgs e)
+        {
+            Program.OpenBrowser("https://malcore.io");
         }
     }
 }
