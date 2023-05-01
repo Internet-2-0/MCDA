@@ -92,17 +92,27 @@ namespace MCDA_APP.Forms
                 key.SetValue("SETTINGS", settingsData.ToString());
                 key.Close();
 
-                RegistryKey startkey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                // RegistryKey startkeyForLocalMachine = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                // RegistryKey startkeyForCurrentUser = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                RegistryKey startkey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
                 // register as start up
                 if (openOnStartup)
                 {
-                    startkey.SetValue("malcore", "C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe");
+                    // startkeyForLocalMachine.SetValue("malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" /autostart");
+                    // startkeyForCurrentUser.SetValue("malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" /autostart");
+                    startkey.SetValue("Malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" --process-start-args --startup");
+
                 }
                 else
                 {
-                    startkey.DeleteValue("malcore");
+                    // startkeyForLocalMachine.DeleteValue("malcore");
+                    // startkeyForCurrentUser.DeleteValue("malcore");
+                    startkey.DeleteValue("Malcore");
+
                 }
+                // startkeyForLocalMachine.Close();
+                // startkeyForCurrentUser.Close();
                 startkey.Close();
 
                 Hide();
