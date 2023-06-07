@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1S9WQJQkOGcfmZbxdJfZ9ZmGbNWDCLcG+U0XyIRpWJ+UiubnYFPFGGeYNeUCIMJwHT2w7z7WPvnYuUkehkJ5jg==",
+  "dgSpecHash": "wn4mVnME8Sl1TmrquPkJwSNlFjjLgWESdYrhuVlAm2bE8cHbZOw8rtjsFUjqCC+WH/t2WEYvwUQrf/FIiCpBXg==",
   "success": true,
-  "projectFilePath": "D:\\WORK\\MCDA\\MCDA-APP\\MCDA-APP.csproj",
+  "projectFilePath": "D:\\WORK\\MCDA-agent\\MCDA-APP\\MCDA-APP.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512"
   ],

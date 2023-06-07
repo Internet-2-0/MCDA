@@ -53,7 +53,6 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
             }
         }
 
@@ -73,7 +72,6 @@ namespace MCDA_APP.Forms
                 bool sendStatistics = checkSendStatistics.Checked;
                 bool openOnStartup = checkOpenOnStartup.Checked;
                 string minThreatScore = textMinScore.Text;
-                string monitorFolders = "";
 
                 var data = new SettingsData()
                 {
@@ -81,7 +79,6 @@ namespace MCDA_APP.Forms
                     sendStatistics = sendStatistics,
                     openOnStartup = openOnStartup,
                     minThreatScore = minThreatScore,
-                    monitorFolders = monitorFolders,
                     paths = string.Join(",", this.paths.ToArray())
                 };
                 var settingsData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
@@ -102,14 +99,14 @@ namespace MCDA_APP.Forms
                     // startkeyForLocalMachine.SetValue("malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" /autostart");
                     // startkeyForCurrentUser.SetValue("malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" /autostart");
                     startkey.SetValue("Malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" --process-start-args --startup");
-
                 }
                 else
                 {
                     // startkeyForLocalMachine.DeleteValue("malcore");
                     // startkeyForCurrentUser.DeleteValue("malcore");
-                    startkey.DeleteValue("Malcore");
-
+                    if(startkey.GetValue("Malcore") != null) {
+                        startkey.DeleteValue("Malcore");
+                    }
                 }
                 // startkeyForLocalMachine.Close();
                 // startkeyForCurrentUser.Close();
@@ -145,7 +142,6 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
                 Hide();
             }
         }
@@ -165,7 +161,6 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
             }
 
             Hide();
@@ -183,6 +178,11 @@ namespace MCDA_APP.Forms
             if (result == DialogResult.OK)
             {
                 string folderPath = folderDlg.SelectedPath;
+
+                // prevent to add root dirives such as C:\, D:\
+                if(folderPath.Length == 3) {
+                    return;
+                }
                 this.paths.Add(folderPath);
 
                 if (this.paths.Count != this.paths.Distinct().Count())
@@ -293,7 +293,6 @@ namespace MCDA_APP.Forms
         public bool sendStatistics { get; set; }
         public bool openOnStartup { get; set; }
         public string minThreatScore { get; set; }
-        public string monitorFolders { get; set; }
         public string paths { get; set; }
     }
 }

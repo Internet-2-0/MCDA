@@ -74,6 +74,7 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblProcessFileCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.monitoringFlowLayoutPanel.SuspendLayout();
             this.queuePanel.SuspendLayout();
@@ -260,6 +261,7 @@
             // 
             // monitoringFlowLayoutPanel
             // 
+            this.monitoringFlowLayoutPanel.AllowDrop = true;
             this.monitoringFlowLayoutPanel.AutoScroll = true;
             this.monitoringFlowLayoutPanel.Controls.Add(this.queuePanel);
             this.monitoringFlowLayoutPanel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -268,6 +270,8 @@
             this.monitoringFlowLayoutPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.monitoringFlowLayoutPanel.Size = new System.Drawing.Size(797, 328);
             this.monitoringFlowLayoutPanel.TabIndex = 39;
+            this.monitoringFlowLayoutPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.monitoringForm_DragDrop);
+            this.monitoringFlowLayoutPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.monitoringForm_DragEnter);
             // 
             // queuePanel
             // 
@@ -504,12 +508,25 @@
             this.exitToolStripMenuItem.Text = "Quit Malcore Agent";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // lblProcessFileCount
+            // 
+            this.lblProcessFileCount.AutoSize = true;
+            this.lblProcessFileCount.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblProcessFileCount.ForeColor = System.Drawing.Color.White;
+            this.lblProcessFileCount.Location = new System.Drawing.Point(200, 78);
+            this.lblProcessFileCount.Name = "lblProcessFileCount";
+            this.lblProcessFileCount.Size = new System.Drawing.Size(184, 21);
+            this.lblProcessFileCount.TabIndex = 40;
+            this.lblProcessFileCount.Text = "10 Files are running now";
+            this.lblProcessFileCount.Visible = false;
+            // 
             // MonitoringForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(800, 504);
+            this.Controls.Add(this.lblProcessFileCount);
             this.Controls.Add(this.panelInactive);
             this.Controls.Add(this.monitoringFlowLayoutPanel);
             this.Controls.Add(this.btnLogout);
@@ -612,5 +629,6 @@
         private Panel queuePanel;
         private Label labelQueuedFiles;
         private Button btnViewQueue;
+        private Label lblProcessFileCount;
     }
 }

@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System;
+using System.IO;
 // using System.ComponentModel;
 
 namespace MCDA_APP.Forms
@@ -13,9 +14,13 @@ namespace MCDA_APP.Forms
     {
         double minThreatScore = 15.0;
         bool sendStatistics = true;
+        List<string> paths = new List<string>();
+
         bool closing = false;
         int screenWidth = 820;
 
+        // Increased the queue to hold 10 files at once
+        int queueHoldSize = 10;
         int numberOfProcessing = 0;
         private System.Windows.Forms.Timer monitorTimer;
 
@@ -43,10 +48,34 @@ namespace MCDA_APP.Forms
             startMonitoring();
         }
 
+        /**
+        * @Description: process the files in the queue. 
+        * This function runs when there are files in the queue and stops when the file queue is empty.
+        * Call threat API if currently running processes are less than 10 
+        * Otherwise, wait until the number of currently running processes is less than 10.
+        * @return void.
+        **/
+        private async Task processHoldQueue()
+        {
+            if (this.numberOfProcessing > this.queueHoldSize)
+            {
+                await Task.Delay(300);
+                await processHoldQueue();
+            }
+            else
+            {
+                if(Program.FilePool.Count > 0) {
+                    this.numberOfProcessing++;
+                    ProcessFile(Program.FilePool.Dequeue());
+                }
+                return;
+            }
+        }
+
 
         /**
         * @Description: Start monitoring and update monitoring form with result
-        * This function works only once when the app starts
+        * @Description: This function works only one time when the app starts
         * @return void.
         **/
         public async void startMonitoring()
@@ -93,18 +122,8 @@ namespace MCDA_APP.Forms
                                 // start monitoring
                                 while (Program.FilePool.Count > 0)
                                 {
-                                    this.numberOfProcessing++;
-
-                                    if (this.numberOfProcessing > 5)
-                                    {
-                                        await ProcessFile(Program.FilePool.Dequeue());
-                                    }
-                                    else
-                                    {
-                                        ProcessFile(Program.FilePool.Dequeue());
-                                    }
+                                    await processHoldQueue();
                                 }
-                                // Debug.WriteLine("end monitoring");
                                 InitTimer();
                             }
                         }
@@ -123,7 +142,7 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 // Write out any exceptions.
-                Debug.WriteLine(ex);
+                Debug.Write(ex);
             }
         }
 
@@ -166,18 +185,8 @@ namespace MCDA_APP.Forms
                                 // start monitoring
                                 while (Program.FilePool.Count > 0)
                                 {
-                                    this.numberOfProcessing++;
-
-                                    if (this.numberOfProcessing > 5)
-                                    {
-                                        await ProcessFile(Program.FilePool.Dequeue());
-                                    }
-                                    else
-                                    {
-                                        ProcessFile(Program.FilePool.Dequeue());
-                                    }
+                                    await processHoldQueue();
                                 }
-                                // Debug.WriteLine("end handleMonitoring");
                             }
                         }
                     }
@@ -195,7 +204,7 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 // Write out any exceptions.
-                Debug.WriteLine(ex);
+                Debug.Write(ex);
             }
         }
 
@@ -225,14 +234,12 @@ namespace MCDA_APP.Forms
                             // start monitoring
                             string settings_paths = (string)json["paths"];
 
-                            List<string> paths = settings_paths.Split(',').ToList();
+                            paths = settings_paths.Split(',').ToList();
                             int num = 0;
                             foreach (string path in paths)
                             {
                                 if (File.Exists(path))
                                 {
-                                    // Debug.WriteLine("process init...." + path);
-
                                     bool result = checkFileExtentionIsAllowed(path);
                                     if (result)
                                     {
@@ -326,7 +333,7 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 // Write out any exceptions.
-                Debug.WriteLine(ex);
+                Debug.Write(ex);
                 return false;
             }
         }
@@ -379,6 +386,10 @@ namespace MCDA_APP.Forms
                             {
                                 string responseString = await response.Content.ReadAsStringAsync();
                                 this.numberOfProcessing--;
+                                
+                                // if (this.numberOfProcessing == 0) {
+                                //     lblProcessFileCount.Visible = false;
+                                // }
                                 return responseString;
                             }
                             else
@@ -386,6 +397,10 @@ namespace MCDA_APP.Forms
                                 string payload2 = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"api_error\",\"message\":\"API Error\"}}";
                                 await agentStat(payload2);
                                 this.numberOfProcessing--;
+
+                                // if (this.numberOfProcessing == 0) {
+                                //     lblProcessFileCount.Visible = false;
+                                // }
                                 return "";
                             }
                         }
@@ -394,9 +409,11 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                // Write out any exceptions.
+                Debug.Write(ex);
                 this.numberOfProcessing--;
-                Debug.WriteLine("getThreatScore Exception.........................." + ex);
+                // if (this.numberOfProcessing == 0) {
+                //     lblProcessFileCount.Visible = false;
+                // }
                 handleRelease(pathFile, false);
 
                 string payload = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"timeout/api_error/other_error\",\"message\":\"API Error/Timeout/Other\"}}";
@@ -448,7 +465,7 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 // Write out any exceptions.
-                Debug.WriteLine("agentStat dug.........................." + ex);
+                Debug.Write(ex);
                 return "";
             }
         }
@@ -500,6 +517,7 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 // Write out any exceptions. 
+                Debug.Write(ex);
                 return false;
             }
         }
@@ -537,7 +555,8 @@ namespace MCDA_APP.Forms
                         score = (string)jsonObject["data"]["data"]["score"];
                         string[] scores = score.Split('/');
                         score_num = Convert.ToDouble(scores[0]);
-                        score = Convert.ToString(Math.Round(score_num)) + "%";
+                        // score = Convert.ToString(Math.Round(score_num)) + "%";
+                        score = scores[0] + "%";
                     }
                 }
             }
@@ -588,9 +607,12 @@ namespace MCDA_APP.Forms
             percentLabel.Name = "percentLabel";
             percentLabel.Text = score;
             percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
-            percentLabel.Width = 76;
+            // percentLabel.Width = 76;
+            percentLabel.Width = 110;
             percentLabel.Height = 40;
-            percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4);  // 512
+            // percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4);  // 512
+            percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 4); 
+            percentLabel.TextAlign = ContentAlignment.MiddleRight;
 
             Button removeButton = new Button();
             removeButton.Name = "removeButton";
@@ -765,6 +787,8 @@ namespace MCDA_APP.Forms
                 percentLabel.Location = new System.Drawing.Point(this.screenWidth - 292, 14);
                 percentLabel.ForeColor = Color.White;
                 percentLabel.Text = "Scanning...";
+                percentLabel.TextAlign = ContentAlignment.TopRight;
+                percentLabel.Width = 76;
 
                 string path = folderName + "\\" + fileName;
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
@@ -836,13 +860,15 @@ namespace MCDA_APP.Forms
                             score = (string)jsonObject["data"]["data"]["score"];
                             string[] scores = score.Split('/');
                             score_num = Convert.ToDouble(scores[0]);
-                            score = Convert.ToString(Math.Round(score_num)) + "%";
+                            // score = Convert.ToString(Math.Round(score_num)) + "%";
+                            score = scores[0] + "%";
                         }
                         else
                         {
                             score = (string)jsonObject["data"]["data"]["dfi"]["results"]["dfi_results"]["score"];
                             score_num = Convert.ToDouble(score);
-                            score = Convert.ToString(Math.Round(score_num)) + "%";
+                            // score = Convert.ToString(Math.Round(score_num)) + "%";
+                            score = score + "%";
                         }
 
                         Panel colorPanel = (Panel)panel.Controls.Find("colorPanel", true)[0];
@@ -885,6 +911,8 @@ namespace MCDA_APP.Forms
 
                 }
 
+                percentLabel.TextAlign = ContentAlignment.MiddleRight;
+                percentLabel.Width = 110;
                 if (success == false)
                 {
                     percentLabel.Visible = false;
@@ -894,8 +922,8 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
+                Debug.Write(ex);
                 // Write out any exceptions.
-                Debug.WriteLine("rerunScanFile.........................." + ex);
                 Button rerunButton = (Button)panel.Controls.Find("rerunButton", true)[0];
                 rerunButton.Visible = true;
 
@@ -937,7 +965,8 @@ namespace MCDA_APP.Forms
                 {
                     score = (string)jsonObject["data"]["data"]["dfi"]["results"]["dfi_results"]["score"];
                     score_num = Convert.ToDouble(score);
-                    score = Convert.ToString(Math.Round(score_num)) + "%";
+                    // score = Convert.ToString(Math.Round(score_num)) + "%";
+                    score = score + "%";
                 }
             }
 
@@ -987,9 +1016,10 @@ namespace MCDA_APP.Forms
             percentLabel.Name = "percentLabel";
             percentLabel.Text = score;
             percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
-            percentLabel.Width = 76;
+            percentLabel.Width = 110;
             percentLabel.Height = 40;
-            percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4); // 512
+            percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 4); // 512
+            percentLabel.TextAlign = ContentAlignment.MiddleRight;
 
             Button removeButton = new Button();
             removeButton.Name = "removeButton";
@@ -1153,7 +1183,6 @@ namespace MCDA_APP.Forms
             string[] fileEntries = Directory.GetFiles(targetDirectory);
             foreach (string fileName in fileEntries)
             {
-                // Debug.WriteLine("process directory...." + fileName);
                 bool result = checkFileExtentionIsAllowed(fileName);
                 if (result)
                 {
@@ -1181,6 +1210,14 @@ namespace MCDA_APP.Forms
         {
             try
             {
+                // // tempcode
+                // if(this.numberOfProcessing > 0) {
+                //     lblProcessFileCount.Visible = true;
+                //     lblProcessFileCount.Text = this.numberOfProcessing + " files are running now.";
+                // } else {
+                //     lblProcessFileCount.Visible = false;
+                // }
+
                 Program.PrecessedFilePool.Enqueue(path);
 
                 string fileName = Path.GetFileName(path);
@@ -1202,6 +1239,10 @@ namespace MCDA_APP.Forms
                         succeed = false;
                     }
 
+                    this.numberOfProcessing--;
+                    // if (this.numberOfProcessing == 0) {
+                    //     lblProcessFileCount.Visible = false;
+                    // }
                     addItemToMonitoringPanel(fileString, folderName, fileName, succeed);
                 }
                 else if (File.Exists("./malcore/doc/" + hashFileName))
@@ -1287,7 +1328,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Process File failed----------------" + path + "-----------" + ex);
+                Debug.Write(ex);
                 return false;
             }
         }
@@ -1320,9 +1361,9 @@ namespace MCDA_APP.Forms
                     fInfo.SetAccessControl(fSecurity);
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                // throw;
+                Debug.Write(ex);
             }
         }
 
@@ -1350,10 +1391,11 @@ namespace MCDA_APP.Forms
                 }
                 return result;
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.Write(ex);
                 return false;
-            }
+            } 
         }
 
         /**
@@ -1441,7 +1483,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Debug.Write(ex);
             }
 
             Hide();
@@ -1558,6 +1600,69 @@ namespace MCDA_APP.Forms
         private void lblMalcore_Click(object sender, EventArgs e)
         {
             Program.OpenBrowser("https://malcore.io");
+        }
+         
+        /**
+        * @Description: if drag&drop a folder from windows explorer to monitoring form,
+        * @Description: update the settings and restart scanning
+        **/
+        private void monitoringForm_DragDrop(object sender, DragEventArgs e)
+        {
+
+            string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            for (int i = 0; i < filePaths.Length; i++)
+            {
+                paths.Add(filePaths[i]);
+                if (paths.Count != paths.Distinct().Count())
+                {
+                    paths.Remove(filePaths[i]);
+                }
+            }
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
+            var OldSettings = key.GetValue("SETTINGS");
+            JObject json = JObject.Parse(OldSettings.ToString()); 
+            string settings_paths = (string)json["paths"];
+            List<string> oldPaths = settings_paths.Split(',').ToList();
+
+            if(this.paths.Count != oldPaths.Count) {
+                try
+                {
+                    var data = new SettingsData()
+                    {
+                        enableMornitoring = (bool)json["enableMornitoring"],
+                        sendStatistics = this.sendStatistics,
+                        openOnStartup = (bool)json["openOnStartup"],
+                        minThreatScore = (string)json["minThreatScore"],
+                        paths = string.Join(",", paths.ToArray())
+                    };
+
+                    var settingsData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                    key.SetValue("SETTINGS", settingsData.ToString());
+                    key.Close();
+
+                    startMonitoring();
+                }
+                catch (Exception ex)
+                {
+                    // Write out any exceptions.
+                    Debug.Write(ex);
+                }
+            }
+
+        }
+
+        private void monitoringForm_DragEnter(object sender, DragEventArgs e)
+        {
+            DragDropEffects effects = DragDropEffects.None;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string folderPath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+                if (Directory.Exists(folderPath)) {
+                    effects = DragDropEffects.Copy;
+                }
+            }
+            e.Effect = effects;
         }
     }
 }

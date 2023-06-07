@@ -125,20 +125,20 @@
             this.folderLabel.ForeColor = System.Drawing.Color.White;
             this.folderLabel.Location = new System.Drawing.Point(33, 22);
             this.folderLabel.Name = "folderLabel";
-            this.folderLabel.Size = new System.Drawing.Size(210, 15);
+            this.folderLabel.Size = new System.Drawing.Size(199, 16);
             this.folderLabel.TabIndex = 32;
             this.folderLabel.Text = "My Documents";
             // 
             // percentLabel
             // 
-            this.percentLabel.AutoSize = true;
             this.percentLabel.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.percentLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.percentLabel.Location = new System.Drawing.Point(248, 4);
+            this.percentLabel.Location = new System.Drawing.Point(209, 4);
             this.percentLabel.Name = "percentLabel";
-            this.percentLabel.Size = new System.Drawing.Size(66, 36);
+            this.percentLabel.Size = new System.Drawing.Size(120, 34);
             this.percentLabel.TabIndex = 31;
             this.percentLabel.Text = "33%";
+            this.percentLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.percentLabel.Click += new System.EventHandler(this.lblFileName_Click);
             // 
             // fileLabel
@@ -328,7 +328,6 @@
             this.Text = "Malcore Agent 1.0.0 | Details";
             this.Load += new System.EventHandler(this.DetailsForm_Load);
             this.panelDetailItem.ResumeLayout(false);
-            this.panelDetailItem.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WORK\\MCDA\\MCDA-APP\\MCDA-APP.csproj": {}
+    "D:\\WORK\\MCDA-agent\\MCDA-APP\\MCDA-APP.csproj": {}
   },
   "projects": {
-    "D:\\WORK\\MCDA\\MCDA-APP\\MCDA-APP.csproj": {
+    "D:\\WORK\\MCDA-agent\\MCDA-APP\\MCDA-APP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WORK\\MCDA\\MCDA-APP\\MCDA-APP.csproj",
+        "projectUniqueName": "D:\\WORK\\MCDA-agent\\MCDA-APP\\MCDA-APP.csproj",
         "projectName": "MCDA-APP",
-        "projectPath": "D:\\WORK\\MCDA\\MCDA-APP\\MCDA-APP.csproj",
+        "projectPath": "D:\\WORK\\MCDA-agent\\MCDA-APP\\MCDA-APP.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\WORK\\MCDA\\MCDA-APP\\obj\\",
+        "outputPath": "D:\\WORK\\MCDA-agent\\MCDA-APP\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",

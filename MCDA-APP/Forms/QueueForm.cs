@@ -303,7 +303,6 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 // Write out any exceptions.
-                Debug.WriteLine("agentStat dug.........................." + ex);
                 return "";
             }
         }
@@ -357,7 +356,6 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
             }
 
             Hide();

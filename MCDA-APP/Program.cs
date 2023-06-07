@@ -123,7 +123,6 @@ namespace MCDA_APP
                 catch (Exception ex1)
                 {
                     Process.Start("C:\\Program Files\\Internet Explorer\\iexplore.exe", url);
-                    Debug.Write(ex1);
                 }
             }
         }

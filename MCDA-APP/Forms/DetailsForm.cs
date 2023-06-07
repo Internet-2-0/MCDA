@@ -81,7 +81,8 @@ namespace MCDA_APP.Forms
                     score = (string)jsonObject["data"]["data"]["score"];
                     string[] scores = score.Split('/');
                     score_num = Convert.ToDouble(scores[0]);
-                    score = Convert.ToString(Math.Round(score_num)) + "%";
+                    // score = Convert.ToString(Math.Round(score_num)) + "%";
+                    score = scores[0] + "%";
 
                     if (jsonObject["data"]["data"]["signatures"] != null)
                     {
@@ -176,6 +177,8 @@ namespace MCDA_APP.Forms
                     {
                         removeButton.Visible = true;
                         releaseButton.Visible = true;
+                        percentLabel.Text = score;
+                        percentLabel.Width = 126;
                     }
                     else
                     {
@@ -316,7 +319,9 @@ namespace MCDA_APP.Forms
 
                     score = (string)jsonObject["data"]["data"]["dfi"]["results"]["dfi_results"]["score"];
                     score_num = Convert.ToDouble(score);
-                    score = Convert.ToString(Math.Round(score_num)) + "%";
+                    // score = Convert.ToString(Math.Round(score_num)) + "%";
+
+                    score = score + "%";
 
                     if (jsonObject["data"]["data"]["dfi"]["results"]["dfi_results"]["details"] != null)
                     {
@@ -519,7 +524,6 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
             }
 
             Hide();
