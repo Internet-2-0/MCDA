@@ -325,7 +325,7 @@
             this.MaximizeBox = false;
             this.Name = "DetailsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Malcore Agent 1.0.0 | Details";
+            this.Text = "Malcore Agent 1.1.0 | Details";
             this.Load += new System.EventHandler(this.DetailsForm_Load);
             this.panelDetailItem.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -170,29 +170,36 @@ namespace MCDA_APP.Forms
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderDlg = new FolderBrowserDialog();
-            folderDlg.ShowNewFolderButton = true;
-
-            // Show the FolderBrowserDialog.  
-            DialogResult result = folderDlg.ShowDialog();
-            if (result == DialogResult.OK)
+            try
             {
-                string folderPath = folderDlg.SelectedPath;
+                FolderBrowserDialog folderDlg = new FolderBrowserDialog();
+                folderDlg.ShowNewFolderButton = true;
 
-                // prevent to add root dirives such as C:\, D:\
-                if(folderPath.Length == 3) {
-                    return;
-                }
-                this.paths.Add(folderPath);
+                // Show the FolderBrowserDialog.  
+                DialogResult result = folderDlg.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string folderPath = folderDlg.SelectedPath;
 
-                if (this.paths.Count != this.paths.Distinct().Count())
-                {
-                    this.paths.Remove(folderPath);
+                    // prevent to add root dirives such as C:\, D:\
+                    if(folderPath.Length == 3) {
+                        return;
+                    }
+                    this.paths.Add(folderPath);
+
+                    if (this.paths.Count != this.paths.Distinct().Count())
+                    {
+                        this.paths.Remove(folderPath);
+                    }
+                    else
+                    {
+                        addPathToFoldersList(folderPath);
+                    }
                 }
-                else
-                {
-                    addPathToFoldersList(folderPath);
-                }
+            }
+            catch (Exception ex)
+            {
+                
             }
         }
 
@@ -257,17 +264,31 @@ namespace MCDA_APP.Forms
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Show();
-            this.WindowState = FormWindowState.Normal;
-            notifyIcon1.Visible = false;
+            try
+            {
+                Show();
+                this.WindowState = FormWindowState.Normal;
+                notifyIcon1.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.closing = true;
-            notifyIcon1.Visible = false;
-            notifyIcon1.Dispose();
-            Application.Exit();
+            try
+            {
+                this.closing = true;
+                notifyIcon1.Visible = false;
+                notifyIcon1.Dispose();
+                Application.Exit();
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -283,6 +304,61 @@ namespace MCDA_APP.Forms
         private void lblMalcore_Click(object sender, EventArgs e)
         {
             Program.OpenBrowser("https://malcore.io");
+        }
+
+        /**
+        * @Description: add folder(s) to the setting's folder list. 
+        **/
+        private void settingsForm_DragDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+                for (int i = 0; i < filePaths.Length; i++)
+                {
+                    String folderPath = filePaths[i];
+                    // prevent to add root dirives such as C:\, D:\
+                    if(folderPath.Length == 3) {
+                        return;
+                    }
+                    this.paths.Add(folderPath);
+
+                    if (this.paths.Count != this.paths.Distinct().Count())
+                    {
+                        this.paths.Remove(folderPath);
+                    }
+                    else
+                    {
+                        addPathToFoldersList(folderPath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
+        private void settingsForm_DrapEnter(object sender, DragEventArgs e)
+        {
+            try
+            {
+                DragDropEffects effects = DragDropEffects.None;
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    string folderPath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+                    // Only allow folders to drop
+                    if (Directory.Exists(folderPath)) {
+                        effects = DragDropEffects.Copy;
+                    }
+                }
+                e.Effect = effects;
+            }
+            catch (Exception ex)
+            {
+                
+            }
+
         }
     }
 

@@ -196,28 +196,32 @@ namespace MCDA_APP.Forms
             removeButton.Location = new System.Drawing.Point(this.screenWidth - 120, 2); // 415
             removeButton.Click += delegate (object obj, EventArgs ea)
             {
-                if (File.Exists(filePath))
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    handleRelease(filePath, false);
-                    File.Delete(filePath);
+                    if (File.Exists(filePath))
+                    {
+                        handleRelease(filePath, false);
+                        File.Delete(filePath);
+                    }
+                    string folderName = Directory.GetParent(filePath) != null ? Directory.GetParent(filePath).FullName : filePath;
+                    string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+                    if (File.Exists("./malcore/doc/" + hashFileName))
+                    {
+                        File.Delete("./malcore/doc/" + hashFileName);
+                    }
+                    panel.Dispose();
+
+                    var list = Program.FilePool.ToList();
+                    list.Remove(filePath);
+                    var queue = new Queue<string>(list);
+                    Program.FilePool = queue;
+
+                    AddItemToViewQueueFlowLayoutPanel(false);
+
+                    string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File deleted\"}}";
+                    agentStat(payload);
                 }
-                string folderName = Directory.GetParent(filePath) != null ? Directory.GetParent(filePath).FullName : filePath;
-                string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
-                if (File.Exists("./malcore/doc/" + hashFileName))
-                {
-                    File.Delete("./malcore/doc/" + hashFileName);
-                }
-                panel.Dispose();
-
-                var list = Program.FilePool.ToList();
-                list.Remove(filePath);
-                var queue = new Queue<string>(list);
-                Program.FilePool = queue;
-
-                AddItemToViewQueueFlowLayoutPanel(false);
-
-                string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File deleted\"}}";
-                agentStat(payload);
 
             };
 
@@ -259,7 +263,7 @@ namespace MCDA_APP.Forms
                     fInfo.SetAccessControl(fSecurity);
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
             }
         }

@@ -548,7 +548,7 @@
             this.MaximizeBox = false;
             this.Name = "MonitoringForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Malcore Agent 1.0.0 | Monitoring";
+            this.Text = "Malcore Agent 1.1.0 | Monitoring";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MonitoringForm_FormClosing);
             this.Resize += new System.EventHandler(this.MonitoringForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

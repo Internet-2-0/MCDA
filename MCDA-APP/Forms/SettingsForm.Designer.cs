@@ -350,6 +350,7 @@
             // 
             // flowLayoutPanelForFolders
             // 
+            this.flowLayoutPanelForFolders.AllowDrop = true;
             this.flowLayoutPanelForFolders.AutoScroll = true;
             this.flowLayoutPanelForFolders.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flowLayoutPanelForFolders.Font = new System.Drawing.Font("Cascadia Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -358,6 +359,8 @@
             this.flowLayoutPanelForFolders.Name = "flowLayoutPanelForFolders";
             this.flowLayoutPanelForFolders.Size = new System.Drawing.Size(459, 125);
             this.flowLayoutPanelForFolders.TabIndex = 22;
+            this.flowLayoutPanelForFolders.DragDrop += new System.Windows.Forms.DragEventHandler(this.settingsForm_DragDrop);
+            this.flowLayoutPanelForFolders.DragEnter += new System.Windows.Forms.DragEventHandler(this.settingsForm_DrapEnter);
             // 
             // pictureBox2
             // 
@@ -428,7 +431,7 @@
             this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Malcore Agent 1.0.0 | Settings";
+            this.Text = "Malcore Agent 1.1.0 | Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.Resize += new System.EventHandler(this.SettingsForm_Resize);

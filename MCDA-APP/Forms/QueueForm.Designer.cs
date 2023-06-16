@@ -228,7 +228,7 @@
             this.MaximizeBox = false;
             this.Name = "QueueForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Malcore Agent 1.0.0 | Queue View";
+            this.Text = "Malcore Agent 1.1.0 | Queue";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

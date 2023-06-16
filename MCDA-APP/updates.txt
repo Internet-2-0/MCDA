@@ -1,0 +1,10 @@
+;aiu;
+
+[Malcore Agent11]
+Name = Malcore Agent 1.1
+URL = https://malcore.io/download/malcore.exe
+Size = 5063829
+Description = This is the latest version of Malcore Agent
+FilePath = C:\Program Files (x86)\Malcore Agent\Malcore Agent\MCDA-APP.exe
+FileSize = 370688
+Version = 1.1
