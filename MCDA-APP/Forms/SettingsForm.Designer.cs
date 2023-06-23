@@ -38,7 +38,6 @@
             this.labelEmail = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSettings = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.checkEnableMonitor = new System.Windows.Forms.CheckBox();
@@ -60,6 +59,7 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.quitMalcoreAgentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -151,21 +151,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 1);
             this.panel1.TabIndex = 11;
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.btnSettings.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSettings.ForeColor = System.Drawing.Color.White;
-            this.btnSettings.Location = new System.Drawing.Point(581, 21);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(85, 31);
-            this.btnSettings.TabIndex = 14;
-            this.btnSettings.Text = "Settings";
-            this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.Visible = false;
             // 
             // btnLogout
             // 
@@ -396,6 +381,21 @@
             this.quitMalcoreAgentToolStripMenuItem.Text = "Quit Malcore Agent";
             this.quitMalcoreAgentToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // btnClear
+            // 
+            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
+            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClear.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
+            this.btnClear.Location = new System.Drawing.Point(554, 21);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(118, 31);
+            this.btnClear.TabIndex = 24;
+            this.btnClear.Text = "Clear History";
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -403,6 +403,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(800, 504);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.flowLayoutPanelForFolders);
             this.Controls.Add(this.panel4);
@@ -414,7 +415,6 @@
             this.Controls.Add(this.checkEnableMonitor);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
@@ -457,7 +457,6 @@
         private Label labelEmail;
         private Label label1;
         private Panel panel1;
-        private Button btnSettings;
         private Button btnLogout;
         private Label label2;
         private CheckBox checkEnableMonitor;
@@ -479,5 +478,6 @@
         private NotifyIcon notifyIcon1;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem quitMalcoreAgentToolStripMenuItem;
+        private Button btnClear;
     }
 }

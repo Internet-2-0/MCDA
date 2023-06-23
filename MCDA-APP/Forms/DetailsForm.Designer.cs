@@ -60,7 +60,7 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
             this.panel1.Location = new System.Drawing.Point(-9, 72);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(540, 1);
+            this.panel1.Size = new System.Drawing.Size(740, 1);
             this.panel1.TabIndex = 26;
             // 
             // panel3
@@ -68,7 +68,7 @@
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
             this.panel3.Location = new System.Drawing.Point(-8, 427);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(543, 1);
+            this.panel3.Size = new System.Drawing.Size(743, 1);
             this.panel3.TabIndex = 25;
             // 
             // openFileDialog1
@@ -86,7 +86,7 @@
             this.panelDetailItem.Controls.Add(this.colorPanel);
             this.panelDetailItem.Location = new System.Drawing.Point(6, 82);
             this.panelDetailItem.Name = "panelDetailItem";
-            this.panelDetailItem.Size = new System.Drawing.Size(516, 44);
+            this.panelDetailItem.Size = new System.Drawing.Size(716, 44);
             this.panelDetailItem.TabIndex = 36;
             // 
             // removeButton
@@ -97,7 +97,7 @@
             this.removeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.removeButton.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.removeButton.ForeColor = System.Drawing.Color.White;
-            this.removeButton.Location = new System.Drawing.Point(333, 7);
+            this.removeButton.Location = new System.Drawing.Point(532, 7);
             this.removeButton.Name = "removeButton";
             this.removeButton.Size = new System.Drawing.Size(85, 31);
             this.removeButton.TabIndex = 37;
@@ -112,7 +112,7 @@
             this.releaseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.releaseButton.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.releaseButton.ForeColor = System.Drawing.Color.White;
-            this.releaseButton.Location = new System.Drawing.Point(424, 7);
+            this.releaseButton.Location = new System.Drawing.Point(623, 7);
             this.releaseButton.Name = "releaseButton";
             this.releaseButton.Size = new System.Drawing.Size(85, 31);
             this.releaseButton.TabIndex = 37;
@@ -133,7 +133,7 @@
             // 
             this.percentLabel.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.percentLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(122)))), ((int)(((byte)(0)))));
-            this.percentLabel.Location = new System.Drawing.Point(209, 4);
+            this.percentLabel.Location = new System.Drawing.Point(408, 4);
             this.percentLabel.Name = "percentLabel";
             this.percentLabel.Size = new System.Drawing.Size(120, 34);
             this.percentLabel.TabIndex = 31;
@@ -167,12 +167,13 @@
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.btnLogout.Location = new System.Drawing.Point(428, 21);
+            this.btnLogout.Location = new System.Drawing.Point(619, 21);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(85, 31);
             this.btnLogout.TabIndex = 44;
             this.btnLogout.Text = "Log Out";
             this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Visible = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // btnSettings
@@ -182,7 +183,7 @@
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSettings.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSettings.ForeColor = System.Drawing.Color.White;
-            this.btnSettings.Location = new System.Drawing.Point(320, 21);
+            this.btnSettings.Location = new System.Drawing.Point(511, 21);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(85, 31);
             this.btnSettings.TabIndex = 43;
@@ -265,7 +266,7 @@
             this.flowLayoutPanelDetails.ForeColor = System.Drawing.Color.White;
             this.flowLayoutPanelDetails.Location = new System.Drawing.Point(7, 158);
             this.flowLayoutPanelDetails.Name = "flowLayoutPanelDetails";
-            this.flowLayoutPanelDetails.Size = new System.Drawing.Size(511, 263);
+            this.flowLayoutPanelDetails.Size = new System.Drawing.Size(711, 263);
             this.flowLayoutPanelDetails.TabIndex = 45;
             this.flowLayoutPanelDetails.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
@@ -274,18 +275,18 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(51, 133);
+            this.label2.Location = new System.Drawing.Point(14, 133);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 18);
+            this.label2.Size = new System.Drawing.Size(72, 18);
             this.label2.TabIndex = 46;
-            this.label2.Text = "File Path";
+            this.label2.Text = "File Path : ";
             // 
             // labelFullPath
             // 
             this.labelFullPath.AutoSize = true;
             this.labelFullPath.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelFullPath.ForeColor = System.Drawing.Color.White;
-            this.labelFullPath.Location = new System.Drawing.Point(152, 133);
+            this.labelFullPath.Location = new System.Drawing.Point(115, 133);
             this.labelFullPath.Name = "labelFullPath";
             this.labelFullPath.Size = new System.Drawing.Size(209, 18);
             this.labelFullPath.TabIndex = 38;
@@ -296,7 +297,7 @@
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
             this.panel6.Location = new System.Drawing.Point(15, 155);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(501, 1);
+            this.panel6.Size = new System.Drawing.Size(701, 1);
             this.panel6.TabIndex = 28;
             // 
             // DetailsForm
@@ -304,7 +305,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(527, 504);
+            this.ClientSize = new System.Drawing.Size(727, 504);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.labelFullPath);
             this.Controls.Add(this.label2);

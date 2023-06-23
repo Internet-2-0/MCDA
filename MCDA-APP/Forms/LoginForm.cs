@@ -70,7 +70,7 @@ namespace MCDA_APP
                         if (authdata != "")
                         {
                             // store API Key and settings info to registory
-                            RegistryKey key = Registry.CurrentUser.CreateSubKey(@".malcore");
+                            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\Malcore");
                             key.SetValue("API_KEY", authdata);
                             key.SetValue("SETTINGS", "");
                             key.Close();
@@ -135,6 +135,31 @@ namespace MCDA_APP
         {
             // this link should be updated based on app version
             Program.OpenBrowser("https://malcore.io/register?utm_source=agent&utm_medium=login&utm_campaign=v1.0.0&utm_content=win");
+        }
+
+        private void LoginFormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                Debug.WriteLine("closed................" + System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location));
+                Application.Exit(); 
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void LoginFormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                Environment.Exit(0); 
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
     }
 

@@ -275,6 +275,8 @@
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Malcore Agent 1.1.0 | Log in";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginFormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginFormClosed);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

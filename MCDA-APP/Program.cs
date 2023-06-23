@@ -12,6 +12,7 @@ namespace MCDA_APP
         public static string USEREMAIL = "";
         public static Queue<string> FilePool = new Queue<string>();
         public static Queue<string> PrecessedFilePool = new Queue<string>();
+        public static Queue<string> DragFilePool = new Queue<string>();
 
 
         ///  The main entry point for the application.
@@ -31,7 +32,7 @@ namespace MCDA_APP
             try
             {
                 // Check user authentication status
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
                 if (key != null)
                 {
                     var API_KEY = key.GetValue("API_KEY");

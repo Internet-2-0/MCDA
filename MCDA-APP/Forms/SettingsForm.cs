@@ -23,7 +23,7 @@ namespace MCDA_APP.Forms
                 txtApikey.Text = Program.APIKEY;
 
                 // Check if user authentication 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
                 if (key != null)
                 {
                     var SETTINGS = key.GetValue("SETTINGS");
@@ -83,34 +83,44 @@ namespace MCDA_APP.Forms
                 };
                 var settingsData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
                 var OldSettings = key.GetValue("SETTINGS");
 
                 key.SetValue("SETTINGS", settingsData.ToString());
                 key.Close();
 
                 // RegistryKey startkeyForLocalMachine = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                // RegistryKey startkeyForCurrentUser = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                RegistryKey startkey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                RegistryKey startkeyForCurrentUser = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+                // old version for admin permission
+                // RegistryKey startkey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
                 // register as start up
                 if (openOnStartup)
                 {
                     // startkeyForLocalMachine.SetValue("malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" /autostart");
-                    // startkeyForCurrentUser.SetValue("malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" /autostart");
-                    startkey.SetValue("Malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" --process-start-args --startup");
+                    startkeyForCurrentUser.SetValue("Malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" --process-start-args --startup");
+                    
+                    // old version for admin permission
+                    // startkey.SetValue("Malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" --process-start-args --startup");
                 }
                 else
                 {
                     // startkeyForLocalMachine.DeleteValue("malcore");
-                    // startkeyForCurrentUser.DeleteValue("malcore");
-                    if(startkey.GetValue("Malcore") != null) {
-                        startkey.DeleteValue("Malcore");
+                    if(startkeyForCurrentUser.GetValue("Malcore") != null) {
+                        startkeyForCurrentUser.DeleteValue("Malcore");
                     }
+                    
+                    // old version for admin permission
+                    // if(startkey.GetValue("Malcore") != null) {
+                    //     startkey.DeleteValue("Malcore");
+                    // }
                 }
                 // startkeyForLocalMachine.Close();
-                // startkeyForCurrentUser.Close();
-                startkey.Close();
+                startkeyForCurrentUser.Close();
+
+                // old version for admin permission
+                // startkey.Close();
 
                 Hide();
 
@@ -142,6 +152,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
+                // MessageBox.Show("save"+ex.ToString());
                 Hide();
             }
         }
@@ -150,22 +161,38 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
 
                 Program.APIKEY = "";
-                Program.USEREMAIL = "";
+                Program.USEREMAIL = ""; 
+                
+                Hide();
+                
+                LoginForm loginForm = new LoginForm();
+                loginForm.Show(this); 
 
+                // foreach (Form f in Application.OpenForms)
+                // {
+                //     if (f.Name == "MonitoringForm") {
+                //         f.Close();
+                //     }
+                // }  
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name != "LoginForm") {
+                        f.Hide();
+                    } 
+                } 
             }
             catch (Exception ex)
             {
+                Debug.Write("e..............."+ex.Message);
+                LoginForm loginForm = new LoginForm();
+                loginForm.Show(this); 
             }
-
-            Hide();
-            LoginForm loginForm = new LoginForm();
-            loginForm.Show(this);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -181,8 +208,8 @@ namespace MCDA_APP.Forms
                 {
                     string folderPath = folderDlg.SelectedPath;
 
-                    // prevent to add root dirives such as C:\, D:\
-                    if(folderPath.Length == 3) {
+                    // prevent to add root dirives such as C:\, D:\ and C:\Windows
+                    if(folderPath.Length == 3 || folderPath.Contains("C:\\Windows")) {
                         return;
                     }
                     this.paths.Add(folderPath);
@@ -318,7 +345,7 @@ namespace MCDA_APP.Forms
                 {
                     String folderPath = filePaths[i];
                     // prevent to add root dirives such as C:\, D:\
-                    if(folderPath.Length == 3) {
+                    if(folderPath.Length == 3 || folderPath.Contains("C:\\Windows")) {
                         return;
                     }
                     this.paths.Add(folderPath);
@@ -359,6 +386,96 @@ namespace MCDA_APP.Forms
                 
             }
 
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to clear the history?", "Clear History", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                try
+                {
+                    if (Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore"))
+                    { 
+                        var dir = new DirectoryInfo(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore");
+                        dir.Delete(true);
+                        
+                    }
+                    // if (Directory.Exists(@"./malcore"))
+                    // { 
+                    //     var dir = new DirectoryInfo(@"./malcore");
+                    //     dir.Delete(true);
+                    // }
+                    this.paths.Clear();
+                    flowLayoutPanelForFolders.Controls.Clear();
+
+                    // Create directories for caching
+                    // there was a problem for the installer. installer did not recognize the relative path
+                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore"))
+                    {
+                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore");
+                    }
+                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat"))
+                    {
+                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat");
+                    }
+                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc"))
+                    {
+                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc");
+                    }
+                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat\\drag"))
+                    {
+                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat\\drag");
+                    }
+                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc\\drag"))
+                    {
+                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc\\drag");
+                    }
+
+                    // // use for local ***tempcode
+                    // if (!Directory.Exists(@"./malcore"))
+                    // {
+                    //     Directory.CreateDirectory(@"./malcore");
+                    // }
+                    // if (!Directory.Exists(@"./malcore/threat"))
+                    // {
+                    //     Directory.CreateDirectory(@"./malcore/threat");
+                    // }
+                    // if (!Directory.Exists(@"./malcore/doc"))
+                    // {
+                    //     Directory.CreateDirectory(@"./malcore/doc");
+                    // }
+                    // if (!Directory.Exists(@"./malcore/threat/drag"))
+                    // {
+                    //     Directory.CreateDirectory(@"./malcore/threat/drag");
+                    // }
+                    // if (!Directory.Exists(@"./malcore/doc/drag"))
+                    // {
+                    //     Directory.CreateDirectory(@"./malcore/doc/drag");
+                    // }
+
+                    // remove all history from monitoring form
+                    FormCollection fc = Application.OpenForms;
+                    foreach (Form frm in fc)
+                    {
+                        if (frm.Name == "MonitoringForm")
+                        {
+                            MonitoringForm monitoringForm = (MonitoringForm)frm;
+                            monitoringForm.removeAllScanedFiles();
+                            break;
+                        }
+                    }
+                }
+                catch (System.Exception)
+                {
+                }
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+            
+            
         }
     }
 

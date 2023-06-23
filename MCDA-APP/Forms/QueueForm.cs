@@ -349,7 +349,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
@@ -357,14 +357,21 @@ namespace MCDA_APP.Forms
                 Program.APIKEY = "";
                 Program.USEREMAIL = "";
 
+                Hide();
+                LoginForm loginForm = new LoginForm();
+                loginForm.Show(this);
+
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name != "LoginForm") {
+                        f.Close();
+                    }
+                }
+
             }
             catch (Exception ex)
             {
             }
-
-            Hide();
-            LoginForm loginForm = new LoginForm();
-            loginForm.Show(this);
         }
 
         private void label3_Click(object sender, EventArgs e)

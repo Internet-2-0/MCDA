@@ -32,19 +32,51 @@ namespace MCDA_APP.Forms
             labelEmail.Text = Program.USEREMAIL;
 
             // Create directories for caching
-            if (!Directory.Exists(@"./malcore"))
+            // there was a problem for the installer. installer did not recognize the relative path
+            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore"))
             {
-                Directory.CreateDirectory(@"./malcore");
+                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore");
             }
-            if (!Directory.Exists(@"./malcore/threat"))
+            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat"))
             {
-                Directory.CreateDirectory(@"./malcore/threat");
+                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat");
             }
-            if (!Directory.Exists(@"./malcore/doc"))
+            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc"))
             {
-                Directory.CreateDirectory(@"./malcore/doc");
+                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc");
+            }
+            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat\\drag"))
+            {
+                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat\\drag");
+            }
+            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc\\drag"))
+            {
+                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc\\drag");
             }
 
+            // // use for local ***tempcode
+            // if (!Directory.Exists(@"./malcore"))
+            // {
+            //     Directory.CreateDirectory(@"./malcore");
+            // }
+            // if (!Directory.Exists(@"./malcore/threat"))
+            // {
+            //     Directory.CreateDirectory(@"./malcore/threat");
+            // }
+            // if (!Directory.Exists(@"./malcore/doc"))
+            // {
+            //     Directory.CreateDirectory(@"./malcore/doc");
+            // }
+            // if (!Directory.Exists(@"./malcore/threat/drag"))
+            // {
+            //     Directory.CreateDirectory(@"./malcore/threat/drag");
+            // }
+            // if (!Directory.Exists(@"./malcore/doc/drag"))
+            // {
+            //     Directory.CreateDirectory(@"./malcore/doc/drag");
+            // }
+
+            showAllScannedDragFiles();
             startMonitoring();
         }
 
@@ -69,6 +101,8 @@ namespace MCDA_APP.Forms
                     if(Program.FilePool.Count > 0) {
                         this.numberOfProcessing++;
                         ProcessFile(Program.FilePool.Dequeue());
+                    } else { 
+                        queuePanel.Visible = false;
                     }
                     return;
                 }
@@ -76,6 +110,23 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 return;
+            }
+        }
+/**
+        * @Description: Start monitoring and update monitoring form with result
+        * @Description: This function works only one time when the app starts
+        * @return void.
+        **/
+        public async void removeAllScanedFiles()
+        { 
+            try
+            {
+                monitoringFlowLayoutPanel.Controls.Clear();
+            }
+            catch (Exception ex)
+            {
+                // Write out any exceptions.
+                Debug.Write(ex);
             }
         }
 
@@ -109,12 +160,12 @@ namespace MCDA_APP.Forms
                     monitoringFlowLayoutPanel.Visible = true;
                     labelRemaining.Visible = true;
                     lblRequestNumber.Visible = true;
-                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 90, 79); // 680
+                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 80, 79); // 680
 
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
 
-                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
+                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
                     if (key != null)
                     {
                         var SETTINGS = key.GetValue("SETTINGS");
@@ -172,12 +223,12 @@ namespace MCDA_APP.Forms
                     monitoringFlowLayoutPanel.Visible = true;
                     labelRemaining.Visible = true;
                     lblRequestNumber.Visible = true;
-                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 90, 79); // 680
+                    lblRequestNumber.Location = new System.Drawing.Point(this.screenWidth - 80, 79); // 680
 
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
 
-                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
+                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
                     if (key != null)
                     {
                         var SETTINGS = key.GetValue("SETTINGS");
@@ -226,7 +277,7 @@ namespace MCDA_APP.Forms
             {
                 Program.FilePool.Clear();
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
                 if (key != null)
                 {
                     var SETTINGS = key.GetValue("SETTINGS");
@@ -333,59 +384,7 @@ namespace MCDA_APP.Forms
                                 {
                                     // Console.WriteLine("{0} is not a valid file or directory.", path);
                                 }
-                            }
-
-                            // add files to the FilePool from malcore json dump folders
-                            // this feature is new added for drag and drop
-                            string threatDirectory = @"./malcore/threat/"; 
-                            string[] threatFileEntries = Directory.GetFiles(threatDirectory);
-                            foreach (string fname in threatFileEntries)
-                            {
-                                Debug.WriteLine("threatFileEntries fileName..........." + fname);
-                                
-                                string fileString = File.ReadAllText(fname);
-                                bool succeed = true;
-                                if (fileString == "released")
-                                {
-                                    return false;
-                                }
-
-                                if (fileString == "")
-                                {
-                                    succeed = false;
-                                }
-
-                                JObject jsonData = JObject.Parse(fileString); 
-                                string folderName = jsonData["folderName"].ToString();
-                                string fileName = jsonData["fileName"].ToString();
-
-                                addItemToMonitoringPanel(fileString, folderName, fileName, succeed);
-                            }
-                            string docDirectory = @"./malcore/doc/"; 
-                            string[] docFileEntries = Directory.GetFiles(docDirectory);
-                            foreach (string fname in docFileEntries)
-                            {
-                                Debug.WriteLine("docFileEntries fileName..........." + fname); 
-
-                                string fileString = File.ReadAllText(fname);
-                                bool succeed = true;
-                                if (fileString == "released")
-                                {
-                                    return false;
-                                }
-
-                                if (fileString == "")
-                                {
-                                    succeed = false;
-                                }
-
-                                JObject jsonData = JObject.Parse(fileString); 
-                                string folderName = jsonData["folderName"].ToString();
-                                string fileName = jsonData["fileName"].ToString();
-
-                                addItemToMonitoringPanelForDoc(fileString, folderName, fileName, succeed);
-                            }
-
+                            } 
                         }
                     }
                 }
@@ -401,6 +400,73 @@ namespace MCDA_APP.Forms
 
 
         /**
+        * @Description: add files to the FilePool from malcore json dump folders
+        * @Description: this feature is new added for drag and drop
+        * @return void.
+        **/
+        private async Task<bool> showAllScannedDragFiles()
+        {
+            try
+            {
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                if (key != null)
+                {
+                    var SETTINGS = key.GetValue("SETTINGS");
+                    if (SETTINGS != null)
+                    {
+                        JObject json = JObject.Parse(SETTINGS.ToString());
+                        this.minThreatScore = (double)(json["minThreatScore"]);
+                        this.sendStatistics = (bool)(json["sendStatistics"]);
+
+                        if ((bool)json["enableMornitoring"])
+                        { 
+                            string threatDirectory = @"./malcore/threat/drag/"; 
+                            string[] threatFileEntries = Directory.GetFiles(threatDirectory);
+                            foreach (string fname in threatFileEntries)
+                            {
+                                string fileString = File.ReadAllText(fname);
+                                bool succeed = true;
+                                if (fileString != "released" && fileString != "")
+                                { 
+
+                                    JObject jsonData = JObject.Parse(fileString); 
+                                    string folderName = jsonData["folderName"].ToString();
+                                    string fileName = jsonData["fileName"].ToString();
+
+                                    addItemToMonitoringPanel(fileString, folderName, fileName, succeed);
+                                }
+                            }
+                            string docDirectory = @"./malcore/doc/drag/"; 
+                            string[] docFileEntries = Directory.GetFiles(docDirectory);
+                            foreach (string fname in docFileEntries)
+                            {
+                                string fileString = File.ReadAllText(fname);
+                                bool succeed = true;
+                                if (fileString != "released" && fileString != "")
+                                { 
+
+                                    JObject jsonData = JObject.Parse(fileString); 
+                                    string folderName = jsonData["folderName"].ToString();
+                                    string fileName = jsonData["fileName"].ToString();
+
+                                    addItemToMonitoringPanelForDoc(fileString, folderName, fileName, succeed);
+                                }
+                            }
+
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Write out any exceptions.
+                Debug.Write(ex);
+                return false;
+            }
+        }
+
+        /**
         * @Description: Call api/threatscore or api/docfile to get scan result
         * @param pathFile: full file path of target file
         * @param fileName: target file name
@@ -410,7 +476,6 @@ namespace MCDA_APP.Forms
         private async Task<string> getThreatScore(string pathFile, string fileName, string type)
         {
             // NotifyPropertyChanged("filePool"); 
-
             try
             {
                 if (Program.FilePool.Count > 0)
@@ -642,7 +707,7 @@ namespace MCDA_APP.Forms
                 fileLabel.Name = "fileLabel";
                 fileLabel.Font = new Font("Calibri", 12, FontStyle.Bold);
                 fileLabel.AutoSize = false;
-                // fileLabel.Width = 400;
+                fileLabel.Width = 400;
                 fileLabel.Location = new System.Drawing.Point(22, 1);
                 fileLabel.Click += delegate (object obj, EventArgs ea)
                 {
@@ -674,7 +739,7 @@ namespace MCDA_APP.Forms
                 percentLabel.Width = 110;
                 percentLabel.Height = 40;
                 // percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4);  // 512
-                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 4); 
+                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 0); 
                 percentLabel.TextAlign = ContentAlignment.MiddleRight;
 
                 Button removeButton = new Button();
@@ -703,6 +768,10 @@ namespace MCDA_APP.Forms
                         {
                             File.Delete("./malcore/threat/" + hashFileName);
                         }
+                        if (File.Exists("./malcore/threat/drag/" + hashFileName))
+                        {
+                            File.Delete("./malcore/threat/drag/" + hashFileName);
+                        }
                         panel.Dispose();
 
                         string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"threatscore\",\"message\":\"File deleted\"}}";
@@ -723,9 +792,9 @@ namespace MCDA_APP.Forms
                 rerunButton.ForeColor = Color.Black;
                 rerunButton.FlatStyle = FlatStyle.Flat;
                 rerunButton.FlatAppearance.BorderSize = 0;
-                rerunButton.Width = 70;
+                rerunButton.Width = 80;
                 rerunButton.Height = 31;
-                rerunButton.Location = new System.Drawing.Point(this.screenWidth - 285, 6);  // 515
+                rerunButton.Location = new System.Drawing.Point(this.screenWidth - 295, 6);  // 515
                 rerunButton.Click += delegate (object obj, EventArgs ea)
                 {
                     rerunButton.Visible = false;
@@ -866,12 +935,18 @@ namespace MCDA_APP.Forms
                 if (isThreat == true)
                 {
                     responseString = await getThreatScore(path, fileName, "threatscore");
-                    JObject jsonObject = JObject.Parse(responseString);
-                    jsonObject["fileName"] = fileName;
-                    jsonObject["folderName"] = folderName;
-                    responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
+                    if(responseString != "") {
+                        JObject jsonObject = JObject.Parse(responseString);
+                        jsonObject["fileName"] = fileName;
+                        jsonObject["folderName"] = folderName;
+                        responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
+                    }
 
-                    File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
+                    if(Program.DragFilePool.Contains(path)) {
+                        File.WriteAllText(@"./malcore/threat/drag/" + hashFileName, responseString);
+                    } else {
+                        File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
+                    }
 
                     Label fileLabel = (Label)panel.Controls.Find("fileLabel", true)[0];
                     fileLabel.Click += delegate (object obj, EventArgs ea)
@@ -889,12 +964,18 @@ namespace MCDA_APP.Forms
                 else
                 {
                     responseString = await getThreatScore(path, fileName, "docfile");
-                    JObject jsonObject = JObject.Parse(responseString);
-                    jsonObject["fileName"] = fileName;
-                    jsonObject["folderName"] = folderName;
-                    responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
+                    if(responseString != "") {
+                        JObject jsonObject = JObject.Parse(responseString);
+                        jsonObject["fileName"] = fileName;
+                        jsonObject["folderName"] = folderName;
+                        responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
+                    }
 
-                    File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
+                    if(Program.DragFilePool.Contains(path)) {
+                        File.WriteAllText(@"./malcore/doc/drag/" + hashFileName, responseString);
+                    } else {
+                        File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
+                    }
 
                     Label fileLabel = (Label)panel.Controls.Find("fileLabel", true)[0];
                     fileLabel.Click += delegate (object obj, EventArgs ea)
@@ -954,7 +1035,7 @@ namespace MCDA_APP.Forms
 
                         percentLabel.Text = score;
                         percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
-                        percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4); // 512
+                        percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 0); // 512
 
                         fileLabel.Text = fileName;
                         fileLabel.ForeColor = Color.White;
@@ -1008,7 +1089,7 @@ namespace MCDA_APP.Forms
                 Label percentLabel = (Label)panel.Controls.Find("percentLabel", true)[0];
                 percentLabel.Visible = false;
                 percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
-                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4); // 512
+                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 0); // 512
                 panel.BackColor = Color.DarkRed;
             }
 
@@ -1067,7 +1148,7 @@ namespace MCDA_APP.Forms
                 fileLabel.Name = "fileLabel";
                 fileLabel.Font = new Font("Calibri", 12, FontStyle.Bold);
                 fileLabel.AutoSize = false;
-                // fileLabel.Width = 400;
+                fileLabel.Width = 400;
                 fileLabel.Location = new System.Drawing.Point(22, 1);
                 fileLabel.Click += delegate (object obj, EventArgs ea)
                 {
@@ -1098,7 +1179,7 @@ namespace MCDA_APP.Forms
                 percentLabel.Font = new Font("Calibri", 20, FontStyle.Bold);
                 percentLabel.Width = 110;
                 percentLabel.Height = 40;
-                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 4); // 512
+                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 0); // 512
                 percentLabel.TextAlign = ContentAlignment.MiddleRight;
 
                 Button removeButton = new Button();
@@ -1125,8 +1206,11 @@ namespace MCDA_APP.Forms
                         string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
                         if (File.Exists("./malcore/doc/" + hashFileName))
                         {
-
                             File.Delete("./malcore/doc/" + hashFileName);
+                        }
+                        if (File.Exists("./malcore/doc/drag/" + hashFileName))
+                        {
+                            File.Delete("./malcore/doc/drag/" + hashFileName);
                         }
                         panel.Dispose();
 
@@ -1148,9 +1232,9 @@ namespace MCDA_APP.Forms
                 rerunButton.ForeColor = Color.Black;
                 rerunButton.FlatStyle = FlatStyle.Flat;
                 rerunButton.FlatAppearance.BorderSize = 0;
-                rerunButton.Width = 70;
+                rerunButton.Width = 80;
                 rerunButton.Height = 31;
-                rerunButton.Location = new System.Drawing.Point(this.screenWidth - 285, 6); // 515
+                rerunButton.Location = new System.Drawing.Point(this.screenWidth - 295, 6); // 515
                 rerunButton.Click += delegate (object obj, EventArgs ea)
                 {
                     rerunButton.Visible = false;
@@ -1252,7 +1336,79 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
+                Debug.Write(ex.Message);
             }
+        }
+
+
+        /**
+        * @Description: add scanning files to monitoring panel temporary
+        * @param folderName: full path of the target file excluding it's name 
+        * @param fileName: target file name
+        * @return void
+        **/
+        private Panel? addItemToMonitoringPanelForInitialScan(string folderName, string fileName)
+        {
+            try
+            { 
+                // item panel
+                Panel panel = new Panel();
+                panel.Width = this.Size.Width - 30;
+                panel.Height = 44;
+                panel.BackColor = Color.Black;
+
+                // color panel
+                Panel colorPanel = new Panel();
+                colorPanel.Name = "colorPanel";
+                colorPanel.Width = 20;
+                colorPanel.Height = 44;
+                colorPanel.BackColor = Color.White;
+
+                // file label
+                Label fileLabel = new Label();
+                fileLabel.Name = "fileLabel";
+                fileLabel.Font = new Font("Calibri", 12, FontStyle.Bold);
+                fileLabel.Text = fileName;
+                fileLabel.AutoSize = false;
+                fileLabel.Location = new System.Drawing.Point(22, 1); 
+                fileLabel.ForeColor = Color.White;
+
+                // folder label
+                Label folderLabel = new Label();
+                folderLabel.Name = "folderLabel";
+                folderLabel.Text = folderName;
+                folderLabel.ForeColor = Color.White;
+                folderLabel.Font = new Font("Calibri", 11, FontStyle.Regular);
+                folderLabel.AutoSize = false;
+                folderLabel.Width = 400;
+                folderLabel.Location = new System.Drawing.Point(24, 22); 
+
+                // percent label
+                Label percentLabel = new Label();
+                percentLabel.Name = "percentLabel";
+                percentLabel.Text = "Scanning...";
+                percentLabel.Font = new Font("Calibri", 11, FontStyle.Bold);
+                percentLabel.ForeColor = Color.White;
+                percentLabel.Width = 110;
+                percentLabel.Height = 40;
+                // percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4);  // 512
+                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 180, 4); 
+                percentLabel.TextAlign = ContentAlignment.MiddleRight;
+                percentLabel.ForeColor = Color.Yellow;  
+
+                panel.Controls.Add(colorPanel);
+                panel.Controls.Add(fileLabel);
+                panel.Controls.Add(folderLabel);
+                panel.Controls.Add(percentLabel);  
+
+                monitoringFlowLayoutPanel.Controls.Add(panel);
+                return panel;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            
         }
 
 
@@ -1263,24 +1419,32 @@ namespace MCDA_APP.Forms
         **/
         public async void ProcessDirectory(string targetDirectory)
         {
-            // Process the list of files found in the directory.
-            string[] fileEntries = Directory.GetFiles(targetDirectory);
-            foreach (string fileName in fileEntries)
+            try
             {
-                bool result = checkFileExtentionIsAllowed(fileName);
-                if (result)
+                // Process the list of files found in the directory.
+                string[] fileEntries = Directory.GetFiles(targetDirectory);
+                foreach (string fileName in fileEntries)
                 {
-                    if (!Program.FilePool.Contains(fileName) && !Program.PrecessedFilePool.Contains(fileName))
+                    bool result = checkFileExtentionIsAllowed(fileName);
+                    if (result)
                     {
-                        Program.FilePool.Enqueue(fileName);
+                        if (!Program.FilePool.Contains(fileName) && !Program.PrecessedFilePool.Contains(fileName))
+                        {
+                            Program.FilePool.Enqueue(fileName);
+                        }
                     }
                 }
-            }
 
-            // Recurse into subdirectories of this directory.
-            string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
-            foreach (string subdirectory in subdirectoryEntries)
-                ProcessDirectory(subdirectory);
+                // Recurse into subdirectories of this directory.
+                string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
+                foreach (string subdirectory in subdirectoryEntries) {
+                    ProcessDirectory(subdirectory);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex);
+            }
         }
 
 
@@ -1301,6 +1465,7 @@ namespace MCDA_APP.Forms
                 // } else {
                 //     lblProcessFileCount.Visible = false;
                 // }
+                Debug.WriteLine("process file......." + path);
 
                 Program.PrecessedFilePool.Enqueue(path);
 
@@ -1313,6 +1478,8 @@ namespace MCDA_APP.Forms
                 {
                     string fileString = File.ReadAllText("./malcore/threat/" + hashFileName);
                     bool succeed = true;
+                    this.numberOfProcessing--;
+
                     if (fileString == "released")
                     {
                         return false;
@@ -1323,7 +1490,6 @@ namespace MCDA_APP.Forms
                         succeed = false;
                     }
 
-                    this.numberOfProcessing--;
                     // if (this.numberOfProcessing == 0) {
                     //     lblProcessFileCount.Visible = false;
                     // }
@@ -1333,6 +1499,8 @@ namespace MCDA_APP.Forms
                 {
                     string fileString = File.ReadAllText("./malcore/doc/" + hashFileName);
                     bool succeed = true;
+                    this.numberOfProcessing--;
+
                     if (fileString == "released")
                     {
                         return false;
@@ -1342,6 +1510,7 @@ namespace MCDA_APP.Forms
                     {
                         succeed = false;
                     }
+
                     addItemToMonitoringPanelForDoc(fileString, folderName, fileName, succeed);
                 }
                 else
@@ -1364,22 +1533,33 @@ namespace MCDA_APP.Forms
                                     // exe file
                                     if ((buffer[0] == 77 && buffer[1] == 90) || (buffer[0] == 90 && buffer[1] == 77))
                                     {
+                                        //tempcode
+                                        var panel = addItemToMonitoringPanelForInitialScan(folderName, fileName);
+                                        Debug.WriteLine("start scanning................." + fileName);
+
                                         string responseString = await getThreatScore(path, fileName, "threatscore");
 
                                         // save to hash file                                        
-                                        JObject jsonObject = JObject.Parse(responseString);
-                                        jsonObject["fileName"] = fileName;
-                                        jsonObject["folderName"] = folderName;
-                                        responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
-                                        
-                                        File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
-
                                         bool succeed = true;
                                         if (responseString == "")
                                         {
-                                            succeed = false;
+                                            succeed = false; 
+                                        } else {
+                                            JObject jsonObject = JObject.Parse(responseString);
+                                            jsonObject["fileName"] = fileName;
+                                            jsonObject["folderName"] = folderName;
+                                            responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
+                                        }
+                                        if(Program.DragFilePool.Contains(path)) {
+                                            File.WriteAllText(@"./malcore/threat/drag/" + hashFileName, responseString);
+                                        } else {
+                                            File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
                                         }
 
+                                        if(panel != null) {
+                                            panel.Dispose();
+                                            Debug.WriteLine("end scanning................." + fileName);
+                                        }
                                         // add to mornitoring list 
                                         addItemToMonitoringPanel(responseString, folderName, fileName, succeed);
                                     }
@@ -1396,19 +1576,30 @@ namespace MCDA_APP.Forms
                                     (buffer[0] == 80 && buffer[1] == 75 && buffer[2] == 3 && buffer[3] == 4 && buffer[4] == 20 && buffer[5] == 0 && buffer[6] == 6 && buffer[7] == 0) ||
                                     (buffer[0] == 228 && buffer[1] == 82 && buffer[2] == 92 && buffer[3] == 123 && buffer[4] == 140 && buffer[5] == 216 && buffer[6] == 167 && buffer[7] == 77 && buffer[8] == 174 && buffer[9] == 177))
                                     {
+                                        var panel = addItemToMonitoringPanelForInitialScan(folderName, fileName);
                                         string responseString = await getThreatScore(path, fileName, "docfile");
 
                                         // save to hash file
-                                        File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);                                   
-                                        JObject jsonObject = JObject.Parse(responseString);
-                                        jsonObject["fileName"] = fileName;
-                                        jsonObject["folderName"] = folderName;
-                                        responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
-
                                         bool succeed = true;
                                         if (responseString == "")
                                         {
-                                            succeed = false;
+                                            succeed = false; 
+                                        } else {
+                                            JObject jsonObject = JObject.Parse(responseString);
+                                            jsonObject["fileName"] = fileName;
+                                            jsonObject["folderName"] = folderName;
+                                            responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
+                                        }
+
+                                        if(Program.DragFilePool.Contains(path)) {
+                                            File.WriteAllText(@"./malcore/doc/drag/" + hashFileName, responseString);                                   
+                                        } else {
+                                            File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);                                   
+                                        }
+                                        
+                                        if(panel != null) {
+                                            panel.Dispose();
+                                            Debug.WriteLine("end scanning................." + fileName);
                                         }
                                         addItemToMonitoringPanelForDoc(responseString, folderName, fileName, succeed);
                                     }
@@ -1579,7 +1770,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
@@ -1587,15 +1778,23 @@ namespace MCDA_APP.Forms
                 Program.APIKEY = "";
                 Program.USEREMAIL = "";
 
+                Hide();
+                LoginForm loginForm = new LoginForm();
+                loginForm.Show(this);
+
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name != "LoginForm") {
+                        f.Hide();
+                    } 
+                } 
             }
             catch (Exception ex)
             {
-                Debug.Write(ex);
+                Debug.Write("em..............."+ex.Message);
+                LoginForm loginForm = new LoginForm();
+                loginForm.Show(this); 
             }
-
-            Hide();
-            LoginForm loginForm = new LoginForm();
-            loginForm.Show(this);
         }
 
         /**
@@ -1770,6 +1969,7 @@ namespace MCDA_APP.Forms
 
                     if (!Program.FilePool.Contains(fileName) && !Program.PrecessedFilePool.Contains(fileName))
                     {
+                        Program.DragFilePool.Enqueue(fileName);
                         Program.FilePool.Enqueue(fileName);
                     } 
                 } 
@@ -1815,5 +2015,12 @@ namespace MCDA_APP.Forms
         {
 
         }
+    }
+
+    public class FileNameData
+    {
+        public bool success { get; set; }
+        public string fileName { get; set; }
+        public string folderName { get; set; }
     }
 }

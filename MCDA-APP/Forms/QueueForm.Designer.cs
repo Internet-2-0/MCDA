@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QueueForm));
-            this.btnLogout = new System.Windows.Forms.Button();
-            this.btnSettings = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.labelEmail = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -45,36 +43,6 @@
             this.viewQueueFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnLogout
-            // 
-            this.btnLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.btnLogout.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.btnLogout.Location = new System.Drawing.Point(695, 23);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(85, 31);
-            this.btnLogout.TabIndex = 48;
-            this.btnLogout.Text = "Log Out";
-            this.btnLogout.UseVisualStyleBackColor = false;
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.btnSettings.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSettings.ForeColor = System.Drawing.Color.White;
-            this.btnSettings.Location = new System.Drawing.Point(322, 23);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(85, 31);
-            this.btnSettings.TabIndex = 47;
-            this.btnSettings.Text = "Settings";
-            this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.Visible = false;
             // 
             // label1
             // 
@@ -219,8 +187,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblMalcore);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.btnLogout);
-            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelEmail);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -236,9 +202,6 @@
         }
 
         #endregion
-
-        private Button btnLogout;
-        private Button btnSettings;
         private Label label1;
         private Label labelEmail;
         private Panel panel1;

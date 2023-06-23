@@ -20,27 +20,35 @@ namespace MCDA_APP.Forms
             this.folderName = folderName;
             this.fileName = fileName;
             this.type = type;
-            labelEmail.Text = Program.USEREMAIL;
+            labelEmail.Text = Program.USEREMAIL; 
 
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore");
-            if (key != null)
+            try
             {
-                var SETTINGS = key.GetValue("SETTINGS");
-                if (SETTINGS != null)
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                if (key != null)
                 {
-                    JObject json = JObject.Parse(SETTINGS.ToString());
-                    this.minThreatScore = (double)(json["minThreatScore"]);
+                    var SETTINGS = key.GetValue("SETTINGS");
+                    if (SETTINGS != null)
+                    {
+                        JObject json = JObject.Parse(SETTINGS.ToString());
+                        this.minThreatScore = (double)(json["minThreatScore"]);
+                    }
+                }
+
+                if (type == "threat")
+                {
+                    initDetailFormUI(monitoringForm, panel);
+                }
+                else
+                {
+                    initDetailFormUIForDoc(monitoringForm, panel);
                 }
             }
-
-            if (type == "threat")
+            catch (Exception ex)
             {
-                initDetailFormUI(monitoringForm, panel);
+                Debug.Write("DetailsForm.............." + ex.Message);
             }
-            else
-            {
-                initDetailFormUIForDoc(monitoringForm, panel);
-            }
+            
 
         }
 
@@ -55,9 +63,10 @@ namespace MCDA_APP.Forms
         {
             // folder label 
             folderLabel.Text = this.folderName;
-            labelFullPath.Text = this.folderName;
+            labelFullPath.Text = this.folderName + "\\" + this.fileName;
 
             bool success = true;
+
 
             if (this.responseString == "" || this.responseString == null)
             {
@@ -66,12 +75,15 @@ namespace MCDA_APP.Forms
             else
             {
                 JObject jsonObject = JObject.Parse(this.responseString);
-                success = (bool)jsonObject["success"];
+                success = (bool)jsonObject["success"]; 
 
-                if (jsonObject["data"]["data"].ToString() == "{}")
+                if (jsonObject["data"]["data"].ToString() == "{}" || jsonObject["data"]["data"].ToString() == "")
                 {
                     success = false;
                 }
+
+                Debug.WriteLine(success);
+
                 string score = "";
                 double score_num = 0;
                 if (success)
@@ -91,10 +103,10 @@ namespace MCDA_APP.Forms
                         {
                             FlowLayoutPanel panel = new FlowLayoutPanel();
                             panel.AutoSize = true;
-                            panel.MaximumSize = new System.Drawing.Size(480, 0);
+                            panel.MaximumSize = new System.Drawing.Size(670, 0);
 
                             Panel linePanel = new Panel();
-                            linePanel.Size = new System.Drawing.Size(480, 1);
+                            linePanel.Size = new System.Drawing.Size(670, 1);
                             linePanel.BackColor = Color.Gray;
 
                             Label lblSignatureTitle = new Label();
@@ -108,13 +120,13 @@ namespace MCDA_APP.Forms
                             lblEntropyDescription.ForeColor = Color.White;
                             lblEntropyDescription.Text = (string)signatures[i]["info"]["description"];
                             lblEntropyDescription.AutoSize = true;
-                            lblEntropyDescription.MaximumSize = new System.Drawing.Size(480, 0);
+                            lblEntropyDescription.MaximumSize = new System.Drawing.Size(670, 0);
 
                             Label lblDiscovered = new Label();
                             lblDiscovered.Text = "Discovered:";
                             lblDiscovered.ForeColor = Color.Red;
                             lblDiscovered.Font = new Font("Calibri", 12, FontStyle.Italic);
-                            lblDiscovered.Width = 480;
+                            lblDiscovered.Width = 670;
 
                             Label lblDiscoveredContent = new Label();
                             var discovered = signatures[i]["discovered"];
@@ -160,7 +172,7 @@ namespace MCDA_APP.Forms
                             lblDiscoveredContent.Font = new Font("Calibri", 11, FontStyle.Regular);
                             lblDiscoveredContent.ForeColor = Color.White;
                             lblDiscoveredContent.AutoSize = true;
-                            lblDiscoveredContent.MaximumSize = new System.Drawing.Size(480, 0);
+                            lblDiscoveredContent.MaximumSize = new System.Drawing.Size(670, 0);
 
                             panel.Controls.Add(lblSignatureTitle);
                             panel.Controls.Add(lblEntropyDescription);
@@ -236,9 +248,9 @@ namespace MCDA_APP.Forms
                 rerunButton.ForeColor = Color.Black;
                 rerunButton.FlatStyle = FlatStyle.Flat;
                 rerunButton.FlatAppearance.BorderSize = 0;
-                rerunButton.Width = 70;
+                rerunButton.Width = 80;
                 rerunButton.Height = 31;
-                rerunButton.Location = new System.Drawing.Point(255, 7);
+                rerunButton.Location = new System.Drawing.Point(445, 7);
                 rerunButton.Click += delegate (object obj, EventArgs ea)
                 {
                     this.Close();
@@ -307,7 +319,7 @@ namespace MCDA_APP.Forms
                 JObject jsonObject = JObject.Parse(this.responseString);
                 success = (bool)jsonObject["success"];
 
-                if (jsonObject["data"]["data"].ToString() == "{}")
+                if (jsonObject["data"]["data"].ToString() == "{}" || jsonObject["data"]["data"].ToString() == "")
                 {
                     success = false;
                 }
@@ -330,10 +342,10 @@ namespace MCDA_APP.Forms
                         {
                             FlowLayoutPanel panel = new FlowLayoutPanel();
                             panel.AutoSize = true;
-                            panel.MaximumSize = new System.Drawing.Size(480, 0);
+                            panel.MaximumSize = new System.Drawing.Size(670, 0);
 
                             Panel linePanel = new Panel();
-                            linePanel.Size = new System.Drawing.Size(480, 1);
+                            linePanel.Size = new System.Drawing.Size(670, 1);
                             linePanel.BackColor = Color.Gray;
 
                             Label lblSignatureTitle = new Label();
@@ -412,9 +424,9 @@ namespace MCDA_APP.Forms
                 rerunButton.ForeColor = Color.Black;
                 rerunButton.FlatStyle = FlatStyle.Flat;
                 rerunButton.FlatAppearance.BorderSize = 0;
-                rerunButton.Width = 70;
+                rerunButton.Width = 80;
                 rerunButton.Height = 31;
-                rerunButton.Location = new System.Drawing.Point(255, 7);
+                rerunButton.Location = new System.Drawing.Point(445, 7);
                 rerunButton.Click += delegate (object obj, EventArgs ea)
                 {
                     this.Close();
@@ -513,7 +525,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@".malcore", true);
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
@@ -521,14 +533,21 @@ namespace MCDA_APP.Forms
                 Program.APIKEY = "";
                 Program.USEREMAIL = "";
 
+                Hide();
+                LoginForm loginForm = new LoginForm();
+                loginForm.Show(this);
+
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name != "LoginForm") {
+                        f.Close();
+                    }
+                }
+
             }
             catch (Exception ex)
             {
             }
-
-            Hide();
-            LoginForm loginForm = new LoginForm();
-            loginForm.Show(this);
         }
 
         private void label3_Click(object sender, EventArgs e)

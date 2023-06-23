@@ -74,7 +74,6 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblProcessFileCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.monitoringFlowLayoutPanel.SuspendLayout();
             this.queuePanel.SuspendLayout();
@@ -118,7 +117,7 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
             this.panel1.Location = new System.Drawing.Point(-1, 72);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 1);
+            this.panel1.Size = new System.Drawing.Size(840, 1);
             this.panel1.TabIndex = 26;
             // 
             // panel3
@@ -134,7 +133,7 @@
             this.lblStatus.AutoSize = true;
             this.lblStatus.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(215)))), ((int)(((byte)(161)))));
-            this.lblStatus.Location = new System.Drawing.Point(120, 78);
+            this.lblStatus.Location = new System.Drawing.Point(130, 78);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(60, 21);
             this.lblStatus.TabIndex = 30;
@@ -168,7 +167,7 @@
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.btnLogout.Location = new System.Drawing.Point(690, 21);
+            this.btnLogout.Location = new System.Drawing.Point(724, 21);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(85, 31);
             this.btnLogout.TabIndex = 38;
@@ -183,7 +182,7 @@
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSettings.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSettings.ForeColor = System.Drawing.Color.White;
-            this.btnSettings.Location = new System.Drawing.Point(582, 21);
+            this.btnSettings.Location = new System.Drawing.Point(616, 21);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(85, 31);
             this.btnSettings.TabIndex = 37;
@@ -228,7 +227,7 @@
             this.lblTerms.AutoSize = true;
             this.lblTerms.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblTerms.ForeColor = System.Drawing.Color.White;
-            this.lblTerms.Location = new System.Drawing.Point(597, 460);
+            this.lblTerms.Location = new System.Drawing.Point(633, 460);
             this.lblTerms.Name = "lblTerms";
             this.lblTerms.Size = new System.Drawing.Size(74, 15);
             this.lblTerms.TabIndex = 31;
@@ -240,7 +239,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(690, 460);
+            this.label3.Location = new System.Drawing.Point(726, 460);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(81, 15);
             this.label3.TabIndex = 32;
@@ -252,7 +251,7 @@
             this.lblMalcore.AutoSize = true;
             this.lblMalcore.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblMalcore.ForeColor = System.Drawing.Color.White;
-            this.lblMalcore.Location = new System.Drawing.Point(515, 460);
+            this.lblMalcore.Location = new System.Drawing.Point(551, 460);
             this.lblMalcore.Name = "lblMalcore";
             this.lblMalcore.Size = new System.Drawing.Size(63, 15);
             this.lblMalcore.TabIndex = 33;
@@ -508,25 +507,12 @@
             this.exitToolStripMenuItem.Text = "Quit Malcore Agent";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // lblProcessFileCount
-            // 
-            this.lblProcessFileCount.AutoSize = true;
-            this.lblProcessFileCount.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblProcessFileCount.ForeColor = System.Drawing.Color.White;
-            this.lblProcessFileCount.Location = new System.Drawing.Point(200, 78);
-            this.lblProcessFileCount.Name = "lblProcessFileCount";
-            this.lblProcessFileCount.Size = new System.Drawing.Size(184, 21);
-            this.lblProcessFileCount.TabIndex = 40;
-            this.lblProcessFileCount.Text = "10 Files are running now";
-            this.lblProcessFileCount.Visible = false;
-            // 
             // MonitoringForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(800, 504);
-            this.Controls.Add(this.lblProcessFileCount);
+            this.ClientSize = new System.Drawing.Size(830, 504);
             this.Controls.Add(this.panelInactive);
             this.Controls.Add(this.monitoringFlowLayoutPanel);
             this.Controls.Add(this.btnLogout);
@@ -629,6 +615,5 @@
         private Panel queuePanel;
         private Label labelQueuedFiles;
         private Button btnViewQueue;
-        private Label lblProcessFileCount;
     }
 }
