@@ -63,6 +63,8 @@ namespace MCDA_APP
                     var userdata = json["data"];
                     Boolean success = json["success"] != null ? (Boolean)json["success"] : false;
 
+                    Debug.WriteLine("btnLogin_Click_1################################################" + userdata);
+
                     if (success == true && userdata != null)
                     {
                         authdata = userdata["user"].ToString();
@@ -77,6 +79,7 @@ namespace MCDA_APP
 
                             Program.APIKEY = userdata["user"]["apiKey"].ToString();
                             Program.USEREMAIL = userdata["user"]["email"].ToString();
+                            Program.SUBSCRIPTION = userdata["user"]["subscription"]["name"].ToString();
 
                             Hide();
                             SettingsForm settingsForm = new SettingsForm();

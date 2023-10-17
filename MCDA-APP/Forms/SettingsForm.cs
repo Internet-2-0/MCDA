@@ -21,6 +21,7 @@ namespace MCDA_APP.Forms
                 // set apikey and user email
                 labelEmail.Text = Program.USEREMAIL;
                 txtApikey.Text = Program.APIKEY;
+                labelPlan.Text = Program.SUBSCRIPTION; 
 
                 // Check if user authentication 
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
@@ -168,6 +169,7 @@ namespace MCDA_APP.Forms
 
                 Program.APIKEY = "";
                 Program.USEREMAIL = ""; 
+                Program.SUBSCRIPTION = ""; 
                 
                 Hide();
                 
@@ -189,7 +191,6 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.Write("e..............."+ex.Message);
                 LoginForm loginForm = new LoginForm();
                 loginForm.Show(this); 
             }
@@ -209,7 +210,7 @@ namespace MCDA_APP.Forms
                     string folderPath = folderDlg.SelectedPath;
 
                     // prevent to add root dirives such as C:\, D:\ and C:\Windows
-                    if(folderPath.Length == 3 || folderPath.Contains("C:\\Windows")) {
+                    if(folderPath.Equals("C:\\") || folderPath.Contains("C:\\Windows")) {
                         return;
                     }
                     this.paths.Add(folderPath);
@@ -345,7 +346,7 @@ namespace MCDA_APP.Forms
                 {
                     String folderPath = filePaths[i];
                     // prevent to add root dirives such as C:\, D:\
-                    if(folderPath.Length == 3 || folderPath.Contains("C:\\Windows")) {
+                    if(folderPath.Equals("C:\\") || folderPath.Contains("C:\\Windows")) {
                         return;
                     }
                     this.paths.Add(folderPath);

@@ -34,7 +34,6 @@ D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.LoginForm.resources
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Forms.MonitoringForm.resources
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Forms.QueueForm.resources
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Forms.SettingsForm.resources
-D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Forms.TestForm.resources
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA_APP.Properties.Resources.resources
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA-APP.csproj.GenerateResource.cache
 D:\WORK\MCDA\MCDA-APP\obj\Debug\net6.0-windows\MCDA-APP.GeneratedMSBuildEditorConfig.editorconfig

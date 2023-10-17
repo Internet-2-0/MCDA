@@ -10,6 +10,7 @@ namespace MCDA_APP
     {
         public static string APIKEY = "";
         public static string USEREMAIL = "";
+        public static string SUBSCRIPTION = "";
         public static Queue<string> FilePool = new Queue<string>();
         public static Queue<string> PrecessedFilePool = new Queue<string>();
         public static Queue<string> DragFilePool = new Queue<string>();
@@ -42,6 +43,7 @@ namespace MCDA_APP
                         JObject json = JObject.Parse(API_KEY.ToString());
                         APIKEY = json["apiKey"].ToString();
                         USEREMAIL = json["email"].ToString();
+                        SUBSCRIPTION = json["subscription"]["name"].ToString();
 
                         var SETTINGS = key.GetValue("SETTINGS");
 
@@ -85,7 +87,7 @@ namespace MCDA_APP
                     var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
                     client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
                     client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.0");
+                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
 
                     using (
                           var response = await client.PostAsync(url, requestContent))

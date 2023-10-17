@@ -30,6 +30,7 @@ namespace MCDA_APP.Forms
 
             this.screenWidth = this.Size.Width;
             labelEmail.Text = Program.USEREMAIL;
+            labelPlan.Text = Program.SUBSCRIPTION; 
 
             // Create directories for caching
             // there was a problem for the installer. installer did not recognize the relative path
@@ -571,7 +572,7 @@ namespace MCDA_APP.Forms
                     var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
                     client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
                     client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.0");
+                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
 
                     using (
                           var response = await client.PostAsync(url, requestContent))
@@ -613,7 +614,7 @@ namespace MCDA_APP.Forms
                     var requestContent = new StringContent("", Encoding.Unicode, "application/json");
                     client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
                     client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.0");
+                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
 
                     using (
                           var response = await client.PostAsync(url, requestContent))
@@ -1777,6 +1778,7 @@ namespace MCDA_APP.Forms
 
                 Program.APIKEY = "";
                 Program.USEREMAIL = "";
+                Program.SUBSCRIPTION = "";
 
                 Hide();
                 LoginForm loginForm = new LoginForm();

@@ -21,6 +21,7 @@ namespace MCDA_APP.Forms
             this.fileName = fileName;
             this.type = type;
             labelEmail.Text = Program.USEREMAIL; 
+            labelPlan.Text = Program.SUBSCRIPTION; 
 
             try
             {
@@ -532,6 +533,7 @@ namespace MCDA_APP.Forms
 
                 Program.APIKEY = "";
                 Program.USEREMAIL = "";
+                Program.SUBSCRIPTION = "";
 
                 Hide();
                 LoginForm loginForm = new LoginForm();

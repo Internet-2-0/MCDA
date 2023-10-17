@@ -36,7 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblMalcore = new System.Windows.Forms.Label();
             this.labelEmail = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelPlan = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -88,11 +88,11 @@
             // lblTerms
             // 
             this.lblTerms.AutoSize = true;
-            this.lblTerms.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblTerms.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblTerms.ForeColor = System.Drawing.Color.White;
             this.lblTerms.Location = new System.Drawing.Point(598, 460);
             this.lblTerms.Name = "lblTerms";
-            this.lblTerms.Size = new System.Drawing.Size(74, 15);
+            this.lblTerms.Size = new System.Drawing.Size(88, 16);
             this.lblTerms.TabIndex = 8;
             this.lblTerms.Text = "Terms of Use";
             this.lblTerms.Click += new System.EventHandler(this.lblTerms_Click);
@@ -100,11 +100,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(691, 460);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(81, 15);
+            this.label3.Size = new System.Drawing.Size(92, 16);
             this.label3.TabIndex = 9;
             this.label3.Text = "Privacy Policy";
             this.label3.Click += new System.EventHandler(this.label3_Click);
@@ -112,11 +112,11 @@
             // lblMalcore
             // 
             this.lblMalcore.AutoSize = true;
-            this.lblMalcore.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblMalcore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblMalcore.ForeColor = System.Drawing.Color.White;
             this.lblMalcore.Location = new System.Drawing.Point(516, 460);
             this.lblMalcore.Name = "lblMalcore";
-            this.lblMalcore.Size = new System.Drawing.Size(63, 15);
+            this.lblMalcore.Size = new System.Drawing.Size(70, 16);
             this.lblMalcore.TabIndex = 10;
             this.lblMalcore.Text = "malcore.io";
             this.lblMalcore.Click += new System.EventHandler(this.lblMalcore_Click);
@@ -128,20 +128,20 @@
             this.labelEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
             this.labelEmail.Location = new System.Drawing.Point(17, 10);
             this.labelEmail.Name = "labelEmail";
-            this.labelEmail.Size = new System.Drawing.Size(201, 26);
+            this.labelEmail.Size = new System.Drawing.Size(59, 26);
             this.labelEmail.TabIndex = 13;
-            this.labelEmail.Text = "mkovalch@gmail.com";
+            this.labelEmail.Text = "Email";
             // 
-            // label1
+            // labelPlan
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.label1.Location = new System.Drawing.Point(18, 37);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(141, 21);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Enterprise 2.0 Plan";
+            this.labelPlan.AutoSize = true;
+            this.labelPlan.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelPlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.labelPlan.Location = new System.Drawing.Point(18, 37);
+            this.labelPlan.Name = "labelPlan";
+            this.labelPlan.Size = new System.Drawing.Size(40, 21);
+            this.labelPlan.TabIndex = 13;
+            this.labelPlan.Text = "Plan";
             // 
             // panel1
             // 
@@ -235,11 +235,11 @@
             // 
             this.textMinScore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
             this.textMinScore.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textMinScore.Font = new System.Drawing.Font("Carlito", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textMinScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textMinScore.ForeColor = System.Drawing.Color.White;
             this.textMinScore.Location = new System.Drawing.Point(6, 4);
             this.textMinScore.Name = "textMinScore";
-            this.textMinScore.Size = new System.Drawing.Size(20, 20);
+            this.textMinScore.Size = new System.Drawing.Size(20, 19);
             this.textMinScore.TabIndex = 18;
             this.textMinScore.Text = "15";
             this.textMinScore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -296,7 +296,7 @@
             // 
             this.btnSave.BackColor = System.Drawing.Color.Black;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Carlito", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSave.ForeColor = System.Drawing.SystemColors.Control;
             this.btnSave.Location = new System.Drawing.Point(644, 371);
             this.btnSave.Name = "btnSave";
@@ -310,7 +310,7 @@
             // 
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Carlito", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCancel.ForeColor = System.Drawing.SystemColors.Control;
             this.btnCancel.Location = new System.Drawing.Point(492, 371);
             this.btnCancel.Name = "btnCancel";
@@ -418,7 +418,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelPlan);
             this.Controls.Add(this.labelEmail);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
@@ -431,7 +431,7 @@
             this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Malcore Agent 1.1.0 | Settings";
+            this.Text = "Malcore Agent 1.1.1 | Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.Resize += new System.EventHandler(this.SettingsForm_Resize);
@@ -455,7 +455,7 @@
         private Label label3;
         private Label lblMalcore;
         private Label labelEmail;
-        private Label label1;
+        private Label labelPlan;
         private Panel panel1;
         private Button btnLogout;
         private Label label2;

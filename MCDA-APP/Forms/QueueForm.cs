@@ -16,6 +16,8 @@ namespace MCDA_APP.Forms
             InitializeComponent();
 
             labelEmail.Text = Program.USEREMAIL;
+            labelPlan.Text = Program.SUBSCRIPTION; 
+
             this.screenWidth = this.Size.Width;
             viewQueueFlowLayoutPanel.Width = this.screenWidth;
             labelInQueueFiles.Location = new System.Drawing.Point(this.screenWidth - 180, 84);
@@ -287,7 +289,7 @@ namespace MCDA_APP.Forms
                     var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
                     client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
                     client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.0");
+                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
 
                     using (
                           var response = await client.PostAsync(url, requestContent))
@@ -356,6 +358,7 @@ namespace MCDA_APP.Forms
 
                 Program.APIKEY = "";
                 Program.USEREMAIL = "";
+                Program.SUBSCRIPTION = ""; 
 
                 Hide();
                 LoginForm loginForm = new LoginForm();

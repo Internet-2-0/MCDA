@@ -41,7 +41,7 @@
             this.colorPanel = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelPlan = new System.Windows.Forms.Label();
             this.labelEmail = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblTerms = new System.Windows.Forms.Label();
@@ -192,16 +192,16 @@
             this.btnSettings.Visible = false;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
-            // label1
+            // labelPlan
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.label1.Location = new System.Drawing.Point(18, 37);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(141, 21);
-            this.label1.TabIndex = 41;
-            this.label1.Text = "Enterprise 2.0 Plan";
+            this.labelPlan.AutoSize = true;
+            this.labelPlan.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelPlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.labelPlan.Location = new System.Drawing.Point(18, 37);
+            this.labelPlan.Name = "labelPlan";
+            this.labelPlan.Size = new System.Drawing.Size(40, 21);
+            this.labelPlan.TabIndex = 41;
+            this.labelPlan.Text = "Plan";
             // 
             // labelEmail
             // 
@@ -210,9 +210,9 @@
             this.labelEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
             this.labelEmail.Location = new System.Drawing.Point(17, 10);
             this.labelEmail.Name = "labelEmail";
-            this.labelEmail.Size = new System.Drawing.Size(201, 26);
+            this.labelEmail.Size = new System.Drawing.Size(59, 26);
             this.labelEmail.TabIndex = 42;
-            this.labelEmail.Text = "mkovalch@gmail.com";
+            this.labelEmail.Text = "Email";
             // 
             // pictureBox1
             // 
@@ -227,11 +227,11 @@
             // lblTerms
             // 
             this.lblTerms.AutoSize = true;
-            this.lblTerms.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblTerms.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblTerms.ForeColor = System.Drawing.Color.White;
             this.lblTerms.Location = new System.Drawing.Point(324, 460);
             this.lblTerms.Name = "lblTerms";
-            this.lblTerms.Size = new System.Drawing.Size(74, 15);
+            this.lblTerms.Size = new System.Drawing.Size(88, 16);
             this.lblTerms.TabIndex = 37;
             this.lblTerms.Text = "Terms of Use";
             this.lblTerms.Click += new System.EventHandler(this.lblTerms_Click);
@@ -239,11 +239,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(417, 460);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(81, 15);
+            this.label3.Size = new System.Drawing.Size(92, 16);
             this.label3.TabIndex = 38;
             this.label3.Text = "Privacy Policy";
             this.label3.Click += new System.EventHandler(this.label3_Click);
@@ -251,11 +251,11 @@
             // lblMalcore
             // 
             this.lblMalcore.AutoSize = true;
-            this.lblMalcore.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblMalcore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblMalcore.ForeColor = System.Drawing.Color.White;
             this.lblMalcore.Location = new System.Drawing.Point(242, 460);
             this.lblMalcore.Name = "lblMalcore";
-            this.lblMalcore.Size = new System.Drawing.Size(63, 15);
+            this.lblMalcore.Size = new System.Drawing.Size(70, 16);
             this.lblMalcore.TabIndex = 39;
             this.lblMalcore.Text = "malcore.io";
             this.lblMalcore.Click += new System.EventHandler(this.lblMalcore_Click);
@@ -312,7 +312,7 @@
             this.Controls.Add(this.flowLayoutPanelDetails);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.btnSettings);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelPlan);
             this.Controls.Add(this.labelEmail);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblTerms);
@@ -326,7 +326,7 @@
             this.MaximizeBox = false;
             this.Name = "DetailsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Malcore Agent 1.1.0 | Details";
+            this.Text = "Malcore Agent 1.1.1 | Details";
             this.Load += new System.EventHandler(this.DetailsForm_Load);
             this.panelDetailItem.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -348,7 +348,7 @@
         private Label percentLabel;
         private Button btnLogout;
         private Button btnSettings;
-        private Label label1;
+        private Label labelPlan;
         private Label labelEmail;
         private PictureBox pictureBox1;
         private Label lblTerms;
