@@ -4,17 +4,16 @@
     {
         public static void CreateFolders()
         {
-            string path = @"Malcore Agent\Malcore Agent\";
 
             string[] folders = new string[] { "malcore", @"malcore\threat", @"malcore\doc", @"malcore\threat\drag",
                         @"malcore\doc\drag" };
 
             foreach (string folder in folders)
             {
-                string temp = Path.Combine(Constants.ProgramFilesFolder, path, folder);
-                if (!Directory.Exists(temp))
+                //string temp = Path.Combine(Constants.ProgramFilesFolder, Constants.MalcoreBasePath, folder);
+                if (!Directory.Exists(folder))
                 {
-                    Directory.CreateDirectory(temp);
+                    Directory.CreateDirectory(folder);
                 }
             }
         }

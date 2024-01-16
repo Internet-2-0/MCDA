@@ -392,7 +392,7 @@ namespace MCDA_APP.Forms
             {
                 try
                 {
-                    string temp = Path.Combine(Constants.ProgramFilesFolder, @"Malcore Agent\Malcore Agent\malcore");
+                    string temp = Path.Combine(Constants.ProgramFilesFolder, Constants.MalcoreBasePath, @"\malcore");
                     if (Directory.Exists(temp))
                     {
                         Directory.Delete(temp, true);

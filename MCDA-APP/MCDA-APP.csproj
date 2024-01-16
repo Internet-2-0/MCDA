@@ -16,12 +16,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <FileAlignment>512</FileAlignment>
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <FileAlignment>512</FileAlignment>
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

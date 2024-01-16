@@ -7,5 +7,6 @@
         public static readonly string MalcorePrivacy = "https://malcore.io/privacy-policy";
         public static readonly string MalcoreBaseUrl = "https://malcore.io";
         public static readonly string ProgramFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+        public static readonly string MalcoreBasePath = @"Malcore Agent\Malcore Agent";
     }
 }
