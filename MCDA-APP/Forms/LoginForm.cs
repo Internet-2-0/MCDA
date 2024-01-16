@@ -10,11 +10,7 @@ namespace MCDA_APP
 {
     public partial class LoginForm : Form
     {
-        public LoginForm()
-        {
-            InitializeComponent();
-            this.ActiveControl = TxtEmail;
-        }
+        public LoginForm() => InitializeComponent();
 
         //TODO: HTTP requests should be handled in it's own class
         private async void BtnLogin_Click(object sender, EventArgs e)
@@ -114,25 +110,13 @@ namespace MCDA_APP
             }
         }
 
-        private void LinkAgree_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            this.CheckAgree.Checked = true;
-        }
+        private void LinkAgree_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => CheckAgree.Checked = true;
 
-        private void LabelTerms_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcoreTerms);
-        }
+        private void LabelTerms_Click(object sender, EventArgs e) => Program.OpenBrowser(Constants.MalcoreTerms);
 
-        private void LabelPrivacyPolicy_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcorePrivacy);
-        }
+        private void LabelPrivacyPolicy_Click(object sender, EventArgs e) => Program.OpenBrowser(Constants.MalcorePrivacy);
 
-        private void LabelMalcore_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcoreBaseUrl);
-        }
+        private void LabelMalcore_Click(object sender, EventArgs e) => Program.OpenBrowser(Constants.MalcoreBaseUrl);
 
         private void LabelSignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
