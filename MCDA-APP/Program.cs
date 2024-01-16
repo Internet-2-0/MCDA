@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Text;
+using System.Reflection;
 
 namespace MCDA_APP
 {
@@ -15,16 +16,14 @@ namespace MCDA_APP
         public static Queue<string> PrecessedFilePool = new Queue<string>();
         public static Queue<string> DragFilePool = new Queue<string>();
 
-
         ///  The main entry point for the application.
         [STAThread]
-
         static void Main()
         {
             // Kill current process if there is already process that is running
-            if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
+            if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location)).Length > 1) Process.GetCurrentProcess().Kill();
 
-            agentStat("{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}");
+            agentStat("{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}").GetAwaiter().GetResult();
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
@@ -104,7 +103,7 @@ namespace MCDA_APP
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "";
             }

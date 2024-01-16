@@ -1,4 +1,6 @@
-﻿namespace MCDA_APP
+﻿using System.Reflection;
+
+namespace MCDA_APP
 {
     internal class Helper
     {
@@ -16,6 +18,12 @@
                     Directory.CreateDirectory(folder);
                 }
             }
+        }
+
+        public static string GetAgentVersion()
+        {
+            Version? version = Assembly.GetExecutingAssembly().GetName().Version;
+            return $"{version?.Major}.{version?.Minor}.{version?.Build}";
         }
     }
 }
