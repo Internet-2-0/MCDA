@@ -351,7 +351,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();

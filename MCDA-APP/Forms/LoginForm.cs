@@ -72,7 +72,7 @@ namespace MCDA_APP
                         if (authdata != "")
                         {
                             // store API Key and settings info to registory
-                            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\Malcore");
+                            RegistryKey key = Registry.CurrentUser.CreateSubKey(Constants.RegistryMalcoreKey);
                             key.SetValue("API_KEY", authdata);
                             key.SetValue("SETTINGS", "");
                             key.Close();

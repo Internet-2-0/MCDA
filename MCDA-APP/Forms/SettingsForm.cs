@@ -7,11 +7,8 @@ namespace MCDA_APP.Forms
     {
         bool closing = false;
         List<string> paths = new List<string>();
-
-        public SettingsForm()
-        {
-            InitializeComponent();
-        }
+        
+        public SettingsForm() => InitializeComponent();
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
@@ -23,7 +20,7 @@ namespace MCDA_APP.Forms
                 labelPlan.Text = Program.SUBSCRIPTION; 
 
                 // Check if user authentication 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                 if (key != null)
                 {
                     var SETTINGS = key.GetValue("SETTINGS");
@@ -83,7 +80,7 @@ namespace MCDA_APP.Forms
                 };
                 var settingsData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
                 var OldSettings = key.GetValue("SETTINGS");
 
                 key.SetValue("SETTINGS", settingsData.ToString());
@@ -161,7 +158,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();

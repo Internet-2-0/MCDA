@@ -166,7 +166,7 @@ namespace MCDA_APP.Forms
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
 
-                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                    RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                     if (key != null)
                     {
                         var SETTINGS = key.GetValue("SETTINGS");
@@ -229,7 +229,7 @@ namespace MCDA_APP.Forms
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
 
-                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                    RegistryKey? key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
                     if (key != null)
                     {
                         var SETTINGS = key.GetValue("SETTINGS");
@@ -278,7 +278,7 @@ namespace MCDA_APP.Forms
             {
                 Program.FilePool.Clear();
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                 if (key != null)
                 {
                     var SETTINGS = key.GetValue("SETTINGS");
@@ -409,7 +409,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                 if (key != null)
                 {
                     var SETTINGS = key.GetValue("SETTINGS");
@@ -1771,7 +1771,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
