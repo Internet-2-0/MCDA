@@ -554,17 +554,17 @@ namespace MCDA_APP.Forms
 
         private void label3_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/privacy-policy");
+            Program.OpenBrowser(Constants.MalcorePrivacy);
         }
 
         private void lblTerms_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/terms-of-use");
+            Program.OpenBrowser(Constants.MalcoreTerms);
         }
 
         private void lblMalcore_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io");
+            Program.OpenBrowser(Constants.MalcoreBaseUrl);
         }
     }
 }
