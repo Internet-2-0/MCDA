@@ -33,7 +33,7 @@ namespace MCDA_APP
             try
             {
                 // Check user authentication status
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                 if (key != null)
                 {
                     var API_KEY = key.GetValue("API_KEY");
@@ -115,18 +115,19 @@ namespace MCDA_APP
         {
             try
             {
-                Process.Start("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", url);
+
+                ProcessStartInfo processStartInfo = new()
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                };
+
+                Process.Start(processStartInfo);
+
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                try
-                {
-                    Process.Start("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", url);
-                }
-                catch (Exception ex1)
-                {
-                    Process.Start("C:\\Program Files\\Internet Explorer\\iexplore.exe", url);
-                }
+               
             }
         }
     }

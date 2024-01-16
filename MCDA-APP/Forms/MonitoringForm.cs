@@ -30,52 +30,11 @@ namespace MCDA_APP.Forms
 
             this.screenWidth = this.Size.Width;
             labelEmail.Text = Program.USEREMAIL;
-            labelPlan.Text = Program.SUBSCRIPTION; 
+            labelPlan.Text = Program.SUBSCRIPTION;
 
             // Create directories for caching
             // there was a problem for the installer. installer did not recognize the relative path
-            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore"))
-            {
-                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore");
-            }
-            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat"))
-            {
-                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat");
-            }
-            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc"))
-            {
-                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc");
-            }
-            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat\\drag"))
-            {
-                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat\\drag");
-            }
-            if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc\\drag"))
-            {
-                Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc\\drag");
-            }
-
-            // // use for local ***tempcode
-            // if (!Directory.Exists(@"./malcore"))
-            // {
-            //     Directory.CreateDirectory(@"./malcore");
-            // }
-            // if (!Directory.Exists(@"./malcore/threat"))
-            // {
-            //     Directory.CreateDirectory(@"./malcore/threat");
-            // }
-            // if (!Directory.Exists(@"./malcore/doc"))
-            // {
-            //     Directory.CreateDirectory(@"./malcore/doc");
-            // }
-            // if (!Directory.Exists(@"./malcore/threat/drag"))
-            // {
-            //     Directory.CreateDirectory(@"./malcore/threat/drag");
-            // }
-            // if (!Directory.Exists(@"./malcore/doc/drag"))
-            // {
-            //     Directory.CreateDirectory(@"./malcore/doc/drag");
-            // }
+            Helper.CreateFolders();
 
             showAllScannedDragFiles();
             startMonitoring();
@@ -166,7 +125,7 @@ namespace MCDA_APP.Forms
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
 
-                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                    RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                     if (key != null)
                     {
                         var SETTINGS = key.GetValue("SETTINGS");
@@ -229,7 +188,7 @@ namespace MCDA_APP.Forms
                     lblStatus.Text = "ACTIVE";
                     lblStatus.ForeColor = Color.Green;
 
-                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                    RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                     if (key != null)
                     {
                         var SETTINGS = key.GetValue("SETTINGS");
@@ -278,7 +237,7 @@ namespace MCDA_APP.Forms
             {
                 Program.FilePool.Clear();
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                 if (key != null)
                 {
                     var SETTINGS = key.GetValue("SETTINGS");
@@ -409,7 +368,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                 if (key != null)
                 {
                     var SETTINGS = key.GetValue("SETTINGS");
@@ -1771,7 +1730,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
@@ -1940,17 +1899,17 @@ namespace MCDA_APP.Forms
 
         private void label3_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/policy");
+            Program.OpenBrowser(Constants.MalcorePrivacy);
         }
 
         private void lblTerms_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/terms");
+            Program.OpenBrowser(Constants.MalcoreTerms);
         }
 
         private void lblMalcore_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io");
+            Program.OpenBrowser(Constants.MalcoreBaseUrl);
         }
          
         /**
