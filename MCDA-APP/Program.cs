@@ -33,7 +33,7 @@ namespace MCDA_APP
             try
             {
                 // Check user authentication status
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                 if (key != null)
                 {
                     var API_KEY = key.GetValue("API_KEY");

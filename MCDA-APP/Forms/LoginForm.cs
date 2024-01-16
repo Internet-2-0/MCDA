@@ -72,7 +72,7 @@ namespace MCDA_APP
                         if (authdata != "")
                         {
                             // store API Key and settings info to registory
-                            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\Malcore");
+                            RegistryKey key = Registry.CurrentUser.CreateSubKey(Constants.RegistryMalcoreKey);
                             key.SetValue("API_KEY", authdata);
                             key.SetValue("SETTINGS", "");
                             key.Close();
@@ -121,17 +121,17 @@ namespace MCDA_APP
 
         private void lblTerms_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/terms");
+            Program.OpenBrowser(Constants.MalcoreTerms);
         }
 
         private void label3_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/policy");
+            Program.OpenBrowser(Constants.MalcorePrivacy);
         }
 
         private void lblMalcore_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io");
+            Program.OpenBrowser(Constants.MalcoreBaseUrl);
         }
 
         private void labelSignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

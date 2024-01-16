@@ -7,11 +7,8 @@ namespace MCDA_APP.Forms
     {
         bool closing = false;
         List<string> paths = new List<string>();
-
-        public SettingsForm()
-        {
-            InitializeComponent();
-        }
+        
+        public SettingsForm() => InitializeComponent();
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
@@ -23,7 +20,7 @@ namespace MCDA_APP.Forms
                 labelPlan.Text = Program.SUBSCRIPTION; 
 
                 // Check if user authentication 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                 if (key != null)
                 {
                     var SETTINGS = key.GetValue("SETTINGS");
@@ -83,7 +80,7 @@ namespace MCDA_APP.Forms
                 };
                 var settingsData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
                 var OldSettings = key.GetValue("SETTINGS");
 
                 key.SetValue("SETTINGS", settingsData.ToString());
@@ -161,7 +158,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
@@ -320,17 +317,17 @@ namespace MCDA_APP.Forms
 
         private void label3_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/policy");
+            Program.OpenBrowser(Constants.MalcorePrivacy);
         }
 
         private void lblTerms_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/terms");
+            Program.OpenBrowser(Constants.MalcoreTerms);
         }
 
         private void lblMalcore_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io");
+            Program.OpenBrowser(Constants.MalcoreBaseUrl);
         }
 
         /**
@@ -395,11 +392,10 @@ namespace MCDA_APP.Forms
             {
                 try
                 {
-                    if (Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore"))
-                    { 
-                        var dir = new DirectoryInfo(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore");
-                        dir.Delete(true);
-                        
+                    string temp = Path.Combine(Constants.ProgramFilesFolder, Constants.MalcoreBasePath, @"\malcore");
+                    if (Directory.Exists(temp))
+                    {
+                        Directory.Delete(temp, true);
                     }
                     
                     this.paths.Clear();
@@ -407,20 +403,7 @@ namespace MCDA_APP.Forms
 
                     // Create directories for caching
                     // there was a problem for the installer. installer did not recognize the relative path
-                    string programFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-                    string path = @"Malcore Agent\Malcore Agent\";
-
-                    string[] folders = new string[] { "malcore", @"malcore\threat", @"malcore\doc", @"malcore\threat\drag",
-                        @"malcore\doc\drag" };
-
-                    foreach (string folder in folders)
-                    {
-                        string temp = Path.Combine(programFilesFolder, path, folder);
-                        if (!Directory.Exists(temp))
-                        {
-                            Directory.CreateDirectory(temp);
-                        }
-                    }
+                    Helper.CreateFolders();
 
                     // remove all history from monitoring form
                     FormCollection fc = Application.OpenForms;
