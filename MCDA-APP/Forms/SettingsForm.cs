@@ -402,58 +402,26 @@ namespace MCDA_APP.Forms
                         dir.Delete(true);
                         
                     }
-                    // if (Directory.Exists(@"./malcore"))
-                    // { 
-                    //     var dir = new DirectoryInfo(@"./malcore");
-                    //     dir.Delete(true);
-                    // }
+                    
                     this.paths.Clear();
                     flowLayoutPanelForFolders.Controls.Clear();
 
                     // Create directories for caching
                     // there was a problem for the installer. installer did not recognize the relative path
-                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore"))
-                    {
-                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore");
-                    }
-                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat"))
-                    {
-                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat");
-                    }
-                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc"))
-                    {
-                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc");
-                    }
-                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat\\drag"))
-                    {
-                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\threat\\drag");
-                    }
-                    if (!Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc\\drag"))
-                    {
-                        Directory.CreateDirectory(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore\\doc\\drag");
-                    }
+                    string programFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                    string path = @"Malcore Agent\Malcore Agent\";
 
-                    // // use for local ***tempcode
-                    // if (!Directory.Exists(@"./malcore"))
-                    // {
-                    //     Directory.CreateDirectory(@"./malcore");
-                    // }
-                    // if (!Directory.Exists(@"./malcore/threat"))
-                    // {
-                    //     Directory.CreateDirectory(@"./malcore/threat");
-                    // }
-                    // if (!Directory.Exists(@"./malcore/doc"))
-                    // {
-                    //     Directory.CreateDirectory(@"./malcore/doc");
-                    // }
-                    // if (!Directory.Exists(@"./malcore/threat/drag"))
-                    // {
-                    //     Directory.CreateDirectory(@"./malcore/threat/drag");
-                    // }
-                    // if (!Directory.Exists(@"./malcore/doc/drag"))
-                    // {
-                    //     Directory.CreateDirectory(@"./malcore/doc/drag");
-                    // }
+                    string[] folders = new string[] { "malcore", @"malcore\threat", @"malcore\doc", @"malcore\threat\drag",
+                        @"malcore\doc\drag" };
+
+                    foreach (string folder in folders)
+                    {
+                        string temp = Path.Combine(programFilesFolder, path, folder);
+                        if (!Directory.Exists(temp))
+                        {
+                            Directory.CreateDirectory(temp);
+                        }
+                    }
 
                     // remove all history from monitoring form
                     FormCollection fc = Application.OpenForms;
@@ -467,8 +435,9 @@ namespace MCDA_APP.Forms
                         }
                     }
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
+                    MessageBox.Show(ex.Message);
                 }
             }
             else if (dialogResult == DialogResult.No)
