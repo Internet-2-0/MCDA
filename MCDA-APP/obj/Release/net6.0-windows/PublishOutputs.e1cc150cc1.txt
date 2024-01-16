@@ -1,6 +1,0 @@
-D:\WORK\MCDA\release\MCDA-APP.exe
-D:\WORK\MCDA\release\MCDA-APP.dll
-D:\WORK\MCDA\release\MCDA-APP.deps.json
-D:\WORK\MCDA\release\MCDA-APP.runtimeconfig.json
-D:\WORK\MCDA\release\MCDA-APP.dll.config
-D:\WORK\MCDA\release\Newtonsoft.Json.dll
