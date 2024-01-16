@@ -392,11 +392,10 @@ namespace MCDA_APP.Forms
             {
                 try
                 {
-                    if (Directory.Exists(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore"))
-                    { 
-                        var dir = new DirectoryInfo(@"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\malcore");
-                        dir.Delete(true);
-                        
+                    string temp = Path.Combine(Constants.ProgramFilesFolder, @"Malcore Agent\Malcore Agent\malcore");
+                    if (Directory.Exists(temp))
+                    {
+                        Directory.Delete(temp, true);
                     }
                     
                     this.paths.Clear();
@@ -404,20 +403,7 @@ namespace MCDA_APP.Forms
 
                     // Create directories for caching
                     // there was a problem for the installer. installer did not recognize the relative path
-                    string programFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-                    string path = @"Malcore Agent\Malcore Agent\";
-
-                    string[] folders = new string[] { "malcore", @"malcore\threat", @"malcore\doc", @"malcore\threat\drag",
-                        @"malcore\doc\drag" };
-
-                    foreach (string folder in folders)
-                    {
-                        string temp = Path.Combine(programFilesFolder, path, folder);
-                        if (!Directory.Exists(temp))
-                        {
-                            Directory.CreateDirectory(temp);
-                        }
-                    }
+                    Helper.CreateFolders();
 
                     // remove all history from monitoring form
                     FormCollection fc = Application.OpenForms;

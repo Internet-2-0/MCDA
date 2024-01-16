@@ -6,5 +6,6 @@
         public static readonly string MalcoreTerms = "https://malcore.io/terms-of-use";
         public static readonly string MalcorePrivacy = "https://malcore.io/privacy-policy";
         public static readonly string MalcoreBaseUrl = "https://malcore.io";
+        public static readonly string ProgramFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
     }
 }

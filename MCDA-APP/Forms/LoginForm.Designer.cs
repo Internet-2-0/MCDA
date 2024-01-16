@@ -140,7 +140,7 @@
             linkAgree.Cursor = Cursors.Hand;
             linkAgree.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
             linkAgree.LinkColor = Color.FromArgb(255, 245, 14);
-            linkAgree.Location = new Point(241, 315);
+            linkAgree.Location = new Point(241, 314);
             linkAgree.Name = "linkAgree";
             linkAgree.Size = new Size(174, 24);
             linkAgree.TabIndex = 3;
