@@ -16,6 +16,7 @@ namespace MCDA_APP
             this.ActiveControl = TxtEmail;
         }
 
+        //TODO: HTTP requests should be handled in it's own class
         private async void BtnLogin_Click(object sender, EventArgs e)
         {
             LabelError.Visible = false;
