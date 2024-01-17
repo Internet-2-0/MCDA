@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Text;
 using System.Reflection;
-using Newtonsoft.Json;
+using MCDA_APP.Model;
 
 namespace MCDA_APP
 {
@@ -148,14 +148,4 @@ namespace MCDA_APP
             }
         }
     }
-
-    public class UserData
-    {
-        [JsonProperty("email")]
-        public string? Email { get; set; }
-
-        [JsonProperty("password")]
-        public string? Password { get; set; }
-    }
-
 }
