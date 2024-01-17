@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System.Security.AccessControl;
 using System.Text;
 using System.Security.Principal;
+using MCDA_APP.Controls;
 
 namespace MCDA_APP.Forms
 {
@@ -16,7 +17,7 @@ namespace MCDA_APP.Forms
             InitializeComponent();
 
             labelEmail.Text = Program.USEREMAIL;
-            labelPlan.Text = Program.SUBSCRIPTION; 
+            labelPlan.Text = Program.SUBSCRIPTION;
 
             this.screenWidth = this.Size.Width;
             viewQueueFlowLayoutPanel.Width = this.screenWidth;
@@ -358,7 +359,7 @@ namespace MCDA_APP.Forms
 
                 Program.APIKEY = "";
                 Program.USEREMAIL = "";
-                Program.SUBSCRIPTION = ""; 
+                Program.SUBSCRIPTION = "";
 
                 Hide();
                 LoginForm loginForm = new LoginForm();
@@ -366,7 +367,8 @@ namespace MCDA_APP.Forms
 
                 foreach (Form f in Application.OpenForms)
                 {
-                    if (f.Name != "LoginForm") {
+                    if (f.Name != "LoginForm")
+                    {
                         f.Close();
                     }
                 }
@@ -377,19 +379,14 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void QueueForm_Load(object sender, EventArgs e)
         {
-            Program.OpenBrowser(Constants.MalcorePrivacy);
-        }
+            MalcoreFooter malcoreFooter = new()
+            {
+                Dock = DockStyle.Bottom
+            };
 
-        private void lblTerms_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcoreTerms);
-        }
-
-        private void lblMalcore_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcoreBaseUrl);
+            Controls.Add(malcoreFooter);
         }
     }
 }

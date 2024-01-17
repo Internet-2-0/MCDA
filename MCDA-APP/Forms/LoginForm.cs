@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Reflection;
 using MCDA_APP.Model;
+using MCDA_APP.Controls;
 
 namespace MCDA_APP
 {
@@ -128,7 +129,7 @@ namespace MCDA_APP
             try
             {
                 Debug.WriteLine("closed................" + Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location));
-                Application.Exit(); 
+                Application.Exit();
             }
             catch (Exception ex)
             {
@@ -140,12 +141,22 @@ namespace MCDA_APP
         {
             try
             {
-                Environment.Exit(0); 
+                Environment.Exit(0);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            MalcoreFooter malcoreFooter = new()
+            {
+                Dock = DockStyle.Bottom
+            };
+
+            Controls.Add(malcoreFooter);
         }
     }
 }
