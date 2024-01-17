@@ -28,545 +28,488 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonitoringForm));
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.labelRemaining = new System.Windows.Forms.Label();
-            this.lblRequestNumber = new System.Windows.Forms.Label();
-            this.btnLogout = new System.Windows.Forms.Button();
-            this.btnSettings = new System.Windows.Forms.Button();
-            this.labelPlan = new System.Windows.Forms.Label();
-            this.labelEmail = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblTerms = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblMalcore = new System.Windows.Forms.Label();
-            this.monitoringFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.queuePanel = new System.Windows.Forms.Panel();
-            this.labelQueuedFiles = new System.Windows.Forms.Label();
-            this.btnViewQueue = new System.Windows.Forms.Button();
-            this.labelInactiveDescription = new System.Windows.Forms.Label();
-            this.panelInactive = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.fileSystemWatcherMain = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher2 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher3 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher4 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher5 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher6 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher7 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher8 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher9 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher10 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher11 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher12 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher13 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher14 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher15 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher16 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher17 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher18 = new System.IO.FileSystemWatcher();
-            this.fileSystemWatcher19 = new System.IO.FileSystemWatcher();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.monitoringFlowLayoutPanel.SuspendLayout();
-            this.queuePanel.SuspendLayout();
-            this.panelInactive.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcherMain)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher19)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
-            this.SuspendLayout();
+            label2 = new Label();
+            panel1 = new Panel();
+            panel3 = new Panel();
+            lblStatus = new Label();
+            labelRemaining = new Label();
+            lblRequestNumber = new Label();
+            btnLogout = new Button();
+            btnSettings = new Button();
+            labelPlan = new Label();
+            labelEmail = new Label();
+            monitoringFlowLayoutPanel = new FlowLayoutPanel();
+            queuePanel = new Panel();
+            labelQueuedFiles = new Label();
+            btnViewQueue = new Button();
+            labelInactiveDescription = new Label();
+            panelInactive = new Panel();
+            label5 = new Label();
+            fileSystemWatcherMain = new FileSystemWatcher();
+            fileSystemWatcher1 = new FileSystemWatcher();
+            fileSystemWatcher2 = new FileSystemWatcher();
+            fileSystemWatcher3 = new FileSystemWatcher();
+            fileSystemWatcher4 = new FileSystemWatcher();
+            fileSystemWatcher5 = new FileSystemWatcher();
+            fileSystemWatcher6 = new FileSystemWatcher();
+            fileSystemWatcher7 = new FileSystemWatcher();
+            fileSystemWatcher8 = new FileSystemWatcher();
+            fileSystemWatcher9 = new FileSystemWatcher();
+            fileSystemWatcher10 = new FileSystemWatcher();
+            fileSystemWatcher11 = new FileSystemWatcher();
+            fileSystemWatcher12 = new FileSystemWatcher();
+            fileSystemWatcher13 = new FileSystemWatcher();
+            fileSystemWatcher14 = new FileSystemWatcher();
+            fileSystemWatcher15 = new FileSystemWatcher();
+            fileSystemWatcher16 = new FileSystemWatcher();
+            fileSystemWatcher17 = new FileSystemWatcher();
+            fileSystemWatcher18 = new FileSystemWatcher();
+            fileSystemWatcher19 = new FileSystemWatcher();
+            notifyIcon1 = new NotifyIcon(components);
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            exitToolStripMenuItem = new ToolStripMenuItem();
+            monitoringFlowLayoutPanel.SuspendLayout();
+            queuePanel.SuspendLayout();
+            panelInactive.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcherMain).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher9).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher10).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher11).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher12).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher13).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher14).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher15).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher16).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher17).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher18).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher19).BeginInit();
+            contextMenuStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(10, 78);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 21);
-            this.label2.TabIndex = 30;
-            this.label2.Text = "MONITORING:";
+            label2.AutoSize = true;
+            label2.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(10, 78);
+            label2.Name = "label2";
+            label2.Size = new Size(115, 21);
+            label2.TabIndex = 30;
+            label2.Text = "MONITORING:";
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.panel1.Location = new System.Drawing.Point(-1, 72);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(840, 1);
-            this.panel1.TabIndex = 26;
+            panel1.BackColor = Color.FromArgb(111, 101, 101);
+            panel1.Location = new Point(-1, 72);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(840, 1);
+            panel1.TabIndex = 26;
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.panel3.Location = new System.Drawing.Point(-8, 427);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(543, 1);
-            this.panel3.TabIndex = 25;
+            panel3.BackColor = Color.FromArgb(111, 101, 101);
+            panel3.Location = new Point(-8, 427);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(543, 1);
+            panel3.TabIndex = 25;
             // 
             // lblStatus
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(215)))), ((int)(((byte)(161)))));
-            this.lblStatus.Location = new System.Drawing.Point(130, 78);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(60, 21);
-            this.lblStatus.TabIndex = 30;
-            this.lblStatus.Text = "ACTIVE";
+            lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblStatus.ForeColor = Color.FromArgb(149, 215, 161);
+            lblStatus.Location = new Point(130, 78);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(60, 21);
+            lblStatus.TabIndex = 30;
+            lblStatus.Text = "ACTIVE";
             // 
             // labelRemaining
             // 
-            this.labelRemaining.AutoSize = true;
-            this.labelRemaining.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelRemaining.ForeColor = System.Drawing.Color.White;
-            this.labelRemaining.Location = new System.Drawing.Point(522, 78);
-            this.labelRemaining.Name = "labelRemaining";
-            this.labelRemaining.Size = new System.Drawing.Size(149, 21);
-            this.labelRemaining.TabIndex = 30;
-            this.labelRemaining.Text = "Request remaining:";
+            labelRemaining.AutoSize = true;
+            labelRemaining.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            labelRemaining.ForeColor = Color.White;
+            labelRemaining.Location = new Point(522, 78);
+            labelRemaining.Name = "labelRemaining";
+            labelRemaining.Size = new Size(149, 21);
+            labelRemaining.TabIndex = 30;
+            labelRemaining.Text = "Request remaining:";
             // 
             // lblRequestNumber
             // 
-            this.lblRequestNumber.AutoSize = true;
-            this.lblRequestNumber.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblRequestNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(215)))), ((int)(((byte)(161)))));
-            this.lblRequestNumber.Location = new System.Drawing.Point(455, 79);
-            this.lblRequestNumber.Name = "lblRequestNumber";
-            this.lblRequestNumber.Size = new System.Drawing.Size(0, 21);
-            this.lblRequestNumber.TabIndex = 30;
+            lblRequestNumber.AutoSize = true;
+            lblRequestNumber.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblRequestNumber.ForeColor = Color.FromArgb(149, 215, 161);
+            lblRequestNumber.Location = new Point(455, 79);
+            lblRequestNumber.Name = "lblRequestNumber";
+            lblRequestNumber.Size = new Size(0, 21);
+            lblRequestNumber.TabIndex = 30;
             // 
             // btnLogout
             // 
-            this.btnLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.btnLogout.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogout.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.btnLogout.Location = new System.Drawing.Point(724, 21);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(85, 31);
-            this.btnLogout.TabIndex = 38;
-            this.btnLogout.Text = "Log Out";
-            this.btnLogout.UseVisualStyleBackColor = false;
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click_1);
+            btnLogout.BackColor = Color.FromArgb(26, 26, 34);
+            btnLogout.FlatAppearance.BorderColor = Color.Red;
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.Font = new Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnLogout.ForeColor = Color.FromArgb(244, 7, 3);
+            btnLogout.Location = new Point(724, 21);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(85, 31);
+            btnLogout.TabIndex = 38;
+            btnLogout.Text = "Log Out";
+            btnLogout.UseVisualStyleBackColor = false;
+            btnLogout.Click += btnLogout_Click_1;
             // 
             // btnSettings
             // 
-            this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.btnSettings.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSettings.ForeColor = System.Drawing.Color.White;
-            this.btnSettings.Location = new System.Drawing.Point(616, 21);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(85, 31);
-            this.btnSettings.TabIndex = 37;
-            this.btnSettings.Text = "Settings";
-            this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click_1);
+            btnSettings.BackColor = Color.FromArgb(26, 26, 34);
+            btnSettings.FlatAppearance.BorderColor = Color.White;
+            btnSettings.FlatStyle = FlatStyle.Flat;
+            btnSettings.Font = new Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnSettings.ForeColor = Color.White;
+            btnSettings.Location = new Point(616, 21);
+            btnSettings.Name = "btnSettings";
+            btnSettings.Size = new Size(85, 31);
+            btnSettings.TabIndex = 37;
+            btnSettings.Text = "Settings";
+            btnSettings.UseVisualStyleBackColor = false;
+            btnSettings.Click += btnSettings_Click_1;
             // 
             // labelPlan
             // 
-            this.labelPlan.AutoSize = true;
-            this.labelPlan.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelPlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.labelPlan.Location = new System.Drawing.Point(18, 37);
-            this.labelPlan.Name = "labelPlan";
-            this.labelPlan.Size = new System.Drawing.Size(40, 21);
-            this.labelPlan.TabIndex = 35;
-            this.labelPlan.Text = "Plan";
+            labelPlan.AutoSize = true;
+            labelPlan.Font = new Font("Calibri", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
+            labelPlan.ForeColor = Color.FromArgb(217, 217, 217);
+            labelPlan.Location = new Point(18, 37);
+            labelPlan.Name = "labelPlan";
+            labelPlan.Size = new Size(40, 21);
+            labelPlan.TabIndex = 35;
+            labelPlan.Text = "Plan";
             // 
             // labelEmail
             // 
-            this.labelEmail.AutoSize = true;
-            this.labelEmail.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.labelEmail.Location = new System.Drawing.Point(17, 10);
-            this.labelEmail.Name = "labelEmail";
-            this.labelEmail.Size = new System.Drawing.Size(59, 26);
-            this.labelEmail.TabIndex = 36;
-            this.labelEmail.Text = "Email";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(23, 440);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(143, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 34;
-            this.pictureBox1.TabStop = false;
-            // 
-            // lblTerms
-            // 
-            this.lblTerms.AutoSize = true;
-            this.lblTerms.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblTerms.ForeColor = System.Drawing.Color.White;
-            this.lblTerms.Location = new System.Drawing.Point(633, 460);
-            this.lblTerms.Name = "lblTerms";
-            this.lblTerms.Size = new System.Drawing.Size(88, 16);
-            this.lblTerms.TabIndex = 31;
-            this.lblTerms.Text = "Terms of Use";
-            this.lblTerms.Click += new System.EventHandler(this.lblTerms_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(726, 460);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 16);
-            this.label3.TabIndex = 32;
-            this.label3.Text = "Privacy Policy";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
-            // 
-            // lblMalcore
-            // 
-            this.lblMalcore.AutoSize = true;
-            this.lblMalcore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblMalcore.ForeColor = System.Drawing.Color.White;
-            this.lblMalcore.Location = new System.Drawing.Point(551, 460);
-            this.lblMalcore.Name = "lblMalcore";
-            this.lblMalcore.Size = new System.Drawing.Size(70, 16);
-            this.lblMalcore.TabIndex = 33;
-            this.lblMalcore.Text = "malcore.io";
-            this.lblMalcore.Click += new System.EventHandler(this.lblMalcore_Click);
+            labelEmail.AutoSize = true;
+            labelEmail.Font = new Font("Calibri", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            labelEmail.ForeColor = Color.FromArgb(217, 217, 217);
+            labelEmail.Location = new Point(17, 10);
+            labelEmail.Name = "labelEmail";
+            labelEmail.Size = new Size(59, 26);
+            labelEmail.TabIndex = 36;
+            labelEmail.Text = "Email";
             // 
             // monitoringFlowLayoutPanel
             // 
-            this.monitoringFlowLayoutPanel.AllowDrop = true;
-            this.monitoringFlowLayoutPanel.AutoScroll = true;
-            this.monitoringFlowLayoutPanel.Controls.Add(this.queuePanel);
-            this.monitoringFlowLayoutPanel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.monitoringFlowLayoutPanel.Location = new System.Drawing.Point(0, 106);
-            this.monitoringFlowLayoutPanel.Name = "monitoringFlowLayoutPanel";
-            this.monitoringFlowLayoutPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.monitoringFlowLayoutPanel.Size = new System.Drawing.Size(797, 328);
-            this.monitoringFlowLayoutPanel.TabIndex = 39;
-            this.monitoringFlowLayoutPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.monitoringForm_DragDrop);
-            this.monitoringFlowLayoutPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.monitoringForm_DragEnter);
+            monitoringFlowLayoutPanel.AllowDrop = true;
+            monitoringFlowLayoutPanel.AutoScroll = true;
+            monitoringFlowLayoutPanel.Controls.Add(queuePanel);
+            monitoringFlowLayoutPanel.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            monitoringFlowLayoutPanel.Location = new Point(0, 106);
+            monitoringFlowLayoutPanel.Name = "monitoringFlowLayoutPanel";
+            monitoringFlowLayoutPanel.RightToLeft = RightToLeft.No;
+            monitoringFlowLayoutPanel.Size = new Size(797, 328);
+            monitoringFlowLayoutPanel.TabIndex = 39;
+            monitoringFlowLayoutPanel.DragDrop += monitoringForm_DragDrop;
+            monitoringFlowLayoutPanel.DragEnter += monitoringForm_DragEnter;
             // 
             // queuePanel
             // 
-            this.queuePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-            this.queuePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.queuePanel.Controls.Add(this.labelQueuedFiles);
-            this.queuePanel.Controls.Add(this.btnViewQueue);
-            this.queuePanel.Location = new System.Drawing.Point(3, 3);
-            this.queuePanel.Name = "queuePanel";
-            this.queuePanel.Size = new System.Drawing.Size(770, 38);
-            this.queuePanel.TabIndex = 9;
+            queuePanel.BackColor = Color.FromArgb(45, 42, 42);
+            queuePanel.BackgroundImageLayout = ImageLayout.None;
+            queuePanel.Controls.Add(labelQueuedFiles);
+            queuePanel.Controls.Add(btnViewQueue);
+            queuePanel.Location = new Point(3, 3);
+            queuePanel.Name = "queuePanel";
+            queuePanel.Size = new Size(770, 38);
+            queuePanel.TabIndex = 9;
             // 
             // labelQueuedFiles
             // 
-            this.labelQueuedFiles.AutoSize = true;
-            this.labelQueuedFiles.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelQueuedFiles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(239)))), ((int)(((byte)(123)))));
-            this.labelQueuedFiles.Location = new System.Drawing.Point(21, 8);
-            this.labelQueuedFiles.Name = "labelQueuedFiles";
-            this.labelQueuedFiles.Size = new System.Drawing.Size(236, 20);
-            this.labelQueuedFiles.TabIndex = 6;
-            this.labelQueuedFiles.Text = "3 files were queued for processing";
+            labelQueuedFiles.AutoSize = true;
+            labelQueuedFiles.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            labelQueuedFiles.ForeColor = Color.FromArgb(252, 239, 123);
+            labelQueuedFiles.Location = new Point(21, 8);
+            labelQueuedFiles.Name = "labelQueuedFiles";
+            labelQueuedFiles.Size = new Size(236, 20);
+            labelQueuedFiles.TabIndex = 6;
+            labelQueuedFiles.Text = "3 files were queued for processing";
             // 
             // btnViewQueue
             // 
-            this.btnViewQueue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.btnViewQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnViewQueue.FlatAppearance.BorderSize = 0;
-            this.btnViewQueue.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnViewQueue.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnViewQueue.ForeColor = System.Drawing.Color.White;
-            this.btnViewQueue.Location = new System.Drawing.Point(593, 6);
-            this.btnViewQueue.Name = "btnViewQueue";
-            this.btnViewQueue.Size = new System.Drawing.Size(170, 25);
-            this.btnViewQueue.TabIndex = 5;
-            this.btnViewQueue.Text = "VIEW QUEUE";
-            this.btnViewQueue.UseVisualStyleBackColor = false;
-            this.btnViewQueue.Click += new System.EventHandler(this.btnViewQueue_Click);
+            btnViewQueue.BackColor = Color.FromArgb(244, 7, 3);
+            btnViewQueue.Cursor = Cursors.Hand;
+            btnViewQueue.FlatAppearance.BorderSize = 0;
+            btnViewQueue.FlatStyle = FlatStyle.Popup;
+            btnViewQueue.Font = new Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            btnViewQueue.ForeColor = Color.White;
+            btnViewQueue.Location = new Point(593, 6);
+            btnViewQueue.Name = "btnViewQueue";
+            btnViewQueue.Size = new Size(170, 25);
+            btnViewQueue.TabIndex = 5;
+            btnViewQueue.Text = "VIEW QUEUE";
+            btnViewQueue.UseVisualStyleBackColor = false;
+            btnViewQueue.Click += btnViewQueue_Click;
             // 
             // labelInactiveDescription
             // 
-            this.labelInactiveDescription.AutoSize = true;
-            this.labelInactiveDescription.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelInactiveDescription.ForeColor = System.Drawing.Color.White;
-            this.labelInactiveDescription.Location = new System.Drawing.Point(0, 0);
-            this.labelInactiveDescription.Name = "labelInactiveDescription";
-            this.labelInactiveDescription.Size = new System.Drawing.Size(333, 38);
-            this.labelInactiveDescription.TabIndex = 40;
-            this.labelInactiveDescription.Text = "Go to Settings to enable or disable monitoring. \r\n \r\n";
+            labelInactiveDescription.AutoSize = true;
+            labelInactiveDescription.Font = new Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            labelInactiveDescription.ForeColor = Color.White;
+            labelInactiveDescription.Location = new Point(0, 0);
+            labelInactiveDescription.Name = "labelInactiveDescription";
+            labelInactiveDescription.Size = new Size(333, 38);
+            labelInactiveDescription.TabIndex = 40;
+            labelInactiveDescription.Text = "Go to Settings to enable or disable monitoring. \r\n \r\n";
             // 
             // panelInactive
             // 
-            this.panelInactive.Controls.Add(this.label5);
-            this.panelInactive.Controls.Add(this.labelInactiveDescription);
-            this.panelInactive.Location = new System.Drawing.Point(12, 109);
-            this.panelInactive.Name = "panelInactive";
-            this.panelInactive.Size = new System.Drawing.Size(776, 223);
-            this.panelInactive.TabIndex = 0;
-            this.panelInactive.Visible = false;
+            panelInactive.Controls.Add(label5);
+            panelInactive.Controls.Add(labelInactiveDescription);
+            panelInactive.Location = new Point(12, 109);
+            panelInactive.Name = "panelInactive";
+            panelInactive.Size = new Size(776, 223);
+            panelInactive.TabIndex = 0;
+            panelInactive.Visible = false;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(2, 28);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(235, 18);
-            this.label5.TabIndex = 41;
-            this.label5.Text = "You are out of requests on your plan.\r\n";
+            label5.AutoSize = true;
+            label5.Font = new Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.ForeColor = Color.Red;
+            label5.Location = new Point(2, 28);
+            label5.Name = "label5";
+            label5.Size = new Size(235, 18);
+            label5.TabIndex = 41;
+            label5.Text = "You are out of requests on your plan.\r\n";
             // 
             // fileSystemWatcherMain
             // 
-            this.fileSystemWatcherMain.EnableRaisingEvents = true;
-            this.fileSystemWatcherMain.IncludeSubdirectories = true;
-            this.fileSystemWatcherMain.SynchronizingObject = this;
-            this.fileSystemWatcherMain.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Changed);
-            this.fileSystemWatcherMain.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcherMain.EnableRaisingEvents = true;
+            fileSystemWatcherMain.IncludeSubdirectories = true;
+            fileSystemWatcherMain.SynchronizingObject = this;
+            fileSystemWatcherMain.Changed += fileSystemWatcherMain_Changed;
+            fileSystemWatcherMain.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher1
             // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.IncludeSubdirectories = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher1.EnableRaisingEvents = true;
+            fileSystemWatcher1.IncludeSubdirectories = true;
+            fileSystemWatcher1.SynchronizingObject = this;
+            fileSystemWatcher1.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher2
             // 
-            this.fileSystemWatcher2.EnableRaisingEvents = true;
-            this.fileSystemWatcher2.IncludeSubdirectories = true;
-            this.fileSystemWatcher2.SynchronizingObject = this;
-            this.fileSystemWatcher2.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher2.EnableRaisingEvents = true;
+            fileSystemWatcher2.IncludeSubdirectories = true;
+            fileSystemWatcher2.SynchronizingObject = this;
+            fileSystemWatcher2.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher3
             // 
-            this.fileSystemWatcher3.EnableRaisingEvents = true;
-            this.fileSystemWatcher3.IncludeSubdirectories = true;
-            this.fileSystemWatcher3.SynchronizingObject = this;
-            this.fileSystemWatcher3.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher3.EnableRaisingEvents = true;
+            fileSystemWatcher3.IncludeSubdirectories = true;
+            fileSystemWatcher3.SynchronizingObject = this;
+            fileSystemWatcher3.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher4
             // 
-            this.fileSystemWatcher4.EnableRaisingEvents = true;
-            this.fileSystemWatcher4.IncludeSubdirectories = true;
-            this.fileSystemWatcher4.SynchronizingObject = this;
-            this.fileSystemWatcher4.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher4.EnableRaisingEvents = true;
+            fileSystemWatcher4.IncludeSubdirectories = true;
+            fileSystemWatcher4.SynchronizingObject = this;
+            fileSystemWatcher4.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher5
             // 
-            this.fileSystemWatcher5.EnableRaisingEvents = true;
-            this.fileSystemWatcher5.IncludeSubdirectories = true;
-            this.fileSystemWatcher5.SynchronizingObject = this;
-            this.fileSystemWatcher5.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher5.EnableRaisingEvents = true;
+            fileSystemWatcher5.IncludeSubdirectories = true;
+            fileSystemWatcher5.SynchronizingObject = this;
+            fileSystemWatcher5.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher6
             // 
-            this.fileSystemWatcher6.EnableRaisingEvents = true;
-            this.fileSystemWatcher6.IncludeSubdirectories = true;
-            this.fileSystemWatcher6.SynchronizingObject = this;
-            this.fileSystemWatcher6.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher6.EnableRaisingEvents = true;
+            fileSystemWatcher6.IncludeSubdirectories = true;
+            fileSystemWatcher6.SynchronizingObject = this;
+            fileSystemWatcher6.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher7
             // 
-            this.fileSystemWatcher7.EnableRaisingEvents = true;
-            this.fileSystemWatcher7.IncludeSubdirectories = true;
-            this.fileSystemWatcher7.SynchronizingObject = this;
-            this.fileSystemWatcher7.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher7.EnableRaisingEvents = true;
+            fileSystemWatcher7.IncludeSubdirectories = true;
+            fileSystemWatcher7.SynchronizingObject = this;
+            fileSystemWatcher7.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher8
             // 
-            this.fileSystemWatcher8.EnableRaisingEvents = true;
-            this.fileSystemWatcher8.IncludeSubdirectories = true;
-            this.fileSystemWatcher8.SynchronizingObject = this;
-            this.fileSystemWatcher8.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher8.EnableRaisingEvents = true;
+            fileSystemWatcher8.IncludeSubdirectories = true;
+            fileSystemWatcher8.SynchronizingObject = this;
+            fileSystemWatcher8.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher9
             // 
-            this.fileSystemWatcher9.EnableRaisingEvents = true;
-            this.fileSystemWatcher9.IncludeSubdirectories = true;
-            this.fileSystemWatcher9.SynchronizingObject = this;
-            this.fileSystemWatcher9.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher9.EnableRaisingEvents = true;
+            fileSystemWatcher9.IncludeSubdirectories = true;
+            fileSystemWatcher9.SynchronizingObject = this;
+            fileSystemWatcher9.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher10
             // 
-            this.fileSystemWatcher10.EnableRaisingEvents = true;
-            this.fileSystemWatcher10.IncludeSubdirectories = true;
-            this.fileSystemWatcher10.SynchronizingObject = this;
-            this.fileSystemWatcher10.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher10.EnableRaisingEvents = true;
+            fileSystemWatcher10.IncludeSubdirectories = true;
+            fileSystemWatcher10.SynchronizingObject = this;
+            fileSystemWatcher10.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher11
             // 
-            this.fileSystemWatcher11.EnableRaisingEvents = true;
-            this.fileSystemWatcher11.IncludeSubdirectories = true;
-            this.fileSystemWatcher11.SynchronizingObject = this;
-            this.fileSystemWatcher11.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher11.EnableRaisingEvents = true;
+            fileSystemWatcher11.IncludeSubdirectories = true;
+            fileSystemWatcher11.SynchronizingObject = this;
+            fileSystemWatcher11.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher12
             // 
-            this.fileSystemWatcher12.EnableRaisingEvents = true;
-            this.fileSystemWatcher12.IncludeSubdirectories = true;
-            this.fileSystemWatcher12.SynchronizingObject = this;
-            this.fileSystemWatcher12.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher12.EnableRaisingEvents = true;
+            fileSystemWatcher12.IncludeSubdirectories = true;
+            fileSystemWatcher12.SynchronizingObject = this;
+            fileSystemWatcher12.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher13
             // 
-            this.fileSystemWatcher13.EnableRaisingEvents = true;
-            this.fileSystemWatcher13.IncludeSubdirectories = true;
-            this.fileSystemWatcher13.SynchronizingObject = this;
-            this.fileSystemWatcher13.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher13.EnableRaisingEvents = true;
+            fileSystemWatcher13.IncludeSubdirectories = true;
+            fileSystemWatcher13.SynchronizingObject = this;
+            fileSystemWatcher13.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher14
             // 
-            this.fileSystemWatcher14.EnableRaisingEvents = true;
-            this.fileSystemWatcher14.IncludeSubdirectories = true;
-            this.fileSystemWatcher14.SynchronizingObject = this;
-            this.fileSystemWatcher14.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher14.EnableRaisingEvents = true;
+            fileSystemWatcher14.IncludeSubdirectories = true;
+            fileSystemWatcher14.SynchronizingObject = this;
+            fileSystemWatcher14.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher15
             // 
-            this.fileSystemWatcher15.EnableRaisingEvents = true;
-            this.fileSystemWatcher15.IncludeSubdirectories = true;
-            this.fileSystemWatcher15.SynchronizingObject = this;
-            this.fileSystemWatcher15.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher15.EnableRaisingEvents = true;
+            fileSystemWatcher15.IncludeSubdirectories = true;
+            fileSystemWatcher15.SynchronizingObject = this;
+            fileSystemWatcher15.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher16
             // 
-            this.fileSystemWatcher16.EnableRaisingEvents = true;
-            this.fileSystemWatcher16.IncludeSubdirectories = true;
-            this.fileSystemWatcher16.SynchronizingObject = this;
-            this.fileSystemWatcher16.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher16.EnableRaisingEvents = true;
+            fileSystemWatcher16.IncludeSubdirectories = true;
+            fileSystemWatcher16.SynchronizingObject = this;
+            fileSystemWatcher16.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher17
             // 
-            this.fileSystemWatcher17.EnableRaisingEvents = true;
-            this.fileSystemWatcher17.IncludeSubdirectories = true;
-            this.fileSystemWatcher17.SynchronizingObject = this;
-            this.fileSystemWatcher17.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher17.EnableRaisingEvents = true;
+            fileSystemWatcher17.IncludeSubdirectories = true;
+            fileSystemWatcher17.SynchronizingObject = this;
+            fileSystemWatcher17.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher18
             // 
-            this.fileSystemWatcher18.EnableRaisingEvents = true;
-            this.fileSystemWatcher18.IncludeSubdirectories = true;
-            this.fileSystemWatcher18.SynchronizingObject = this;
-            this.fileSystemWatcher18.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher18.EnableRaisingEvents = true;
+            fileSystemWatcher18.IncludeSubdirectories = true;
+            fileSystemWatcher18.SynchronizingObject = this;
+            fileSystemWatcher18.Created += fileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher19
             // 
-            this.fileSystemWatcher19.EnableRaisingEvents = true;
-            this.fileSystemWatcher19.IncludeSubdirectories = true;
-            this.fileSystemWatcher19.SynchronizingObject = this;
-            this.fileSystemWatcher19.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcherMain_Created_1);
+            fileSystemWatcher19.EnableRaisingEvents = true;
+            fileSystemWatcher19.IncludeSubdirectories = true;
+            fileSystemWatcher19.SynchronizingObject = this;
+            fileSystemWatcher19.Created += fileSystemWatcherMain_Created_1;
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.notifyIcon1.BalloonTipText = "Malcore Agent";
-            this.notifyIcon1.BalloonTipTitle = "MCDA";
-            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "Malcore Agent";
-            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
+            notifyIcon1.BalloonTipText = "Malcore Agent";
+            notifyIcon1.BalloonTipTitle = "MCDA";
+            notifyIcon1.ContextMenuStrip = contextMenuStrip1;
+            notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
+            notifyIcon1.Text = "Malcore Agent";
+            notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exitToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(179, 26);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(179, 26);
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-            this.exitToolStripMenuItem.Text = "Quit Malcore Agent";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(178, 22);
+            exitToolStripMenuItem.Text = "Quit Malcore Agent";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // MonitoringForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(830, 504);
-            this.Controls.Add(this.panelInactive);
-            this.Controls.Add(this.monitoringFlowLayoutPanel);
-            this.Controls.Add(this.btnLogout);
-            this.Controls.Add(this.btnSettings);
-            this.Controls.Add(this.labelPlan);
-            this.Controls.Add(this.labelEmail);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.lblTerms);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblMalcore);
-            this.Controls.Add(this.lblRequestNumber);
-            this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.labelRemaining);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel3);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "MonitoringForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Malcore Agent 1.1.1 | Monitoring";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MonitoringForm_FormClosing);
-            this.Resize += new System.EventHandler(this.MonitoringForm_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.monitoringFlowLayoutPanel.ResumeLayout(false);
-            this.queuePanel.ResumeLayout(false);
-            this.queuePanel.PerformLayout();
-            this.panelInactive.ResumeLayout(false);
-            this.panelInactive.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcherMain)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher19)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(26, 26, 34);
+            ClientSize = new Size(830, 517);
+            Controls.Add(panelInactive);
+            Controls.Add(monitoringFlowLayoutPanel);
+            Controls.Add(btnLogout);
+            Controls.Add(btnSettings);
+            Controls.Add(labelPlan);
+            Controls.Add(labelEmail);
+            Controls.Add(lblRequestNumber);
+            Controls.Add(lblStatus);
+            Controls.Add(labelRemaining);
+            Controls.Add(label2);
+            Controls.Add(panel1);
+            Controls.Add(panel3);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            Name = "MonitoringForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Malcore Agent 1.1.1 | Monitoring";
+            FormClosing += MonitoringForm_FormClosing;
+            Load += MonitoringForm_Load;
+            Resize += MonitoringForm_Resize;
+            monitoringFlowLayoutPanel.ResumeLayout(false);
+            queuePanel.ResumeLayout(false);
+            queuePanel.PerformLayout();
+            panelInactive.ResumeLayout(false);
+            panelInactive.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcherMain).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher9).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher10).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher11).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher12).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher13).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher14).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher15).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher16).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher17).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher18).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher19).EndInit();
+            contextMenuStrip1.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -581,10 +524,6 @@
         private Button btnSettings;
         private Label labelPlan;
         private Label labelEmail;
-        private PictureBox pictureBox1;
-        private Label lblTerms;
-        private Label label3;
-        private Label lblMalcore;
         private FlowLayoutPanel monitoringFlowLayoutPanel;
         private Label labelInactiveDescription;
         private Panel panelInactive;
