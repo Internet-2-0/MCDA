@@ -381,6 +381,7 @@ namespace MCDA_APP.Forms
 
         private void QueueForm_Load(object sender, EventArgs e)
         {
+            Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Queue");
             MalcoreFooter malcoreFooter = new()
             {
                 Dock = DockStyle.Bottom

@@ -13,6 +13,7 @@ namespace MCDA_APP.Forms
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
+            Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Settings");
             MalcoreFooter malcoreFooter = new()
             {
                 Dock = DockStyle.Bottom

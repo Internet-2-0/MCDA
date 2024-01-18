@@ -151,6 +151,7 @@ namespace MCDA_APP
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
+            Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Log in");
             MalcoreFooter malcoreFooter = new()
             {
                 Dock = DockStyle.Bottom

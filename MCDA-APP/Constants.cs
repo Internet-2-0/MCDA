@@ -8,5 +8,6 @@
         public static readonly string MalcoreBaseUrl = "https://malcore.io";
         public static readonly string ProgramFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
         public static readonly string MalcoreBasePath = @"Malcore Agent\Malcore Agent";
+        public static readonly string MalcoreFormTitle = "Malcore Agent {0} | {1}";
     }
 }

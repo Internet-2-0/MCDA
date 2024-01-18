@@ -129,7 +129,7 @@
             MaximizeBox = false;
             Name = "QueueForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Queue";
+            Text = "%placeholder%";
             Load += QueueForm_Load;
             ResumeLayout(false);
             PerformLayout();

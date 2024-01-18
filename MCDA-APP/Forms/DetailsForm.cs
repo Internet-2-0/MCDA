@@ -503,6 +503,7 @@ namespace MCDA_APP.Forms
 
         private void DetailsForm_Load(object sender, EventArgs e)
         {
+            Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Details");
             MalcoreFooter malcoreFooter = new()
             {
                 Dock = DockStyle.Bottom

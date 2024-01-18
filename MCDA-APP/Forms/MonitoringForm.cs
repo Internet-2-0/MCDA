@@ -1986,6 +1986,7 @@ namespace MCDA_APP.Forms
 
         private void MonitoringForm_Load(object sender, EventArgs e)
         {
+            Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Monitoring");
             MalcoreFooter malcoreFooter = new()
             {
                 Dock = DockStyle.Bottom
