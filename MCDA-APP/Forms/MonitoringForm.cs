@@ -6,6 +6,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System;
 using System.IO;
+using MCDA_APP.Controls;
 // using System.ComponentModel;
 
 namespace MCDA_APP.Forms
@@ -58,10 +59,13 @@ namespace MCDA_APP.Forms
                 }
                 else
                 {
-                    if(Program.FilePool.Count > 0) {
+                    if (Program.FilePool.Count > 0)
+                    {
                         this.numberOfProcessing++;
                         ProcessFile(Program.FilePool.Dequeue());
-                    } else { 
+                    }
+                    else
+                    {
                         queuePanel.Visible = false;
                     }
                     return;
@@ -72,13 +76,13 @@ namespace MCDA_APP.Forms
                 return;
             }
         }
-/**
-        * @Description: Start monitoring and update monitoring form with result
-        * @Description: This function works only one time when the app starts
-        * @return void.
-        **/
+        /**
+                * @Description: Start monitoring and update monitoring form with result
+                * @Description: This function works only one time when the app starts
+                * @return void.
+                **/
         public async void removeAllScanedFiles()
-        { 
+        {
             try
             {
                 monitoringFlowLayoutPanel.Controls.Clear();
@@ -344,7 +348,7 @@ namespace MCDA_APP.Forms
                                 {
                                     // Console.WriteLine("{0} is not a valid file or directory.", path);
                                 }
-                            } 
+                            }
                         }
                     }
                 }
@@ -379,33 +383,33 @@ namespace MCDA_APP.Forms
                         this.sendStatistics = (bool)(json["sendStatistics"]);
 
                         if ((bool)json["enableMornitoring"])
-                        { 
-                            string threatDirectory = @"./malcore/threat/drag/"; 
+                        {
+                            string threatDirectory = @"./malcore/threat/drag/";
                             string[] threatFileEntries = Directory.GetFiles(threatDirectory);
                             foreach (string fname in threatFileEntries)
                             {
                                 string fileString = File.ReadAllText(fname);
                                 bool succeed = true;
                                 if (fileString != "released" && fileString != "")
-                                { 
+                                {
 
-                                    JObject jsonData = JObject.Parse(fileString); 
+                                    JObject jsonData = JObject.Parse(fileString);
                                     string folderName = jsonData["folderName"].ToString();
                                     string fileName = jsonData["fileName"].ToString();
 
                                     addItemToMonitoringPanel(fileString, folderName, fileName, succeed);
                                 }
                             }
-                            string docDirectory = @"./malcore/doc/drag/"; 
+                            string docDirectory = @"./malcore/doc/drag/";
                             string[] docFileEntries = Directory.GetFiles(docDirectory);
                             foreach (string fname in docFileEntries)
                             {
                                 string fileString = File.ReadAllText(fname);
                                 bool succeed = true;
                                 if (fileString != "released" && fileString != "")
-                                { 
+                                {
 
-                                    JObject jsonData = JObject.Parse(fileString); 
+                                    JObject jsonData = JObject.Parse(fileString);
                                     string folderName = jsonData["folderName"].ToString();
                                     string fileName = jsonData["fileName"].ToString();
 
@@ -472,7 +476,7 @@ namespace MCDA_APP.Forms
                             {
                                 string responseString = await response.Content.ReadAsStringAsync();
                                 this.numberOfProcessing--;
-                                
+
                                 // if (this.numberOfProcessing == 0) {
                                 //     lblProcessFileCount.Visible = false;
                                 // }
@@ -699,7 +703,7 @@ namespace MCDA_APP.Forms
                 percentLabel.Width = 110;
                 percentLabel.Height = 40;
                 // percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4);  // 512
-                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 0); 
+                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 320, 0);
                 percentLabel.TextAlign = ContentAlignment.MiddleRight;
 
                 Button removeButton = new Button();
@@ -859,7 +863,7 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
             }
-            
+
         }
 
 
@@ -895,16 +899,20 @@ namespace MCDA_APP.Forms
                 if (isThreat == true)
                 {
                     responseString = await getThreatScore(path, fileName, "threatscore");
-                    if(responseString != "") {
+                    if (responseString != "")
+                    {
                         JObject jsonObject = JObject.Parse(responseString);
                         jsonObject["fileName"] = fileName;
                         jsonObject["folderName"] = folderName;
                         responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
                     }
 
-                    if(Program.DragFilePool.Contains(path)) {
+                    if (Program.DragFilePool.Contains(path))
+                    {
                         File.WriteAllText(@"./malcore/threat/drag/" + hashFileName, responseString);
-                    } else {
+                    }
+                    else
+                    {
                         File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
                     }
 
@@ -924,16 +932,20 @@ namespace MCDA_APP.Forms
                 else
                 {
                     responseString = await getThreatScore(path, fileName, "docfile");
-                    if(responseString != "") {
+                    if (responseString != "")
+                    {
                         JObject jsonObject = JObject.Parse(responseString);
                         jsonObject["fileName"] = fileName;
                         jsonObject["folderName"] = folderName;
                         responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
                     }
 
-                    if(Program.DragFilePool.Contains(path)) {
+                    if (Program.DragFilePool.Contains(path))
+                    {
                         File.WriteAllText(@"./malcore/doc/drag/" + hashFileName, responseString);
-                    } else {
+                    }
+                    else
+                    {
                         File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
                     }
 
@@ -1310,7 +1322,7 @@ namespace MCDA_APP.Forms
         private Panel? addItemToMonitoringPanelForInitialScan(string folderName, string fileName)
         {
             try
-            { 
+            {
                 // item panel
                 Panel panel = new Panel();
                 panel.Width = this.Size.Width - 30;
@@ -1330,7 +1342,7 @@ namespace MCDA_APP.Forms
                 fileLabel.Font = new Font("Calibri", 12, FontStyle.Bold);
                 fileLabel.Text = fileName;
                 fileLabel.AutoSize = false;
-                fileLabel.Location = new System.Drawing.Point(22, 1); 
+                fileLabel.Location = new System.Drawing.Point(22, 1);
                 fileLabel.ForeColor = Color.White;
 
                 // folder label
@@ -1341,7 +1353,7 @@ namespace MCDA_APP.Forms
                 folderLabel.Font = new Font("Calibri", 11, FontStyle.Regular);
                 folderLabel.AutoSize = false;
                 folderLabel.Width = 400;
-                folderLabel.Location = new System.Drawing.Point(24, 22); 
+                folderLabel.Location = new System.Drawing.Point(24, 22);
 
                 // percent label
                 Label percentLabel = new Label();
@@ -1352,14 +1364,14 @@ namespace MCDA_APP.Forms
                 percentLabel.Width = 110;
                 percentLabel.Height = 40;
                 // percentLabel.Location = new System.Drawing.Point(this.screenWidth - 288, 4);  // 512
-                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 180, 4); 
+                percentLabel.Location = new System.Drawing.Point(this.screenWidth - 180, 4);
                 percentLabel.TextAlign = ContentAlignment.MiddleRight;
-                percentLabel.ForeColor = Color.Yellow;  
+                percentLabel.ForeColor = Color.Yellow;
 
                 panel.Controls.Add(colorPanel);
                 panel.Controls.Add(fileLabel);
                 panel.Controls.Add(folderLabel);
-                panel.Controls.Add(percentLabel);  
+                panel.Controls.Add(percentLabel);
 
                 monitoringFlowLayoutPanel.Controls.Add(panel);
                 return panel;
@@ -1368,7 +1380,7 @@ namespace MCDA_APP.Forms
             {
                 return null;
             }
-            
+
         }
 
 
@@ -1397,7 +1409,8 @@ namespace MCDA_APP.Forms
 
                 // Recurse into subdirectories of this directory.
                 string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
-                foreach (string subdirectory in subdirectoryEntries) {
+                foreach (string subdirectory in subdirectoryEntries)
+                {
                     ProcessDirectory(subdirectory);
                 }
             }
@@ -1503,20 +1516,26 @@ namespace MCDA_APP.Forms
                                         bool succeed = true;
                                         if (responseString == "")
                                         {
-                                            succeed = false; 
-                                        } else {
+                                            succeed = false;
+                                        }
+                                        else
+                                        {
                                             JObject jsonObject = JObject.Parse(responseString);
                                             jsonObject["fileName"] = fileName;
                                             jsonObject["folderName"] = folderName;
                                             responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
                                         }
-                                        if(Program.DragFilePool.Contains(path)) {
+                                        if (Program.DragFilePool.Contains(path))
+                                        {
                                             File.WriteAllText(@"./malcore/threat/drag/" + hashFileName, responseString);
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
                                         }
 
-                                        if(panel != null) {
+                                        if (panel != null)
+                                        {
                                             panel.Dispose();
                                             Debug.WriteLine("end scanning................." + fileName);
                                         }
@@ -1543,21 +1562,27 @@ namespace MCDA_APP.Forms
                                         bool succeed = true;
                                         if (responseString == "")
                                         {
-                                            succeed = false; 
-                                        } else {
+                                            succeed = false;
+                                        }
+                                        else
+                                        {
                                             JObject jsonObject = JObject.Parse(responseString);
                                             jsonObject["fileName"] = fileName;
                                             jsonObject["folderName"] = folderName;
                                             responseString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject);
                                         }
 
-                                        if(Program.DragFilePool.Contains(path)) {
-                                            File.WriteAllText(@"./malcore/doc/drag/" + hashFileName, responseString);                                   
-                                        } else {
-                                            File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);                                   
+                                        if (Program.DragFilePool.Contains(path))
+                                        {
+                                            File.WriteAllText(@"./malcore/doc/drag/" + hashFileName, responseString);
                                         }
-                                        
-                                        if(panel != null) {
+                                        else
+                                        {
+                                            File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
+                                        }
+
+                                        if (panel != null)
+                                        {
                                             panel.Dispose();
                                             Debug.WriteLine("end scanning................." + fileName);
                                         }
@@ -1639,7 +1664,7 @@ namespace MCDA_APP.Forms
             {
                 Debug.Write(ex);
                 return false;
-            } 
+            }
         }
 
         /**
@@ -1697,7 +1722,7 @@ namespace MCDA_APP.Forms
             {
                 return false;
             }
-            
+
         }
 
 
@@ -1745,16 +1770,17 @@ namespace MCDA_APP.Forms
 
                 foreach (Form f in Application.OpenForms)
                 {
-                    if (f.Name != "LoginForm") {
+                    if (f.Name != "LoginForm")
+                    {
                         f.Hide();
-                    } 
-                } 
+                    }
+                }
             }
             catch (Exception ex)
             {
-                Debug.Write("em..............."+ex.Message);
+                Debug.Write("em..............." + ex.Message);
                 LoginForm loginForm = new LoginForm();
-                loginForm.Show(this); 
+                loginForm.Show(this);
             }
         }
 
@@ -1890,28 +1916,13 @@ namespace MCDA_APP.Forms
 
                 QueueForm queueForm = new QueueForm();
                 queueForm.Show(this);
-                
+
             }
             catch (Exception ex)
             {
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcorePrivacy);
-        }
-
-        private void lblTerms_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcoreTerms);
-        }
-
-        private void lblMalcore_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcoreBaseUrl);
-        }
-         
         /**
         * @Description: if drag&drop a folder from windows explorer to monitoring form,
         * @Description: update the settings and restart scanning
@@ -1932,8 +1943,8 @@ namespace MCDA_APP.Forms
                     {
                         Program.DragFilePool.Enqueue(fileName);
                         Program.FilePool.Enqueue(fileName);
-                    } 
-                } 
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1959,7 +1970,8 @@ namespace MCDA_APP.Forms
                     // MessageBox.Show(folderPath);
 
                     // Only allow folders to drop
-                    if (!Directory.Exists(folderPath)) {
+                    if (!Directory.Exists(folderPath))
+                    {
                         effects = DragDropEffects.Copy;
                     }
                 }
@@ -1974,7 +1986,12 @@ namespace MCDA_APP.Forms
 
         private void MonitoringForm_Load(object sender, EventArgs e)
         {
+            MalcoreFooter malcoreFooter = new()
+            {
+                Dock = DockStyle.Bottom
+            };
 
+            Controls.Add(malcoreFooter);
         }
     }
 

@@ -39,16 +39,10 @@
             LinkAgree = new LinkLabel();
             BtnLogin = new Button();
             LabelError = new Label();
-            panel3 = new Panel();
-            PictureLogo = new PictureBox();
-            LabelMalcore = new Label();
-            LabelPrivacyPolicy = new Label();
-            LabelTerms = new Label();
             LabelNoAccount = new Label();
             LabelSignup = new LinkLabel();
             PanelEmail.SuspendLayout();
             PanelPassword.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)PictureLogo).BeginInit();
             SuspendLayout();
             // 
             // LabelEmail
@@ -170,60 +164,6 @@
             LabelError.TextAlign = ContentAlignment.MiddleCenter;
             LabelError.UseMnemonic = false;
             // 
-            // panel3
-            // 
-            panel3.BackColor = Color.FromArgb(111, 101, 101);
-            panel3.Location = new Point(0, 423);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(543, 1);
-            panel3.TabIndex = 6;
-            // 
-            // PictureLogo
-            // 
-            PictureLogo.Image = (Image)resources.GetObject("PictureLogo.Image");
-            PictureLogo.Location = new Point(21, 438);
-            PictureLogo.Name = "PictureLogo";
-            PictureLogo.Size = new Size(143, 50);
-            PictureLogo.SizeMode = PictureBoxSizeMode.Zoom;
-            PictureLogo.TabIndex = 7;
-            PictureLogo.TabStop = false;
-            // 
-            // LabelMalcore
-            // 
-            LabelMalcore.AutoSize = true;
-            LabelMalcore.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LabelMalcore.ForeColor = Color.White;
-            LabelMalcore.Location = new Point(240, 458);
-            LabelMalcore.Name = "LabelMalcore";
-            LabelMalcore.Size = new Size(70, 16);
-            LabelMalcore.TabIndex = 11;
-            LabelMalcore.Text = "malcore.io";
-            LabelMalcore.Click += LabelMalcore_Click;
-            // 
-            // LabelPrivacyPolicy
-            // 
-            LabelPrivacyPolicy.AutoSize = true;
-            LabelPrivacyPolicy.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LabelPrivacyPolicy.ForeColor = Color.White;
-            LabelPrivacyPolicy.Location = new Point(415, 458);
-            LabelPrivacyPolicy.Name = "LabelPrivacyPolicy";
-            LabelPrivacyPolicy.Size = new Size(92, 16);
-            LabelPrivacyPolicy.TabIndex = 13;
-            LabelPrivacyPolicy.Text = "Privacy Policy";
-            LabelPrivacyPolicy.Click += LabelPrivacyPolicy_Click;
-            // 
-            // LabelTerms
-            // 
-            LabelTerms.AutoSize = true;
-            LabelTerms.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LabelTerms.ForeColor = Color.White;
-            LabelTerms.Location = new Point(322, 458);
-            LabelTerms.Name = "LabelTerms";
-            LabelTerms.Size = new Size(88, 16);
-            LabelTerms.TabIndex = 12;
-            LabelTerms.Text = "Terms of Use";
-            LabelTerms.Click += LabelTerms_Click;
-            // 
             // LabelNoAccount
             // 
             LabelNoAccount.AutoSize = true;
@@ -255,8 +195,6 @@
             ClientSize = new Size(523, 500);
             Controls.Add(LabelSignup);
             Controls.Add(LabelNoAccount);
-            Controls.Add(PictureLogo);
-            Controls.Add(panel3);
             Controls.Add(LabelError);
             Controls.Add(BtnLogin);
             Controls.Add(LinkAgree);
@@ -264,9 +202,6 @@
             Controls.Add(PanelPassword);
             Controls.Add(LabelPassword);
             Controls.Add(PanelEmail);
-            Controls.Add(LabelTerms);
-            Controls.Add(LabelPrivacyPolicy);
-            Controls.Add(LabelMalcore);
             Controls.Add(LabelEmail);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -276,11 +211,11 @@
             Text = "Malcore Agent 1.1.1 | Log in";
             FormClosing += LoginFormClosing;
             FormClosed += LoginFormClosed;
+            Load += LoginForm_Load;
             PanelEmail.ResumeLayout(false);
             PanelEmail.PerformLayout();
             PanelPassword.ResumeLayout(false);
             PanelPassword.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)PictureLogo).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -297,11 +232,6 @@
         private LinkLabel LinkAgree;
         private Button BtnLogin;
         private Label LabelError;
-        private Panel panel3;
-        private PictureBox PictureLogo;
-        private Label LabelMalcore;
-        private Label LabelPrivacyPolicy;
-        private Label LabelTerms;
         private Label LabelNoAccount;
         private LinkLabel LabelSignup;
     }

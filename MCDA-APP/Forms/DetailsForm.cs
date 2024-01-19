@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
+using MCDA_APP.Controls;
 
 namespace MCDA_APP.Forms
 {
@@ -502,6 +503,12 @@ namespace MCDA_APP.Forms
 
         private void DetailsForm_Load(object sender, EventArgs e)
         {
+            MalcoreFooter malcoreFooter = new()
+            {
+                Dock = DockStyle.Bottom
+            };
+
+            Controls.Add(malcoreFooter);
         }
 
         private void lblFileName_Click(object sender, EventArgs e)

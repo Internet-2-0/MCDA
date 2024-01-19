@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using MCDA_APP.Controls;
+using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 
 namespace MCDA_APP.Forms
@@ -12,6 +13,13 @@ namespace MCDA_APP.Forms
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
+            MalcoreFooter malcoreFooter = new()
+            {
+                Dock = DockStyle.Bottom
+            };
+
+            Controls.Add(malcoreFooter);
+
             try
             {
                 // set apikey and user email
@@ -313,21 +321,6 @@ namespace MCDA_APP.Forms
             {
                 
             }
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcorePrivacy);
-        }
-
-        private void lblTerms_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcoreTerms);
-        }
-
-        private void lblMalcore_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser(Constants.MalcoreBaseUrl);
         }
 
         /**
