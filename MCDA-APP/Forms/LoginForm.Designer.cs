@@ -29,282 +29,210 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.chkAgree = new System.Windows.Forms.CheckBox();
-            this.linkAgree = new System.Windows.Forms.LinkLabel();
-            this.btnLogin = new System.Windows.Forms.Button();
-            this.lblError = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblMalcore = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblTerms = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.labelSignup = new System.Windows.Forms.LinkLabel();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.SuspendLayout();
+            LabelEmail = new Label();
+            PanelEmail = new Panel();
+            TxtEmail = new TextBox();
+            LabelPassword = new Label();
+            PanelPassword = new Panel();
+            TxtPassword = new TextBox();
+            CheckAgree = new CheckBox();
+            LinkAgree = new LinkLabel();
+            BtnLogin = new Button();
+            LabelError = new Label();
+            LabelNoAccount = new Label();
+            LabelSignup = new LinkLabel();
+            PanelEmail.SuspendLayout();
+            PanelPassword.SuspendLayout();
+            SuspendLayout();
             // 
-            // label1
+            // LabelEmail
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Carlito", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(119, 89);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 21);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Email";
+            LabelEmail.AutoSize = true;
+            LabelEmail.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
+            LabelEmail.ForeColor = Color.White;
+            LabelEmail.Location = new Point(119, 89);
+            LabelEmail.Name = "LabelEmail";
+            LabelEmail.Size = new Size(51, 20);
+            LabelEmail.TabIndex = 0;
+            LabelEmail.Text = "Email";
             // 
-            // panel1
+            // PanelEmail
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(78)))), ((int)(((byte)(78)))));
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.txtEmail);
-            this.panel1.Location = new System.Drawing.Point(123, 110);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(282, 40);
-            this.panel1.TabIndex = 1;
+            PanelEmail.BackColor = Color.FromArgb(82, 78, 78);
+            PanelEmail.BorderStyle = BorderStyle.Fixed3D;
+            PanelEmail.Controls.Add(TxtEmail);
+            PanelEmail.Location = new Point(123, 110);
+            PanelEmail.Name = "PanelEmail";
+            PanelEmail.Size = new Size(282, 40);
+            PanelEmail.TabIndex = 1;
             // 
-            // txtEmail
+            // TxtEmail
             // 
-            this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(78)))), ((int)(((byte)(78)))));
-            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtEmail.Font = new System.Drawing.Font("Roboto Condensed", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtEmail.ForeColor = System.Drawing.Color.White;
-            this.txtEmail.Location = new System.Drawing.Point(6, 7);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(268, 21);
-            this.txtEmail.TabIndex = 2;
+            TxtEmail.BackColor = Color.FromArgb(82, 78, 78);
+            TxtEmail.BorderStyle = BorderStyle.None;
+            TxtEmail.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TxtEmail.ForeColor = Color.White;
+            TxtEmail.Location = new Point(6, 7);
+            TxtEmail.Name = "TxtEmail";
+            TxtEmail.Size = new Size(268, 20);
+            TxtEmail.TabIndex = 2;
             // 
-            // label2
+            // LabelPassword
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Carlito", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(119, 169);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 21);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Password";
+            LabelPassword.AutoSize = true;
+            LabelPassword.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
+            LabelPassword.ForeColor = Color.White;
+            LabelPassword.Location = new Point(119, 169);
+            LabelPassword.Name = "LabelPassword";
+            LabelPassword.Size = new Size(83, 20);
+            LabelPassword.TabIndex = 3;
+            LabelPassword.Text = "Password";
             // 
-            // panel2
+            // PanelPassword
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(78)))), ((int)(((byte)(78)))));
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.txtPassword);
-            this.panel2.Location = new System.Drawing.Point(123, 190);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(282, 40);
-            this.panel2.TabIndex = 1;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            PanelPassword.BackColor = Color.FromArgb(82, 78, 78);
+            PanelPassword.BorderStyle = BorderStyle.Fixed3D;
+            PanelPassword.Controls.Add(TxtPassword);
+            PanelPassword.Location = new Point(123, 190);
+            PanelPassword.Name = "PanelPassword";
+            PanelPassword.Size = new Size(282, 40);
+            PanelPassword.TabIndex = 4;
             // 
-            // txtPassword
+            // TxtPassword
             // 
-            this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(78)))), ((int)(((byte)(78)))));
-            this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtPassword.Font = new System.Drawing.Font("Roboto Condensed", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtPassword.ForeColor = System.Drawing.Color.White;
-            this.txtPassword.Location = new System.Drawing.Point(6, 8);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(268, 21);
-            this.txtPassword.TabIndex = 2;
+            TxtPassword.BackColor = Color.FromArgb(82, 78, 78);
+            TxtPassword.BorderStyle = BorderStyle.None;
+            TxtPassword.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
+            TxtPassword.ForeColor = Color.White;
+            TxtPassword.Location = new Point(6, 8);
+            TxtPassword.Name = "TxtPassword";
+            TxtPassword.PasswordChar = '*';
+            TxtPassword.Size = new Size(268, 20);
+            TxtPassword.TabIndex = 5;
             // 
-            // chkAgree
+            // CheckAgree
             // 
-            this.chkAgree.AutoSize = true;
-            this.chkAgree.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.chkAgree.ForeColor = System.Drawing.Color.White;
-            this.chkAgree.Location = new System.Drawing.Point(121, 235);
-            this.chkAgree.Name = "chkAgree";
-            this.chkAgree.Size = new System.Drawing.Size(90, 23);
-            this.chkAgree.TabIndex = 2;
-            this.chkAgree.Text = "I agree to";
-            this.chkAgree.UseVisualStyleBackColor = true;
+            CheckAgree.AutoSize = true;
+            CheckAgree.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            CheckAgree.ForeColor = Color.White;
+            CheckAgree.Location = new Point(121, 235);
+            CheckAgree.Name = "CheckAgree";
+            CheckAgree.Size = new Size(90, 23);
+            CheckAgree.TabIndex = 6;
+            CheckAgree.Text = "I agree to";
+            CheckAgree.UseVisualStyleBackColor = true;
             // 
-            // linkAgree
+            // LinkAgree
             // 
-            this.linkAgree.AutoSize = true;
-            this.linkAgree.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.linkAgree.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.linkAgree.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(14)))));
-            this.linkAgree.Location = new System.Drawing.Point(203, 236);
-            this.linkAgree.Name = "linkAgree";
-            this.linkAgree.Size = new System.Drawing.Size(136, 19);
-            this.linkAgree.TabIndex = 3;
-            this.linkAgree.TabStop = true;
-            this.linkAgree.Text = "terms & conditions ";
-            this.linkAgree.UseMnemonic = false;
-            this.linkAgree.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAgree_LinkClicked);
+            LinkAgree.AutoSize = true;
+            LinkAgree.Cursor = Cursors.Hand;
+            LinkAgree.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            LinkAgree.LinkColor = Color.FromArgb(255, 245, 14);
+            LinkAgree.Location = new Point(211, 236);
+            LinkAgree.Name = "LinkAgree";
+            LinkAgree.Size = new Size(136, 19);
+            LinkAgree.TabIndex = 7;
+            LinkAgree.TabStop = true;
+            LinkAgree.Text = "terms & conditions ";
+            LinkAgree.UseMnemonic = false;
+            LinkAgree.LinkClicked += LinkAgree_LinkClicked;
             // 
-            // btnLogin
+            // BtnLogin
             // 
-            this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.btnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLogin.FlatAppearance.BorderSize = 0;
-            this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnLogin.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnLogin.ForeColor = System.Drawing.Color.White;
-            this.btnLogin.Location = new System.Drawing.Point(272, 276);
-            this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(132, 40);
-            this.btnLogin.TabIndex = 4;
-            this.btnLogin.Text = "LOGIN";
-            this.btnLogin.UseVisualStyleBackColor = false;
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click_1);
+            BtnLogin.BackColor = Color.FromArgb(244, 7, 3);
+            BtnLogin.Cursor = Cursors.Hand;
+            BtnLogin.FlatAppearance.BorderSize = 0;
+            BtnLogin.FlatStyle = FlatStyle.Popup;
+            BtnLogin.Font = new Font("Calibri", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            BtnLogin.ForeColor = Color.White;
+            BtnLogin.Location = new Point(272, 276);
+            BtnLogin.Name = "BtnLogin";
+            BtnLogin.Size = new Size(132, 40);
+            BtnLogin.TabIndex = 8;
+            BtnLogin.Text = "LOGIN";
+            BtnLogin.UseVisualStyleBackColor = false;
+            BtnLogin.Click += BtnLogin_Click;
             // 
-            // lblError
+            // LabelError
             // 
-            this.lblError.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(7)))), ((int)(((byte)(3)))));
-            this.lblError.Location = new System.Drawing.Point(79, 321);
-            this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(371, 30);
-            this.lblError.TabIndex = 5;
-            this.lblError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblError.UseMnemonic = false;
+            LabelError.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            LabelError.ForeColor = Color.FromArgb(244, 7, 3);
+            LabelError.Location = new Point(79, 321);
+            LabelError.Name = "LabelError";
+            LabelError.Size = new Size(371, 30);
+            LabelError.TabIndex = 5;
+            LabelError.TextAlign = ContentAlignment.MiddleCenter;
+            LabelError.UseMnemonic = false;
             // 
-            // panel3
+            // LabelNoAccount
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.panel3.Location = new System.Drawing.Point(0, 423);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(543, 1);
-            this.panel3.TabIndex = 6;
+            LabelNoAccount.AutoSize = true;
+            LabelNoAccount.ForeColor = SystemColors.ButtonHighlight;
+            LabelNoAccount.Location = new Point(208, 364);
+            LabelNoAccount.Name = "LabelNoAccount";
+            LabelNoAccount.Size = new Size(131, 15);
+            LabelNoAccount.TabIndex = 9;
+            LabelNoAccount.Text = "Don't have an account?";
             // 
-            // pictureBox1
+            // LabelSignup
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(21, 438);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(143, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
-            // 
-            // lblMalcore
-            // 
-            this.lblMalcore.AutoSize = true;
-            this.lblMalcore.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblMalcore.ForeColor = System.Drawing.Color.White;
-            this.lblMalcore.Location = new System.Drawing.Point(240, 458);
-            this.lblMalcore.Name = "lblMalcore";
-            this.lblMalcore.Size = new System.Drawing.Size(63, 15);
-            this.lblMalcore.TabIndex = 0;
-            this.lblMalcore.Text = "malcore.io";
-            this.lblMalcore.Click += new System.EventHandler(this.lblMalcore_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(415, 458);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(81, 15);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Privacy Policy";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
-            // 
-            // lblTerms
-            // 
-            this.lblTerms.AutoSize = true;
-            this.lblTerms.Font = new System.Drawing.Font("Carlito", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblTerms.ForeColor = System.Drawing.Color.White;
-            this.lblTerms.Location = new System.Drawing.Point(322, 458);
-            this.lblTerms.Name = "lblTerms";
-            this.lblTerms.Size = new System.Drawing.Size(74, 15);
-            this.lblTerms.TabIndex = 0;
-            this.lblTerms.Text = "Terms of Use";
-            this.lblTerms.Click += new System.EventHandler(this.lblTerms_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label4.Location = new System.Drawing.Point(208, 364);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(131, 15);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Don\'t have an account?";
-            // 
-            // labelSignup
-            // 
-            this.labelSignup.AutoSize = true;
-            this.labelSignup.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelSignup.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(14)))));
-            this.labelSignup.Location = new System.Drawing.Point(342, 360);
-            this.labelSignup.Name = "labelSignup";
-            this.labelSignup.Size = new System.Drawing.Size(63, 19);
-            this.labelSignup.TabIndex = 9;
-            this.labelSignup.TabStop = true;
-            this.labelSignup.Text = "Sign Up!";
-            this.labelSignup.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labelSignup_LinkClicked);
+            LabelSignup.AutoSize = true;
+            LabelSignup.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            LabelSignup.LinkColor = Color.FromArgb(255, 245, 14);
+            LabelSignup.Location = new Point(342, 360);
+            LabelSignup.Name = "LabelSignup";
+            LabelSignup.Size = new Size(63, 19);
+            LabelSignup.TabIndex = 10;
+            LabelSignup.TabStop = true;
+            LabelSignup.Text = "Sign Up!";
+            LabelSignup.LinkClicked += LabelSignup_LinkClicked;
             // 
             // LoginForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(523, 500);
-            this.Controls.Add(this.labelSignup);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.lblError);
-            this.Controls.Add(this.btnLogin);
-            this.Controls.Add(this.linkAgree);
-            this.Controls.Add(this.chkAgree);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.lblTerms);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblMalcore);
-            this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "LoginForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Malcore Agent 1.1.1 | Log in";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginFormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginFormClosed);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(26, 26, 34);
+            ClientSize = new Size(523, 500);
+            Controls.Add(LabelSignup);
+            Controls.Add(LabelNoAccount);
+            Controls.Add(LabelError);
+            Controls.Add(BtnLogin);
+            Controls.Add(LinkAgree);
+            Controls.Add(CheckAgree);
+            Controls.Add(PanelPassword);
+            Controls.Add(LabelPassword);
+            Controls.Add(PanelEmail);
+            Controls.Add(LabelEmail);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            Name = "LoginForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Malcore Agent 1.1.1 | Log in";
+            FormClosing += LoginFormClosing;
+            FormClosed += LoginFormClosed;
+            Load += LoginForm_Load;
+            PanelEmail.ResumeLayout(false);
+            PanelEmail.PerformLayout();
+            PanelPassword.ResumeLayout(false);
+            PanelPassword.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
-        private Panel panel1;
-        private TextBox txtEmail;
-        private Label label2;
-        private Panel panel2;
-        private TextBox txtPassword;
-        private CheckBox chkAgree;
-        private LinkLabel linkAgree;
-        private Button btnLogin;
-        private Label lblError;
-        private Panel panel3;
-        private PictureBox pictureBox1;
-        private Label lblMalcore;
-        private Label label3;
-        private Label lblTerms;
-        private Label label4;
-        private LinkLabel labelSignup;
+        private Label LabelEmail;
+        private Panel PanelEmail;
+        private TextBox TxtEmail;
+        private Label LabelPassword;
+        private Panel PanelPassword;
+        private TextBox TxtPassword;
+        private CheckBox CheckAgree;
+        private LinkLabel LinkAgree;
+        private Button BtnLogin;
+        private Label LabelError;
+        private Label LabelNoAccount;
+        private LinkLabel LabelSignup;
     }
 }

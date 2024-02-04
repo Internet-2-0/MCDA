@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System.Security.AccessControl;
 using System.Text;
 using System.Security.Principal;
+using MCDA_APP.Controls;
 
 namespace MCDA_APP.Forms
 {
@@ -16,7 +17,7 @@ namespace MCDA_APP.Forms
             InitializeComponent();
 
             labelEmail.Text = Program.USEREMAIL;
-            labelPlan.Text = Program.SUBSCRIPTION; 
+            labelPlan.Text = Program.SUBSCRIPTION;
 
             this.screenWidth = this.Size.Width;
             viewQueueFlowLayoutPanel.Width = this.screenWidth;
@@ -351,14 +352,14 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
 
                 Program.APIKEY = "";
                 Program.USEREMAIL = "";
-                Program.SUBSCRIPTION = ""; 
+                Program.SUBSCRIPTION = "";
 
                 Hide();
                 LoginForm loginForm = new LoginForm();
@@ -366,7 +367,8 @@ namespace MCDA_APP.Forms
 
                 foreach (Form f in Application.OpenForms)
                 {
-                    if (f.Name != "LoginForm") {
+                    if (f.Name != "LoginForm")
+                    {
                         f.Close();
                     }
                 }
@@ -377,19 +379,14 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void QueueForm_Load(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/policy");
-        }
+            MalcoreFooter malcoreFooter = new()
+            {
+                Dock = DockStyle.Bottom
+            };
 
-        private void lblTerms_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser("https://malcore.io/terms");
-        }
-
-        private void lblMalcore_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser("https://malcore.io");
+            Controls.Add(malcoreFooter);
         }
     }
 }

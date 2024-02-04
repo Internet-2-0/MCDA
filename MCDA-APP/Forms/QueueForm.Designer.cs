@@ -29,190 +29,119 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QueueForm));
-            this.labelPlan = new System.Windows.Forms.Label();
-            this.labelEmail = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblTerms = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblMalcore = new System.Windows.Forms.Label();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.labelInQueueFiles = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.viewQueueFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.SuspendLayout();
+            labelPlan = new Label();
+            labelEmail = new Label();
+            panel1 = new Panel();
+            lblStatus = new Label();
+            labelInQueueFiles = new Label();
+            label2 = new Label();
+            viewQueueFlowLayoutPanel = new FlowLayoutPanel();
+            SuspendLayout();
             // 
             // labelPlan
             // 
-            this.labelPlan.AutoSize = true;
-            this.labelPlan.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelPlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.labelPlan.Location = new System.Drawing.Point(18, 37);
-            this.labelPlan.Name = "labelPlan";
-            this.labelPlan.Size = new System.Drawing.Size(40, 21);
-            this.labelPlan.TabIndex = 45;
-            this.labelPlan.Text = "Plan";
+            labelPlan.AutoSize = true;
+            labelPlan.Font = new Font("Calibri", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
+            labelPlan.ForeColor = Color.FromArgb(217, 217, 217);
+            labelPlan.Location = new Point(18, 37);
+            labelPlan.Name = "labelPlan";
+            labelPlan.Size = new Size(40, 21);
+            labelPlan.TabIndex = 45;
+            labelPlan.Text = "Plan";
             // 
             // labelEmail
             // 
-            this.labelEmail.AutoSize = true;
-            this.labelEmail.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
-            this.labelEmail.Location = new System.Drawing.Point(17, 10);
-            this.labelEmail.Name = "labelEmail";
-            this.labelEmail.Size = new System.Drawing.Size(59, 26);
-            this.labelEmail.TabIndex = 46;
-            this.labelEmail.Text = "Email";
+            labelEmail.AutoSize = true;
+            labelEmail.Font = new Font("Calibri", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            labelEmail.ForeColor = Color.FromArgb(217, 217, 217);
+            labelEmail.Location = new Point(17, 10);
+            labelEmail.Name = "labelEmail";
+            labelEmail.Size = new Size(59, 26);
+            labelEmail.TabIndex = 46;
+            labelEmail.Text = "Email";
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.panel1.Location = new System.Drawing.Point(1, 71);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(798, 1);
-            this.panel1.TabIndex = 49;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(25, 442);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(143, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 53;
-            this.pictureBox1.TabStop = false;
-            // 
-            // lblTerms
-            // 
-            this.lblTerms.AutoSize = true;
-            this.lblTerms.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblTerms.ForeColor = System.Drawing.Color.White;
-            this.lblTerms.Location = new System.Drawing.Point(567, 461);
-            this.lblTerms.Name = "lblTerms";
-            this.lblTerms.Size = new System.Drawing.Size(88, 16);
-            this.lblTerms.TabIndex = 50;
-            this.lblTerms.Text = "Terms of Use";
-            this.lblTerms.Click += new System.EventHandler(this.lblTerms_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(660, 461);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 16);
-            this.label3.TabIndex = 51;
-            this.label3.Text = "Privacy Policy";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
-            // 
-            // lblMalcore
-            // 
-            this.lblMalcore.AutoSize = true;
-            this.lblMalcore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblMalcore.ForeColor = System.Drawing.Color.White;
-            this.lblMalcore.Location = new System.Drawing.Point(485, 461);
-            this.lblMalcore.Name = "lblMalcore";
-            this.lblMalcore.Size = new System.Drawing.Size(70, 16);
-            this.lblMalcore.TabIndex = 52;
-            this.lblMalcore.Text = "malcore.io";
-            this.lblMalcore.Click += new System.EventHandler(this.lblMalcore_Click);
+            panel1.BackColor = Color.FromArgb(111, 101, 101);
+            panel1.Location = new Point(1, 71);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(798, 1);
+            panel1.TabIndex = 49;
             // 
             // lblStatus
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(215)))), ((int)(((byte)(161)))));
-            this.lblStatus.Location = new System.Drawing.Point(132, 84);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(60, 21);
-            this.lblStatus.TabIndex = 54;
-            this.lblStatus.Text = "ACTIVE";
+            lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblStatus.ForeColor = Color.FromArgb(149, 215, 161);
+            lblStatus.Location = new Point(132, 84);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(60, 21);
+            lblStatus.TabIndex = 54;
+            lblStatus.Text = "ACTIVE";
             // 
             // labelInQueueFiles
             // 
-            this.labelInQueueFiles.AutoSize = true;
-            this.labelInQueueFiles.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelInQueueFiles.ForeColor = System.Drawing.Color.White;
-            this.labelInQueueFiles.Location = new System.Drawing.Point(660, 84);
-            this.labelInQueueFiles.Name = "labelInQueueFiles";
-            this.labelInQueueFiles.Size = new System.Drawing.Size(120, 21);
-            this.labelInQueueFiles.TabIndex = 55;
-            this.labelInQueueFiles.Text = "IN QUEUE FILES";
+            labelInQueueFiles.AutoSize = true;
+            labelInQueueFiles.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            labelInQueueFiles.ForeColor = Color.White;
+            labelInQueueFiles.Location = new Point(660, 84);
+            labelInQueueFiles.Name = "labelInQueueFiles";
+            labelInQueueFiles.Size = new Size(120, 21);
+            labelInQueueFiles.TabIndex = 55;
+            labelInQueueFiles.Text = "IN QUEUE FILES";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Calibri", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(22, 84);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 21);
-            this.label2.TabIndex = 56;
-            this.label2.Text = "MONITORING:";
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(101)))), ((int)(((byte)(101)))));
-            this.panel2.Location = new System.Drawing.Point(2, 429);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(798, 1);
-            this.panel2.TabIndex = 57;
+            label2.AutoSize = true;
+            label2.Font = new Font("Calibri", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(22, 84);
+            label2.Name = "label2";
+            label2.Size = new Size(115, 21);
+            label2.TabIndex = 56;
+            label2.Text = "MONITORING:";
             // 
             // viewQueueFlowLayoutPanel
             // 
-            this.viewQueueFlowLayoutPanel.AutoScroll = true;
-            this.viewQueueFlowLayoutPanel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.viewQueueFlowLayoutPanel.Location = new System.Drawing.Point(3, 116);
-            this.viewQueueFlowLayoutPanel.Name = "viewQueueFlowLayoutPanel";
-            this.viewQueueFlowLayoutPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewQueueFlowLayoutPanel.Size = new System.Drawing.Size(795, 307);
-            this.viewQueueFlowLayoutPanel.TabIndex = 58;
+            viewQueueFlowLayoutPanel.AutoScroll = true;
+            viewQueueFlowLayoutPanel.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            viewQueueFlowLayoutPanel.Location = new Point(3, 116);
+            viewQueueFlowLayoutPanel.Name = "viewQueueFlowLayoutPanel";
+            viewQueueFlowLayoutPanel.RightToLeft = RightToLeft.No;
+            viewQueueFlowLayoutPanel.Size = new Size(795, 307);
+            viewQueueFlowLayoutPanel.TabIndex = 58;
             // 
             // QueueForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(804, 508);
-            this.Controls.Add(this.viewQueueFlowLayoutPanel);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.labelInQueueFiles);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.lblTerms);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblMalcore);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.labelPlan);
-            this.Controls.Add(this.labelEmail);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "QueueForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Malcore Agent 1.1.1 | Queue";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(26, 26, 34);
+            ClientSize = new Size(804, 508);
+            Controls.Add(viewQueueFlowLayoutPanel);
+            Controls.Add(lblStatus);
+            Controls.Add(labelInQueueFiles);
+            Controls.Add(label2);
+            Controls.Add(panel1);
+            Controls.Add(labelPlan);
+            Controls.Add(labelEmail);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            Name = "QueueForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Malcore Agent 1.1.1 | Queue";
+            Load += QueueForm_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
         private Label labelPlan;
         private Label labelEmail;
         private Panel panel1;
-        private PictureBox pictureBox1;
-        private Label lblTerms;
-        private Label label3;
-        private Label lblMalcore;
         private Label lblStatus;
         private Label labelInQueueFiles;
         private Label label2;
-        private Panel panel2;
         private FlowLayoutPanel viewQueueFlowLayoutPanel;
     }
 }

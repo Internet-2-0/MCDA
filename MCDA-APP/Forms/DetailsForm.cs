@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
+using MCDA_APP.Controls;
 
 namespace MCDA_APP.Forms
 {
@@ -25,7 +26,7 @@ namespace MCDA_APP.Forms
 
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore");
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
                 if (key != null)
                 {
                     var SETTINGS = key.GetValue("SETTINGS");
@@ -502,6 +503,12 @@ namespace MCDA_APP.Forms
 
         private void DetailsForm_Load(object sender, EventArgs e)
         {
+            MalcoreFooter malcoreFooter = new()
+            {
+                Dock = DockStyle.Bottom
+            };
+
+            Controls.Add(malcoreFooter);
         }
 
         private void lblFileName_Click(object sender, EventArgs e)
@@ -526,7 +533,7 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Malcore", true);
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
                 key.DeleteValue("API_KEY");
                 key.DeleteValue("SETTINGS");
                 key.Close();
@@ -554,17 +561,17 @@ namespace MCDA_APP.Forms
 
         private void label3_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/policy");
+            Program.OpenBrowser(Constants.MalcorePrivacy);
         }
 
         private void lblTerms_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io/terms");
+            Program.OpenBrowser(Constants.MalcoreTerms);
         }
 
         private void lblMalcore_Click(object sender, EventArgs e)
         {
-            Program.OpenBrowser("https://malcore.io");
+            Program.OpenBrowser(Constants.MalcoreBaseUrl);
         }
     }
 }

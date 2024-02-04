@@ -3,44 +3,41 @@ using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Text;
+using System.Reflection;
+using MCDA_APP.Model;
+using MCDA_APP.Controls;
 
 namespace MCDA_APP
 {
     public partial class LoginForm : Form
     {
-        public LoginForm()
+        public LoginForm() => InitializeComponent();
+
+        //TODO: HTTP requests should be handled in it's own class
+        private async void BtnLogin_Click(object sender, EventArgs e)
         {
-            InitializeComponent();
-            this.ActiveControl = txtEmail;
-        }
+            LabelError.Visible = false;
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-        }
+            string username = TxtEmail.Text;
+            string password = TxtPassword.Text;
 
-        private async void btnLogin_Click_1(object sender, EventArgs e)
-        {
-            lblError.Visible = false;
-
-            string username = txtEmail.Text;
-            string password = txtPassword.Text;
-
-            if (username == "" || username == null)
+            if (string.IsNullOrEmpty(username))
             {
-                lblError.Visible = true;
-                lblError.Text = "Please enter your email address";
+                LabelError.Visible = true;
+                LabelError.Text = "Please enter your email address";
                 return;
             }
-            if (password == "" || password == null)
+
+            if (string.IsNullOrEmpty(password))
             {
-                lblError.Visible = true;
-                lblError.Text = "Please enter your password";
+                LabelError.Visible = true;
+                LabelError.Text = "Please enter your password";
                 return;
             }
-            if (!chkAgree.Checked)
+            if (!CheckAgree.Checked)
             {
-                lblError.Visible = true;
-                lblError.Text = "Please agree terms & conditions";
+                LabelError.Visible = true;
+                LabelError.Text = "Please agree terms & conditions";
                 return;
             }
 
@@ -49,7 +46,7 @@ namespace MCDA_APP
                 HttpClient client = new HttpClient();
                 string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/auth/login";
 
-                var data = new UserData() { email = username, password = password };
+                var data = new UserData() { Email = username, Password = password };
                 var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 
                 var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
@@ -72,7 +69,7 @@ namespace MCDA_APP
                         if (authdata != "")
                         {
                             // store API Key and settings info to registory
-                            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\Malcore");
+                            RegistryKey key = Registry.CurrentUser.CreateSubKey(Constants.RegistryMalcoreKey);
                             key.SetValue("API_KEY", authdata);
                             key.SetValue("SETTINGS", "");
                             key.Close();
@@ -87,21 +84,21 @@ namespace MCDA_APP
                         }
                         else
                         {
-                            lblError.Visible = true;
-                            lblError.Text = "Something went wrong";
+                            LabelError.Visible = true;
+                            LabelError.Text = "Something went wrong";
                         }
                     }
                     else
                     {
                         var errorMsg = json["messages"][0]["message"];
-                        lblError.Visible = true;
-                        lblError.Text = errorMsg.ToString();
+                        LabelError.Visible = true;
+                        LabelError.Text = errorMsg.ToString();
                     }
                 }
                 else
                 {
-                    lblError.Visible = true;
-                    lblError.Text = "Something went wrong";
+                    LabelError.Visible = true;
+                    LabelError.Text = "Something went wrong";
                 }
 
             }
@@ -109,43 +106,30 @@ namespace MCDA_APP
             {
                 Debug.WriteLine(ex);
 
-                lblError.Visible = true;
-                lblError.Text = "Something went wrong";
+                LabelError.Visible = true;
+                LabelError.Text = "Something went wrong";
             }
         }
 
-        private void linkAgree_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            this.chkAgree.Checked = true;
-        }
+        private void LinkAgree_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => CheckAgree.Checked = true;
 
-        private void lblTerms_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser("https://malcore.io/terms");
-        }
+        private void LabelTerms_Click(object sender, EventArgs e) => Program.OpenBrowser(Constants.MalcoreTerms);
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser("https://malcore.io/policy");
-        }
+        private void LabelPrivacyPolicy_Click(object sender, EventArgs e) => Program.OpenBrowser(Constants.MalcorePrivacy);
 
-        private void lblMalcore_Click(object sender, EventArgs e)
-        {
-            Program.OpenBrowser("https://malcore.io");
-        }
+        private void LabelMalcore_Click(object sender, EventArgs e) => Program.OpenBrowser(Constants.MalcoreBaseUrl);
 
-        private void labelSignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LabelSignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // this link should be updated based on app version
-            Program.OpenBrowser("https://malcore.io/register?utm_source=agent&utm_medium=login&utm_campaign=v1.0.0&utm_content=win");
+            Program.OpenBrowser($"https://malcore.io/register?utm_source=agent&utm_medium=login&utm_campaign=v{Helper.GetAgentVersion()}&utm_content=win");
         }
 
         private void LoginFormClosed(object sender, FormClosedEventArgs e)
         {
             try
             {
-                Debug.WriteLine("closed................" + System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location));
-                Application.Exit(); 
+                Debug.WriteLine("closed................" + Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location));
+                Application.Exit();
             }
             catch (Exception ex)
             {
@@ -157,19 +141,22 @@ namespace MCDA_APP
         {
             try
             {
-                Environment.Exit(0); 
+                Environment.Exit(0);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
         }
-    }
 
-    public class UserData
-    {
-        public string email { get; set; }
-        public string password { get; set; }
-    }
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            MalcoreFooter malcoreFooter = new()
+            {
+                Dock = DockStyle.Bottom
+            };
 
+            Controls.Add(malcoreFooter);
+        }
+    }
 }
