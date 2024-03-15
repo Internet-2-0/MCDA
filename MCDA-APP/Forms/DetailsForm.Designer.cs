@@ -63,7 +63,7 @@
             // 
             // panelDetailItem
             // 
-            panelDetailItem.BackColor = Color.FromArgb(45, 42, 42);
+            panelDetailItem.BackColor = Color.FromArgb(33, 43, 53);
             panelDetailItem.Controls.Add(removeButton);
             panelDetailItem.Controls.Add(releaseButton);
             panelDetailItem.Controls.Add(folderLabel);
@@ -124,7 +124,7 @@
             percentLabel.Size = new Size(120, 34);
             percentLabel.TabIndex = 31;
             percentLabel.Text = "33%";
-            percentLabel.TextAlign = ContentAlignment.TopRight;
+            percentLabel.TextAlign = ContentAlignment.MiddleRight;
             percentLabel.Click += lblFileName_Click;
             // 
             // fileLabel
@@ -244,7 +244,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(26, 26, 34);
+            BackColor = Color.FromArgb(16, 27, 38);
             ClientSize = new Size(727, 504);
             Controls.Add(panel6);
             Controls.Add(labelFullPath);
@@ -261,7 +261,7 @@
             MaximizeBox = false;
             Name = "DetailsForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Details";
+            Text = "Malcore Agent 1.2 | Details";
             Load += DetailsForm_Load;
             panelDetailItem.ResumeLayout(false);
             ResumeLayout(false);

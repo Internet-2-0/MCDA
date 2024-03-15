@@ -48,7 +48,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                Debug.Write("DetailsForm.............." + ex.Message);
+                Debug.Write("DetailsForm###########################" + ex);
             }
             
 
@@ -68,23 +68,41 @@ namespace MCDA_APP.Forms
             labelFullPath.Text = this.folderName + "\\" + this.fileName;
 
             bool success = true;
+            string scan_result = "";
+            string message = "";
+            string fileString = "";
+
+            string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+            if (File.Exists("./malcore/threat/" + hashFileName))
+            {
+                fileString = File.ReadAllText("./malcore/threat/" + hashFileName);
+            }
+            else if (File.Exists("./malcore/threat/drag/" + hashFileName))
+            {
+                fileString = File.ReadAllText("./malcore/threat/drag/" + hashFileName);
+            }
+
+            
 
 
-            if (this.responseString == "" || this.responseString == null)
+            if (fileString == "" || fileString == null)
             {
                 success = false;
             }
             else
             {
-                JObject jsonObject = JObject.Parse(this.responseString);
+                JObject jsonObject = JObject.Parse(fileString);
                 success = (bool)jsonObject["success"]; 
 
                 if (jsonObject["data"]["data"].ToString() == "{}" || jsonObject["data"]["data"].ToString() == "")
                 {
                     success = false;
-                }
+                } 
+                
 
-                Debug.WriteLine(success);
+                if((string)jsonObject["data"]?["data"]?["handler_type"] == "error") {
+                    success = false;
+                }
 
                 string score = "";
                 double score_num = 0;
@@ -92,15 +110,17 @@ namespace MCDA_APP.Forms
                 {
                     flowLayoutPanelDetails.Visible = true;
 
-                    score = (string)jsonObject["data"]["data"]["score"];
-                    string[] scores = score.Split('/');
-                    score_num = Convert.ToDouble(scores[0]);
-                    // score = Convert.ToString(Math.Round(score_num)) + "%";
-                    score = scores[0] + "%";
+                    if (jsonObject["data"]?["data"]?["threat_score"]?["results"]?["score"] != null) {
+                        score = (string)jsonObject["data"]?["data"]?["threat_score"]?["results"]?["score"];
+                        string[] scores = score.Split('/');
+                        score_num = Convert.ToDouble(scores[0]);
+                        score = scores[0] + "%";
+                    }
 
-                    if (jsonObject["data"]["data"]["signatures"] != null)
+
+                    if (jsonObject["data"]?["data"]?["threat_score"]?["results"]?["signatures"] != null)
                     {
-                        JArray signatures = (JArray)jsonObject["data"]["data"]["signatures"];
+                        JArray signatures = (JArray)jsonObject["data"]?["data"]?["threat_score"]?["results"]?["signatures"];
                         for (int i = 0; i < signatures.Count; i++)
                         {
                             FlowLayoutPanel panel = new FlowLayoutPanel();
@@ -213,6 +233,7 @@ namespace MCDA_APP.Forms
                 {
                     colorPanel.BackColor = Color.Green;
                     percentLabel.ForeColor = Color.Green;
+                    removeButton.Visible = false;
                 }
                 else if (score_num >= 20.0 && score_num < 40.0)
                 {
@@ -243,6 +264,8 @@ namespace MCDA_APP.Forms
                 colorPanel.BackColor = Color.Yellow;
                 panelDetailItem.BackColor = Color.DarkRed;
 
+                removeButton.Visible = true;
+
                 Button rerunButton = new Button();
                 rerunButton.Text = "RERUN";
                 rerunButton.Font = new Font("Calibri", 12, FontStyle.Bold);
@@ -256,7 +279,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Click += delegate (object obj, EventArgs ea)
                 {
                     this.Close();
-                    monitoringForm.rerunScanFile(folderName, fileName, listPanel, true);
+                    monitoringForm.RerunScanFile(folderName, fileName, listPanel, true);
                 };
                 panelDetailItem.Controls.Add(rerunButton);
                 percentLabel.Visible = false;
@@ -291,7 +314,11 @@ namespace MCDA_APP.Forms
 
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
                 string responseString = "released";
-                File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
+                if(File.Exists(@"./malcore/threat/drag/" + hashFileName)) {
+                    File.WriteAllText(@"./malcore/threat/drag/" + hashFileName, responseString);
+                } else if(File.Exists(@"./malcore/threat/" + hashFileName)) {
+                    File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
+                }
             };
         }
 
@@ -308,26 +335,42 @@ namespace MCDA_APP.Forms
             // folder label 
             folderLabel.Text = this.folderName;
             labelFullPath.Text = this.folderName;
+            string scan_result = "";
+            // string message = "";
 
             bool success = true;
 
-            if (this.responseString == "" || this.responseString == null)
+            string fileString = "";
+
+            string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
+            if (File.Exists("./malcore/doc/" + hashFileName))
+            {
+                fileString = File.ReadAllText("./malcore/doc/" + hashFileName);
+            }
+            else if (File.Exists("./malcore/doc/drag/" + hashFileName))
+            {
+                fileString = File.ReadAllText("./malcore/doc/drag/" + hashFileName);
+            }
+
+            
+
+            if (fileString == "" || fileString == null)
             {
                 success = false;
-            }
+            } 
             else
             {
 
-                JObject jsonObject = JObject.Parse(this.responseString);
+                JObject jsonObject = JObject.Parse(fileString);
                 success = (bool)jsonObject["success"];
 
-                if (jsonObject["data"]["data"].ToString() == "{}" || jsonObject["data"]["data"].ToString() == "")
+                if (bool.Parse((string)jsonObject["success"]) == false || jsonObject["data"] == null || (jsonObject["data"] != null && jsonObject["data"]["data"].ToString() == "{}"))
                 {
                     success = false;
                 }
                 string score = "";
                 double score_num = 0;
-                if (success)
+                if (success && jsonObject["data"]?["data"]?["dfi"]?["results"]?["dfi_results"]?["score"] != null)
                 {
                     flowLayoutPanelDetails.Visible = true;
 
@@ -353,7 +396,7 @@ namespace MCDA_APP.Forms
                             Label lblSignatureTitle = new Label();
                             lblSignatureTitle.Font = new Font("Calibri", 14, FontStyle.Bold);
                             lblSignatureTitle.ForeColor = Color.Orange;
-                            string title = (string)details[i]["title"];
+                            string title = details[i]["title"] != null ? (string)details[i]["title"] : (string)details[i]["description"];
                             lblSignatureTitle.Text = title.ToUpper();
                             lblSignatureTitle.AutoSize = true;
 
@@ -381,6 +424,16 @@ namespace MCDA_APP.Forms
                     flowLayoutPanelDetails.Visible = false;
                 }
 
+
+                if (success && jsonObject["data"]?["data"]?["status"] != null)
+                {
+                    scan_result = (string)jsonObject["data"]?["data"]?["status"];
+                }
+                // if (jsonObject["data"] is JObject data && data["messages"] is JArray messages && messages.Count > 0)
+                // {
+                //     message = messages[0]["message"].Value<string>();
+                // }
+                
                 // percent label
                 percentLabel.Text = score;
 
@@ -389,6 +442,7 @@ namespace MCDA_APP.Forms
                 {
                     colorPanel.BackColor = Color.Green;
                     percentLabel.ForeColor = Color.Green;
+                    removeButton.Visible = false;
                 }
                 else if (score_num >= 20.0 && score_num < 40.0)
                 {
@@ -405,6 +459,14 @@ namespace MCDA_APP.Forms
                     colorPanel.BackColor = Color.Red;
                     percentLabel.ForeColor = Color.Red;
                 }
+                
+                // if scan is not completed
+                if (scan_result != "completed")
+                {
+                    percentLabel.Text = scan_result + "...";
+                    percentLabel.Font = new Font("Calibri", 10, FontStyle.Bold);
+                    percentLabel.ForeColor = Color.White;
+                }
             }
 
             if (success)
@@ -419,6 +481,8 @@ namespace MCDA_APP.Forms
                 colorPanel.BackColor = Color.Yellow;
                 panelDetailItem.BackColor = Color.DarkRed;
 
+                removeButton.Visible = true;
+
                 Button rerunButton = new Button();
                 rerunButton.Text = "RERUN";
                 rerunButton.Font = new Font("Calibri", 12, FontStyle.Bold);
@@ -432,7 +496,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Click += delegate (object obj, EventArgs ea)
                 {
                     this.Close();
-                    monitoringForm.rerunScanFile(folderName, fileName, listPanel, false);
+                    monitoringForm.RerunScanFile(folderName, fileName, listPanel, false);
                 };
                 panelDetailItem.Controls.Add(rerunButton);
                 percentLabel.Visible = false;
@@ -466,7 +530,11 @@ namespace MCDA_APP.Forms
 
                 string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
                 string responseString = "released";
-                File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
+                if(File.Exists(@"./malcore/doc/drag/" + hashFileName)) {
+                    File.WriteAllText(@"./malcore/doc/drag/" + hashFileName, responseString);
+                } else if(File.Exists(@"./malcore/doc/" + hashFileName)) {
+                    File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
+                }
             };
         }
 

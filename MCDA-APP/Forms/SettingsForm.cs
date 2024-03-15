@@ -8,7 +8,7 @@ namespace MCDA_APP.Forms
     {
         bool closing = false;
         List<string> paths = new List<string>();
-        
+
         public SettingsForm() => InitializeComponent();
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -25,7 +25,7 @@ namespace MCDA_APP.Forms
                 // set apikey and user email
                 labelEmail.Text = Program.USEREMAIL;
                 txtApikey.Text = Program.APIKEY;
-                labelPlan.Text = Program.SUBSCRIPTION; 
+                labelPlan.Text = Program.SUBSCRIPTION;
 
                 // Check if user authentication 
                 RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
@@ -105,17 +105,18 @@ namespace MCDA_APP.Forms
                 {
                     // startkeyForLocalMachine.SetValue("malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" /autostart");
                     startkeyForCurrentUser.SetValue("Malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" --process-start-args --startup");
-                    
+
                     // old version for admin permission
                     // startkey.SetValue("Malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" --process-start-args --startup");
                 }
                 else
                 {
                     // startkeyForLocalMachine.DeleteValue("malcore");
-                    if(startkeyForCurrentUser.GetValue("Malcore") != null) {
+                    if (startkeyForCurrentUser.GetValue("Malcore") != null)
+                    {
                         startkeyForCurrentUser.DeleteValue("Malcore");
                     }
-                    
+
                     // old version for admin permission
                     // if(startkey.GetValue("Malcore") != null) {
                     //     startkey.DeleteValue("Malcore");
@@ -148,7 +149,7 @@ namespace MCDA_APP.Forms
                             if (frm.Name == "MonitoringForm")
                             {
                                 MonitoringForm monitoringForm = (MonitoringForm)frm;
-                                monitoringForm.startMonitoring();
+                                monitoringForm.StartMonitoring();
                                 break;
                             }
                         }
@@ -172,13 +173,13 @@ namespace MCDA_APP.Forms
                 key.Close();
 
                 Program.APIKEY = "";
-                Program.USEREMAIL = ""; 
-                Program.SUBSCRIPTION = ""; 
-                
+                Program.USEREMAIL = "";
+                Program.SUBSCRIPTION = "";
+
                 Hide();
-                
+
                 LoginForm loginForm = new LoginForm();
-                loginForm.Show(this); 
+                loginForm.Show(this);
 
                 // foreach (Form f in Application.OpenForms)
                 // {
@@ -188,15 +189,16 @@ namespace MCDA_APP.Forms
                 // }  
                 foreach (Form f in Application.OpenForms)
                 {
-                    if (f.Name != "LoginForm") {
+                    if (f.Name != "LoginForm")
+                    {
                         f.Hide();
-                    } 
-                } 
+                    }
+                }
             }
             catch (Exception ex)
             {
                 LoginForm loginForm = new LoginForm();
-                loginForm.Show(this); 
+                loginForm.Show(this);
             }
         }
 
@@ -214,7 +216,8 @@ namespace MCDA_APP.Forms
                     string folderPath = folderDlg.SelectedPath;
 
                     // prevent to add root dirives such as C:\, D:\ and C:\Windows
-                    if(folderPath.Equals("C:\\") || folderPath.Contains("C:\\Windows")) {
+                    if (folderPath.Equals("C:\\") || folderPath.Contains("C:\\Windows"))
+                    {
                         return;
                     }
                     this.paths.Add(folderPath);
@@ -231,7 +234,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -257,6 +260,7 @@ namespace MCDA_APP.Forms
             removePicture.Padding = new Padding(0, 0, 0, 0);
             removePicture.Location = new System.Drawing.Point(flowLayoutPanelForFolders.Size.Width - 52, 2); // 400
             removePicture.Image = pictureBox2.Image;
+            removePicture.Cursor = Cursors.Hand;
             removePicture.SizeMode = PictureBoxSizeMode.StretchImage;
             removePicture.Click += delegate (object obj, EventArgs ea)
             {
@@ -304,7 +308,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -319,7 +323,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -335,7 +339,8 @@ namespace MCDA_APP.Forms
                 {
                     String folderPath = filePaths[i];
                     // prevent to add root dirives such as C:\, D:\
-                    if(folderPath.Equals("C:\\") || folderPath.Contains("C:\\Windows")) {
+                    if (folderPath.Equals("C:\\") || folderPath.Contains("C:\\Windows"))
+                    {
                         return;
                     }
                     this.paths.Add(folderPath);
@@ -352,7 +357,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -365,7 +370,8 @@ namespace MCDA_APP.Forms
                 {
                     string folderPath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
                     // Only allow folders to drop
-                    if (Directory.Exists(folderPath)) {
+                    if (Directory.Exists(folderPath))
+                    {
                         effects = DragDropEffects.Copy;
                     }
                 }
@@ -373,7 +379,7 @@ namespace MCDA_APP.Forms
             }
             catch (Exception ex)
             {
-                
+
             }
 
         }
@@ -390,7 +396,7 @@ namespace MCDA_APP.Forms
                     {
                         Directory.Delete(temp, true);
                     }
-                    
+
                     this.paths.Clear();
                     flowLayoutPanelForFolders.Controls.Clear();
 
@@ -405,7 +411,7 @@ namespace MCDA_APP.Forms
                         if (frm.Name == "MonitoringForm")
                         {
                             MonitoringForm monitoringForm = (MonitoringForm)frm;
-                            monitoringForm.removeAllScanedFiles();
+                            monitoringForm.RemoveAllScanedFiles();
                             break;
                         }
                     }
@@ -419,8 +425,225 @@ namespace MCDA_APP.Forms
             {
                 //do something else
             }
-            
-            
+
+
+        }
+
+        private void pictureClearHistory_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to clear the history?", "Clear History", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                try
+                {
+                    string temp = Path.Combine(Constants.ProgramFilesFolder, Constants.MalcoreBasePath, @"\malcore");
+                    if (Directory.Exists(temp))
+                    {
+                        Directory.Delete(temp, true);
+                    }
+
+                    this.paths.Clear();
+                    flowLayoutPanelForFolders.Controls.Clear();
+
+                    // Create directories for caching
+                    // there was a problem for the installer. installer did not recognize the relative path
+                    Helper.CreateFolders();
+
+                    // remove all history from monitoring form
+                    FormCollection fc = Application.OpenForms;
+                    foreach (Form frm in fc)
+                    {
+                        if (frm.Name == "MonitoringForm")
+                        {
+                            MonitoringForm monitoringForm = (MonitoringForm)frm;
+                            monitoringForm.RemoveAllScanedFiles();
+                            break;
+                        }
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+        }
+
+        private void pictureLogout_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
+                key.DeleteValue("API_KEY");
+                key.DeleteValue("SETTINGS");
+                key.Close();
+
+                Program.APIKEY = "";
+                Program.USEREMAIL = "";
+                Program.SUBSCRIPTION = "";
+
+                Hide();
+
+                LoginForm loginForm = new LoginForm();
+                loginForm.Show(this);
+
+                // foreach (Form f in Application.OpenForms)
+                // {
+                //     if (f.Name == "MonitoringForm") {
+                //         f.Close();
+                //     }
+                // }  
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name != "LoginForm")
+                    {
+                        f.Hide();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoginForm loginForm = new LoginForm();
+                loginForm.Show(this);
+            }
+        }
+
+        private void pictureAdd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FolderBrowserDialog folderDlg = new FolderBrowserDialog();
+                folderDlg.ShowNewFolderButton = true;
+
+                // Show the FolderBrowserDialog.  
+                DialogResult result = folderDlg.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string folderPath = folderDlg.SelectedPath;
+
+                    // prevent to add root dirives such as C:\, D:\ and C:\Windows
+                    if (folderPath.Equals("C:\\") || folderPath.Contains("C:\\Windows"))
+                    {
+                        return;
+                    }
+                    this.paths.Add(folderPath);
+
+                    if (this.paths.Count != this.paths.Distinct().Count())
+                    {
+                        this.paths.Remove(folderPath);
+                    }
+                    else
+                    {
+                        addPathToFoldersList(folderPath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Hide();
+        }
+
+        private void pictureSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bool enableMornitoring = checkEnableMonitor.Checked;
+                bool sendStatistics = checkSendStatistics.Checked;
+                bool openOnStartup = checkOpenOnStartup.Checked;
+                string minThreatScore = textMinScore.Text;
+
+                var data = new SettingsData()
+                {
+                    enableMornitoring = enableMornitoring,
+                    sendStatistics = sendStatistics,
+                    openOnStartup = openOnStartup,
+                    minThreatScore = minThreatScore,
+                    paths = string.Join(",", this.paths.ToArray())
+                };
+                var settingsData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+
+                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
+                var OldSettings = key.GetValue("SETTINGS");
+
+                key.SetValue("SETTINGS", settingsData.ToString());
+                key.Close();
+
+                // RegistryKey startkeyForLocalMachine = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                RegistryKey startkeyForCurrentUser = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+                // old version for admin permission
+                // RegistryKey startkey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+                // register as start up
+                if (openOnStartup)
+                {
+                    // startkeyForLocalMachine.SetValue("malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" /autostart");
+                    startkeyForCurrentUser.SetValue("Malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" --process-start-args --startup");
+
+                    // old version for admin permission
+                    // startkey.SetValue("Malcore", "\"C:\\Program Files (x86)\\Malcore Agent\\Malcore Agent\\MCDA-APP.exe\" --process-start-args --startup");
+                }
+                else
+                {
+                    // startkeyForLocalMachine.DeleteValue("malcore");
+                    if (startkeyForCurrentUser.GetValue("Malcore") != null)
+                    {
+                        startkeyForCurrentUser.DeleteValue("Malcore");
+                    }
+
+                    // old version for admin permission
+                    // if(startkey.GetValue("Malcore") != null) {
+                    //     startkey.DeleteValue("Malcore");
+                    // }
+                }
+                // startkeyForLocalMachine.Close();
+                startkeyForCurrentUser.Close();
+
+                // old version for admin permission
+                // startkey.Close();
+
+                Hide();
+
+                // If settings is updated, restart monitoring
+                if (OldSettings == null || OldSettings.ToString() == "")
+                {
+                    // if first start the app after install, open monitoring form
+                    MonitoringForm monitoringForm = new MonitoringForm();
+                    monitoringForm.Visible = false;
+                    monitoringForm.Show(this);
+                }
+                else
+                {
+                    // if settings are updated, restart monitoring
+                    if ((OldSettings.ToString() != settingsData.ToString()))
+                    {
+                        FormCollection fc = Application.OpenForms;
+                        foreach (Form frm in fc)
+                        {
+                            if (frm.Name == "MonitoringForm")
+                            {
+                                MonitoringForm monitoringForm = (MonitoringForm)frm;
+                                monitoringForm.StartMonitoring();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // MessageBox.Show("save"+ex.ToString());
+                Hide();
+            }
         }
     }
 

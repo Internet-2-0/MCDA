@@ -117,7 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btn-add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn-cancel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-cancel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn-settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn-save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn-cancel1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-cancel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="closeImage" xml:space="preserve">
     <value>img/close.png</value>
+  </data>
+  <data name="btn-history" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-history.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn-login" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-login.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn-logout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-logout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn-save1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn-history1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\btn-history.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

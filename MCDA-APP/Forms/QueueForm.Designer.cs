@@ -115,7 +115,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(26, 26, 34);
+            BackColor = Color.FromArgb(16, 27, 38);
             ClientSize = new Size(804, 508);
             Controls.Add(viewQueueFlowLayoutPanel);
             Controls.Add(lblStatus);
@@ -129,7 +129,7 @@
             MaximizeBox = false;
             Name = "QueueForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Queue";
+            Text = "Malcore Agent 1.2 | Queue";
             Load += QueueForm_Load;
             ResumeLayout(false);
             PerformLayout();

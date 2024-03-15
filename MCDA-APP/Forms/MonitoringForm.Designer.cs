@@ -70,6 +70,8 @@
             notifyIcon1 = new NotifyIcon(components);
             contextMenuStrip1 = new ContextMenuStrip(components);
             exitToolStripMenuItem = new ToolStripMenuItem();
+            pictureSettings = new PictureBox();
+            pictureLogout = new PictureBox();
             monitoringFlowLayoutPanel.SuspendLayout();
             queuePanel.SuspendLayout();
             panelInactive.SuspendLayout();
@@ -94,6 +96,8 @@
             ((System.ComponentModel.ISupportInitialize)fileSystemWatcher18).BeginInit();
             ((System.ComponentModel.ISupportInitialize)fileSystemWatcher19).BeginInit();
             contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureSettings).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureLogout).BeginInit();
             SuspendLayout();
             // 
             // label2
@@ -168,10 +172,11 @@
             btnLogout.TabIndex = 38;
             btnLogout.Text = "Log Out";
             btnLogout.UseVisualStyleBackColor = false;
-            btnLogout.Click += btnLogout_Click_1;
+            btnLogout.Click += BtnLogout_Click_1;
             // 
             // btnSettings
             // 
+            btnSettings.AutoEllipsis = true;
             btnSettings.BackColor = Color.FromArgb(26, 26, 34);
             btnSettings.FlatAppearance.BorderColor = Color.White;
             btnSettings.FlatStyle = FlatStyle.Flat;
@@ -183,7 +188,7 @@
             btnSettings.TabIndex = 37;
             btnSettings.Text = "Settings";
             btnSettings.UseVisualStyleBackColor = false;
-            btnSettings.Click += btnSettings_Click_1;
+            btnSettings.Click += BtnSettings_Click_1;
             // 
             // labelPlan
             // 
@@ -218,8 +223,8 @@
             monitoringFlowLayoutPanel.RightToLeft = RightToLeft.No;
             monitoringFlowLayoutPanel.Size = new Size(797, 328);
             monitoringFlowLayoutPanel.TabIndex = 39;
-            monitoringFlowLayoutPanel.DragDrop += monitoringForm_DragDrop;
-            monitoringFlowLayoutPanel.DragEnter += monitoringForm_DragEnter;
+            monitoringFlowLayoutPanel.DragDrop += MonitoringForm_DragDrop;
+            monitoringFlowLayoutPanel.DragEnter += MonitoringForm_DragEnter;
             // 
             // queuePanel
             // 
@@ -257,7 +262,7 @@
             btnViewQueue.TabIndex = 5;
             btnViewQueue.Text = "VIEW QUEUE";
             btnViewQueue.UseVisualStyleBackColor = false;
-            btnViewQueue.Click += btnViewQueue_Click;
+            btnViewQueue.Click += BtnViewQueue_Click;
             // 
             // labelInactiveDescription
             // 
@@ -296,141 +301,141 @@
             fileSystemWatcherMain.EnableRaisingEvents = true;
             fileSystemWatcherMain.IncludeSubdirectories = true;
             fileSystemWatcherMain.SynchronizingObject = this;
-            fileSystemWatcherMain.Changed += fileSystemWatcherMain_Changed;
-            fileSystemWatcherMain.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcherMain.Changed += FileSystemWatcherMain_Changed;
+            fileSystemWatcherMain.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher1
             // 
             fileSystemWatcher1.EnableRaisingEvents = true;
             fileSystemWatcher1.IncludeSubdirectories = true;
             fileSystemWatcher1.SynchronizingObject = this;
-            fileSystemWatcher1.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher1.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher2
             // 
             fileSystemWatcher2.EnableRaisingEvents = true;
             fileSystemWatcher2.IncludeSubdirectories = true;
             fileSystemWatcher2.SynchronizingObject = this;
-            fileSystemWatcher2.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher2.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher3
             // 
             fileSystemWatcher3.EnableRaisingEvents = true;
             fileSystemWatcher3.IncludeSubdirectories = true;
             fileSystemWatcher3.SynchronizingObject = this;
-            fileSystemWatcher3.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher3.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher4
             // 
             fileSystemWatcher4.EnableRaisingEvents = true;
             fileSystemWatcher4.IncludeSubdirectories = true;
             fileSystemWatcher4.SynchronizingObject = this;
-            fileSystemWatcher4.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher4.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher5
             // 
             fileSystemWatcher5.EnableRaisingEvents = true;
             fileSystemWatcher5.IncludeSubdirectories = true;
             fileSystemWatcher5.SynchronizingObject = this;
-            fileSystemWatcher5.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher5.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher6
             // 
             fileSystemWatcher6.EnableRaisingEvents = true;
             fileSystemWatcher6.IncludeSubdirectories = true;
             fileSystemWatcher6.SynchronizingObject = this;
-            fileSystemWatcher6.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher6.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher7
             // 
             fileSystemWatcher7.EnableRaisingEvents = true;
             fileSystemWatcher7.IncludeSubdirectories = true;
             fileSystemWatcher7.SynchronizingObject = this;
-            fileSystemWatcher7.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher7.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher8
             // 
             fileSystemWatcher8.EnableRaisingEvents = true;
             fileSystemWatcher8.IncludeSubdirectories = true;
             fileSystemWatcher8.SynchronizingObject = this;
-            fileSystemWatcher8.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher8.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher9
             // 
             fileSystemWatcher9.EnableRaisingEvents = true;
             fileSystemWatcher9.IncludeSubdirectories = true;
             fileSystemWatcher9.SynchronizingObject = this;
-            fileSystemWatcher9.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher9.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher10
             // 
             fileSystemWatcher10.EnableRaisingEvents = true;
             fileSystemWatcher10.IncludeSubdirectories = true;
             fileSystemWatcher10.SynchronizingObject = this;
-            fileSystemWatcher10.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher10.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher11
             // 
             fileSystemWatcher11.EnableRaisingEvents = true;
             fileSystemWatcher11.IncludeSubdirectories = true;
             fileSystemWatcher11.SynchronizingObject = this;
-            fileSystemWatcher11.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher11.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher12
             // 
             fileSystemWatcher12.EnableRaisingEvents = true;
             fileSystemWatcher12.IncludeSubdirectories = true;
             fileSystemWatcher12.SynchronizingObject = this;
-            fileSystemWatcher12.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher12.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher13
             // 
             fileSystemWatcher13.EnableRaisingEvents = true;
             fileSystemWatcher13.IncludeSubdirectories = true;
             fileSystemWatcher13.SynchronizingObject = this;
-            fileSystemWatcher13.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher13.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher14
             // 
             fileSystemWatcher14.EnableRaisingEvents = true;
             fileSystemWatcher14.IncludeSubdirectories = true;
             fileSystemWatcher14.SynchronizingObject = this;
-            fileSystemWatcher14.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher14.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher15
             // 
             fileSystemWatcher15.EnableRaisingEvents = true;
             fileSystemWatcher15.IncludeSubdirectories = true;
             fileSystemWatcher15.SynchronizingObject = this;
-            fileSystemWatcher15.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher15.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher16
             // 
             fileSystemWatcher16.EnableRaisingEvents = true;
             fileSystemWatcher16.IncludeSubdirectories = true;
             fileSystemWatcher16.SynchronizingObject = this;
-            fileSystemWatcher16.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher16.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher17
             // 
             fileSystemWatcher17.EnableRaisingEvents = true;
             fileSystemWatcher17.IncludeSubdirectories = true;
             fileSystemWatcher17.SynchronizingObject = this;
-            fileSystemWatcher17.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher17.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher18
             // 
             fileSystemWatcher18.EnableRaisingEvents = true;
             fileSystemWatcher18.IncludeSubdirectories = true;
             fileSystemWatcher18.SynchronizingObject = this;
-            fileSystemWatcher18.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher18.Created += FileSystemWatcherMain_Created_1;
             // 
             // fileSystemWatcher19
             // 
             fileSystemWatcher19.EnableRaisingEvents = true;
             fileSystemWatcher19.IncludeSubdirectories = true;
             fileSystemWatcher19.SynchronizingObject = this;
-            fileSystemWatcher19.Created += fileSystemWatcherMain_Created_1;
+            fileSystemWatcher19.Created += FileSystemWatcherMain_Created_1;
             // 
             // notifyIcon1
             // 
@@ -440,7 +445,7 @@
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
             notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
             notifyIcon1.Text = "Malcore Agent";
-            notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
+            notifyIcon1.MouseDoubleClick += NotifyIcon1_MouseDoubleClick;
             // 
             // contextMenuStrip1
             // 
@@ -453,14 +458,38 @@
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.Size = new Size(178, 22);
             exitToolStripMenuItem.Text = "Quit Malcore Agent";
-            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
+            // 
+            // pictureSettings
+            // 
+            pictureSettings.Cursor = Cursors.Hand;
+            pictureSettings.Image = Properties.Resources.btn_settings;
+            pictureSettings.Location = new Point(616, 20);
+            pictureSettings.Name = "pictureSettings";
+            pictureSettings.Size = new Size(95, 38);
+            pictureSettings.TabIndex = 40;
+            pictureSettings.TabStop = false;
+            pictureSettings.Click += PictureSettings_Click;
+            // 
+            // pictureLogout
+            // 
+            pictureLogout.BackgroundImage = Properties.Resources.btn_logout;
+            pictureLogout.Cursor = Cursors.Hand;
+            pictureLogout.Location = new Point(719, 21);
+            pictureLogout.Name = "pictureLogout";
+            pictureLogout.Size = new Size(90, 38);
+            pictureLogout.TabIndex = 41;
+            pictureLogout.TabStop = false;
+            pictureLogout.Click += PictureLogout_Click;
             // 
             // MonitoringForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(26, 26, 34);
+            BackColor = Color.FromArgb(16, 27, 38);
             ClientSize = new Size(830, 517);
+            Controls.Add(pictureLogout);
+            Controls.Add(pictureSettings);
             Controls.Add(panelInactive);
             Controls.Add(monitoringFlowLayoutPanel);
             Controls.Add(btnLogout);
@@ -478,7 +507,7 @@
             MaximizeBox = false;
             Name = "MonitoringForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Monitoring";
+            Text = "Malcore Agent 1.2 | Monitoring";
             FormClosing += MonitoringForm_FormClosing;
             Load += MonitoringForm_Load;
             Resize += MonitoringForm_Resize;
@@ -508,6 +537,8 @@
             ((System.ComponentModel.ISupportInitialize)fileSystemWatcher18).EndInit();
             ((System.ComponentModel.ISupportInitialize)fileSystemWatcher19).EndInit();
             contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureSettings).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureLogout).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -554,5 +585,7 @@
         private Panel queuePanel;
         private Label labelQueuedFiles;
         private Button btnViewQueue;
+        private PictureBox pictureSettings;
+        private PictureBox pictureLogout;
     }
 }

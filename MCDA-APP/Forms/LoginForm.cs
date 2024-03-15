@@ -158,5 +158,102 @@ namespace MCDA_APP
 
             Controls.Add(malcoreFooter);
         }
+
+        private async void pictureLogin_Click(object sender, EventArgs e)
+        {
+            LabelError.Visible = false;
+
+            string username = TxtEmail.Text;
+            string password = TxtPassword.Text;
+
+            if (string.IsNullOrEmpty(username))
+            {
+                LabelError.Visible = true;
+                LabelError.Text = "Please enter your email address";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                LabelError.Visible = true;
+                LabelError.Text = "Please enter your password";
+                return;
+            }
+            if (!CheckAgree.Checked)
+            {
+                LabelError.Visible = true;
+                LabelError.Text = "Please agree terms & conditions";
+                return;
+            }
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/auth/login";
+
+                var data = new UserData() { Email = username, Password = password };
+                var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+
+                var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
+                var response = await client.PostAsync(url, requestContent);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    JObject json = JObject.Parse(content);
+                    var authdata = "";
+                    var userdata = json["data"];
+                    Boolean success = json["success"] != null ? (Boolean)json["success"] : false;
+
+                    Debug.WriteLine("btnLogin_Click_1################################################" + userdata);
+
+                    if (success == true && userdata != null)
+                    {
+                        authdata = userdata["user"].ToString();
+
+                        if (authdata != "")
+                        {
+                            // store API Key and settings info to registory
+                            RegistryKey key = Registry.CurrentUser.CreateSubKey(Constants.RegistryMalcoreKey);
+                            key.SetValue("API_KEY", authdata);
+                            key.SetValue("SETTINGS", "");
+                            key.Close();
+
+                            Program.APIKEY = userdata["user"]["apiKey"].ToString();
+                            Program.USEREMAIL = userdata["user"]["email"].ToString();
+                            Program.SUBSCRIPTION = userdata["user"]["subscription"]["name"].ToString();
+
+                            Hide();
+                            SettingsForm settingsForm = new SettingsForm();
+                            settingsForm.Show(this);
+                        }
+                        else
+                        {
+                            LabelError.Visible = true;
+                            LabelError.Text = "Something went wrong";
+                        }
+                    }
+                    else
+                    {
+                        var errorMsg = json["messages"][0]["message"];
+                        LabelError.Visible = true;
+                        LabelError.Text = errorMsg.ToString();
+                    }
+                }
+                else
+                {
+                    LabelError.Visible = true;
+                    LabelError.Text = "Something went wrong";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+
+                LabelError.Visible = true;
+                LabelError.Text = "Something went wrong";
+            }
+        }
     }
 }

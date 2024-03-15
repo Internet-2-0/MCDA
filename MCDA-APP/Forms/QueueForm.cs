@@ -290,7 +290,7 @@ namespace MCDA_APP.Forms
                     var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
                     client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
                     client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
+                    client.DefaultRequestHeaders.Add("agentVersion", "1.2");
 
                     using (
                           var response = await client.PostAsync(url, requestContent))

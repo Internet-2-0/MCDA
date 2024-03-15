@@ -41,8 +41,10 @@
             LabelError = new Label();
             LabelNoAccount = new Label();
             LabelSignup = new LinkLabel();
+            pictureLogin = new PictureBox();
             PanelEmail.SuspendLayout();
             PanelPassword.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureLogin).BeginInit();
             SuspendLayout();
             // 
             // LabelEmail
@@ -50,7 +52,7 @@
             LabelEmail.AutoSize = true;
             LabelEmail.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
             LabelEmail.ForeColor = Color.White;
-            LabelEmail.Location = new Point(119, 89);
+            LabelEmail.Location = new Point(119, 91);
             LabelEmail.Name = "LabelEmail";
             LabelEmail.Size = new Size(51, 20);
             LabelEmail.TabIndex = 0;
@@ -58,17 +60,17 @@
             // 
             // PanelEmail
             // 
-            PanelEmail.BackColor = Color.FromArgb(82, 78, 78);
+            PanelEmail.BackColor = Color.FromArgb(33, 43, 53);
             PanelEmail.BorderStyle = BorderStyle.Fixed3D;
             PanelEmail.Controls.Add(TxtEmail);
-            PanelEmail.Location = new Point(123, 110);
+            PanelEmail.Location = new Point(123, 112);
             PanelEmail.Name = "PanelEmail";
             PanelEmail.Size = new Size(282, 40);
             PanelEmail.TabIndex = 1;
             // 
             // TxtEmail
             // 
-            TxtEmail.BackColor = Color.FromArgb(82, 78, 78);
+            TxtEmail.BackColor = Color.FromArgb(33, 43, 53);
             TxtEmail.BorderStyle = BorderStyle.None;
             TxtEmail.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
             TxtEmail.ForeColor = Color.White;
@@ -82,7 +84,7 @@
             LabelPassword.AutoSize = true;
             LabelPassword.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
             LabelPassword.ForeColor = Color.White;
-            LabelPassword.Location = new Point(119, 169);
+            LabelPassword.Location = new Point(119, 171);
             LabelPassword.Name = "LabelPassword";
             LabelPassword.Size = new Size(83, 20);
             LabelPassword.TabIndex = 3;
@@ -90,18 +92,19 @@
             // 
             // PanelPassword
             // 
-            PanelPassword.BackColor = Color.FromArgb(82, 78, 78);
+            PanelPassword.BackColor = Color.FromArgb(33, 43, 53);
             PanelPassword.BorderStyle = BorderStyle.Fixed3D;
             PanelPassword.Controls.Add(TxtPassword);
-            PanelPassword.Location = new Point(123, 190);
+            PanelPassword.Location = new Point(123, 192);
             PanelPassword.Name = "PanelPassword";
             PanelPassword.Size = new Size(282, 40);
             PanelPassword.TabIndex = 4;
             // 
             // TxtPassword
             // 
-            TxtPassword.BackColor = Color.FromArgb(82, 78, 78);
+            TxtPassword.BackColor = Color.FromArgb(33, 43, 53);
             TxtPassword.BorderStyle = BorderStyle.None;
+            TxtPassword.Cursor = Cursors.Hand;
             TxtPassword.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
             TxtPassword.ForeColor = Color.White;
             TxtPassword.Location = new Point(6, 8);
@@ -115,7 +118,7 @@
             CheckAgree.AutoSize = true;
             CheckAgree.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
             CheckAgree.ForeColor = Color.White;
-            CheckAgree.Location = new Point(121, 235);
+            CheckAgree.Location = new Point(121, 237);
             CheckAgree.Name = "CheckAgree";
             CheckAgree.Size = new Size(90, 23);
             CheckAgree.TabIndex = 6;
@@ -128,7 +131,7 @@
             LinkAgree.Cursor = Cursors.Hand;
             LinkAgree.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
             LinkAgree.LinkColor = Color.FromArgb(255, 245, 14);
-            LinkAgree.Location = new Point(211, 236);
+            LinkAgree.Location = new Point(211, 238);
             LinkAgree.Name = "LinkAgree";
             LinkAgree.Size = new Size(136, 19);
             LinkAgree.TabIndex = 7;
@@ -145,7 +148,7 @@
             BtnLogin.FlatStyle = FlatStyle.Popup;
             BtnLogin.Font = new Font("Calibri", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             BtnLogin.ForeColor = Color.White;
-            BtnLogin.Location = new Point(272, 276);
+            BtnLogin.Location = new Point(272, 278);
             BtnLogin.Name = "BtnLogin";
             BtnLogin.Size = new Size(132, 40);
             BtnLogin.TabIndex = 8;
@@ -157,7 +160,7 @@
             // 
             LabelError.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
             LabelError.ForeColor = Color.FromArgb(244, 7, 3);
-            LabelError.Location = new Point(79, 321);
+            LabelError.Location = new Point(79, 323);
             LabelError.Name = "LabelError";
             LabelError.Size = new Size(371, 30);
             LabelError.TabIndex = 5;
@@ -168,7 +171,7 @@
             // 
             LabelNoAccount.AutoSize = true;
             LabelNoAccount.ForeColor = SystemColors.ButtonHighlight;
-            LabelNoAccount.Location = new Point(208, 364);
+            LabelNoAccount.Location = new Point(208, 366);
             LabelNoAccount.Name = "LabelNoAccount";
             LabelNoAccount.Size = new Size(131, 15);
             LabelNoAccount.TabIndex = 9;
@@ -179,7 +182,7 @@
             LabelSignup.AutoSize = true;
             LabelSignup.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
             LabelSignup.LinkColor = Color.FromArgb(255, 245, 14);
-            LabelSignup.Location = new Point(342, 360);
+            LabelSignup.Location = new Point(342, 362);
             LabelSignup.Name = "LabelSignup";
             LabelSignup.Size = new Size(63, 19);
             LabelSignup.TabIndex = 10;
@@ -187,12 +190,23 @@
             LabelSignup.Text = "Sign Up!";
             LabelSignup.LinkClicked += LabelSignup_LinkClicked;
             // 
+            // pictureLogin
+            // 
+            pictureLogin.Image = Properties.Resources.btn_login;
+            pictureLogin.Location = new Point(272, 278);
+            pictureLogin.Name = "pictureLogin";
+            pictureLogin.Size = new Size(139, 48);
+            pictureLogin.TabIndex = 11;
+            pictureLogin.TabStop = false;
+            pictureLogin.Click += pictureLogin_Click;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(26, 26, 34);
+            BackColor = Color.FromArgb(16, 27, 38);
             ClientSize = new Size(523, 500);
+            Controls.Add(pictureLogin);
             Controls.Add(LabelSignup);
             Controls.Add(LabelNoAccount);
             Controls.Add(LabelError);
@@ -203,12 +217,13 @@
             Controls.Add(LabelPassword);
             Controls.Add(PanelEmail);
             Controls.Add(LabelEmail);
+            Cursor = Cursors.Hand;
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Log in";
+            Text = "Malcore Agent 1.2| Log in";
             FormClosing += LoginFormClosing;
             FormClosed += LoginFormClosed;
             Load += LoginForm_Load;
@@ -216,6 +231,7 @@
             PanelEmail.PerformLayout();
             PanelPassword.ResumeLayout(false);
             PanelPassword.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureLogin).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -234,5 +250,6 @@
         private Label LabelError;
         private Label LabelNoAccount;
         private LinkLabel LabelSignup;
+        private PictureBox pictureLogin;
     }
 }

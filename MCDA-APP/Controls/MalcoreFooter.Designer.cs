@@ -92,7 +92,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(26, 26, 34);
+            BackColor = Color.Black;
             Controls.Add(PictureLogo);
             Controls.Add(LabelTerms);
             Controls.Add(LabelPrivacyPolicy);

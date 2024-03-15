@@ -55,10 +55,20 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             quitMalcoreAgentToolStripMenuItem = new ToolStripMenuItem();
             btnClear = new Button();
+            pictureClearHistory = new PictureBox();
+            pictureLogout = new PictureBox();
+            pictureAdd = new PictureBox();
+            pictureCancel = new PictureBox();
+            pictureSave = new PictureBox();
             panel2.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureClearHistory).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureLogout).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureAdd).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureCancel).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureSave).BeginInit();
             SuspendLayout();
             // 
             // labelEmail
@@ -173,7 +183,7 @@
             // 
             // textMinScore
             // 
-            textMinScore.BackColor = Color.FromArgb(26, 26, 34);
+            textMinScore.BackColor = Color.FromArgb(33, 43, 53);
             textMinScore.BorderStyle = BorderStyle.None;
             textMinScore.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             textMinScore.ForeColor = Color.White;
@@ -212,11 +222,11 @@
             // 
             // txtApikey
             // 
-            txtApikey.BackColor = Color.FromArgb(100, 79, 79);
+            txtApikey.BackColor = Color.FromArgb(33, 43, 53);
             txtApikey.BorderStyle = BorderStyle.None;
             txtApikey.Font = new Font("Segoe MDL2 Assets", 12F, FontStyle.Regular, GraphicsUnit.Point);
             txtApikey.ForeColor = Color.White;
-            txtApikey.Location = new Point(4, 5);
+            txtApikey.Location = new Point(9, 5);
             txtApikey.Name = "txtApikey";
             txtApikey.ReadOnly = true;
             txtApikey.Size = new Size(469, 16);
@@ -224,12 +234,12 @@
             // 
             // panel2
             // 
-            panel2.BackColor = Color.FromArgb(100, 79, 79);
+            panel2.BackColor = Color.FromArgb(33, 43, 53);
             panel2.BorderStyle = BorderStyle.Fixed3D;
             panel2.Controls.Add(txtApikey);
-            panel2.Location = new Point(28, 314);
+            panel2.Location = new Point(28, 316);
             panel2.Name = "panel2";
-            panel2.Size = new Size(745, 35);
+            panel2.Size = new Size(748, 35);
             panel2.TabIndex = 19;
             // 
             // btnSave
@@ -262,11 +272,12 @@
             // 
             // panel4
             // 
+            panel4.BackColor = Color.FromArgb(33, 43, 53);
             panel4.BorderStyle = BorderStyle.Fixed3D;
             panel4.Controls.Add(textMinScore);
             panel4.Location = new Point(523, 201);
             panel4.Name = "panel4";
-            panel4.Size = new Size(32, 32);
+            panel4.Size = new Size(36, 32);
             panel4.TabIndex = 21;
             // 
             // openFileDialog
@@ -289,6 +300,7 @@
             // 
             // pictureBox2
             // 
+            pictureBox2.Cursor = Cursors.Hand;
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
             pictureBox2.Location = new Point(615, 281);
             pictureBox2.Name = "pictureBox2";
@@ -335,13 +347,73 @@
             btnClear.UseVisualStyleBackColor = false;
             btnClear.Click += btnClear_Click;
             // 
+            // pictureClearHistory
+            // 
+            pictureClearHistory.Cursor = Cursors.Hand;
+            pictureClearHistory.Image = Properties.Resources.btn_history1;
+            pictureClearHistory.Location = new Point(554, 21);
+            pictureClearHistory.Name = "pictureClearHistory";
+            pictureClearHistory.Size = new Size(128, 40);
+            pictureClearHistory.TabIndex = 25;
+            pictureClearHistory.TabStop = false;
+            pictureClearHistory.Click += pictureClearHistory_Click;
+            // 
+            // pictureLogout
+            // 
+            pictureLogout.Cursor = Cursors.Hand;
+            pictureLogout.Image = Properties.Resources.btn_logout;
+            pictureLogout.Location = new Point(688, 21);
+            pictureLogout.Name = "pictureLogout";
+            pictureLogout.Size = new Size(93, 40);
+            pictureLogout.TabIndex = 26;
+            pictureLogout.TabStop = false;
+            pictureLogout.Click += pictureLogout_Click;
+            // 
+            // pictureAdd
+            // 
+            pictureAdd.Cursor = Cursors.Hand;
+            pictureAdd.Image = Properties.Resources.btn_add;
+            pictureAdd.Location = new Point(390, 255);
+            pictureAdd.Name = "pictureAdd";
+            pictureAdd.Size = new Size(92, 39);
+            pictureAdd.TabIndex = 27;
+            pictureAdd.TabStop = false;
+            pictureAdd.Click += pictureAdd_Click;
+            // 
+            // pictureCancel
+            // 
+            pictureCancel.Cursor = Cursors.Hand;
+            pictureCancel.Image = Properties.Resources.btn_cancel1;
+            pictureCancel.Location = new Point(492, 371);
+            pictureCancel.Name = "pictureCancel";
+            pictureCancel.Size = new Size(140, 51);
+            pictureCancel.TabIndex = 28;
+            pictureCancel.TabStop = false;
+            pictureCancel.Click += pictureBox1_Click;
+            // 
+            // pictureSave
+            // 
+            pictureSave.Cursor = Cursors.Hand;
+            pictureSave.Image = Properties.Resources.btn_save1;
+            pictureSave.Location = new Point(644, 371);
+            pictureSave.Name = "pictureSave";
+            pictureSave.Size = new Size(138, 50);
+            pictureSave.TabIndex = 29;
+            pictureSave.TabStop = false;
+            pictureSave.Click += pictureSave_Click;
+            // 
             // SettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(26, 26, 34);
+            BackColor = Color.FromArgb(16, 27, 38);
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(800, 504);
+            Controls.Add(pictureSave);
+            Controls.Add(pictureCancel);
+            Controls.Add(pictureAdd);
+            Controls.Add(pictureLogout);
+            Controls.Add(pictureClearHistory);
             Controls.Add(btnClear);
             Controls.Add(pictureBox2);
             Controls.Add(flowLayoutPanelForFolders);
@@ -365,7 +437,7 @@
             MaximizeBox = false;
             Name = "SettingsForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Settings";
+            Text = "Malcore Agent 1.2 | Settings";
             FormClosing += SettingsForm_FormClosing;
             Load += SettingsForm_Load;
             Resize += SettingsForm_Resize;
@@ -375,6 +447,11 @@
             panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureClearHistory).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureLogout).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureAdd).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureCancel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureSave).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -405,5 +482,10 @@
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem quitMalcoreAgentToolStripMenuItem;
         private Button btnClear;
+        private PictureBox pictureClearHistory;
+        private PictureBox pictureLogout;
+        private PictureBox pictureAdd;
+        private PictureBox pictureCancel;
+        private PictureBox pictureSave;
     }
 }
