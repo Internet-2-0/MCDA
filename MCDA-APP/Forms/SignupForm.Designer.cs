@@ -62,9 +62,9 @@
             // 
             LabelError.Font = new Font("Calibri", 12F, FontStyle.Regular, GraphicsUnit.Point);
             LabelError.ForeColor = Color.FromArgb(244, 7, 3);
-            LabelError.Location = new Point(78, 302);
+            LabelError.Location = new Point(29, 299);
             LabelError.Name = "LabelError";
-            LabelError.Size = new Size(371, 30);
+            LabelError.Size = new Size(463, 30);
             LabelError.TabIndex = 16;
             LabelError.TextAlign = ContentAlignment.MiddleCenter;
             LabelError.UseMnemonic = false;
@@ -139,7 +139,7 @@
             // 
             pictureRegister.Cursor = Cursors.Hand;
             pictureRegister.Image = Properties.Resources.btn_register;
-            pictureRegister.Location = new Point(271, 257);
+            pictureRegister.Location = new Point(271, 249);
             pictureRegister.Name = "pictureRegister";
             pictureRegister.Size = new Size(139, 48);
             pictureRegister.TabIndex = 22;
