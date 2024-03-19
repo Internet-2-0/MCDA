@@ -1,5 +1,6 @@
-﻿using MCDA_APP.Controls; 
-using System.Text; 
+﻿using MCDA_APP.Controls;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Diagnostics;
 using MCDA_APP.Model;
 using Newtonsoft.Json.Linq;
@@ -9,6 +10,8 @@ namespace MCDA_APP.Forms
 {
     public partial class SignupForm : Form
     {
+        bool submitting = false;
+
         public SignupForm()
         {
             InitializeComponent();
@@ -16,6 +19,13 @@ namespace MCDA_APP.Forms
 
         private async void PictureRegister_Click(object sender, EventArgs e)
         {
+
+            LabelError.Visible = false;
+            if (this.submitting)
+            {
+                Debug.WriteLine("submitting################################################");
+                return;
+            }
 
             string username = TxtRegEmail.Text;
             string password = TxtRegPassword.Text;
@@ -32,11 +42,16 @@ namespace MCDA_APP.Forms
                 LabelError.Text = "Please enter your password";
                 return;
             }
+            if(!IsPasswordValid(password)) {
+                LabelError.Visible = true;
+                LabelError.Text = "Requires at least six characters, one digit and one special character.";
+                return;
+            }
             Debug.WriteLine("################################################" + username + password);
 
             try
             {
-
+                this.submitting = true;
                 HttpClient client = new HttpClient();
                 string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/auth/register";
 
@@ -48,7 +63,7 @@ namespace MCDA_APP.Forms
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    var content = await response.Content.ReadAsStringAsync(); 
+                    var content = await response.Content.ReadAsStringAsync();
 
                     Debug.WriteLine("PictureRegister_Click################################################" + content);
                     JObject json = JObject.Parse(content);
@@ -59,45 +74,24 @@ namespace MCDA_APP.Forms
 
                     Debug.WriteLine("PictureRegister_Click userdata################################################" + userdata);
 
+                    var errorMsg = json["messages"][0]["message"];
+
                     if (success == true && userdata != null)
                     {
-                        // authdata = userdata["user"].ToString();
-
-                        // if (authdata != "")
-                        // {
-                        //     // store API Key and settings info to registory
-                        //     RegistryKey key = Registry.CurrentUser.CreateSubKey(Constants.RegistryMalcoreKey);
-                        //     key.SetValue("API_KEY", authdata);
-                        //     key.SetValue("SETTINGS", "");
-                        //     key.Close();
-
-                        //     Program.APIKEY = userdata["user"]["apiKey"].ToString();
-                        //     Program.USEREMAIL = userdata["user"]["email"].ToString();
-                        //     Program.SUBSCRIPTION = userdata["user"]["subscription"]["name"].ToString();
-
-                        //     Hide();
-                        //     SettingsForm settingsForm = new SettingsForm();
-                        //     settingsForm.Show(this);
-                        // }
-                        // else
-                        // {
-                        //     LabelError.Visible = true;
-                        //     LabelError.Text = "Something went wrong";
-                        // }
+                        errorMsg = "User created successfully, please verify your email.";
+                    } else {
+                        this.submitting = false;
                     }
-                    else
-                    {
-                        var errorMsg = json["messages"][0]["message"];
-                        LabelError.Visible = true;
-                        LabelError.Text = errorMsg.ToString();
-                    }
-                
+
+                    LabelError.Visible = true;
+                    LabelError.Text = errorMsg.ToString();
 
                 }
                 else
                 {
                     LabelError.Visible = true;
                     LabelError.Text = "Something went wrong";
+                    this.submitting = false;
                 }
 
             }
@@ -107,7 +101,16 @@ namespace MCDA_APP.Forms
 
                 LabelError.Visible = true;
                 LabelError.Text = "Something went wrong";
+                this.submitting = false;
+
             }
+        }
+
+        static bool IsPasswordValid(string password)
+        {
+            Regex pwdValidator = new Regex(@"^(?=.*\d)(?=.*[!?@#,.;()\[\]<>+\-\/$%^&*])[a-zA-Z0-9!?@;#,\[\]<>.()+\-\/$%;^&*]{6,99}$");
+
+            return pwdValidator.IsMatch(password);
         }
 
         private void SignupForm_Load(object sender, EventArgs e)
