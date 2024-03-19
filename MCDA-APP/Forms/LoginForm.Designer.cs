@@ -72,6 +72,7 @@
             // 
             TxtEmail.BackColor = Color.FromArgb(33, 43, 53);
             TxtEmail.BorderStyle = BorderStyle.None;
+            TxtEmail.Cursor = Cursors.IBeam;
             TxtEmail.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
             TxtEmail.ForeColor = Color.White;
             TxtEmail.Location = new Point(6, 7);
@@ -104,7 +105,6 @@
             // 
             TxtPassword.BackColor = Color.FromArgb(33, 43, 53);
             TxtPassword.BorderStyle = BorderStyle.None;
-            TxtPassword.Cursor = Cursors.Hand;
             TxtPassword.Font = new Font("Microsoft Sans Serif", 12.75F, FontStyle.Regular, GraphicsUnit.Point);
             TxtPassword.ForeColor = Color.White;
             TxtPassword.Location = new Point(6, 8);
@@ -198,7 +198,7 @@
             pictureLogin.Size = new Size(139, 48);
             pictureLogin.TabIndex = 11;
             pictureLogin.TabStop = false;
-            pictureLogin.Click += pictureLogin_Click;
+            pictureLogin.Click += PictureLogin_Click;
             // 
             // LoginForm
             // 

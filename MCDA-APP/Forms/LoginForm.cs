@@ -121,7 +121,15 @@ namespace MCDA_APP
 
         private void LabelSignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Program.OpenBrowser($"https://malcore.io/register?utm_source=agent&utm_medium=login&utm_campaign=v{Helper.GetAgentVersion()}&utm_content=win");
+            // Program.OpenBrowser($"https://malcore.io/register?utm_source=agent&utm_medium=login&utm_campaign=v{Helper.GetAgentVersion()}&utm_content=win");
+            try
+            {
+                SignupForm signupForm = new SignupForm();
+                signupForm.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         private void LoginFormClosed(object sender, FormClosedEventArgs e)
@@ -159,7 +167,7 @@ namespace MCDA_APP
             Controls.Add(malcoreFooter);
         }
 
-        private async void pictureLogin_Click(object sender, EventArgs e)
+        private async void PictureLogin_Click(object sender, EventArgs e)
         {
             LabelError.Visible = false;
 
