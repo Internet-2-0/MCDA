@@ -115,7 +115,7 @@
             btnLogout.TabIndex = 15;
             btnLogout.Text = "Log Out";
             btnLogout.UseVisualStyleBackColor = false;
-            btnLogout.Click += btnLogout_Click;
+            btnLogout.Click += BtnLogout_Click;
             // 
             // label2
             // 
@@ -207,7 +207,7 @@
             btnAdd.TabIndex = 14;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = false;
-            btnAdd.Click += btnAdd_Click;
+            btnAdd.Click += BtnAdd_Click;
             // 
             // label5
             // 
@@ -254,7 +254,7 @@
             btnSave.TabIndex = 20;
             btnSave.Text = "SAVE";
             btnSave.UseVisualStyleBackColor = false;
-            btnSave.Click += btnSave_Click;
+            btnSave.Click += BtnSave_Click;
             // 
             // btnCancel
             // 
@@ -268,7 +268,7 @@
             btnCancel.TabIndex = 20;
             btnCancel.Text = "CANCEL";
             btnCancel.UseVisualStyleBackColor = false;
-            btnCancel.Click += btnCancel_Click;
+            btnCancel.Click += BtnCancel_Click;
             // 
             // panel4
             // 
@@ -295,8 +295,8 @@
             flowLayoutPanelForFolders.Name = "flowLayoutPanelForFolders";
             flowLayoutPanelForFolders.Size = new Size(459, 125);
             flowLayoutPanelForFolders.TabIndex = 22;
-            flowLayoutPanelForFolders.DragDrop += settingsForm_DragDrop;
-            flowLayoutPanelForFolders.DragEnter += settingsForm_DrapEnter;
+            flowLayoutPanelForFolders.DragDrop += SettingsForm_DragDrop;
+            flowLayoutPanelForFolders.DragEnter += SettingsForm_DrapEnter;
             // 
             // pictureBox2
             // 
@@ -330,7 +330,7 @@
             quitMalcoreAgentToolStripMenuItem.Name = "quitMalcoreAgentToolStripMenuItem";
             quitMalcoreAgentToolStripMenuItem.Size = new Size(178, 22);
             quitMalcoreAgentToolStripMenuItem.Text = "Quit Malcore Agent";
-            quitMalcoreAgentToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            quitMalcoreAgentToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
             // btnClear
             // 
@@ -345,7 +345,7 @@
             btnClear.TabIndex = 24;
             btnClear.Text = "Clear History";
             btnClear.UseVisualStyleBackColor = false;
-            btnClear.Click += btnClear_Click;
+            btnClear.Click += BtnClear_Click;
             // 
             // pictureClearHistory
             // 
@@ -356,7 +356,7 @@
             pictureClearHistory.Size = new Size(128, 40);
             pictureClearHistory.TabIndex = 25;
             pictureClearHistory.TabStop = false;
-            pictureClearHistory.Click += pictureClearHistory_Click;
+            pictureClearHistory.Click += PictureClearHistory_Click;
             // 
             // pictureLogout
             // 
@@ -367,7 +367,7 @@
             pictureLogout.Size = new Size(93, 40);
             pictureLogout.TabIndex = 26;
             pictureLogout.TabStop = false;
-            pictureLogout.Click += pictureLogout_Click;
+            pictureLogout.Click += PictureLogout_Click;
             // 
             // pictureAdd
             // 
@@ -378,7 +378,7 @@
             pictureAdd.Size = new Size(92, 39);
             pictureAdd.TabIndex = 27;
             pictureAdd.TabStop = false;
-            pictureAdd.Click += pictureAdd_Click;
+            pictureAdd.Click += PictureAdd_Click;
             // 
             // pictureCancel
             // 
@@ -389,7 +389,7 @@
             pictureCancel.Size = new Size(140, 51);
             pictureCancel.TabIndex = 28;
             pictureCancel.TabStop = false;
-            pictureCancel.Click += pictureBox1_Click;
+            pictureCancel.Click += PictureBox1_Click;
             // 
             // pictureSave
             // 
@@ -400,7 +400,7 @@
             pictureSave.Size = new Size(138, 50);
             pictureSave.TabIndex = 29;
             pictureSave.TabStop = false;
-            pictureSave.Click += pictureSave_Click;
+            pictureSave.Click += PictureSave_Click;
             // 
             // SettingsForm
             // 

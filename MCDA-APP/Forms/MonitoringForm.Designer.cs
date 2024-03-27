@@ -72,6 +72,7 @@
             exitToolStripMenuItem = new ToolStripMenuItem();
             pictureSettings = new PictureBox();
             pictureLogout = new PictureBox();
+            pictureHexdump = new PictureBox();
             monitoringFlowLayoutPanel.SuspendLayout();
             queuePanel.SuspendLayout();
             panelInactive.SuspendLayout();
@@ -98,6 +99,7 @@
             contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureSettings).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureLogout).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureHexdump).BeginInit();
             SuspendLayout();
             // 
             // label2
@@ -482,12 +484,24 @@
             pictureLogout.TabStop = false;
             pictureLogout.Click += PictureLogout_Click;
             // 
+            // pictureHexdump
+            // 
+            pictureHexdump.Cursor = Cursors.Hand;
+            pictureHexdump.Image = Properties.Resources.btn_hexdump;
+            pictureHexdump.Location = new Point(515, 20);
+            pictureHexdump.Name = "pictureHexdump";
+            pictureHexdump.Size = new Size(92, 38);
+            pictureHexdump.TabIndex = 42;
+            pictureHexdump.TabStop = false;
+            pictureHexdump.Click += PictureHexdump_Click;
+            // 
             // MonitoringForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(16, 27, 38);
             ClientSize = new Size(830, 517);
+            Controls.Add(pictureHexdump);
             Controls.Add(pictureLogout);
             Controls.Add(pictureSettings);
             Controls.Add(panelInactive);
@@ -539,6 +553,7 @@
             contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureSettings).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureLogout).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureHexdump).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -587,5 +602,6 @@
         private Button btnViewQueue;
         private PictureBox pictureSettings;
         private PictureBox pictureLogout;
+        private PictureBox pictureHexdump;
     }
 }

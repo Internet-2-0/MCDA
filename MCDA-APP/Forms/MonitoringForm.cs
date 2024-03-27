@@ -480,12 +480,12 @@ namespace MCDA_APP.Forms
                         using (
                            var response = await client.PostAsync(url, content))
                         {
-                            HandleRelease(pathFile, true); 
+                            HandleRelease(pathFile, true);
 
                             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                             {
                                 string responseString = await response.Content.ReadAsStringAsync();
-                                this.numberOfProcessing--; 
+                                this.numberOfProcessing--;
 
                                 return responseString;
                             }
@@ -494,7 +494,7 @@ namespace MCDA_APP.Forms
                                 string payload2 = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"api_error\",\"message\":\"API Error\"}}";
                                 await AgentStat(payload2);
                                 this.numberOfProcessing--;
- 
+
                                 return "";
                             }
                         }
@@ -504,7 +504,7 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 Debug.Write("getThreatScore ERROR#####################" + ex);
-                this.numberOfProcessing--; 
+                this.numberOfProcessing--;
                 HandleRelease(pathFile, false);
 
                 string payload = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"timeout/api_error/other_error\",\"message\":\"API Error/Timeout/Other\"}}";
@@ -666,10 +666,11 @@ namespace MCDA_APP.Forms
                         }
                         if (jsonObject["data"]?["data"]?["scan_id"] != null)
                         {
-                            scan_id = (string)jsonObject["data"]["data"]["scan_id"]; 
+                            scan_id = (string)jsonObject["data"]["data"]["scan_id"];
                         }
 
-                        if((string)jsonObject["data"]?["data"]?["handler_type"] == "error") {
+                        if ((string)jsonObject["data"]?["data"]?["handler_type"] == "error")
+                        {
                             success = false;
                         }
                     }
@@ -829,9 +830,12 @@ namespace MCDA_APP.Forms
 
                     string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
                     string responseString = "released";
-                    if(File.Exists(@"./malcore/threat/" + hashFileName)) {
+                    if (File.Exists(@"./malcore/threat/" + hashFileName))
+                    {
                         File.WriteAllText(@"./malcore/threat/" + hashFileName, responseString);
-                    } else if(File.Exists(@"./malcore/threat/drag/" + hashFileName)) {
+                    }
+                    else if (File.Exists(@"./malcore/threat/drag/" + hashFileName))
+                    {
                         File.WriteAllText(@"./malcore/threat/drag/" + hashFileName, responseString);
                     }
                 };
@@ -1082,7 +1086,7 @@ namespace MCDA_APP.Forms
 
                         if (jsonObject["data"]?["data"]?["scan_id"] != null)
                         {
-                            scan_id = (string)jsonObject["data"]["data"]["scan_id"]; 
+                            scan_id = (string)jsonObject["data"]["data"]["scan_id"];
                         }
 
                         if (jsonObject["data"]?["data"]?["status"] != null)
@@ -1152,7 +1156,7 @@ namespace MCDA_APP.Forms
 
                 }
 
-                
+
 
                 percentLabel.TextAlign = ContentAlignment.MiddleRight;
                 percentLabel.Width = 110;
@@ -1192,7 +1196,7 @@ namespace MCDA_APP.Forms
 
                 string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/scan/" + scan_id;
                 Debug.Write("############checkstatus start################" + url);
-                
+
                 string status = "pending";
                 string score = "";
                 string rewrite = "";
@@ -1230,17 +1234,20 @@ namespace MCDA_APP.Forms
                                     percentLabel.Text = status + "...";
                                     percentLabel.Font = new Font("Calibri", 10, FontStyle.Bold);
 
-                                    Debug.Write("#################################"+status);
+                                    Debug.Write("#################################" + status);
 
-                                    if(status == "completed") {
+                                    if (status == "completed")
+                                    {
 
                                         // newJObject["data"] = jsonObject.ContainsKey("output") == true ? jsonObject["data"]?["output"] : jsonObject["data"];
 
-                                        newJObject["data"] = jsonObject["data"]["result"]; 
-                                        if(jsonObject["data"]?["result"]?["data"]?["output"]!= null) {
-                                            newJObject["data"]["data"] = jsonObject["data"]["result"]["data"]["output"]; 
-                                        } 
-                                        if(newJObject["data"]["data"] == null) {
+                                        newJObject["data"] = jsonObject["data"]["result"];
+                                        if (jsonObject["data"]?["result"]?["data"]?["output"] != null)
+                                        {
+                                            newJObject["data"]["data"] = jsonObject["data"]["result"]["data"]["output"];
+                                        }
+                                        if (newJObject["data"]["data"] == null)
+                                        {
                                             newJObject["data"]["data"] = new JObject();
                                         }
                                         newJObject["data"]["data"]["status"] = status;
@@ -1271,13 +1278,14 @@ namespace MCDA_APP.Forms
                                         }
 
                                         Debug.Write("############checkstatus handler_type################" + (string)newJObject["data"]["data"]?["handler_type"]);
-                                        if((string)newJObject["data"]["data"]?["handler_type"] == "error") {
+                                        if ((string)newJObject["data"]["data"]?["handler_type"] == "error")
+                                        {
                                             rerunButton.Visible = true;
                                             percentLabel.Visible = false;
                                             status = "error";
                                             colorPanel.BackColor = Color.Red;
                                         }
-                                        
+
                                     }
 
 
@@ -1319,17 +1327,19 @@ namespace MCDA_APP.Forms
                                     }
 
                                     // AddItemToMonitoringPanelForDoc(responseString, folderName, fileName, true);
-                                    if(status == "completed") {
+                                    if (status == "completed")
+                                    {
                                         score = (string)newJObject["data"]["data"]["dfi"]["results"]["dfi_results"]["score"];
                                         score_num = Convert.ToDouble(score);
                                         score += "%";
                                         percentLabel.Text = score;
                                         percentLabel.Font = new Font("Calibri", 16, FontStyle.Bold);
- 
+
                                     }
                                 }
 
-                                if(status == "completed") { 
+                                if (status == "completed")
+                                {
                                     percentLabel.Text = score;
                                     percentLabel.Font = new Font("Calibri", 16, FontStyle.Bold);
 
@@ -1383,7 +1393,7 @@ namespace MCDA_APP.Forms
             catch (Exception ex)
             {
                 Label percentLabel = (Label)panel.Controls.Find("percentLabel", true)[0];
-                Button rerunButton = (Button)panel.Controls.Find("rerunButton", true)[0]; 
+                Button rerunButton = (Button)panel.Controls.Find("rerunButton", true)[0];
                 Panel colorPanel = (Panel)panel.Controls.Find("colorPanel", true)[0];
 
                 percentLabel.Visible = false;
@@ -1581,9 +1591,12 @@ namespace MCDA_APP.Forms
 
                     string hashFileName = folderName.Replace("\\", "-").Replace(":", "") + fileName + "-hash.json";
                     string responseString = "released";
-                    if(File.Exists(@"./malcore/doc/drag/" + hashFileName)) {
+                    if (File.Exists(@"./malcore/doc/drag/" + hashFileName))
+                    {
                         File.WriteAllText(@"./malcore/doc/drag/" + hashFileName, responseString);
-                    } else if(File.Exists(@"./malcore/doc/" + hashFileName)) {
+                    }
+                    else if (File.Exists(@"./malcore/doc/" + hashFileName))
+                    {
                         File.WriteAllText(@"./malcore/doc/" + hashFileName, responseString);
                     }
                 };
@@ -1797,7 +1810,7 @@ namespace MCDA_APP.Forms
         public async Task<bool> ProcessFile(string path)
         {
             try
-            { 
+            {
                 Debug.WriteLine("process file......." + path);
 
                 Program.PrecessedFilePool.Enqueue(path);
@@ -1824,7 +1837,7 @@ namespace MCDA_APP.Forms
                     {
                         succeed = false;
                     }
- 
+
                     AddItemToMonitoringPanel(fileString, folderName, fileName, succeed);
                 }
                 else if (File.Exists("./malcore/doc/" + hashFileName))
@@ -2396,6 +2409,12 @@ namespace MCDA_APP.Forms
                 LoginForm loginForm = new LoginForm();
                 loginForm.Show(this);
             }
+        }
+
+        private void PictureHexdump_Click(object sender, EventArgs e)
+        {   
+            HexdumpForm hexdumpForm = new HexdumpForm();
+            hexdumpForm.Show(this);
         }
     }
 

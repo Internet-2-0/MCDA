@@ -49,7 +49,7 @@ namespace MCDA_APP.Forms
                         {
                             if (folderPath != "")
                             {
-                                addPathToFoldersList(folderPath);
+                                AddPathToFoldersList(folderPath);
                             }
                         }
                     }
@@ -61,7 +61,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             Hide();
             // MonitoringForm monitoringForm = new MonitoringForm();
@@ -69,7 +69,7 @@ namespace MCDA_APP.Forms
             // monitoringForm.Show(this);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             try
             {
@@ -163,7 +163,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void BtnLogout_Click(object sender, EventArgs e)
         {
             try
             {
@@ -202,7 +202,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             try
             {
@@ -228,7 +228,7 @@ namespace MCDA_APP.Forms
                     }
                     else
                     {
-                        addPathToFoldersList(folderPath);
+                        AddPathToFoldersList(folderPath);
                     }
                 }
             }
@@ -238,7 +238,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void addPathToFoldersList(string folderPath)
+        private void AddPathToFoldersList(string folderPath)
         {
             Panel panel = new Panel();
             panel.Width = flowLayoutPanelForFolders.Size.Width - 30; // 425
@@ -298,7 +298,7 @@ namespace MCDA_APP.Forms
 
         }
 
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             try
             {
@@ -312,7 +312,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -330,7 +330,7 @@ namespace MCDA_APP.Forms
         /**
         * @Description: add folder(s) to the setting's folder list. 
         **/
-        private void settingsForm_DragDrop(object sender, DragEventArgs e)
+        private void SettingsForm_DragDrop(object sender, DragEventArgs e)
         {
             try
             {
@@ -351,7 +351,7 @@ namespace MCDA_APP.Forms
                     }
                     else
                     {
-                        addPathToFoldersList(folderPath);
+                        AddPathToFoldersList(folderPath);
                     }
                 }
             }
@@ -361,7 +361,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void settingsForm_DrapEnter(object sender, DragEventArgs e)
+        private void SettingsForm_DrapEnter(object sender, DragEventArgs e)
         {
             try
             {
@@ -384,7 +384,7 @@ namespace MCDA_APP.Forms
 
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+        private void BtnClear_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to clear the history?", "Clear History", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -429,7 +429,7 @@ namespace MCDA_APP.Forms
 
         }
 
-        private void pictureClearHistory_Click(object sender, EventArgs e)
+        private void PictureClearHistory_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to clear the history?", "Clear History", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -472,7 +472,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void pictureLogout_Click(object sender, EventArgs e)
+        private void PictureLogout_Click(object sender, EventArgs e)
         {
             try
             {
@@ -511,7 +511,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void pictureAdd_Click(object sender, EventArgs e)
+        private void PictureAdd_Click(object sender, EventArgs e)
         {
             try
             {
@@ -537,7 +537,7 @@ namespace MCDA_APP.Forms
                     }
                     else
                     {
-                        addPathToFoldersList(folderPath);
+                        AddPathToFoldersList(folderPath);
                     }
                 }
             }
@@ -547,12 +547,12 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void PictureBox1_Click(object sender, EventArgs e)
         {
             Hide();
         }
 
-        private void pictureSave_Click(object sender, EventArgs e)
+        private void PictureSave_Click(object sender, EventArgs e)
         {
             try
             {

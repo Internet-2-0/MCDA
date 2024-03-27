@@ -93,6 +93,16 @@ namespace MCDA_APP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_hexdump {
+            get {
+                object obj = ResourceManager.GetObject("btn-hexdump", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_history {
             get {
                 object obj = ResourceManager.GetObject("btn-history", resourceCulture);
@@ -171,11 +181,31 @@ namespace MCDA_APP.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_upload {
+            get {
+                object obj = ResourceManager.GetObject("btn-upload", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to img/close.png.
         /// </summary>
         internal static string closeImage {
             get {
                 return ResourceManager.GetString("closeImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap loading {
+            get {
+                object obj = ResourceManager.GetObject("loading", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
