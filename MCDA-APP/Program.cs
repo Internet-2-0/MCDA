@@ -27,9 +27,7 @@ namespace MCDA_APP
             if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location)).Length > 1) Process.GetCurrentProcess().Kill();
 
             _client = new Client();
-            //_client.SendAgentStatus().GetAwaiter().GetResult();
-
-            SendAgentStatus("{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}").GetAwaiter().GetResult();
+            _client.SendAgentStatus().GetAwaiter().GetResult();
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
@@ -79,49 +77,6 @@ namespace MCDA_APP
                 Application.Run(new LoginForm());
             }
 
-        }
-
-        private static async Task<string> SendAgentStatus(string jsonData)
-        {
-            try
-            {
-                AgentStatus agentStatus = new()
-                {
-                    Payload = new Payload
-                    {
-                        Message = "Agent Started"
-                    },
-                    Type = "started"
-                };
-
-                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/stat";
-
-                using (var client = new HttpClient())
-                {
-                    var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
-                    client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
-                    client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
-
-                    using (
-                          var response = await client.PostAsync(url, requestContent))
-                    {
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var content = await response.Content.ReadAsStringAsync();
-                            return content;
-                        }
-                        else
-                        {
-                            return "";
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return "";
-            }
         }
 
         public static void OpenBrowser(string url)
