@@ -4,6 +4,8 @@ using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Text;
 using System.Reflection;
+using MCDA_APP.Model.Agent;
+using MCDA_APP.Core;
 
 namespace MCDA_APP
 {
@@ -15,6 +17,7 @@ namespace MCDA_APP
         public static Queue<string> FilePool = new Queue<string>();
         public static Queue<string> PrecessedFilePool = new Queue<string>();
         public static Queue<string> DragFilePool = new Queue<string>();
+        public static Client? _client;
 
         ///  The main entry point for the application.
         [STAThread]
@@ -23,7 +26,10 @@ namespace MCDA_APP
             // Kill current process if there is already process that is running
             if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location)).Length > 1) Process.GetCurrentProcess().Kill();
 
-            agentStat("{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}").GetAwaiter().GetResult();
+            _client = new Client();
+            //_client.SendAgentStatus().GetAwaiter().GetResult();
+
+            SendAgentStatus("{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}").GetAwaiter().GetResult();
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
@@ -75,10 +81,19 @@ namespace MCDA_APP
 
         }
 
-        private static async Task<string> agentStat(string jsonData)
+        private static async Task<string> SendAgentStatus(string jsonData)
         {
             try
             {
+                AgentStatus agentStatus = new()
+                {
+                    Payload = new Payload
+                    {
+                        Message = "Agent Started"
+                    },
+                    Type = "started"
+                };
+
                 string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/stat";
 
                 using (var client = new HttpClient())
@@ -108,7 +123,6 @@ namespace MCDA_APP
                 return "";
             }
         }
-
 
         public static void OpenBrowser(string url)
         {

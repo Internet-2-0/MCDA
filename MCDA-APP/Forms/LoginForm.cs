@@ -34,6 +34,7 @@ namespace MCDA_APP
                 LabelError.Text = "Please enter your password";
                 return;
             }
+
             if (!CheckAgree.Checked)
             {
                 LabelError.Visible = true;
