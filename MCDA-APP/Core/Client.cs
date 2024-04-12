@@ -5,7 +5,6 @@ using MCDA_APP.Model.Api;
 using MCDA_APP.Web;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace MCDA_APP.Core
 {
@@ -16,22 +15,16 @@ namespace MCDA_APP.Core
         public Client()
         {
             _customHttpClient = new CustomHttpClient();
-            SetupHeaders();
         }
 
-        private void SetupHeaders()
-        {
-            _customHttpClient.AddHeader("apiKey", "");
-            _customHttpClient.AddHeader("source", "agent");
-            _customHttpClient.AddHeader("agentVersion", Helper.GetAgentVersion());
-        }
-
-        public async Task Login(string email, string password)
+        public async Task<AccountInformation?> Login(string email, string password)
         {
             try
             {
-                string response = await _customHttpClient.SendJsonRequestAsync($"{Constants.ApiBaseUrl}/auth/login", HttpMethod.Post, 
-                    new UserData() { Email = email, Password = password });
+                UserData userData = new() { Email = email, Password = password };
+
+                string response = await _customHttpClient.SendJsonRequestAsync(
+                    $"{Constants.ApiBaseUrl}/auth/login", HttpMethod.Post, userData);
 
                 var settings = new JsonSerializerSettings
                 {
@@ -39,11 +32,12 @@ namespace MCDA_APP.Core
                 };
 
                 AccountInformation? root = JsonConvert.DeserializeObject<AccountInformation>(response, settings);
-
+                return root;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                throw;
             }
         }
 
@@ -55,6 +49,10 @@ namespace MCDA_APP.Core
                 Type = "started"
             };
 
+            _customHttpClient.AddHeader("apiKey", "");
+            _customHttpClient.AddHeader("source", "agent");
+            _customHttpClient.AddHeader("agentVersion", Helper.GetAgentVersion());
+
             try
             {
                 await _customHttpClient.SendJsonRequestAsync($"{Constants.ApiBaseUrl}/agent/stat", HttpMethod.Post, agentStatus);
@@ -63,6 +61,10 @@ namespace MCDA_APP.Core
             {
                 Debug.WriteLine(ex.Message);
             }
+
+            _customHttpClient.RemoveHeader("apiKey");
+            _customHttpClient.RemoveHeader("source");
+            _customHttpClient.RemoveHeader("agentVersion");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
+using System.Net.Http.Json;
 using System.Text;
 
 namespace MCDA_APP.Web
@@ -7,7 +8,6 @@ namespace MCDA_APP.Web
     public class CustomHttpClient
     {
         private readonly HttpClient _httpClient;
-        private readonly HttpClientHandler? _handler;
 
         public CustomHttpClient()
         {
@@ -17,6 +17,16 @@ namespace MCDA_APP.Web
         public void AddHeader(string key, string value)
         {
             _httpClient.DefaultRequestHeaders.Add(key, value);
+        }
+
+        public void RemoveHeader(string key)
+        {
+            bool exists = _httpClient.DefaultRequestHeaders.Contains(key);
+
+            if (exists)
+            {
+                _httpClient.DefaultRequestHeaders.Remove(key);
+            }
         }
 
         public void ChangeHeader(string key, string newValue)
@@ -52,17 +62,25 @@ namespace MCDA_APP.Web
             return JsonConvert.DeserializeObject<T>(responseContent)!;
         }
 
-        public async Task<string> SendJsonRequestAsync(string url, HttpMethod method, object? requestBody = null)
+        public async Task<string> SendJsonRequestAsync(string url, HttpMethod method, object? requestBody)
         {
-            var request = new HttpRequestMessage(method, url);
-
-            if (requestBody is not null)
+            if (requestBody is null)
             {
-                string jsonBody = JsonConvert.SerializeObject(requestBody);
-                request.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                return string.Empty;
             }
 
-            HttpResponseMessage response = await _httpClient.SendAsync(request);
+            string jsonBody = JsonConvert.SerializeObject(requestBody);
+            StringContent content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await _httpClient.PostAsync(url, content);
+
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<string> PostAsync(string url, object? requestBody)
+        {
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync(url, requestBody);
 
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync();

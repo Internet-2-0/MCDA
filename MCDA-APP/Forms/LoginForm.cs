@@ -6,6 +6,7 @@ using System.Text;
 using System.Reflection;
 using MCDA_APP.Model;
 using MCDA_APP.Controls;
+using MCDA_APP.Model.Api;
 
 namespace MCDA_APP
 {
@@ -44,64 +45,37 @@ namespace MCDA_APP
 
             try
             {
-                HttpClient client = new HttpClient();
-                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/auth/login";
+                AccountInformation? account = await Program.Client?.Login(username, password)!;
 
-                var data = new UserData() { Email = username, Password = password };
-                var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-
-                var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
-                var response = await client.PostAsync(url, requestContent);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (!account!.Success)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    JObject json = JObject.Parse(content);
-                    var authdata = "";
-                    var userdata = json["data"];
-                    Boolean success = json["success"] != null ? (Boolean)json["success"] : false;
+                    LabelError.Visible = true;
+                    LabelError.Text = account.Message;
 
-                    Debug.WriteLine("btnLogin_Click_1################################################" + userdata);
-
-                    if (success == true && userdata != null)
-                    {
-                        authdata = userdata["user"].ToString();
-
-                        if (authdata != "")
-                        {
-                            // store API Key and settings info to registory
-                            RegistryKey key = Registry.CurrentUser.CreateSubKey(Constants.RegistryMalcoreKey);
-                            key.SetValue("API_KEY", authdata);
-                            key.SetValue("SETTINGS", "");
-                            key.Close();
-
-                            Program.APIKEY = userdata["user"]["apiKey"].ToString();
-                            Program.USEREMAIL = userdata["user"]["email"].ToString();
-                            Program.SUBSCRIPTION = userdata["user"]["subscription"]["name"].ToString();
-
-                            Hide();
-                            SettingsForm settingsForm = new SettingsForm();
-                            settingsForm.Show(this);
-                        }
-                        else
-                        {
-                            LabelError.Visible = true;
-                            LabelError.Text = "Something went wrong";
-                        }
-                    }
-                    else
-                    {
-                        var errorMsg = json["messages"][0]["message"];
-                        LabelError.Visible = true;
-                        LabelError.Text = errorMsg.ToString();
-                    }
+                    return;
                 }
-                else
+
+                if (string.IsNullOrEmpty(account.ApiKey))
                 {
                     LabelError.Visible = true;
                     LabelError.Text = "Something went wrong";
+
+                    return;
                 }
 
+                Helper.SetRegistryKey("API_KEY", account.ApiKey);
+                Helper.SetRegistryKey("EMAIL", account.UserEmail!);
+                Helper.SetRegistryKey("SUBSCRIPTION", account.Subscription!);
+                Helper.SetRegistryKey("SETTINGS", "");
+
+                Program.APIKEY = account.ApiKey;
+                Program.USEREMAIL = account.UserEmail!;
+                Program.SUBSCRIPTION = account.Subscription!;
+
+                Hide();
+
+                SettingsForm settingsForm = new();
+                settingsForm.Show(this);
             }
             catch (Exception ex)
             {

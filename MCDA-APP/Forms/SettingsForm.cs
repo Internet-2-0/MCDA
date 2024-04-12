@@ -163,14 +163,11 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void BtnLogout_Click(object sender, EventArgs e)
         {
             try
             {
-                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
-                key.DeleteValue("API_KEY");
-                key.DeleteValue("SETTINGS");
-                key.Close();
+                Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
 
                 Program.APIKEY = "";
                 Program.USEREMAIL = ""; 
@@ -181,12 +178,6 @@ namespace MCDA_APP.Forms
                 LoginForm loginForm = new LoginForm();
                 loginForm.Show(this); 
 
-                // foreach (Form f in Application.OpenForms)
-                // {
-                //     if (f.Name == "MonitoringForm") {
-                //         f.Close();
-                //     }
-                // }  
                 foreach (Form f in Application.OpenForms)
                 {
                     if (f.Name != "LoginForm") {

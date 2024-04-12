@@ -437,9 +437,8 @@ namespace MCDA_APP.Forms
         * @param type: file type - threatscore / docfile
         * @return api response as string.
         **/
-        private async Task<string> getThreatScore(string pathFile, string fileName, string type)
+        private async Task<string> GetThreatScore(string pathFile, string fileName, string type)
         {
-            // NotifyPropertyChanged("filePool"); 
             try
             {
                 if (Program.FilePool.Count > 0)
@@ -898,7 +897,7 @@ namespace MCDA_APP.Forms
                 // save to hash file
                 if (isThreat == true)
                 {
-                    responseString = await getThreatScore(path, fileName, "threatscore");
+                    responseString = await GetThreatScore(path, fileName, "threatscore");
                     if (responseString != "")
                     {
                         JObject jsonObject = JObject.Parse(responseString);
@@ -931,7 +930,7 @@ namespace MCDA_APP.Forms
                 }
                 else
                 {
-                    responseString = await getThreatScore(path, fileName, "docfile");
+                    responseString = await GetThreatScore(path, fileName, "docfile");
                     if (responseString != "")
                     {
                         JObject jsonObject = JObject.Parse(responseString);
@@ -1510,7 +1509,7 @@ namespace MCDA_APP.Forms
                                         var panel = addItemToMonitoringPanelForInitialScan(folderName, fileName);
                                         Debug.WriteLine("start scanning................." + fileName);
 
-                                        string responseString = await getThreatScore(path, fileName, "threatscore");
+                                        string responseString = await GetThreatScore(path, fileName, "threatscore");
 
                                         // save to hash file                                        
                                         bool succeed = true;
@@ -1556,7 +1555,7 @@ namespace MCDA_APP.Forms
                                     (buffer[0] == 228 && buffer[1] == 82 && buffer[2] == 92 && buffer[3] == 123 && buffer[4] == 140 && buffer[5] == 216 && buffer[6] == 167 && buffer[7] == 77 && buffer[8] == 174 && buffer[9] == 177))
                                     {
                                         var panel = addItemToMonitoringPanelForInitialScan(folderName, fileName);
-                                        string responseString = await getThreatScore(path, fileName, "docfile");
+                                        string responseString = await GetThreatScore(path, fileName, "docfile");
 
                                         // save to hash file
                                         bool succeed = true;
@@ -1751,21 +1750,18 @@ namespace MCDA_APP.Forms
         /**
         * @Description: handle logout
         **/
-        private void btnLogout_Click_1(object sender, EventArgs e)
+        private void BtnLogout_Click(object sender, EventArgs e)
         {
             try
             {
-                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
-                key.DeleteValue("API_KEY");
-                key.DeleteValue("SETTINGS");
-                key.Close();
-
+                Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
+                
                 Program.APIKEY = "";
                 Program.USEREMAIL = "";
                 Program.SUBSCRIPTION = "";
 
                 Hide();
-                LoginForm loginForm = new LoginForm();
+                LoginForm loginForm = new();
                 loginForm.Show(this);
 
                 foreach (Form f in Application.OpenForms)
