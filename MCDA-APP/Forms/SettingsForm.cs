@@ -24,9 +24,9 @@ namespace MCDA_APP.Forms
             try
             {
                 // set apikey and user email
-                labelEmail.Text = Program.USEREMAIL;
-                txtApikey.Text = Program.APIKEY;
-                labelPlan.Text = Program.SUBSCRIPTION; 
+                labelEmail.Text = Program.AccountInformation?.UserEmail;
+                txtApikey.Text = Program.AccountInformation?.ApiKey;
+                labelPlan.Text = Program.AccountInformation?.Subscription; 
 
                 // Check if user authentication 
                 RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
@@ -168,10 +168,7 @@ namespace MCDA_APP.Forms
             try
             {
                 Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
-
-                Program.APIKEY = "";
-                Program.USEREMAIL = ""; 
-                Program.SUBSCRIPTION = ""; 
+                Program.AccountInformation?.ResetValues();
                 
                 Hide();
                 

@@ -30,8 +30,8 @@ namespace MCDA_APP.Forms
             InitializeComponent();
 
             this.screenWidth = this.Size.Width;
-            labelEmail.Text = Program.USEREMAIL;
-            labelPlan.Text = Program.SUBSCRIPTION;
+            labelEmail.Text = Program.AccountInformation?.UserEmail;
+            labelPlan.Text = Program.AccountInformation?.Subscription;
 
             // Create directories for caching
             // there was a problem for the installer. installer did not recognize the relative path
@@ -463,7 +463,7 @@ namespace MCDA_APP.Forms
                     {
                         byte[] fileData = File.ReadAllBytes(pathFile);
                         content.Add(new StreamContent(new MemoryStream(fileData)), "filename1", fileName);
-                        content.Headers.Add("apiKey", Program.APIKEY);
+                        content.Headers.Add("apiKey", Program.AccountInformation?.ApiKey);
                         content.Headers.Add("source", "agent");
 
                         using (
@@ -532,7 +532,7 @@ namespace MCDA_APP.Forms
                     // string jsonData = "{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}";
 
                     var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
-                    client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
+                    client.DefaultRequestHeaders.Add("apiKey", Program.AccountInformation?.ApiKey);
                     client.DefaultRequestHeaders.Add("source", "agent");
                     client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
 
@@ -574,7 +574,7 @@ namespace MCDA_APP.Forms
                 {
 
                     var requestContent = new StringContent("", Encoding.Unicode, "application/json");
-                    client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
+                    client.DefaultRequestHeaders.Add("apiKey", Program.AccountInformation?.ApiKey);
                     client.DefaultRequestHeaders.Add("source", "agent");
                     client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
 
@@ -1755,11 +1755,8 @@ namespace MCDA_APP.Forms
             try
             {
                 Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
+                Program.AccountInformation?.ResetValues();
                 
-                Program.APIKEY = "";
-                Program.USEREMAIL = "";
-                Program.SUBSCRIPTION = "";
-
                 Hide();
                 LoginForm loginForm = new();
                 loginForm.Show(this);

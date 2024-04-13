@@ -7,5 +7,14 @@
         public string? Subscription;
         public string? Message;
         public bool Success;
+
+        public void ResetValues()
+        {
+            ApiKey = "";
+            UserEmail = "";
+            Subscription = "";
+            Message = "";
+            Success = false;
+        }
     }
 }

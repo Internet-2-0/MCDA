@@ -1,12 +1,8 @@
 ﻿using MCDA_APP.Forms;
-using Microsoft.Win32;
-using Newtonsoft.Json.Linq;
 using System.Diagnostics;
-using System.Text;
 using System.Reflection;
-using MCDA_APP.Model;
 using MCDA_APP.Controls;
-using MCDA_APP.Model.Api;
+using MCDA_APP.Core;
 
 namespace MCDA_APP
 {
@@ -14,7 +10,6 @@ namespace MCDA_APP
     {
         public LoginForm() => InitializeComponent();
 
-        //TODO: HTTP requests should be handled in it's own class
         private async void BtnLogin_Click(object sender, EventArgs e)
         {
             LabelError.Visible = false;
@@ -45,17 +40,17 @@ namespace MCDA_APP
 
             try
             {
-                AccountInformation? account = await Program.Client?.Login(username, password)!;
+                Program.AccountInformation = await Program.Client?.Login(username, password)!;
 
-                if (!account!.Success)
+                if (!Program.AccountInformation!.Success)
                 {
                     LabelError.Visible = true;
-                    LabelError.Text = account.Message;
+                    LabelError.Text = Program.AccountInformation.Message;
 
                     return;
                 }
 
-                if (string.IsNullOrEmpty(account.ApiKey))
+                if (string.IsNullOrEmpty(Program.AccountInformation.ApiKey))
                 {
                     LabelError.Visible = true;
                     LabelError.Text = "Something went wrong";
@@ -63,14 +58,12 @@ namespace MCDA_APP
                     return;
                 }
 
-                Helper.SetRegistryKey("API_KEY", account.ApiKey);
-                Helper.SetRegistryKey("EMAIL", account.UserEmail!);
-                Helper.SetRegistryKey("SUBSCRIPTION", account.Subscription!);
+                Helper.SetRegistryKey("API_KEY", Program.AccountInformation.ApiKey);
+                Helper.SetRegistryKey("EMAIL", Program.AccountInformation.UserEmail!);
+                Helper.SetRegistryKey("SUBSCRIPTION", Program.AccountInformation.Subscription!);
                 Helper.SetRegistryKey("SETTINGS", "");
 
-                Program.APIKEY = account.ApiKey;
-                Program.USEREMAIL = account.UserEmail!;
-                Program.SUBSCRIPTION = account.Subscription!;
+                await Program.Client.SendAgentStatus();
 
                 Hide();
 

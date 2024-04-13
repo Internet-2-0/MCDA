@@ -32,6 +32,9 @@ namespace MCDA_APP.Core
                 };
 
                 AccountInformation? root = JsonConvert.DeserializeObject<AccountInformation>(response, settings);
+
+                _customHttpClient.AddHeader("apiKey", root?.ApiKey!);
+
                 return root;
             }
             catch (Exception ex)
@@ -39,6 +42,11 @@ namespace MCDA_APP.Core
                 Debug.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        public async Task SendAgentUsage()
+        {
+
         }
 
         public async Task SendAgentStatus()
@@ -49,7 +57,6 @@ namespace MCDA_APP.Core
                 Type = "started"
             };
 
-            _customHttpClient.AddHeader("apiKey", "");
             _customHttpClient.AddHeader("source", "agent");
             _customHttpClient.AddHeader("agentVersion", Helper.GetAgentVersion());
 
@@ -62,7 +69,6 @@ namespace MCDA_APP.Core
                 Debug.WriteLine(ex.Message);
             }
 
-            _customHttpClient.RemoveHeader("apiKey");
             _customHttpClient.RemoveHeader("source");
             _customHttpClient.RemoveHeader("agentVersion");
         }

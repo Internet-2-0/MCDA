@@ -16,8 +16,8 @@ namespace MCDA_APP.Forms
         {
             InitializeComponent();
 
-            labelEmail.Text = Program.USEREMAIL;
-            labelPlan.Text = Program.SUBSCRIPTION;
+            labelEmail.Text = Program.AccountInformation?.UserEmail;
+            labelPlan.Text = Program.AccountInformation?.Subscription;
 
             this.screenWidth = this.Size.Width;
             viewQueueFlowLayoutPanel.Width = this.screenWidth;
@@ -288,7 +288,7 @@ namespace MCDA_APP.Forms
                     // string jsonData = "{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}";
 
                     var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
-                    client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
+                    client.DefaultRequestHeaders.Add("apiKey", Program.AccountInformation?.ApiKey);
                     client.DefaultRequestHeaders.Add("source", "agent");
                     client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
 
@@ -352,14 +352,8 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
-                key.DeleteValue("API_KEY");
-                key.DeleteValue("SETTINGS");
-                key.Close();
-
-                Program.APIKEY = "";
-                Program.USEREMAIL = "";
-                Program.SUBSCRIPTION = "";
+                Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
+                Program.AccountInformation?.ResetValues();
 
                 Hide();
                 LoginForm loginForm = new LoginForm();

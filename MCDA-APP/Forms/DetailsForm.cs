@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
 using MCDA_APP.Controls;
+using MCDA_APP.Model.Api;
 
 namespace MCDA_APP.Forms
 {
@@ -21,8 +22,8 @@ namespace MCDA_APP.Forms
             this.folderName = folderName;
             this.fileName = fileName;
             this.type = type;
-            labelEmail.Text = Program.USEREMAIL; 
-            labelPlan.Text = Program.SUBSCRIPTION; 
+            labelEmail.Text = Program.AccountInformation?.UserEmail; 
+            labelPlan.Text = Program.AccountInformation?.Subscription; 
 
             try
             {
@@ -534,17 +535,11 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
-                key.DeleteValue("API_KEY");
-                key.DeleteValue("SETTINGS");
-                key.Close();
-
-                Program.APIKEY = "";
-                Program.USEREMAIL = "";
-                Program.SUBSCRIPTION = "";
+                Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
+                Program.AccountInformation!.ResetValues();
 
                 Hide();
-                LoginForm loginForm = new LoginForm();
+                LoginForm loginForm = new();
                 loginForm.Show(this);
 
                 foreach (Form f in Application.OpenForms)
