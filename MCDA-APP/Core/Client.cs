@@ -5,6 +5,8 @@ using MCDA_APP.Model.Api;
 using MCDA_APP.Web;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net;
+using System.Text;
 
 namespace MCDA_APP.Core
 {
@@ -15,6 +17,14 @@ namespace MCDA_APP.Core
         public Client()
         {
             _customHttpClient = new CustomHttpClient();
+
+            _customHttpClient.AddHeader("source", "agent");
+            _customHttpClient.AddHeader("agentVersion", Helper.GetAgentVersion());
+        }
+
+        public void AddApiKey(string apiKey)
+        {
+            _customHttpClient.AddHeader("apiKey", apiKey);
         }
 
         public async Task<AccountInformation?> Login(string email, string password)
@@ -24,7 +34,7 @@ namespace MCDA_APP.Core
                 UserData userData = new() { Email = email, Password = password };
 
                 string response = await _customHttpClient.SendJsonRequestAsync(
-                    $"{Constants.ApiBaseUrl}/auth/login", HttpMethod.Post, userData);
+                    $"{Constants.ApiBaseUrl}/auth/login", userData);
 
                 var settings = new JsonSerializerSettings
                 {
@@ -44,33 +54,84 @@ namespace MCDA_APP.Core
             }
         }
 
-        public async Task SendAgentUsage()
+        public async Task<(string, HttpStatusCode)> GetUsage()
         {
+            HttpStatusCode statusCode = HttpStatusCode.OK;
+            try
+            {
+                var requestContent = new StringContent("", Encoding.Unicode, "application/json");
+                var response = await _customHttpClient.PostAsync($"{Constants.ApiBaseUrl}/agent/usage", requestContent);
+                statusCode = response.Item2;
 
+                return (response.Item1, statusCode);
+            }catch(Exception)
+            {
+                return ("", statusCode);
+            }
         }
 
-        public async Task SendAgentStatus()
+        public void SendAgentStatus(string type = "", string pName = "", string pType = "", string pMessage = "", string pResponse = "")
         {
-            AgentStatus agentStatus = new()
+            try
             {
-                Payload = new Payload{ Message = "Agent Started" },
-                Type = "started"
-            };
+                AgentStatus agentStatus = new AgentStatus
+                {
+                    Type = type,
+                    Payload = new Payload
+                    {
+                        Name = pName,
+                        Type = pType,
+                        Response = pResponse,
+                        Message = pMessage
+                    }
+                };
+                _customHttpClient.SendJsonRequest($"{Constants.ApiBaseUrl}/agent/stat", agentStatus);
+            }
+            catch (Exception)
+            {
+            }
+        }
 
-            _customHttpClient.AddHeader("source", "agent");
-            _customHttpClient.AddHeader("agentVersion", Helper.GetAgentVersion());
+        public void SendAgentStatus(AgentStatus agentStatus)
+        {
+            try
+            {
+                _customHttpClient.SendJsonRequest($"{Constants.ApiBaseUrl}/agent/stat", agentStatus);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public async Task<(string, HttpStatusCode)> UploadFile(string url, byte[] file, string fileName) 
+        {
+            try
+            {
+                var response = await _customHttpClient.PostRequestWithFileAsync(url, file, fileName);
+                return response;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task SendAgentStatusAsync(AgentStatus agentStatus)
+        {
+            //AgentStatus agentStatus = new()
+            //{
+            //    Payload = new Payload{ Message = "Agent Started" },
+            //    Type = "started"
+            //};
 
             try
             {
-                await _customHttpClient.SendJsonRequestAsync($"{Constants.ApiBaseUrl}/agent/stat", HttpMethod.Post, agentStatus);
+                await _customHttpClient.SendJsonRequestAsync($"{Constants.ApiBaseUrl}/agent/stat", agentStatus);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-
-            _customHttpClient.RemoveHeader("source");
-            _customHttpClient.RemoveHeader("agentVersion");
         }
     }
 }

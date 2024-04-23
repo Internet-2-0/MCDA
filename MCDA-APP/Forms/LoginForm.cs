@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Reflection;
 using MCDA_APP.Controls;
 using MCDA_APP.Core;
+using MCDA_APP.Model.Agent;
 
 namespace MCDA_APP
 {
@@ -63,7 +64,12 @@ namespace MCDA_APP
                 Helper.SetRegistryKey("SUBSCRIPTION", Program.AccountInformation.Subscription!);
                 Helper.SetRegistryKey("SETTINGS", "");
 
-                await Program.Client.SendAgentStatus();
+                AgentStatus agentStatus = new()
+                {
+                    Payload = new Payload { Message = "Agent Started" },
+                    Type = "started"
+                };
+                await Program.Client.SendAgentStatusAsync(agentStatus);
 
                 Hide();
 

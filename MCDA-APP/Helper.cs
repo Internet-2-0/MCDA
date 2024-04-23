@@ -51,10 +51,15 @@ namespace MCDA_APP
 
         public static string? GetRegistryKey(string key)
         {
-            RegistryKey regKey = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey) 
-                ?? throw new NullReferenceException("Registry key does not exist");
-
-            return (string?)regKey?.GetValue(key);
+            try
+            {
+                RegistryKey? regKey = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
+                return (string?)regKey?.GetValue(key);
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
         }
     }
 }

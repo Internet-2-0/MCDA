@@ -3,7 +3,6 @@ using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
 using MCDA_APP.Controls;
-using MCDA_APP.Model.Api;
 
 namespace MCDA_APP.Forms
 {
@@ -80,7 +79,7 @@ namespace MCDA_APP.Forms
                 JObject jsonObject = JObject.Parse(this.responseString);
                 success = (bool)jsonObject["success"]; 
 
-                if (jsonObject["data"]["data"].ToString() == "{}" || jsonObject["data"]["data"].ToString() == "")
+                if (jsonObject["data"]?["data"]?.ToString() == "{}" || jsonObject["data"]?["data"]?.ToString() == "")
                 {
                     success = false;
                 }
@@ -254,7 +253,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Width = 80;
                 rerunButton.Height = 31;
                 rerunButton.Location = new System.Drawing.Point(445, 7);
-                rerunButton.Click += delegate (object obj, EventArgs ea)
+                rerunButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     this.Close();
                     monitoringForm.rerunScanFile(folderName, fileName, listPanel, true);
@@ -263,7 +262,7 @@ namespace MCDA_APP.Forms
                 percentLabel.Visible = false;
             }
 
-            removeButton.Click += delegate (object obj, EventArgs ea)
+            removeButton.Click += delegate (object? obj, EventArgs ea)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
@@ -284,7 +283,7 @@ namespace MCDA_APP.Forms
                 }
             };
 
-            releaseButton.Click += delegate (object obj, EventArgs ea)
+            releaseButton.Click += delegate (object? obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);
                 releaseButton.Visible = false;
@@ -430,7 +429,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Width = 80;
                 rerunButton.Height = 31;
                 rerunButton.Location = new System.Drawing.Point(445, 7);
-                rerunButton.Click += delegate (object obj, EventArgs ea)
+                rerunButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     this.Close();
                     monitoringForm.rerunScanFile(folderName, fileName, listPanel, false);
@@ -439,7 +438,7 @@ namespace MCDA_APP.Forms
                 percentLabel.Visible = false;
             }
 
-            removeButton.Click += delegate (object obj, EventArgs ea)
+            removeButton.Click += delegate (object? obj, EventArgs ea)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
@@ -459,7 +458,7 @@ namespace MCDA_APP.Forms
                 }
             };
 
-            releaseButton.Click += delegate (object obj, EventArgs ea)
+            releaseButton.Click += delegate (object? obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);
                 releaseButton.Visible = false;
