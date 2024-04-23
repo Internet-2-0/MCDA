@@ -507,6 +507,7 @@ namespace MCDA_APP.Forms
                         Response = "timeout/api_error/other_error"
                     }
                 };
+
                 await Program.Client!.SendAgentStatusAsync(agentStatusFailed);
 
                 return "";
@@ -695,19 +696,6 @@ namespace MCDA_APP.Forms
                 {
                     rerunButton.Visible = false;
                     rerunScanFile(folderName, fileName, panel, true);
-
-                    AgentStatus agentStatusRerun = new()
-                    {
-                        Type = AgentStatusType.File_Rerun,
-                        Payload = new Payload
-                        {
-                            Name = fileName,
-                            Type = AgentStatusPayloadType.Threat_Score,
-                            Message = "File reran",
-                        }
-                    };
-                    Program.Client?.SendAgentStatus(agentStatusRerun);
-
                     Program.Client?.SendAgentStatus("file_reran", fileName, "threatscore", "File deleted");
 
 
@@ -728,17 +716,7 @@ namespace MCDA_APP.Forms
                 {
                     handleRelease(folderName + "\\" + fileName, false);
                     
-
-                    AgentStatus agentStatusRerun = new()
-                    {
-                        Type = AgentStatusType.File_Released,
-                        Payload = new Payload
-                        {
-                            Name = fileName,
-                            Message = "File released",
-                        }
-                    };
-                    Program.Client?.SendAgentStatus(agentStatusRerun);
+                    Program.Client?.SendAgentStatus(AgentStatusType.File_Released, fileName, pMessage: "File released");
 
                     releaseButton.Visible = false;
                     panel.Dispose();
@@ -1141,17 +1119,7 @@ namespace MCDA_APP.Forms
                         }
                         panel.Dispose();
 
-                        AgentStatus agentStatus = new AgentStatus
-                        {
-                            Type = AgentStatusType.File_Deleted,
-                            Payload = new Payload
-                            {
-                                Name = fileName,
-                                Type = AgentStatusPayloadType.Doc_File,
-                                Message = "File deleted"
-                            }
-                        };
-                        Program.Client?.SendAgentStatus(agentStatus);
+                        Program.Client?.SendAgentStatus(AgentStatusType.File_Deleted, fileName, AgentStatusPayloadType.Doc_File, "File deleted");
                     }
                     else if (dialogResult == DialogResult.No)
                     {
@@ -1175,20 +1143,8 @@ namespace MCDA_APP.Forms
                 {
                     rerunButton.Visible = false;
                     rerunScanFile(folderName, fileName, panel, false);
-
-                    AgentStatus agentStatus = new AgentStatus
-                    {
-                        Type = AgentStatusType.File_Deleted,
-                        Payload = new Payload
-                        {
-                            Name = fileName,
-                            Type = AgentStatusPayloadType.Doc_File,
-                            Message = "File deleted"
-                        }
-                    };
-                    Program.Client?.SendAgentStatus(agentStatus);
-                    //string payload = "{\"type\":\"file_reran\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File reran\"}}";
-                    //agentStat(payload);
+                    
+                    Program.Client?.SendAgentStatus(AgentStatusType.File_Deleted, fileName, AgentStatusPayloadType.Doc_File, "File deleted");
                 };
 
                 Button releaseButton = new Button();
@@ -1206,16 +1162,7 @@ namespace MCDA_APP.Forms
                 {
                     handleRelease(folderName + "\\" + fileName, false);
                     
-                    AgentStatus agentStatusRerun = new()
-                    {
-                        Type = AgentStatusType.File_Released,
-                        Payload = new Payload
-                        {
-                            Name = fileName,
-                            Message = "File released",
-                        }
-                    };
-                    Program.Client?.SendAgentStatus(agentStatusRerun);
+                    Program.Client?.SendAgentStatus(AgentStatusType.File_Released, fileName, pMessage: "File released");
 
                     releaseButton.Visible = false;
                     panel.Dispose();

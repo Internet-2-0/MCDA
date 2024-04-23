@@ -92,17 +92,6 @@ namespace MCDA_APP.Core
             }
         }
 
-        public void SendAgentStatus(AgentStatus agentStatus)
-        {
-            try
-            {
-                _customHttpClient.SendJsonRequest($"{Constants.ApiBaseUrl}/agent/stat", agentStatus);
-            }
-            catch (Exception)
-            {
-            }
-        }
-
         public async Task<(string, HttpStatusCode)> UploadFile(string url, byte[] file, string fileName) 
         {
             try
