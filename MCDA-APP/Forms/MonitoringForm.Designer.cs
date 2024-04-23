@@ -168,7 +168,7 @@
             btnLogout.TabIndex = 38;
             btnLogout.Text = "Log Out";
             btnLogout.UseVisualStyleBackColor = false;
-            btnLogout.Click += btnLogout_Click_1;
+            btnLogout.Click += BtnLogout_Click;
             // 
             // btnSettings
             // 
@@ -478,7 +478,7 @@
             MaximizeBox = false;
             Name = "MonitoringForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Monitoring";
+            Text = "%placeholder%";
             FormClosing += MonitoringForm_FormClosing;
             Load += MonitoringForm_Load;
             Resize += MonitoringForm_Resize;

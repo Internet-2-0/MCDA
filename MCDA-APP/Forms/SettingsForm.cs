@@ -13,6 +13,7 @@ namespace MCDA_APP.Forms
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
+            Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Settings");
             MalcoreFooter malcoreFooter = new()
             {
                 Dock = DockStyle.Bottom
@@ -23,9 +24,9 @@ namespace MCDA_APP.Forms
             try
             {
                 // set apikey and user email
-                labelEmail.Text = Program.USEREMAIL;
-                txtApikey.Text = Program.APIKEY;
-                labelPlan.Text = Program.SUBSCRIPTION; 
+                labelEmail.Text = Program.AccountInformation?.UserEmail;
+                txtApikey.Text = Program.AccountInformation?.ApiKey;
+                labelPlan.Text = Program.AccountInformation?.Subscription; 
 
                 // Check if user authentication 
                 RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
@@ -162,30 +163,18 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void BtnLogout_Click(object sender, EventArgs e)
         {
             try
             {
-                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
-                key.DeleteValue("API_KEY");
-                key.DeleteValue("SETTINGS");
-                key.Close();
-
-                Program.APIKEY = "";
-                Program.USEREMAIL = ""; 
-                Program.SUBSCRIPTION = ""; 
+                Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
+                Program.AccountInformation?.ResetValues();
                 
                 Hide();
                 
                 LoginForm loginForm = new LoginForm();
                 loginForm.Show(this); 
 
-                // foreach (Form f in Application.OpenForms)
-                // {
-                //     if (f.Name == "MonitoringForm") {
-                //         f.Close();
-                //     }
-                // }  
                 foreach (Form f in Application.OpenForms)
                 {
                     if (f.Name != "LoginForm") {

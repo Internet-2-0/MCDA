@@ -208,7 +208,7 @@
             MaximizeBox = false;
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Log in";
+            Text = "%placeholder%";
             FormClosing += LoginFormClosing;
             FormClosed += LoginFormClosed;
             Load += LoginForm_Load;
