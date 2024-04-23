@@ -4,6 +4,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Security.Principal;
 using MCDA_APP.Controls;
+using MCDA_APP.Model.Agent;
 
 namespace MCDA_APP.Forms
 {
@@ -16,8 +17,8 @@ namespace MCDA_APP.Forms
         {
             InitializeComponent();
 
-            labelEmail.Text = Program.USEREMAIL;
-            labelPlan.Text = Program.SUBSCRIPTION;
+            labelEmail.Text = Program.AccountInformation?.UserEmail;
+            labelPlan.Text = Program.AccountInformation?.Subscription;
 
             this.screenWidth = this.Size.Width;
             viewQueueFlowLayoutPanel.Width = this.screenWidth;
@@ -82,7 +83,7 @@ namespace MCDA_APP.Forms
             drawTimer.Interval = 2000; // in miliseconds
             drawTimer.Start();
         }
-        private void RedrawPanel(object sender, EventArgs e)
+        private void RedrawPanel(object? sender, EventArgs e)
         {
             // AddItemToViewQueueFlowLayoutPanel(false);
             CheckItemIsDrawed();
@@ -145,7 +146,7 @@ namespace MCDA_APP.Forms
             totopButton.Width = 85;
             totopButton.Height = 28;
             totopButton.Location = new System.Drawing.Point(this.screenWidth - 310, 2); // 215
-            totopButton.Click += delegate (object obj, EventArgs ea)
+            totopButton.Click += delegate (object? obj, EventArgs ea)
             {
                 var list = Program.FilePool.ToList();
                 list.Remove(filePath);
@@ -172,14 +173,13 @@ namespace MCDA_APP.Forms
             releaseButton.Width = 85;
             releaseButton.Height = 28;
             releaseButton.Location = new System.Drawing.Point(this.screenWidth - 215, 2); // 315
-            releaseButton.Click += delegate (object obj, EventArgs ea)
+            releaseButton.Click += delegate (object? obj, EventArgs ea)
             {
 
                 handleRelease(filePath, false);
                 releaseButton.Visible = false;
 
-                string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
-                agentStat(payload);
+                Program.Client?.SendAgentStatus(AgentStatusType.File_Released, pName: fileName, pMessage: "File released");
             };
             if (HasWritePermission(filePath))
             {
@@ -197,7 +197,7 @@ namespace MCDA_APP.Forms
             removeButton.Width = 85;
             removeButton.Height = 28;
             removeButton.Location = new System.Drawing.Point(this.screenWidth - 120, 2); // 415
-            removeButton.Click += delegate (object obj, EventArgs ea)
+            removeButton.Click += delegate (object? obj, EventArgs ea)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
@@ -222,8 +222,7 @@ namespace MCDA_APP.Forms
 
                     AddItemToViewQueueFlowLayoutPanel(false);
 
-                    string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File deleted\"}}";
-                    agentStat(payload);
+                    Program.Client?.SendAgentStatus(AgentStatusType.File_Deleted, fileName, AgentStatusPayloadType.Doc_File, "File deleted");
                 }
 
             };
@@ -271,49 +270,6 @@ namespace MCDA_APP.Forms
             }
         }
 
-
-        /**
-        * @Description: Call agent/stat for log on the server
-        * @param jsonData: json string for request data of the api 
-        * @return api response as string.
-        **/
-        private async Task<string> agentStat(string jsonData)
-        {
-            try
-            {
-                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/stat";
-
-                using (var client = new HttpClient())
-                {
-                    // string jsonData = "{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}";
-
-                    var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
-                    client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
-                    client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
-
-                    using (
-                          var response = await client.PostAsync(url, requestContent))
-                    {
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var content = await response.Content.ReadAsStringAsync();
-                            return content;
-                        }
-                        else
-                        {
-                            return "";
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Write out any exceptions.
-                return "";
-            }
-        }
-
         /**
         * @Description: Check if file has write permission
         * @param FilePath: full file path
@@ -352,14 +308,8 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
-                key.DeleteValue("API_KEY");
-                key.DeleteValue("SETTINGS");
-                key.Close();
-
-                Program.APIKEY = "";
-                Program.USEREMAIL = "";
-                Program.SUBSCRIPTION = "";
+                Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
+                Program.AccountInformation?.ResetValues();
 
                 Hide();
                 LoginForm loginForm = new LoginForm();

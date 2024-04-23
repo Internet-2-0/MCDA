@@ -1,20 +1,18 @@
 using MCDA_APP.Forms;
-using Microsoft.Win32;
-using Newtonsoft.Json.Linq;
 using System.Diagnostics;
-using System.Text;
 using System.Reflection;
+using MCDA_APP.Core;
+using MCDA_APP.Model.Api;
 
 namespace MCDA_APP
 {
-    internal static class Program
+    public static class Program
     {
-        public static string APIKEY = "";
-        public static string USEREMAIL = "";
-        public static string SUBSCRIPTION = "";
         public static Queue<string> FilePool = new Queue<string>();
         public static Queue<string> PrecessedFilePool = new Queue<string>();
         public static Queue<string> DragFilePool = new Queue<string>();
+        public static Client? Client { private set; get; }
+        public static AccountInformation? AccountInformation { set; get; }
 
         ///  The main entry point for the application.
         [STAThread]
@@ -23,7 +21,8 @@ namespace MCDA_APP
             // Kill current process if there is already process that is running
             if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location)).Length > 1) Process.GetCurrentProcess().Kill();
 
-            agentStat("{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}").GetAwaiter().GetResult();
+            Client = new Client();
+            AccountInformation = new AccountInformation();
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
@@ -31,84 +30,35 @@ namespace MCDA_APP
 
             try
             {
-                // Check user authentication status
-                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey);
-                if (key != null)
+                AccountInformation.ApiKey = Helper.GetRegistryKey("API_KEY");
+                AccountInformation.UserEmail = Helper.GetRegistryKey("EMAIL");
+                AccountInformation.Subscription = Helper.GetRegistryKey("SUBSCRIPTION");
+                var SETTINGS = Helper.GetRegistryKey("SETTINGS");
+
+                if (string.IsNullOrEmpty(AccountInformation.ApiKey))
                 {
-                    var API_KEY = key.GetValue("API_KEY");
-                    // if user already log in
-                    if (API_KEY != null)
-                    {
-                        JObject json = JObject.Parse(API_KEY.ToString());
-                        APIKEY = json["apiKey"].ToString();
-                        USEREMAIL = json["email"].ToString();
-                        SUBSCRIPTION = json["subscription"]["name"].ToString();
+                    //Client.SendAgentStatus().GetAwaiter().GetResult();
+                    Application.Run(new LoginForm());
+                    return;
+                }
 
-                        var SETTINGS = key.GetValue("SETTINGS");
+                Client.AddApiKey(AccountInformation.ApiKey);
 
-                        // if user have saved settings, go to monitoring
-                        if (SETTINGS != null && SETTINGS.ToString() != "")
-                        {
-                            Application.Run(new MonitoringForm());
-                        }
-                        else
-                        {
-                            Application.Run(new SettingsForm());
-                        }
-                    }
-                    else
-                    {
-                        Application.Run(new LoginForm());
-                    }
+                if (!string.IsNullOrEmpty(SETTINGS)) 
+                {
+                    Application.Run(new MonitoringForm());
                 }
                 else
                 {
-                    Application.Run(new LoginForm());
+                    Application.Run(new SettingsForm());
                 }
             }
             catch (Exception ex)
             {
-                // Write out any exceptions.
                 Debug.WriteLine(ex);
                 Application.Run(new LoginForm());
             }
-
         }
-
-        private static async Task<string> agentStat(string jsonData)
-        {
-            try
-            {
-                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/stat";
-
-                using (var client = new HttpClient())
-                {
-                    var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
-                    client.DefaultRequestHeaders.Add("apiKey", Program.APIKEY);
-                    client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
-
-                    using (
-                          var response = await client.PostAsync(url, requestContent))
-                    {
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var content = await response.Content.ReadAsStringAsync();
-                            return content;
-                        }
-                        else
-                        {
-                            return "";
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return "";
-            }
-        }
-
 
         public static void OpenBrowser(string url)
         {
