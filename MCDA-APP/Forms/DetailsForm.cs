@@ -21,8 +21,8 @@ namespace MCDA_APP.Forms
             this.folderName = folderName;
             this.fileName = fileName;
             this.type = type;
-            labelEmail.Text = Program.AccountInformation?.UserEmail; 
-            labelPlan.Text = Program.AccountInformation?.Subscription; 
+            labelEmail.Text = Program.AccountInformation?.UserEmail;
+            labelPlan.Text = Program.AccountInformation?.Subscription;
 
             try
             {
@@ -50,7 +50,7 @@ namespace MCDA_APP.Forms
             {
                 Debug.Write("DetailsForm.............." + ex.Message);
             }
-            
+
 
         }
 
@@ -77,7 +77,7 @@ namespace MCDA_APP.Forms
             else
             {
                 JObject jsonObject = JObject.Parse(this.responseString);
-                success = (bool)jsonObject["success"]; 
+                success = (bool)jsonObject["success"];
 
                 if (jsonObject["data"]?["data"]?.ToString() == "{}" || jsonObject["data"]?["data"]?.ToString() == "")
                 {
@@ -543,7 +543,8 @@ namespace MCDA_APP.Forms
 
                 foreach (Form f in Application.OpenForms)
                 {
-                    if (f.Name != "LoginForm") {
+                    if (f.Name != "LoginForm")
+                    {
                         f.Close();
                     }
                 }

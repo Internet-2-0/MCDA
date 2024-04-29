@@ -12,6 +12,9 @@ namespace MCDA_APP.Web
         public CustomHttpClient()
         {
             _httpClient = new HttpClient();
+
+            AddHeader("source", "agent");
+            AddHeader("agentVersion", Helper.GetAgentVersion());
         }
 
         public void AddHeader(string key, string value)
