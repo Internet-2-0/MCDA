@@ -4,10 +4,8 @@ using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using System;
-using System.IO;
 using MCDA_APP.Controls;
-// using System.ComponentModel;
+using MCDA_APP.Model.Agent;
 
 namespace MCDA_APP.Forms
 {
@@ -71,7 +69,7 @@ namespace MCDA_APP.Forms
                     return;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return;
             }
@@ -116,7 +114,7 @@ namespace MCDA_APP.Forms
             try
             {
                 // Check if active or inactive based on usuage
-                bool active = await agentUsuage();
+                bool active = await AgentUsuage();
 
                 if (active)
                 {
@@ -179,7 +177,7 @@ namespace MCDA_APP.Forms
             try
             {
                 // Check if active or inactive based on usuage
-                bool active = await agentUsuage();
+                bool active = await AgentUsuage();
 
                 if (active)
                 {
@@ -451,157 +449,93 @@ namespace MCDA_APP.Forms
                     queuePanel.Visible = false;
                 }
 
-                string payload = "{\"type\":\"file_submitted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"message\":\"File submitted\"}}";
-                await agentStat(payload);
+                AgentStatus agentStatusOk = new()
+                {
+                    Type = AgentStatusType.File_Submitted,
+                    Payload = new Payload
+                    {
+                        Name = fileName,
+                        Type = type,
+                        Message = "File submitted"
+                    }
+                };
+                await Program.Client!.SendAgentStatusAsync(agentStatusOk);
 
                 handleRelease(pathFile, false);
                 string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/api/" + type;
 
-                using (var client = new HttpClient())
+                byte[] fileData = File.ReadAllBytes(pathFile);
+                var response = await Program.Client.UploadFile(url, fileData, fileName);
+
+                handleRelease(pathFile, true);
+
+                this.numberOfProcessing--;
+
+                if (response.Item2 == System.Net.HttpStatusCode.OK)
                 {
-                    using (var content = new MultipartFormDataContent())
-                    {
-                        byte[] fileData = File.ReadAllBytes(pathFile);
-                        content.Add(new StreamContent(new MemoryStream(fileData)), "filename1", fileName);
-                        content.Headers.Add("apiKey", Program.AccountInformation?.ApiKey);
-                        content.Headers.Add("source", "agent");
-
-                        using (
-                           var response = await client.PostAsync(url, content))
-                        {
-                            handleRelease(pathFile, true);
-
-                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                            {
-                                string responseString = await response.Content.ReadAsStringAsync();
-                                this.numberOfProcessing--;
-
-                                // if (this.numberOfProcessing == 0) {
-                                //     lblProcessFileCount.Visible = false;
-                                // }
-                                return responseString;
-                            }
-                            else
-                            {
-                                string payload2 = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"api_error\",\"message\":\"API Error\"}}";
-                                await agentStat(payload2);
-                                this.numberOfProcessing--;
-
-                                // if (this.numberOfProcessing == 0) {
-                                //     lblProcessFileCount.Visible = false;
-                                // }
-                                return "";
-                            }
-                        }
-                    }
+                    return response.Item1;
                 }
+
+                AgentStatus agentStatusFailed = new()
+                {
+                    Type = AgentStatusType.File_Failed,
+                    Payload = new Payload
+                    {
+                        Name = fileName,
+                        Type = type,
+                        Message = "API Error",
+                        Response = "api_error"
+                    }
+                };
+                await Program.Client!.SendAgentStatusAsync(agentStatusFailed);
+                return "";  
             }
             catch (Exception ex)
             {
                 Debug.Write(ex);
                 this.numberOfProcessing--;
-                // if (this.numberOfProcessing == 0) {
-                //     lblProcessFileCount.Visible = false;
-                // }
                 handleRelease(pathFile, false);
 
-                string payload = "{\"type\":\"file_failed\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"" + type + "\",\"response\":\"timeout/api_error/other_error\",\"message\":\"API Error/Timeout/Other\"}}";
-                await agentStat(payload);
-                return "";
-            }
-        }
-
-
-        /**
-        * @Description: Call agent/stat for log on the server
-        * @param jsonData: json string for request data of the api 
-        * @return api response as string.
-        **/
-        private async Task<string> agentStat(string jsonData)
-        {
-            try
-            {
-                if (this.sendStatistics == false)
+                AgentStatus agentStatusFailed = new()
                 {
-                    return "";
-                }
-                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/stat";
-
-                using (var client = new HttpClient())
-                {
-                    // string jsonData = "{\"type\":\"started\",\"payload\":{\"message\":\"Agent Started\"}}";
-
-                    var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
-                    client.DefaultRequestHeaders.Add("apiKey", Program.AccountInformation?.ApiKey);
-                    client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
-
-                    using (
-                          var response = await client.PostAsync(url, requestContent))
+                    Type = AgentStatusType.File_Failed,
+                    Payload = new Payload
                     {
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var content = await response.Content.ReadAsStringAsync();
-                            return content;
-                        }
-                        else
-                        {
-                            return "";
-                        }
+                        Name = fileName,
+                        Type = type,
+                        Message = "API Error/Timeout/Other",
+                        Response = "timeout/api_error/other_error"
                     }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Write out any exceptions.
-                Debug.Write(ex);
+                };
+
+                await Program.Client!.SendAgentStatusAsync(agentStatusFailed);
+
                 return "";
             }
         }
-
 
         /**
         * @Description: Call agent/usage API
         * @return true if remaining > 0, else false
         **/
-        private async Task<bool> agentUsuage()
+        private async Task<bool> AgentUsuage()
         {
             try
             {
-                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/agent/usage";
+                var response = await Program.Client!.GetUsage();
 
-                using (var client = new HttpClient())
+                if (response.Item2 == System.Net.HttpStatusCode.OK)
                 {
+                    JObject jsonObject = JObject.Parse(response.Item1);
 
-                    var requestContent = new StringContent("", Encoding.Unicode, "application/json");
-                    client.DefaultRequestHeaders.Add("apiKey", Program.AccountInformation?.ApiKey);
-                    client.DefaultRequestHeaders.Add("source", "agent");
-                    client.DefaultRequestHeaders.Add("agentVersion", "1.1.1");
-
-                    using (
-                          var response = await client.PostAsync(url, requestContent))
+                    if ((bool)jsonObject["success"] == true)
                     {
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var content = await response.Content.ReadAsStringAsync();
-                            JObject jsonObject = JObject.Parse(content);
-
-                            if ((bool)jsonObject["success"] == true)
-                            {
-                                lblRequestNumber.Text = (string)jsonObject["data"]["remaining"];
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return false;
-                        }
+                        lblRequestNumber.Text = (string)jsonObject["data"]["remaining"];
+                        return true;
                     }
                 }
+
+                return false;
             }
             catch (Exception ex)
             {
@@ -672,7 +606,7 @@ namespace MCDA_APP.Forms
                 fileLabel.AutoSize = false;
                 fileLabel.Width = 400;
                 fileLabel.Location = new System.Drawing.Point(22, 1);
-                fileLabel.Click += delegate (object obj, EventArgs ea)
+                fileLabel.Click += delegate (object? obj, EventArgs ea)
                 {
                     DetailsForm detailsForm = new DetailsForm("threat", responseString, folderName, fileName, this, panel);
                     detailsForm.Show(this);
@@ -687,7 +621,7 @@ namespace MCDA_APP.Forms
                 folderLabel.AutoSize = false;
                 folderLabel.Width = 400;
                 folderLabel.Location = new System.Drawing.Point(24, 22);
-                folderLabel.Click += delegate (object obj, EventArgs ea)
+                folderLabel.Click += delegate (object? obj, EventArgs ea)
                 {
                     DetailsForm detailsForm = new DetailsForm("threat", responseString, folderName, fileName, this, panel);
                     detailsForm.Show(this);
@@ -716,7 +650,8 @@ namespace MCDA_APP.Forms
                 removeButton.Width = 85;
                 removeButton.Height = 31;
                 removeButton.Location = new System.Drawing.Point(this.screenWidth - 210, 6); // 590
-                removeButton.Click += delegate (object obj, EventArgs ea)
+                //removeButton.Click += RemoveButton_Click;
+                removeButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
@@ -737,8 +672,7 @@ namespace MCDA_APP.Forms
                         }
                         panel.Dispose();
 
-                        string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"threatscore\",\"message\":\"File deleted\"}}";
-                        agentStat(payload);
+                        Program.Client?.SendAgentStatus("file_deleted", fileName, "threatscore", "File deleted");
                     }
                     else if (dialogResult == DialogResult.No)
                     {
@@ -758,13 +692,13 @@ namespace MCDA_APP.Forms
                 rerunButton.Width = 80;
                 rerunButton.Height = 31;
                 rerunButton.Location = new System.Drawing.Point(this.screenWidth - 295, 6);  // 515
-                rerunButton.Click += delegate (object obj, EventArgs ea)
+                rerunButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     rerunButton.Visible = false;
                     rerunScanFile(folderName, fileName, panel, true);
+                    Program.Client?.SendAgentStatus("file_reran", fileName, "threatscore", "File deleted");
 
-                    string payload = "{\"type\":\"file_reran\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"threatscore\",\"message\":\"File reran\"}}";
-                    agentStat(payload);
+
                 };
 
                 Button releaseButton = new Button();
@@ -778,11 +712,12 @@ namespace MCDA_APP.Forms
                 releaseButton.Width = 85;
                 releaseButton.Height = 31;
                 releaseButton.Location = new System.Drawing.Point(this.screenWidth - 121, 6);
-                releaseButton.Click += delegate (object obj, EventArgs ea)
+                releaseButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     handleRelease(folderName + "\\" + fileName, false);
-                    string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
-                    agentStat(payload);
+                    
+                    Program.Client?.SendAgentStatus(AgentStatusType.File_Released, fileName, pMessage: "File released");
+
                     releaseButton.Visible = false;
                     panel.Dispose();
 
@@ -859,12 +794,11 @@ namespace MCDA_APP.Forms
 
                 monitoringFlowLayoutPanel.Controls.Add(panel);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
 
         }
-
 
         /**
         * @Description: recall api/threatscore or api/docfile api and update UI accordingly
@@ -916,13 +850,13 @@ namespace MCDA_APP.Forms
                     }
 
                     Label fileLabel = (Label)panel.Controls.Find("fileLabel", true)[0];
-                    fileLabel.Click += delegate (object obj, EventArgs ea)
+                    fileLabel.Click += delegate (object? obj, EventArgs ea)
                     {
                         DetailsForm detailsForm = new DetailsForm("threat", responseString, folderName, fileName, this, panel);
                         detailsForm.Show(this);
                     };
                     Label folderLabel = (Label)panel.Controls.Find("folderLabel", true)[0];
-                    folderLabel.Click += delegate (object obj, EventArgs ea)
+                    folderLabel.Click += delegate (object? obj, EventArgs ea)
                     {
                         DetailsForm detailsForm = new DetailsForm("threat", responseString, folderName, fileName, this, panel);
                         detailsForm.Show(this);
@@ -949,13 +883,13 @@ namespace MCDA_APP.Forms
                     }
 
                     Label fileLabel = (Label)panel.Controls.Find("fileLabel", true)[0];
-                    fileLabel.Click += delegate (object obj, EventArgs ea)
+                    fileLabel.Click += delegate (object? obj, EventArgs ea)
                     {
                         DetailsForm detailsForm = new DetailsForm("doc", responseString, folderName, fileName, this, panel);
                         detailsForm.Show(this);
                     };
                     Label folderLabel = (Label)panel.Controls.Find("folderLabel", true)[0];
-                    folderLabel.Click += delegate (object obj, EventArgs ea)
+                    folderLabel.Click += delegate (object? obj, EventArgs ea)
                     {
                         DetailsForm detailsForm = new DetailsForm("doc", responseString, folderName, fileName, this, panel);
                         detailsForm.Show(this);
@@ -1120,8 +1054,8 @@ namespace MCDA_APP.Forms
                 fileLabel.Font = new Font("Calibri", 12, FontStyle.Bold);
                 fileLabel.AutoSize = false;
                 fileLabel.Width = 400;
-                fileLabel.Location = new System.Drawing.Point(22, 1);
-                fileLabel.Click += delegate (object obj, EventArgs ea)
+                fileLabel.Location = new Point(22, 1);
+                fileLabel.Click += delegate (object? obj, EventArgs ea)
                 {
                     DetailsForm detailsForm = new DetailsForm("doc", responseString, folderName, fileName, this, panel);
                     detailsForm.Show(this);
@@ -1136,8 +1070,8 @@ namespace MCDA_APP.Forms
                 folderLabel.AutoSize = false;
                 folderLabel.Width = 400;
                 // folderLabel.MaximumSize = new System.Drawing.Size(200, 0);
-                folderLabel.Location = new System.Drawing.Point(24, 22);
-                folderLabel.Click += delegate (object obj, EventArgs ea)
+                folderLabel.Location = new Point(24, 22);
+                folderLabel.Click += delegate (object? obj, EventArgs ea)
                 {
                     DetailsForm detailsForm = new DetailsForm("doc", responseString, folderName, fileName, this, panel);
                     detailsForm.Show(this);
@@ -1163,8 +1097,8 @@ namespace MCDA_APP.Forms
                 removeButton.FlatAppearance.BorderSize = 0;
                 removeButton.Width = 85;
                 removeButton.Height = 31;
-                removeButton.Location = new System.Drawing.Point(this.screenWidth - 210, 6);
-                removeButton.Click += delegate (object obj, EventArgs ea)
+                removeButton.Location = new Point(this.screenWidth - 210, 6);
+                removeButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
@@ -1185,8 +1119,7 @@ namespace MCDA_APP.Forms
                         }
                         panel.Dispose();
 
-                        string payload = "{\"type\":\"file_deleted\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File deleted\"}}";
-                        agentStat(payload);
+                        Program.Client?.SendAgentStatus(AgentStatusType.File_Deleted, fileName, AgentStatusPayloadType.Doc_File, "File deleted");
                     }
                     else if (dialogResult == DialogResult.No)
                     {
@@ -1205,14 +1138,13 @@ namespace MCDA_APP.Forms
                 rerunButton.FlatAppearance.BorderSize = 0;
                 rerunButton.Width = 80;
                 rerunButton.Height = 31;
-                rerunButton.Location = new System.Drawing.Point(this.screenWidth - 295, 6); // 515
-                rerunButton.Click += delegate (object obj, EventArgs ea)
+                rerunButton.Location = new Point(this.screenWidth - 295, 6); // 515
+                rerunButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     rerunButton.Visible = false;
                     rerunScanFile(folderName, fileName, panel, false);
-
-                    string payload = "{\"type\":\"file_reran\",\"payload\":{\"name\":\"" + fileName + "\",\"type\":\"docfile\",\"message\":\"File reran\"}}";
-                    agentStat(payload);
+                    
+                    Program.Client?.SendAgentStatus(AgentStatusType.File_Deleted, fileName, AgentStatusPayloadType.Doc_File, "File deleted");
                 };
 
                 Button releaseButton = new Button();
@@ -1225,12 +1157,13 @@ namespace MCDA_APP.Forms
                 releaseButton.FlatAppearance.BorderSize = 0;
                 releaseButton.Width = 85;
                 releaseButton.Height = 31;
-                releaseButton.Location = new System.Drawing.Point(this.screenWidth - 121, 6); // 679
-                releaseButton.Click += delegate (object obj, EventArgs ea)
+                releaseButton.Location = new Point(this.screenWidth - 121, 6); // 679
+                releaseButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     handleRelease(folderName + "\\" + fileName, false);
-                    string payload = "{\"type\":\"file_released\",\"payload\":{\"name\":\"" + fileName + "\",\"message\":\"File released\"}}";
-                    agentStat(payload);
+                    
+                    Program.Client?.SendAgentStatus(AgentStatusType.File_Released, fileName, pMessage: "File released");
+
                     releaseButton.Visible = false;
                     panel.Dispose();
 
@@ -1375,7 +1308,7 @@ namespace MCDA_APP.Forms
                 monitoringFlowLayoutPanel.Controls.Add(panel);
                 return panel;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -1388,7 +1321,7 @@ namespace MCDA_APP.Forms
         * @param targetDirectory: full path of the target file 
         * @return void
         **/
-        public async void ProcessDirectory(string targetDirectory)
+        public void ProcessDirectory(string targetDirectory)
         {
             try
             {
@@ -1717,7 +1650,7 @@ namespace MCDA_APP.Forms
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -1738,7 +1671,7 @@ namespace MCDA_APP.Forms
                 monitorTimer.Interval = 3000; // in miliseconds
                 monitorTimer.Start();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -1787,7 +1720,7 @@ namespace MCDA_APP.Forms
                 SettingsForm settingsForm = new SettingsForm();
                 settingsForm.ShowDialog(this);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -1807,7 +1740,7 @@ namespace MCDA_APP.Forms
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -1833,7 +1766,7 @@ namespace MCDA_APP.Forms
                     // notifyIcon1.ShowBalloonTip(500);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -1849,7 +1782,7 @@ namespace MCDA_APP.Forms
                 this.WindowState = FormWindowState.Normal;
                 notifyIcon1.Visible = false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -1868,7 +1801,7 @@ namespace MCDA_APP.Forms
                     notifyIcon1.Visible = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -1885,7 +1818,7 @@ namespace MCDA_APP.Forms
                 notifyIcon1.Dispose();
                 Application.Exit();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -1911,7 +1844,7 @@ namespace MCDA_APP.Forms
                 queueForm.Show(this);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }

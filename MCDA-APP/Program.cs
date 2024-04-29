@@ -42,6 +42,8 @@ namespace MCDA_APP
                     return;
                 }
 
+                Client.AddApiKey(AccountInformation.ApiKey);
+
                 if (!string.IsNullOrEmpty(SETTINGS)) 
                 {
                     Application.Run(new MonitoringForm());
