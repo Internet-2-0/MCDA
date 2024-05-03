@@ -125,7 +125,7 @@ namespace MCDA_APP.Forms
             FillExports();
             Highlighter highlighter = new Highlighter(new RtfEngine());
 
-            string result = AssemblyParser.SetRichText(_assemblyCode);
+            string result = AssemblyParser.RemoveUnwantedComments(_assemblyCode);
 
             richTextBox1.Rtf = highlighter.Highlight("Assembly", result);
 
