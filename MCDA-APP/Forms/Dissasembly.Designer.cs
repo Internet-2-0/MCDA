@@ -53,6 +53,7 @@ namespace MCDA_APP.Forms
             columnHeader5 = new ColumnHeader();
             columnHeader6 = new ColumnHeader();
             DisassemblyTab = new TabPage();
+            richTextBox1 = new RichTextBox();
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
             OptionsMenu = new MenuStrip();
@@ -63,6 +64,7 @@ namespace MCDA_APP.Forms
             ImportsTab.SuspendLayout();
             ExportsTab.SuspendLayout();
             StringsTab.SuspendLayout();
+            DisassemblyTab.SuspendLayout();
             OptionsMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -83,6 +85,8 @@ namespace MCDA_APP.Forms
             FunctionsListView.TabIndex = 0;
             FunctionsListView.UseCompatibleStateImageBehavior = false;
             FunctionsListView.View = View.Details;
+            FunctionsListView.DoubleClick += FunctionsListView_DoubleClick;
+            FunctionsListView.MouseDoubleClick += FunctionsListView_MouseDoubleClick;
             // 
             // FunctionNameHeader
             // 
@@ -302,13 +306,28 @@ namespace MCDA_APP.Forms
             // 
             // DisassemblyTab
             // 
+            DisassemblyTab.BackColor = Color.FromArgb(26, 26, 34);
+            DisassemblyTab.Controls.Add(richTextBox1);
+            DisassemblyTab.ForeColor = Color.White;
             DisassemblyTab.Location = new Point(4, 30);
             DisassemblyTab.Name = "DisassemblyTab";
             DisassemblyTab.Padding = new Padding(3);
             DisassemblyTab.Size = new Size(700, 545);
             DisassemblyTab.TabIndex = 4;
             DisassemblyTab.Text = "View";
-            DisassemblyTab.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.BackColor = Color.FromArgb(26, 26, 34);
+            richTextBox1.Dock = DockStyle.Fill;
+            richTextBox1.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            richTextBox1.ForeColor = Color.White;
+            richTextBox1.Location = new Point(3, 3);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new Size(694, 539);
+            richTextBox1.TabIndex = 0;
+            richTextBox1.Text = "";
             // 
             // tabPage1
             // 
@@ -394,6 +413,7 @@ namespace MCDA_APP.Forms
             ImportsTab.ResumeLayout(false);
             ExportsTab.ResumeLayout(false);
             StringsTab.ResumeLayout(false);
+            DisassemblyTab.ResumeLayout(false);
             OptionsMenu.ResumeLayout(false);
             OptionsMenu.PerformLayout();
             splitContainer1.Panel1.ResumeLayout(false);
@@ -435,5 +455,6 @@ namespace MCDA_APP.Forms
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader7;
         private ColumnHeader columnHeader8;
+        private RichTextBox richTextBox1;
     }
 }

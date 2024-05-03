@@ -4,6 +4,7 @@ using MCDA_APP.Rendering;
 using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using static System.Windows.Forms.ListView;
 
 namespace MCDA_APP.Forms
 {
@@ -125,7 +126,7 @@ namespace MCDA_APP.Forms
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-            
+
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
@@ -143,6 +144,12 @@ namespace MCDA_APP.Forms
 
             string exports = _r2Pipe.RunCommand("iEj");
             _exportList = JsonConvert.DeserializeObject<List<RadareExport>>(exports);
+            
+            //set some needed options
+            _r2Pipe.RunCommand("e asm.lines=false");
+            _r2Pipe.RunCommand("e asm.lines.fcn=false");
+            _r2Pipe.RunCommand("e asm.bytes=false");
+            //_r2Pipe.RunCommand("e asm.comments=false");
         }
 
         private void OptionsMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -169,6 +176,8 @@ namespace MCDA_APP.Forms
         {
             FunctionsListView.Items.Clear();
             StringsListView.Items.Clear();
+            ExportsListView.Items.Clear();
+            ImportsListView.Items.Clear();
         }
 
         private void LoadFile()
@@ -178,6 +187,23 @@ namespace MCDA_APP.Forms
             ClearControls();
 
             _backgroundWorker.RunWorkerAsync();
+        }
+
+        private void FunctionsListView_DoubleClick(object sender, EventArgs e)
+        {
+            SelectedListViewItemCollection selectedList = FunctionsListView.SelectedItems;
+
+            if (selectedList.Count == 0)
+            {
+                return;
+            }
+
+            string output = _r2Pipe.RunCommand($"s {selectedList[0].Text};pdf");
+            richTextBox1.Rtf = AssemblyParser.SetRichText(output);
+        }
+
+        private void FunctionsListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
         }
     }
 }
