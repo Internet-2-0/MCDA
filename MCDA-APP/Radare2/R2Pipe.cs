@@ -5,12 +5,21 @@ namespace MCDA_APP.Radare2
 {
     public class R2Pipe : IDisposable
     {
-        private Process _r2Process;
+        private readonly Process _r2Process;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="r2executable"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public R2Pipe(string file, string r2executable)
         {
             if (file == null)
                 throw new ArgumentNullException("File is null");
+
+            if (!File.Exists(file))
+                throw new FileNotFoundException($"File '{file}' was not found!");
 
             _r2Process = new Process
             {
@@ -32,6 +41,11 @@ namespace MCDA_APP.Radare2
             _r2Process.StandardOutput.Read();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         public string RunCommand(string command)
         {
             _r2Process.StandardInput.WriteLine(command);
@@ -41,11 +55,10 @@ namespace MCDA_APP.Radare2
             char buffer;
             int charCode;
 
-            // Continue to read until a null character is encountered
-            while ((charCode = _r2Process.StandardOutput.Read()) != -1)  // Read returns -1 if no more characters are available
+            while ((charCode = _r2Process.StandardOutput.Read()) != -1) 
             {
                 buffer = (char)charCode;
-                if (buffer == '\0')  // Check for null terminator
+                if (buffer == '\0') 
                     break;
                 sb.Append(buffer);
             }
@@ -53,24 +66,9 @@ namespace MCDA_APP.Radare2
             return sb.ToString();
         }
 
-        //public string RunCommand(string command)
-        //{
-        //    var sb = new StringBuilder();
-        //    _r2Process.StandardInput.WriteLine(command);
-        //    _r2Process.StandardInput.Flush();
-
-        //    while (true)
-        //    {
-        //        int buffer = _r2Process.StandardOutput.Read();
-
-        //        if (buffer == -1)
-        //            break;
-
-        //        sb.Append((char)buffer);
-        //    }
-        //    return sb.ToString();
-        //}
-
+        /// <summary>
+        /// Exits and disposes of the _r2Process object
+        /// </summary>
         public void Dispose()
         {
             if (!_r2Process.HasExited)

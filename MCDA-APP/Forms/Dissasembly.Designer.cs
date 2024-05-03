@@ -38,20 +38,20 @@ namespace MCDA_APP.Forms
             InformationTab = new TabPage();
             ImportsTab = new TabPage();
             ImportsListView = new ListView();
-            columnHeader3 = new ColumnHeader();
-            columnHeader7 = new ColumnHeader();
-            columnHeader8 = new ColumnHeader();
+            ImportNameColumn = new ColumnHeader();
+            ImportAddressColumn = new ColumnHeader();
+            ImportLibraryColumn = new ColumnHeader();
             ExportsTab = new TabPage();
             ExportsListView = new ListView();
-            NameColumn = new ColumnHeader();
+            ExportNameColumn = new ColumnHeader();
             AddressColumn = new ColumnHeader();
             StringsTab = new TabPage();
             StringsListView = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
-            columnHeader4 = new ColumnHeader();
-            columnHeader5 = new ColumnHeader();
-            columnHeader6 = new ColumnHeader();
+            StringAddressColumn = new ColumnHeader();
+            StringLengthColumn = new ColumnHeader();
+            StringSectionColumn = new ColumnHeader();
+            StringTypeColumn = new ColumnHeader();
+            StringColumn = new ColumnHeader();
             DisassemblyTab = new TabPage();
             richTextBox1 = new RichTextBox();
             tabPage1 = new TabPage();
@@ -202,7 +202,7 @@ namespace MCDA_APP.Forms
             // ImportsListView
             // 
             ImportsListView.BackColor = Color.FromArgb(26, 26, 34);
-            ImportsListView.Columns.AddRange(new ColumnHeader[] { columnHeader3, columnHeader7, columnHeader8 });
+            ImportsListView.Columns.AddRange(new ColumnHeader[] { ImportNameColumn, ImportAddressColumn, ImportLibraryColumn });
             ImportsListView.Dock = DockStyle.Fill;
             ImportsListView.ForeColor = Color.White;
             ImportsListView.FullRowSelect = true;
@@ -213,17 +213,20 @@ namespace MCDA_APP.Forms
             ImportsListView.UseCompatibleStateImageBehavior = false;
             ImportsListView.View = View.Details;
             // 
-            // columnHeader3
+            // ImportNameColumn
             // 
-            columnHeader3.Text = "Name";
+            ImportNameColumn.Text = "Name";
+            ImportNameColumn.Width = 210;
             // 
-            // columnHeader7
+            // ImportAddressColumn
             // 
-            columnHeader7.Text = "Address";
+            ImportAddressColumn.Text = "Address";
+            ImportAddressColumn.Width = 80;
             // 
-            // columnHeader8
+            // ImportLibraryColumn
             // 
-            columnHeader8.Text = "Library";
+            ImportLibraryColumn.Text = "Library";
+            ImportLibraryColumn.Width = 120;
             // 
             // ExportsTab
             // 
@@ -240,7 +243,7 @@ namespace MCDA_APP.Forms
             // ExportsListView
             // 
             ExportsListView.BackColor = Color.FromArgb(26, 26, 34);
-            ExportsListView.Columns.AddRange(new ColumnHeader[] { NameColumn, AddressColumn });
+            ExportsListView.Columns.AddRange(new ColumnHeader[] { ExportNameColumn, AddressColumn });
             ExportsListView.Dock = DockStyle.Fill;
             ExportsListView.ForeColor = Color.White;
             ExportsListView.FullRowSelect = true;
@@ -251,13 +254,15 @@ namespace MCDA_APP.Forms
             ExportsListView.UseCompatibleStateImageBehavior = false;
             ExportsListView.View = View.Details;
             // 
-            // NameColumn
+            // ExportNameColumn
             // 
-            NameColumn.Text = "Name";
+            ExportNameColumn.Text = "Name";
+            ExportNameColumn.Width = 210;
             // 
             // AddressColumn
             // 
             AddressColumn.Text = "Address";
+            AddressColumn.Width = 80;
             // 
             // StringsTab
             // 
@@ -273,7 +278,7 @@ namespace MCDA_APP.Forms
             // StringsListView
             // 
             StringsListView.BackColor = Color.FromArgb(26, 26, 34);
-            StringsListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader4, columnHeader5, columnHeader6 });
+            StringsListView.Columns.AddRange(new ColumnHeader[] { StringAddressColumn, StringLengthColumn, StringSectionColumn, StringTypeColumn, StringColumn });
             StringsListView.Dock = DockStyle.Fill;
             StringsListView.ForeColor = Color.White;
             StringsListView.FullRowSelect = true;
@@ -284,25 +289,29 @@ namespace MCDA_APP.Forms
             StringsListView.UseCompatibleStateImageBehavior = false;
             StringsListView.View = View.Details;
             // 
-            // columnHeader1
+            // StringAddressColumn
             // 
-            columnHeader1.Text = "Address";
+            StringAddressColumn.Text = "Address";
+            StringAddressColumn.Width = 80;
             // 
-            // columnHeader2
+            // StringLengthColumn
             // 
-            columnHeader2.Text = "Length";
+            StringLengthColumn.Text = "Length";
             // 
-            // columnHeader4
+            // StringSectionColumn
             // 
-            columnHeader4.Text = "Section";
+            StringSectionColumn.Text = "Section";
+            StringSectionColumn.Width = 70;
             // 
-            // columnHeader5
+            // StringTypeColumn
             // 
-            columnHeader5.Text = "Type";
+            StringTypeColumn.Text = "Type";
+            StringTypeColumn.Width = 70;
             // 
-            // columnHeader6
+            // StringColumn
             // 
-            columnHeader6.Text = "String";
+            StringColumn.Text = "String";
+            StringColumn.Width = 300;
             // 
             // DisassemblyTab
             // 
@@ -443,18 +452,18 @@ namespace MCDA_APP.Forms
         private ColumnHeader FunctionNameHeader;
         private ColumnHeader AddressHeader;
         private SplitContainer splitContainer1;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
-        private ColumnHeader columnHeader6;
-        private ColumnHeader columnHeader4;
-        private ColumnHeader columnHeader5;
+        private ColumnHeader StringAddressColumn;
+        private ColumnHeader StringLengthColumn;
+        private ColumnHeader StringColumn;
+        private ColumnHeader StringSectionColumn;
+        private ColumnHeader StringTypeColumn;
         private ListView ExportsListView;
-        private ColumnHeader NameColumn;
+        private ColumnHeader ExportNameColumn;
         private ColumnHeader AddressColumn;
         private ListView ImportsListView;
-        private ColumnHeader columnHeader3;
-        private ColumnHeader columnHeader7;
-        private ColumnHeader columnHeader8;
+        private ColumnHeader ImportNameColumn;
+        private ColumnHeader ImportAddressColumn;
+        private ColumnHeader ImportLibraryColumn;
         private RichTextBox richTextBox1;
     }
 }

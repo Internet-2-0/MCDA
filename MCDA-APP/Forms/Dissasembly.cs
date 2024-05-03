@@ -1,4 +1,6 @@
-﻿using MCDA_APP.Model.Agent.Disassembler;
+﻿using MCDA_APP.Highlight;
+using MCDA_APP.Highlight.Engines;
+using MCDA_APP.Model.Agent.Disassembler;
 using MCDA_APP.Radare2;
 using MCDA_APP.Rendering;
 using Newtonsoft.Json;
@@ -10,13 +12,14 @@ namespace MCDA_APP.Forms
 {
     public partial class Dissasembly : Form
     {
-        private string FilePath;
+        private string _filePath;
         private R2Pipe _r2Pipe;
         private List<FunctionDetail> _functions;
         private BackgroundWorker _backgroundWorker;
         private List<RadareString>? _stringsList;
         private List<RadareImport>? _importList;
         private List<RadareExport>? _exportList;
+        private string _assemblyCode;
 
         public Dissasembly()
         {
@@ -120,18 +123,24 @@ namespace MCDA_APP.Forms
             FillStrings();
             FillImports();
             FillExports();
+            Highlighter highlighter = new Highlighter(new RtfEngine());
 
+            string result = AssemblyParser.SetRichText(_assemblyCode);
+
+            richTextBox1.Rtf = highlighter.Highlight("Assembly", result);
+
+            //richTextBox1.Rtf = AssemblyParser.SetRichText(_assemblyCode);
             MessageBox.Show("Completed!");
         }
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-
+            
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            _r2Pipe = new R2Pipe(FilePath, "bin\\radare2.exe");
+            _r2Pipe = new R2Pipe(_filePath, "bin\\radare2.exe");
 
             string response = _r2Pipe.RunCommand("aaa;afl");
             _functions = ParseFunctionDetails(response);
@@ -146,9 +155,12 @@ namespace MCDA_APP.Forms
             _exportList = JsonConvert.DeserializeObject<List<RadareExport>>(exports);
             
             //set some needed options
-            _r2Pipe.RunCommand("e asm.lines=false");
-            _r2Pipe.RunCommand("e asm.lines.fcn=false");
-            _r2Pipe.RunCommand("e asm.bytes=false");
+            _r2Pipe.RunCommand("e asm.lines=false;e asm.lines.fcn=false;e asm.bytes=false");
+
+            _assemblyCode = _r2Pipe.RunCommand("pdf @@f");
+
+            //_r2Pipe.RunCommand("e asm.lines.fcn=false");
+            //_r2Pipe.RunCommand("e asm.bytes=false");
             //_r2Pipe.RunCommand("e asm.comments=false");
         }
 
@@ -165,7 +177,7 @@ namespace MCDA_APP.Forms
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    FilePath = openFileDialog.FileName;
+                    _filePath = openFileDialog.FileName;
 
                     LoadFile();
                 }
@@ -198,8 +210,8 @@ namespace MCDA_APP.Forms
                 return;
             }
 
-            string output = _r2Pipe.RunCommand($"s {selectedList[0].Text};pdf");
-            richTextBox1.Rtf = AssemblyParser.SetRichText(output);
+            //string output = _r2Pipe.RunCommand($"s {selectedList[0].Text};pdf");
+            //richTextBox1.Rtf = AssemblyParser.SetRichText(output);
         }
 
         private void FunctionsListView_MouseDoubleClick(object sender, MouseEventArgs e)
