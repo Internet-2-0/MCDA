@@ -1,4 +1,4 @@
-﻿namespace MCDA_APP.Model.Agent
+﻿namespace MCDA_APP.Model.Agent.Disassembler
 {
     public class FunctionDetail
     {

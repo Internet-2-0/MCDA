@@ -40,6 +40,11 @@ namespace MCDA_APP.Forms
             ExportsTab = new TabPage();
             StringsTab = new TabPage();
             StringsListView = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
+            columnHeader6 = new ColumnHeader();
+            columnHeader5 = new ColumnHeader();
             DisassemblyTab = new TabPage();
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
@@ -47,9 +52,6 @@ namespace MCDA_APP.Forms
             fileToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
             splitContainer1 = new SplitContainer();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
-            columnHeader3 = new ColumnHeader();
             customTabControl2.SuspendLayout();
             StringsTab.SuspendLayout();
             OptionsMenu.SuspendLayout();
@@ -174,23 +176,25 @@ namespace MCDA_APP.Forms
             // 
             // ImportsTab
             // 
+            ImportsTab.BackColor = Color.FromArgb(26, 26, 34);
+            ImportsTab.ForeColor = Color.White;
             ImportsTab.Location = new Point(4, 30);
             ImportsTab.Name = "ImportsTab";
             ImportsTab.Padding = new Padding(3);
             ImportsTab.Size = new Size(700, 545);
             ImportsTab.TabIndex = 1;
             ImportsTab.Text = "Imports";
-            ImportsTab.UseVisualStyleBackColor = true;
             // 
             // ExportsTab
             // 
+            ExportsTab.BackColor = Color.FromArgb(26, 26, 34);
+            ExportsTab.ForeColor = Color.White;
             ExportsTab.Location = new Point(4, 30);
             ExportsTab.Name = "ExportsTab";
             ExportsTab.Padding = new Padding(3);
             ExportsTab.Size = new Size(700, 545);
             ExportsTab.TabIndex = 2;
             ExportsTab.Text = "Exports";
-            ExportsTab.UseVisualStyleBackColor = true;
             // 
             // StringsTab
             // 
@@ -206,14 +210,36 @@ namespace MCDA_APP.Forms
             // StringsListView
             // 
             StringsListView.BackColor = Color.FromArgb(26, 26, 34);
-            StringsListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
+            StringsListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader4, columnHeader5, columnHeader6 });
             StringsListView.Dock = DockStyle.Fill;
+            StringsListView.ForeColor = Color.White;
+            StringsListView.FullRowSelect = true;
             StringsListView.Location = new Point(3, 3);
             StringsListView.Name = "StringsListView";
             StringsListView.Size = new Size(694, 539);
             StringsListView.TabIndex = 0;
             StringsListView.UseCompatibleStateImageBehavior = false;
             StringsListView.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Address";
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Length";
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Section";
+            // 
+            // columnHeader6
+            // 
+            columnHeader6.Text = "String";
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "Type";
             // 
             // DisassemblyTab
             // 
@@ -292,18 +318,6 @@ namespace MCDA_APP.Forms
             splitContainer1.SplitterDistance = 280;
             splitContainer1.TabIndex = 1;
             // 
-            // columnHeader1
-            // 
-            columnHeader1.Text = "Address";
-            // 
-            // columnHeader2
-            // 
-            columnHeader2.Text = "Length";
-            // 
-            // columnHeader3
-            // 
-            columnHeader3.Text = "String";
-            // 
             // Dissasembly
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -350,6 +364,8 @@ namespace MCDA_APP.Forms
         private SplitContainer splitContainer1;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
-        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader6;
+        private ColumnHeader columnHeader4;
+        private ColumnHeader columnHeader5;
     }
 }

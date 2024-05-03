@@ -1,6 +1,8 @@
-﻿using MCDA_APP.Model.Agent;
+﻿using MCDA_APP.Model.Agent.Disassembler;
 using MCDA_APP.Radare2;
 using MCDA_APP.Rendering;
+using Newtonsoft.Json;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace MCDA_APP.Forms
@@ -10,6 +12,8 @@ namespace MCDA_APP.Forms
         private string FilePath;
         private R2Pipe _r2Pipe;
         private List<FunctionDetail> _functions;
+        private BackgroundWorker _backgroundWorker;
+        private List<RadareString>? _stringsList;
 
         public Dissasembly()
         {
@@ -37,22 +41,70 @@ namespace MCDA_APP.Forms
                         Name = match.Groups[4].Value.Trim()
                     };
                     functions.Add(fd);
-
-                    ListViewItem tempItem = new ListViewItem(fd.Name);
-                    tempItem.SubItems.Add(fd.Address);
-
-                    FunctionsListView.Items.Add(tempItem);
                 }
             }
 
             return functions;
         }
 
+        private void FillFunctions()
+        {
+            foreach (FunctionDetail functionDetail in _functions)
+            {
+                ListViewItem tempItem = new ListViewItem(functionDetail.Name);
+                tempItem.SubItems.Add(functionDetail.Address);
+
+                FunctionsListView.Items.Add(tempItem);
+            }
+        }
+
+        private void FillStrings()
+        {
+            for (int i = 0; i < _stringsList?.Count; i++)
+            {
+                RadareString radareString = _stringsList[i];
+
+                ListViewItem temp = new ListViewItem($"0x{radareString.Vaddr.ToString("X8").ToLower()}");
+                temp.SubItems.Add(radareString.Length.ToString());
+                temp.SubItems.Add(radareString.Section);
+                temp.SubItems.Add(radareString.Type);
+                temp.SubItems.Add(radareString.String);
+
+                StringsListView.Items.Add(temp);
+            }
+        }
+
         private void Dissasembly_Load(object sender, EventArgs e)
         {
             Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Dissasembler");
 
-            //_r2Pipe = new R2Pipe(File)
+            _backgroundWorker = new BackgroundWorker();
+            _backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            _backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+            _backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+        {
+            FillFunctions();
+            FillStrings();
+            MessageBox.Show("Completed!");
+        }
+
+        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            
+        }
+
+        private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            _r2Pipe = new R2Pipe(FilePath, "bin\\radare2.exe");
+
+            string response = _r2Pipe.RunCommand("aaa;afl");
+            _functions = ParseFunctionDetails(response);
+
+            string strings = _r2Pipe.RunCommand("izzj");
+            _stringsList = JsonConvert.DeserializeObject<List<RadareString>>(strings);
         }
 
         private void OptionsMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -75,14 +127,19 @@ namespace MCDA_APP.Forms
             }
         }
 
+        private void ClearControls()
+        {
+            FunctionsListView.Items.Clear();
+            StringsListView.Items.Clear();
+        }
+
         private void LoadFile()
         {
-            _r2Pipe = new R2Pipe(FilePath, "bin\\radare2.exe");
+            _r2Pipe?.Dispose();
 
-            string response = _r2Pipe.RunCommand("aaa;afl");
-            _functions = ParseFunctionDetails(response);
+            ClearControls();
 
-            string strings = _r2Pipe.RunCommand("izz");
+            _backgroundWorker.RunWorkerAsync();
         }
     }
 }
