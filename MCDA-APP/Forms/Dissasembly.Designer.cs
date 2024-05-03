@@ -37,14 +37,21 @@ namespace MCDA_APP.Forms
             customTabControl2 = new TabControl.CustomTabControl();
             InformationTab = new TabPage();
             ImportsTab = new TabPage();
+            ImportsListView = new ListView();
+            columnHeader3 = new ColumnHeader();
+            columnHeader7 = new ColumnHeader();
+            columnHeader8 = new ColumnHeader();
             ExportsTab = new TabPage();
+            ExportsListView = new ListView();
+            NameColumn = new ColumnHeader();
+            AddressColumn = new ColumnHeader();
             StringsTab = new TabPage();
             StringsListView = new ListView();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
-            columnHeader6 = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
+            columnHeader6 = new ColumnHeader();
             DisassemblyTab = new TabPage();
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
@@ -53,6 +60,8 @@ namespace MCDA_APP.Forms
             openToolStripMenuItem = new ToolStripMenuItem();
             splitContainer1 = new SplitContainer();
             customTabControl2.SuspendLayout();
+            ImportsTab.SuspendLayout();
+            ExportsTab.SuspendLayout();
             StringsTab.SuspendLayout();
             OptionsMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -177,6 +186,7 @@ namespace MCDA_APP.Forms
             // ImportsTab
             // 
             ImportsTab.BackColor = Color.FromArgb(26, 26, 34);
+            ImportsTab.Controls.Add(ImportsListView);
             ImportsTab.ForeColor = Color.White;
             ImportsTab.Location = new Point(4, 30);
             ImportsTab.Name = "ImportsTab";
@@ -185,9 +195,36 @@ namespace MCDA_APP.Forms
             ImportsTab.TabIndex = 1;
             ImportsTab.Text = "Imports";
             // 
+            // ImportsListView
+            // 
+            ImportsListView.BackColor = Color.FromArgb(26, 26, 34);
+            ImportsListView.Columns.AddRange(new ColumnHeader[] { columnHeader3, columnHeader7, columnHeader8 });
+            ImportsListView.Dock = DockStyle.Fill;
+            ImportsListView.ForeColor = Color.White;
+            ImportsListView.FullRowSelect = true;
+            ImportsListView.Location = new Point(3, 3);
+            ImportsListView.Name = "ImportsListView";
+            ImportsListView.Size = new Size(694, 539);
+            ImportsListView.TabIndex = 2;
+            ImportsListView.UseCompatibleStateImageBehavior = false;
+            ImportsListView.View = View.Details;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Name";
+            // 
+            // columnHeader7
+            // 
+            columnHeader7.Text = "Address";
+            // 
+            // columnHeader8
+            // 
+            columnHeader8.Text = "Library";
+            // 
             // ExportsTab
             // 
             ExportsTab.BackColor = Color.FromArgb(26, 26, 34);
+            ExportsTab.Controls.Add(ExportsListView);
             ExportsTab.ForeColor = Color.White;
             ExportsTab.Location = new Point(4, 30);
             ExportsTab.Name = "ExportsTab";
@@ -195,6 +232,28 @@ namespace MCDA_APP.Forms
             ExportsTab.Size = new Size(700, 545);
             ExportsTab.TabIndex = 2;
             ExportsTab.Text = "Exports";
+            // 
+            // ExportsListView
+            // 
+            ExportsListView.BackColor = Color.FromArgb(26, 26, 34);
+            ExportsListView.Columns.AddRange(new ColumnHeader[] { NameColumn, AddressColumn });
+            ExportsListView.Dock = DockStyle.Fill;
+            ExportsListView.ForeColor = Color.White;
+            ExportsListView.FullRowSelect = true;
+            ExportsListView.Location = new Point(3, 3);
+            ExportsListView.Name = "ExportsListView";
+            ExportsListView.Size = new Size(694, 539);
+            ExportsListView.TabIndex = 1;
+            ExportsListView.UseCompatibleStateImageBehavior = false;
+            ExportsListView.View = View.Details;
+            // 
+            // NameColumn
+            // 
+            NameColumn.Text = "Name";
+            // 
+            // AddressColumn
+            // 
+            AddressColumn.Text = "Address";
             // 
             // StringsTab
             // 
@@ -233,13 +292,13 @@ namespace MCDA_APP.Forms
             // 
             columnHeader4.Text = "Section";
             // 
-            // columnHeader6
-            // 
-            columnHeader6.Text = "String";
-            // 
             // columnHeader5
             // 
             columnHeader5.Text = "Type";
+            // 
+            // columnHeader6
+            // 
+            columnHeader6.Text = "String";
             // 
             // DisassemblyTab
             // 
@@ -332,6 +391,8 @@ namespace MCDA_APP.Forms
             Text = "%placeholder%";
             Load += Dissasembly_Load;
             customTabControl2.ResumeLayout(false);
+            ImportsTab.ResumeLayout(false);
+            ExportsTab.ResumeLayout(false);
             StringsTab.ResumeLayout(false);
             OptionsMenu.ResumeLayout(false);
             OptionsMenu.PerformLayout();
@@ -367,5 +428,12 @@ namespace MCDA_APP.Forms
         private ColumnHeader columnHeader6;
         private ColumnHeader columnHeader4;
         private ColumnHeader columnHeader5;
+        private ListView ExportsListView;
+        private ColumnHeader NameColumn;
+        private ColumnHeader AddressColumn;
+        private ListView ImportsListView;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader7;
+        private ColumnHeader columnHeader8;
     }
 }

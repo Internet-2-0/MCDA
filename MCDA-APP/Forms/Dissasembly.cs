@@ -14,6 +14,8 @@ namespace MCDA_APP.Forms
         private List<FunctionDetail> _functions;
         private BackgroundWorker _backgroundWorker;
         private List<RadareString>? _stringsList;
+        private List<RadareImport>? _importList;
+        private List<RadareExport>? _exportList;
 
         public Dissasembly()
         {
@@ -74,6 +76,33 @@ namespace MCDA_APP.Forms
             }
         }
 
+        private void FillImports()
+        {
+            for (int i = 0; i < _importList?.Count; i++)
+            {
+                RadareImport radareImport = _importList[i];
+
+                ListViewItem temp = new ListViewItem(radareImport.Name);
+                temp.SubItems.Add($"0x{radareImport.Plt.ToString("X8").ToLower()}");
+                temp.SubItems.Add(radareImport.Libname);
+
+                ImportsListView.Items.Add(temp);
+            }
+        }
+
+        private void FillExports()
+        {
+            for (int i = 0; i < _exportList?.Count; i++)
+            {
+                RadareExport radareExport = _exportList[i];
+
+                ListViewItem temp = new ListViewItem(radareExport.Name);
+                temp.SubItems.Add($"0x{radareExport.Vaddr.ToString("X8").ToLower()}");
+
+                ExportsListView.Items.Add(temp);
+            }
+        }
+
         private void Dissasembly_Load(object sender, EventArgs e)
         {
             Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Dissasembler");
@@ -88,6 +117,9 @@ namespace MCDA_APP.Forms
         {
             FillFunctions();
             FillStrings();
+            FillImports();
+            FillExports();
+
             MessageBox.Show("Completed!");
         }
 
@@ -105,6 +137,12 @@ namespace MCDA_APP.Forms
 
             string strings = _r2Pipe.RunCommand("izzj");
             _stringsList = JsonConvert.DeserializeObject<List<RadareString>>(strings);
+
+            string imports = _r2Pipe.RunCommand("iij");
+            _importList = JsonConvert.DeserializeObject<List<RadareImport>>(imports);
+
+            string exports = _r2Pipe.RunCommand("iEj");
+            _exportList = JsonConvert.DeserializeObject<List<RadareExport>>(exports);
         }
 
         private void OptionsMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
