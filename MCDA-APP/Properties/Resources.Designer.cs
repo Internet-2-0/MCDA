@@ -68,5 +68,15 @@ namespace MCDA_APP.Properties {
                 return ResourceManager.GetString("closeImage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap malcore_icon {
+            get {
+                object obj = ResourceManager.GetObject("malcore-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

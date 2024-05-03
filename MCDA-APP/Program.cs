@@ -18,6 +18,8 @@ namespace MCDA_APP
         [STAThread]
         static void Main()
         {
+            
+            
             // Kill current process if there is already process that is running
             if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location)).Length > 1) Process.GetCurrentProcess().Kill();
 
@@ -27,6 +29,9 @@ namespace MCDA_APP
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+
+            Dissasembly d = new Dissasembly();
+            d.Show();
 
             try
             {
