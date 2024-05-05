@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace MCDA_APP.Radare2
 {
@@ -26,10 +27,25 @@ namespace MCDA_APP.Radare2
             {
                 if (line.TrimStart().StartsWith("; CODE XREF") ||
                     line.TrimStart().StartsWith("; CALL XREF") ||
-                    line.TrimStart().StartsWith("; XREFS:"))
+                    line.TrimStart().StartsWith("; XREFS:") || 
+                    line.TrimStart().StartsWith(";-- rip:") ||
+                    line.TrimStart().StartsWith(";-- _start:") ||
+                    line.TrimStart().StartsWith(";-- section..text:") ||
+                    line.TrimStart().StartsWith("; XREFS") ||
+                    line.TrimStart().StartsWith(".."))
                     continue;
 
-                sb.AppendLine(line);
+                string searchString = @"^\s*\d+:\s*";
+                Match match = Regex.Match(line, searchString);
+
+                if (match.Success)
+                {
+                    sb.AppendLine(HttpUtility.HtmlDecode(line.Substring(match.Length).TrimEnd()));
+                }
+                else
+                {
+                    sb.AppendLine(HttpUtility.HtmlDecode(line.TrimEnd()));
+                }
             }
 
             return sb.ToString();

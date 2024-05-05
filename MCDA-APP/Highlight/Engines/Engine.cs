@@ -63,6 +63,7 @@ namespace MCDA_APP.Highlight.Engines
             }
 
             var pattern = definition.Patterns.First(x => match.Groups[x.Key].Success).Value;
+
             if (pattern != null)
             {
                 if (pattern is BlockPattern)

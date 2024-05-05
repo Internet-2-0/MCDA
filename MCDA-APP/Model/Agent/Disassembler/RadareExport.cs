@@ -34,7 +34,7 @@ namespace MCDA_APP.Model.Agent.Disassembler
         public long Vaddr { get; set; }
 
         [JsonProperty("paddr")]
-        public int Paddr { get; set; }
+        public object Paddr { get; set; }
 
         [JsonProperty("is_imported")]
         public bool IsImported { get; set; }
