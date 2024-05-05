@@ -60,7 +60,13 @@ namespace MCDA_APP.Forms
             FileToolStripMenuItem = new ToolStripMenuItem();
             OpenToolStripMenuItem = new ToolStripMenuItem();
             splitContainer1 = new SplitContainer();
+            label1 = new Label();
+            label2 = new Label();
+            textBox1 = new TextBox();
+            textBox2 = new TextBox();
+            label3 = new Label();
             customTabControl2.SuspendLayout();
+            InformationTab.SuspendLayout();
             ImportsTab.SuspendLayout();
             ExportsTab.SuspendLayout();
             StringsTab.SuspendLayout();
@@ -180,6 +186,11 @@ namespace MCDA_APP.Forms
             // InformationTab
             // 
             InformationTab.BackColor = Color.FromArgb(26, 26, 34);
+            InformationTab.Controls.Add(textBox2);
+            InformationTab.Controls.Add(label3);
+            InformationTab.Controls.Add(textBox1);
+            InformationTab.Controls.Add(label2);
+            InformationTab.Controls.Add(label1);
             InformationTab.Location = new Point(4, 30);
             InformationTab.Name = "InformationTab";
             InformationTab.Padding = new Padding(3);
@@ -383,7 +394,7 @@ namespace MCDA_APP.Forms
             // OpenToolStripMenuItem
             // 
             OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
-            OpenToolStripMenuItem.Size = new Size(180, 22);
+            OpenToolStripMenuItem.Size = new Size(112, 22);
             OpenToolStripMenuItem.Text = "Open...";
             OpenToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
@@ -405,6 +416,51 @@ namespace MCDA_APP.Forms
             splitContainer1.SplitterDistance = 280;
             splitContainer1.TabIndex = 1;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(18, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(69, 37);
+            label1.TabIndex = 2;
+            label1.Text = "Info";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(18, 83);
+            label2.Name = "label2";
+            label2.Size = new Size(28, 15);
+            label2.TabIndex = 2;
+            label2.Text = "File:";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(72, 80);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(256, 23);
+            textBox1.TabIndex = 3;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(72, 109);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(256, 23);
+            textBox2.TabIndex = 5;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(18, 112);
+            label3.Name = "label3";
+            label3.Size = new Size(48, 15);
+            label3.TabIndex = 4;
+            label3.Text = "Format:";
+            // 
             // Dissasembly
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -419,6 +475,8 @@ namespace MCDA_APP.Forms
             Text = "%placeholder%";
             Load += Dissasembly_Load;
             customTabControl2.ResumeLayout(false);
+            InformationTab.ResumeLayout(false);
+            InformationTab.PerformLayout();
             ImportsTab.ResumeLayout(false);
             ExportsTab.ResumeLayout(false);
             StringsTab.ResumeLayout(false);
@@ -465,5 +523,10 @@ namespace MCDA_APP.Forms
         private ColumnHeader ImportAddressColumn;
         private ColumnHeader ImportLibraryColumn;
         private RichTextBox richTextBox1;
+        private Label label1;
+        private TextBox textBox1;
+        private Label label2;
+        private TextBox textBox2;
+        private Label label3;
     }
 }

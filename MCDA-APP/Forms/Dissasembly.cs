@@ -19,6 +19,7 @@ namespace MCDA_APP.Forms
         private List<RadareString>? _stringsList;
         private List<RadareImport>? _importList;
         private List<RadareExport>? _exportList;
+        private RadareInformation? _information;
         private string _assemblyCode;
 
         public Dissasembly()
@@ -153,7 +154,10 @@ namespace MCDA_APP.Forms
 
             string exports = _r2Pipe.RunCommand("iEj");
             _exportList = JsonConvert.DeserializeObject<List<RadareExport>>(exports);
-            
+
+            string information = _r2Pipe.RunCommand("ij");
+            _information = JsonConvert.DeserializeObject<RadareInformation>(information);
+
             //set some needed options
             _r2Pipe.RunCommand("e asm.lines=false;e asm.lines.fcn=false;e asm.bytes=false");
 
