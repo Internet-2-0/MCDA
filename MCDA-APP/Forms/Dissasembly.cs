@@ -158,10 +158,20 @@ namespace MCDA_APP.Forms
             _r2Pipe.RunCommand("e asm.lines=false;e asm.lines.fcn=false;e asm.bytes=false");
 
             _assemblyCode = _r2Pipe.RunCommand("pdf @@f");
+        }
 
-            //_r2Pipe.RunCommand("e asm.lines.fcn=false");
-            //_r2Pipe.RunCommand("e asm.bytes=false");
-            //_r2Pipe.RunCommand("e asm.comments=false");
+        private void FindAndScrollToValue(string value)
+        {
+            string[] lines = richTextBox1.Lines;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].TrimStart().StartsWith(value))
+                {
+                    richTextBox1.SelectionStart = richTextBox1.GetFirstCharIndexFromLine(i);
+                    richTextBox1.ScrollToCaret();
+                    return;
+                }
+            }
         }
 
         private void OptionsMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -210,12 +220,15 @@ namespace MCDA_APP.Forms
                 return;
             }
 
+            FindAndScrollToValue(selectedList[0].Text);
+
             //string output = _r2Pipe.RunCommand($"s {selectedList[0].Text};pdf");
             //richTextBox1.Rtf = AssemblyParser.SetRichText(output);
         }
 
         private void FunctionsListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+
         }
     }
 }

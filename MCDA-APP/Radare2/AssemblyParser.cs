@@ -32,7 +32,8 @@ namespace MCDA_APP.Radare2
                     line.TrimStart().StartsWith(";-- _start:") ||
                     line.TrimStart().StartsWith(";-- section..text:") ||
                     line.TrimStart().StartsWith("; XREFS") ||
-                    line.TrimStart().StartsWith(".."))
+                    line.TrimStart().StartsWith("..") ||
+                    line.TrimStart().StartsWith("; DATA XREF"))
                     continue;
 
                 string searchString = @"^\s*\d+:\s*";
