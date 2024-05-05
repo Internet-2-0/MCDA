@@ -28,7 +28,7 @@ namespace MCDA_APP.Forms
             OptionsMenu.Renderer = new CustomRender(true);
         }
 
-        public List<FunctionDetail> ParseFunctionDetails(string data)
+        private static List<FunctionDetail> ParseFunctionDetails(string data)
         {
             List<FunctionDetail> functions = new List<FunctionDetail>();
             string[] lines = data.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
@@ -228,11 +228,6 @@ namespace MCDA_APP.Forms
             customTabControl2.SelectedTab = DisassemblyTab;
             //string output = _r2Pipe.RunCommand($"s {selectedList[0].Text};pdf");
             //richTextBox1.Rtf = AssemblyParser.SetRichText(output);
-        }
-
-        private void FunctionsListView_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
         }
     }
 }

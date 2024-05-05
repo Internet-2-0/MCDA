@@ -92,7 +92,6 @@ namespace MCDA_APP.Forms
             FunctionsListView.UseCompatibleStateImageBehavior = false;
             FunctionsListView.View = View.Details;
             FunctionsListView.DoubleClick += FunctionsListView_DoubleClick;
-            FunctionsListView.MouseDoubleClick += FunctionsListView_MouseDoubleClick;
             // 
             // FunctionNameHeader
             // 
