@@ -57,8 +57,8 @@ namespace MCDA_APP.Forms
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
             OptionsMenu = new MenuStrip();
-            fileToolStripMenuItem = new ToolStripMenuItem();
-            openToolStripMenuItem = new ToolStripMenuItem();
+            FileToolStripMenuItem = new ToolStripMenuItem();
+            OpenToolStripMenuItem = new ToolStripMenuItem();
             splitContainer1 = new SplitContainer();
             customTabControl2.SuspendLayout();
             ImportsTab.SuspendLayout();
@@ -361,7 +361,7 @@ namespace MCDA_APP.Forms
             // OptionsMenu
             // 
             OptionsMenu.BackColor = Color.FromArgb(26, 26, 34);
-            OptionsMenu.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
+            OptionsMenu.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem });
             OptionsMenu.Location = new Point(0, 0);
             OptionsMenu.Name = "OptionsMenu";
             OptionsMenu.Padding = new Padding(10, 7, 0, 7);
@@ -371,21 +371,21 @@ namespace MCDA_APP.Forms
             OptionsMenu.Text = "menuStrip1";
             OptionsMenu.ItemClicked += OptionsMenu_ItemClicked;
             // 
-            // fileToolStripMenuItem
+            // FileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openToolStripMenuItem });
-            fileToolStripMenuItem.ForeColor = Color.White;
-            fileToolStripMenuItem.Margin = new Padding(30, 0, 0, 0);
-            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 19);
-            fileToolStripMenuItem.Text = "File";
+            FileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { OpenToolStripMenuItem });
+            FileToolStripMenuItem.ForeColor = Color.White;
+            FileToolStripMenuItem.Margin = new Padding(30, 0, 0, 0);
+            FileToolStripMenuItem.Name = "FileToolStripMenuItem";
+            FileToolStripMenuItem.Size = new Size(37, 19);
+            FileToolStripMenuItem.Text = "File";
             // 
-            // openToolStripMenuItem
+            // OpenToolStripMenuItem
             // 
-            openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(112, 22);
-            openToolStripMenuItem.Text = "Open...";
-            openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
+            OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
+            OpenToolStripMenuItem.Size = new Size(180, 22);
+            OpenToolStripMenuItem.Text = "Open...";
+            OpenToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
             // splitContainer1
             // 
@@ -446,8 +446,8 @@ namespace MCDA_APP.Forms
         private TabPage StringsTab;
         private ListView StringsListView;
         private TabPage DisassemblyTab;
-        private ToolStripMenuItem fileToolStripMenuItem;
-        private ToolStripMenuItem openToolStripMenuItem;
+        private ToolStripMenuItem FileToolStripMenuItem;
+        private ToolStripMenuItem OpenToolStripMenuItem;
         private ListView FunctionsListView;
         private ColumnHeader FunctionNameHeader;
         private ColumnHeader AddressHeader;
