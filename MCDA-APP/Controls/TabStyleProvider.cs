@@ -1252,49 +1252,49 @@ namespace MCDA_APP.Controls
 
         #region Painting
 
-        protected internal virtual void DrawTabCloser(GraphicsPath closerPath, GraphicsPath closerButtonPath, Graphics graphics, TabState state, Point mousePosition)
-        {
-            bool active = closerButtonPath.GetBounds().Contains(mousePosition);
-            switch (state)
-            {
-                case TabState.Disabled:
-                    DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorUnselected, this.CloserButtonFillColorUnselected, this.CloserButtonOutlineColorUnselected);
-                    break;
-                case TabState.Focused:
-                    if (active)
-                    {
-                        DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorFocusedActive, this.CloserButtonFillColorFocusedActive, this.CloserButtonOutlineColorFocusedActive);
-                    }
-                    else
-                    {
-                        DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorFocused, this.CloserButtonFillColorFocused, this.CloserButtonOutlineColorFocused);
-                    }
-                    break;
-                case TabState.Highlighted:
-                    if (active)
-                    {
-                        DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorHighlightedActive, this.CloserButtonFillColorHighlightedActive, this.CloserButtonOutlineColorHighlightedActive);
-                    }
-                    else
-                    {
-                        DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorHighlighted, this.CloserButtonFillColorHighlighted, this.CloserButtonOutlineColorHighlighted);
-                    }
-                    break;
-                case TabState.Selected:
-                    if (active)
-                    {
-                        DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorSelectedActive, this.CloserButtonFillColorSelectedActive, this.CloserButtonOutlineColorSelectedActive);
-                    }
-                    else
-                    {
-                        DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorSelected, this.CloserButtonFillColorSelected, this.CloserButtonOutlineColorSelected);
-                    }
-                    break;
-                case TabState.Unselected:
-                    DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorUnselected, this.CloserButtonFillColorUnselected, this.CloserButtonOutlineColorUnselected);
-                    break;
-            }
-        }
+        //protected internal virtual void DrawTabCloser(GraphicsPath closerPath, GraphicsPath closerButtonPath, Graphics graphics, TabState state, Point mousePosition)
+        //{
+        //    bool active = closerButtonPath.GetBounds().Contains(mousePosition);
+        //    switch (state)
+        //    {
+        //        case TabState.Disabled:
+        //            DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorUnselected, this.CloserButtonFillColorUnselected, this.CloserButtonOutlineColorUnselected);
+        //            break;
+        //        case TabState.Focused:
+        //            if (active)
+        //            {
+        //                DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorFocusedActive, this.CloserButtonFillColorFocusedActive, this.CloserButtonOutlineColorFocusedActive);
+        //            }
+        //            else
+        //            {
+        //                DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorFocused, this.CloserButtonFillColorFocused, this.CloserButtonOutlineColorFocused);
+        //            }
+        //            break;
+        //        case TabState.Highlighted:
+        //            if (active)
+        //            {
+        //                DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorHighlightedActive, this.CloserButtonFillColorHighlightedActive, this.CloserButtonOutlineColorHighlightedActive);
+        //            }
+        //            else
+        //            {
+        //                DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorHighlighted, this.CloserButtonFillColorHighlighted, this.CloserButtonOutlineColorHighlighted);
+        //            }
+        //            break;
+        //        case TabState.Selected:
+        //            if (active)
+        //            {
+        //                DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorSelectedActive, this.CloserButtonFillColorSelectedActive, this.CloserButtonOutlineColorSelectedActive);
+        //            }
+        //            else
+        //            {
+        //                DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorSelected, this.CloserButtonFillColorSelected, this.CloserButtonOutlineColorSelected);
+        //            }
+        //            break;
+        //        case TabState.Unselected:
+        //            DrawTabCloser(closerPath, closerButtonPath, graphics, this.CloserColorUnselected, this.CloserButtonFillColorUnselected, this.CloserButtonOutlineColorUnselected);
+        //            break;
+        //    }
+        //}
 
         private void DrawTabCloser(GraphicsPath closerPath, GraphicsPath closerButtonPath, Graphics graphics, Color closerColor, Color closerFillColor, Color closerOutlineColor)
         {
@@ -1339,17 +1339,17 @@ namespace MCDA_APP.Controls
             return closerPath;
         }
 
-        public void DrawTabCloser(Rectangle closerButtonRect, Graphics graphics, TabState state, Point mousePosition)
-        {
-            if (!this._ShowTabCloser) return;
-            using (var closerPath = GetTabCloserPath(closerButtonRect))
-            {
-                using (var closerButtonPath = GetTabCloserButtonPath(closerButtonRect))
-                {
-                    DrawTabCloser(closerPath, closerButtonPath, graphics, state, mousePosition);
-                }
-            }
-        }
+        //public void DrawTabCloser(Rectangle closerButtonRect, Graphics graphics, TabState state, Point mousePosition)
+        //{
+        //    if (!this._ShowTabCloser) return;
+        //    using (var closerPath = GetTabCloserPath(closerButtonRect))
+        //    {
+        //        using (var closerButtonPath = GetTabCloserButtonPath(closerButtonRect))
+        //        {
+        //            DrawTabCloser(closerPath, closerButtonPath, graphics, state, mousePosition);
+        //        }
+        //    }
+        //}
 
         protected internal virtual GraphicsPath GetTabCloserPath(Rectangle closerButtonRect)
         {

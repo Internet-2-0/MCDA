@@ -221,7 +221,7 @@ namespace MCDA_APP.Forms
             }
 
             FindAndScrollToValue(selectedList[0].Text);
-
+            customTabControl2.SelectedTab = DisassemblyTab;
             //string output = _r2Pipe.RunCommand($"s {selectedList[0].Text};pdf");
             //richTextBox1.Rtf = AssemblyParser.SetRichText(output);
         }

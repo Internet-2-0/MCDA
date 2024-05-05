@@ -1044,7 +1044,7 @@ namespace MCDA_APP.TabControl
             //	Paint a focus indication
             this._StyleProvider.DrawTabFocusIndicator(tabBorder, state, graphics);
             //	Paint the closer
-            this._StyleProvider.DrawTabCloser(tabCloserButtonRect, graphics, state, mousePosition);
+            //this._StyleProvider.DrawTabCloser(tabCloserButtonRect, graphics, state, mousePosition);
         }
 
         private void DrawTabPageBorder(GraphicsPath path, TabState state, Graphics graphics)
