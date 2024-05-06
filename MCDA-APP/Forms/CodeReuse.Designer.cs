@@ -28,50 +28,71 @@
         /// </summary>
         private void InitializeComponent()
         {
-            iconTextBox1 = new Controls.IconTextBox();
-            iconTextBox2 = new Controls.IconTextBox();
+            TextBoxFile = new Controls.IconTextBox();
+            TextBoxSecondFile = new Controls.IconTextBox();
+            ButtonSubmitScan = new Button();
             SuspendLayout();
             // 
-            // iconTextBox1
+            // TextBoxFile
             // 
-            iconTextBox1.BackColor = Color.FromArgb(40, 47, 53);
-            iconTextBox1.Cursor = Cursors.Hand;
-            iconTextBox1.Location = new Point(559, 201);
-            iconTextBox1.Name = "iconTextBox1";
-            iconTextBox1.Size = new Size(272, 40);
-            iconTextBox1.TabIndex = 0;
-            iconTextBox1.TextBoxFontSize = 12F;
-            iconTextBox1.TextBoxText = "File";
+            TextBoxFile.BackColor = Color.FromArgb(40, 47, 53);
+            TextBoxFile.Cursor = Cursors.Hand;
+            TextBoxFile.Location = new Point(24, 28);
+            TextBoxFile.Name = "TextBoxFile";
+            TextBoxFile.Size = new Size(272, 40);
+            TextBoxFile.TabIndex = 0;
+            TextBoxFile.TextBoxFontSize = 12F;
+            TextBoxFile.TextBoxText = "File";
             // 
-            // iconTextBox2
+            // TextBoxSecondFile
             // 
-            iconTextBox2.BackColor = Color.FromArgb(40, 47, 53);
-            iconTextBox2.Cursor = Cursors.Hand;
-            iconTextBox2.Location = new Point(559, 261);
-            iconTextBox2.Name = "iconTextBox2";
-            iconTextBox2.Size = new Size(272, 40);
-            iconTextBox2.TabIndex = 1;
-            iconTextBox2.TextBoxFontSize = 12F;
-            iconTextBox2.TextBoxText = "Secondary File";
+            TextBoxSecondFile.AllowDrop = true;
+            TextBoxSecondFile.BackColor = Color.FromArgb(40, 47, 53);
+            TextBoxSecondFile.Cursor = Cursors.Hand;
+            TextBoxSecondFile.Location = new Point(325, 28);
+            TextBoxSecondFile.Name = "TextBoxSecondFile";
+            TextBoxSecondFile.Size = new Size(272, 40);
+            TextBoxSecondFile.TabIndex = 1;
+            TextBoxSecondFile.TextBoxFontSize = 12F;
+            TextBoxSecondFile.TextBoxText = "Secondary File";
+            // 
+            // ButtonSubmitScan
+            // 
+            ButtonSubmitScan.BackColor = Color.FromArgb(255, 128, 128);
+            ButtonSubmitScan.FlatStyle = FlatStyle.Popup;
+            ButtonSubmitScan.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            ButtonSubmitScan.ForeColor = Color.White;
+            ButtonSubmitScan.Location = new Point(24, 85);
+            ButtonSubmitScan.Name = "ButtonSubmitScan";
+            ButtonSubmitScan.Size = new Size(573, 39);
+            ButtonSubmitScan.TabIndex = 2;
+            ButtonSubmitScan.Text = "SUBMIT SCAN";
+            ButtonSubmitScan.UseVisualStyleBackColor = false;
+            ButtonSubmitScan.Click += ButtonSubmitScan_Click;
             // 
             // CodeReuse
             // 
+            AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 34);
-            ClientSize = new Size(843, 545);
-            Controls.Add(iconTextBox2);
-            Controls.Add(iconTextBox1);
+            ClientSize = new Size(618, 155);
+            Controls.Add(ButtonSubmitScan);
+            Controls.Add(TextBoxSecondFile);
+            Controls.Add(TextBoxFile);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "CodeReuse";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "CodeReuse";
+            Text = "%placeholder%";
             Load += CodeReuse_Load;
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Controls.IconTextBox iconTextBox1;
-        private Controls.IconTextBox iconTextBox2;
+        private Controls.IconTextBox TextBoxFile;
+        private Controls.IconTextBox TextBoxSecondFile;
+        private Button ButtonSubmitScan;
     }
 }
