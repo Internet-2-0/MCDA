@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MCDA_APP.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,13 @@ namespace MCDA_APP.Forms
         public CodeReuse()
         {
             InitializeComponent();
+        }
+
+        private void CodeReuse_Load(object sender, EventArgs e)
+        {
+
+            //Casm c = new Casm();
+            //Controls.Add(c);
         }
     }
 }

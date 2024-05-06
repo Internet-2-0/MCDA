@@ -36,6 +36,11 @@ namespace MCDA_APP.Forms
             AddressHeader = new ColumnHeader();
             customTabControl2 = new TabControl.CustomTabControl();
             InformationTab = new TabPage();
+            textBox2 = new TextBox();
+            label3 = new Label();
+            textBox1 = new TextBox();
+            label2 = new Label();
+            label1 = new Label();
             ImportsTab = new TabPage();
             ImportsListView = new ListView();
             ImportNameColumn = new ColumnHeader();
@@ -60,11 +65,8 @@ namespace MCDA_APP.Forms
             FileToolStripMenuItem = new ToolStripMenuItem();
             OpenToolStripMenuItem = new ToolStripMenuItem();
             splitContainer1 = new SplitContainer();
-            label1 = new Label();
-            label2 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            label3 = new Label();
+            textBox3 = new TextBox();
+            label4 = new Label();
             customTabControl2.SuspendLayout();
             InformationTab.SuspendLayout();
             ImportsTab.SuspendLayout();
@@ -185,6 +187,8 @@ namespace MCDA_APP.Forms
             // InformationTab
             // 
             InformationTab.BackColor = Color.FromArgb(26, 26, 34);
+            InformationTab.Controls.Add(textBox3);
+            InformationTab.Controls.Add(label4);
             InformationTab.Controls.Add(textBox2);
             InformationTab.Controls.Add(label3);
             InformationTab.Controls.Add(textBox1);
@@ -196,6 +200,55 @@ namespace MCDA_APP.Forms
             InformationTab.Size = new Size(700, 545);
             InformationTab.TabIndex = 0;
             InformationTab.Text = "Information";
+            // 
+            // textBox2
+            // 
+            textBox2.BackColor = Color.FromArgb(46, 46, 65);
+            textBox2.ForeColor = Color.White;
+            textBox2.Location = new Point(72, 109);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(256, 23);
+            textBox2.TabIndex = 5;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(18, 112);
+            label3.Name = "label3";
+            label3.Size = new Size(48, 15);
+            label3.TabIndex = 4;
+            label3.Text = "Format:";
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = Color.FromArgb(46, 46, 65);
+            textBox1.ForeColor = Color.White;
+            textBox1.Location = new Point(72, 80);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(256, 23);
+            textBox1.TabIndex = 3;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(18, 83);
+            label2.Name = "label2";
+            label2.Size = new Size(28, 15);
+            label2.TabIndex = 2;
+            label2.Text = "File:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(18, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(69, 37);
+            label1.TabIndex = 2;
+            label1.Text = "Info";
             // 
             // ImportsTab
             // 
@@ -415,50 +468,24 @@ namespace MCDA_APP.Forms
             splitContainer1.SplitterDistance = 280;
             splitContainer1.TabIndex = 1;
             // 
-            // label1
+            // textBox3
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(18, 15);
-            label1.Name = "label1";
-            label1.Size = new Size(69, 37);
-            label1.TabIndex = 2;
-            label1.Text = "Info";
+            textBox3.BackColor = Color.FromArgb(46, 46, 65);
+            textBox3.ForeColor = Color.White;
+            textBox3.Location = new Point(72, 138);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(256, 23);
+            textBox3.TabIndex = 7;
             // 
-            // label2
+            // label4
             // 
-            label2.AutoSize = true;
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(18, 83);
-            label2.Name = "label2";
-            label2.Size = new Size(28, 15);
-            label2.TabIndex = 2;
-            label2.Text = "File:";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(72, 80);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(256, 23);
-            textBox1.TabIndex = 3;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(72, 109);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(256, 23);
-            textBox2.TabIndex = 5;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.ForeColor = Color.White;
-            label3.Location = new Point(18, 112);
-            label3.Name = "label3";
-            label3.Size = new Size(48, 15);
-            label3.TabIndex = 4;
-            label3.Text = "Format:";
+            label4.AutoSize = true;
+            label4.ForeColor = Color.White;
+            label4.Location = new Point(18, 141);
+            label4.Name = "label4";
+            label4.Size = new Size(30, 15);
+            label4.TabIndex = 6;
+            label4.Text = "Size:";
             // 
             // Dissasembly
             // 
@@ -527,5 +554,7 @@ namespace MCDA_APP.Forms
         private Label label2;
         private TextBox textBox2;
         private Label label3;
+        private TextBox textBox3;
+        private Label label4;
     }
 }

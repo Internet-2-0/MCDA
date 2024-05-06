@@ -28,20 +28,50 @@
         /// </summary>
         private void InitializeComponent()
         {
+            iconTextBox1 = new Controls.IconTextBox();
+            iconTextBox2 = new Controls.IconTextBox();
             SuspendLayout();
+            // 
+            // iconTextBox1
+            // 
+            iconTextBox1.BackColor = Color.FromArgb(40, 47, 53);
+            iconTextBox1.Cursor = Cursors.Hand;
+            iconTextBox1.Location = new Point(559, 201);
+            iconTextBox1.Name = "iconTextBox1";
+            iconTextBox1.Size = new Size(272, 40);
+            iconTextBox1.TabIndex = 0;
+            iconTextBox1.TextBoxFontSize = 12F;
+            iconTextBox1.TextBoxText = "File";
+            // 
+            // iconTextBox2
+            // 
+            iconTextBox2.BackColor = Color.FromArgb(40, 47, 53);
+            iconTextBox2.Cursor = Cursors.Hand;
+            iconTextBox2.Location = new Point(559, 261);
+            iconTextBox2.Name = "iconTextBox2";
+            iconTextBox2.Size = new Size(272, 40);
+            iconTextBox2.TabIndex = 1;
+            iconTextBox2.TextBoxFontSize = 12F;
+            iconTextBox2.TextBoxText = "Secondary File";
             // 
             // CodeReuse
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 34);
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(843, 545);
+            Controls.Add(iconTextBox2);
+            Controls.Add(iconTextBox1);
             Name = "CodeReuse";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CodeReuse";
+            Load += CodeReuse_Load;
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Controls.IconTextBox iconTextBox1;
+        private Controls.IconTextBox iconTextBox2;
     }
 }

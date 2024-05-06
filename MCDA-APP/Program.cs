@@ -33,6 +33,8 @@ namespace MCDA_APP
             Dissasembly d = new Dissasembly();
             d.Show();
 
+            new CodeReuse().Show();
+
             try
             {
                 AccountInformation.ApiKey = Helper.GetRegistryKey("API_KEY");
