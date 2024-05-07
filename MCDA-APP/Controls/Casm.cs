@@ -3,11 +3,18 @@ using Newtonsoft.Json.Linq;
 
 namespace MCDA_APP.Controls
 {
-    public struct Instructions 
+    public struct Instruction 
     { 
         public List<string> LeftInstructions { get; set; }
         public List<string> RightInstructions { get; set; }
         public double Score { get; set; }
+
+        public Instruction(List<string> leftInstructions, List<string> rightInstructions, double score)
+        {
+            LeftInstructions = leftInstructions;
+            RightInstructions = rightInstructions;
+            Score = score;
+        }
     }
 
     public partial class Casm : UserControl
@@ -80,7 +87,7 @@ namespace MCDA_APP.Controls
             }
             else
             {
-                List<Instructions> instructionsList = new List<Instructions>();
+                List<Instruction> instructionsList = new List<Instruction>();
 
                 foreach (var result in results.Cast<JArray>())
                 {
@@ -88,13 +95,17 @@ namespace MCDA_APP.Controls
                     var rightInstructions = result[1].ToString().Split('\n').ToList();
                     double score = Convert.ToDouble(result[2]);
 
-                    var comparisonControl = CreateComparisonControl(leftInstructions, rightInstructions, score);
-                    panel.Controls.Add(comparisonControl);
+                    instructionsList.Add(new Instruction(leftInstructions, rightInstructions, score));
+                    //var comparisonControl = CreateComparisonControl(leftInstructions, rightInstructions, score);
+                    //panel.Controls.Add(comparisonControl);
                 }
+
+                var comparisonControl = CreateComparisonControl(instructionsList);
+                panel.Controls.Add(comparisonControl);
             }
         }
 
-        private Control CreateComparisonControl(List<string> leftTexts, List<string> rightTexts, double score)
+        private Control CreateComparisonControl(List<Instruction> instructionsList)
         {
             var tableLayoutPanel = new TableLayoutPanel
             {
@@ -104,30 +115,76 @@ namespace MCDA_APP.Controls
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.None,
                 Dock = DockStyle.Fill,
                 BackColor = Color.FromArgb(36, 39, 48)
-                
             };
 
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
 
-            int maxLines = Math.Max(leftTexts.Count, rightTexts.Count);
-            for (int i = 0; i < maxLines; i++)
+            int row = 0;
+
+            foreach (var instruction in instructionsList)
             {
-                string leftText = i < leftTexts.Count ? leftTexts[i] : string.Empty;
-                string rightText = i < rightTexts.Count ? rightTexts[i] : string.Empty;
+                int maxLines = Math.Max(instruction.LeftInstructions.Count, instruction.RightInstructions.Count);
 
-                tableLayoutPanel.Controls.Add(CreateTextLabel(leftText), 0, i);
-                tableLayoutPanel.Controls.Add(CreateTextLabel("->", centered: true), 1, i);
-                tableLayoutPanel.Controls.Add(CreateTextLabel(rightText), 2, i);
+                for (int i = 0; i < maxLines; i++)
+                {
+                    string leftText = i < instruction.LeftInstructions.Count ? instruction.LeftInstructions[i] : string.Empty;
+                    string rightText = i < instruction.RightInstructions.Count ? instruction.RightInstructions[i] : string.Empty;
+
+                    tableLayoutPanel.Controls.Add(CreateTextLabel(leftText), 0, row);
+                    tableLayoutPanel.Controls.Add(CreateTextLabel("->", centered: true), 1, row);
+                    tableLayoutPanel.Controls.Add(CreateTextLabel(rightText), 2, row);
+
+                    row += 1;
+                }
+
+                tableLayoutPanel.Controls.Add(new Label(), 0, row);
+                tableLayoutPanel.Controls.Add(CreateTextLabel(instruction.Score.ToString("0.###"), isScore: true), 1, row);
+                tableLayoutPanel.Controls.Add(new Label(), 2, row);
+
+                row += 1;
             }
-
-            tableLayoutPanel.Controls.Add(new Label(), 0, maxLines);
-            tableLayoutPanel.Controls.Add(CreateTextLabel(score.ToString("0.###"), isScore: true), 1, maxLines);
-            tableLayoutPanel.Controls.Add(new Label(), 2, maxLines);
 
             return tableLayoutPanel;
         }
+
+        //private Control CreateComparisonControl(List<string> leftTexts, List<string> rightTexts, double score)
+        //{
+        //    var tableLayoutPanel = new TableLayoutPanel
+        //    {
+        //        ColumnCount = 3,
+        //        AutoSize = true,
+        //        AutoSizeMode = AutoSizeMode.GrowAndShrink,
+        //        CellBorderStyle = TableLayoutPanelCellBorderStyle.None,
+        //        Dock = DockStyle.Fill,
+        //        BackColor = Color.FromArgb(36, 39, 48)
+        //    };
+
+        //    tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
+        //    tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        //    tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
+
+        //    int row = 0;
+
+        //    foreach 
+        //    int maxLines = Math.Max(leftTexts.Count, rightTexts.Count);
+        //    for (int i = 0; i < maxLines; i++)
+        //    {
+        //        string leftText = i < leftTexts.Count ? leftTexts[i] : string.Empty;
+        //        string rightText = i < rightTexts.Count ? rightTexts[i] : string.Empty;
+
+        //        tableLayoutPanel.Controls.Add(CreateTextLabel(leftText), 0, i);
+        //        tableLayoutPanel.Controls.Add(CreateTextLabel("->", centered: true), 1, i);
+        //        tableLayoutPanel.Controls.Add(CreateTextLabel(rightText), 2, i);
+        //    }
+
+        //    tableLayoutPanel.Controls.Add(new Label(), 0, maxLines);
+        //    tableLayoutPanel.Controls.Add(CreateTextLabel(score.ToString("0.###"), isScore: true), 1, maxLines);
+        //    tableLayoutPanel.Controls.Add(new Label(), 2, maxLines);
+
+        //    return tableLayoutPanel;
+        //}
 
         private Label CreateTextLabel(string text, bool isScore = false, bool centered = false)
         {
