@@ -3,6 +3,13 @@ using Newtonsoft.Json.Linq;
 
 namespace MCDA_APP.Controls
 {
+    public struct Instructions 
+    { 
+        public List<string> LeftInstructions { get; set; }
+        public List<string> RightInstructions { get; set; }
+        public double Score { get; set; }
+    }
+
     public partial class Casm : UserControl
     {
         public Casm(string groupName, DataGroup dataGroup)
@@ -14,7 +21,8 @@ namespace MCDA_APP.Controls
                 AutoSizeMode = AutoSizeMode.GrowAndShrink,
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.None,
                 Dock = DockStyle.Fill,
-                BackColor = Color.FromArgb(22, 25, 34)
+                BackColor = Color.FromArgb(22, 25, 34),
+                Padding = new Padding(0, 10, 0, 10)
             };
 
             tableLayoutPanel.Controls.Add(CreateHeaderLabel(groupName));
@@ -72,11 +80,14 @@ namespace MCDA_APP.Controls
             }
             else
             {
+                List<Instructions> instructionsList = new List<Instructions>();
+
                 foreach (var result in results.Cast<JArray>())
                 {
                     var leftInstructions = result[0].ToString().Split('\n').ToList();
                     var rightInstructions = result[1].ToString().Split('\n').ToList();
                     double score = Convert.ToDouble(result[2]);
+
                     var comparisonControl = CreateComparisonControl(leftInstructions, rightInstructions, score);
                     panel.Controls.Add(comparisonControl);
                 }
