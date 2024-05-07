@@ -1,113 +1,124 @@
-﻿namespace MCDA_APP.Controls
+﻿using MCDA_APP.Model.Api.Reuse;
+using Newtonsoft.Json.Linq;
+
+namespace MCDA_APP.Controls
 {
     public partial class Casm : UserControl
     {
-        public Casm(List<string> leftTexts, List<string> rightTexts, double score)
+        public Casm(string groupName, DataGroup dataGroup)
         {
-            BackColor = Color.FromArgb(20, 31, 43);
-            DoubleBuffered = true;
+            var tableLayoutPanel = new TableLayoutPanel
+            {
+                ColumnCount = 1,
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                CellBorderStyle = TableLayoutPanelCellBorderStyle.None,
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(22, 25, 34)
+            };
 
-            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel
+            tableLayoutPanel.Controls.Add(CreateHeaderLabel(groupName));
+
+            AddResults(tableLayoutPanel, "Kinda Similar", dataGroup.results.kinda_similar);
+            AddResults(tableLayoutPanel, "Very Similar", dataGroup.results.very_similar);
+            AddResults(tableLayoutPanel, "Perfect Similarity", dataGroup.results.perfect_similarity);
+
+            Controls.Add(tableLayoutPanel);
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
+
+        private Label CreateHeaderLabel(string text)
+        {
+            return new Label
+            {
+                Text = text,
+                ForeColor = Color.White,
+                Font = new Font("Consolas", 16, FontStyle.Bold),
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter,
+                AutoSize = true,
+                BackColor = Color.FromArgb(44, 47, 54)
+            };
+        }
+
+        private void AddResults(TableLayoutPanel panel, string labelText, List<object> results)
+        {
+            var title = new Label
+            {
+                Text = labelText,
+                ForeColor = Color.White,
+                Font = new Font("Consolas", 14, FontStyle.Bold),
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft,
+                AutoSize = true,
+                Margin = new Padding(0, 10, 10, 10),
+                //BackColor = Color.FromArgb(30, 33, 40)
+            };
+            panel.Controls.Add(title);
+
+            if (results.Count == 1 && results[0].ToString() == "no code reuse discovered")
+            {
+                var label = new Label
+                {
+                    Text = "No code reuse discovered",
+                    ForeColor = Color.Gray,
+                    Font = new Font("Consolas", 10),
+                    Dock = DockStyle.Fill,
+                    AutoSize = true,
+                    //TextAlign = ContentAlignment.MiddleCenter
+                };
+                panel.Controls.Add(label);
+            }
+            else
+            {
+                foreach (var result in results.Cast<JArray>())
+                {
+                    var leftInstructions = result[0].ToString().Split('\n').ToList();
+                    var rightInstructions = result[1].ToString().Split('\n').ToList();
+                    double score = Convert.ToDouble(result[2]);
+                    var comparisonControl = CreateComparisonControl(leftInstructions, rightInstructions, score);
+                    panel.Controls.Add(comparisonControl);
+                }
+            }
+        }
+
+        private Control CreateComparisonControl(List<string> leftTexts, List<string> rightTexts, double score)
+        {
+            var tableLayoutPanel = new TableLayoutPanel
             {
                 ColumnCount = 3,
                 AutoSize = true,
-                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                CellBorderStyle = TableLayoutPanelCellBorderStyle.None,
                 Dock = DockStyle.Fill,
-                BackColor = Color.FromArgb(22, 25, 34)
+                BackColor = Color.FromArgb(36, 39, 48)
+                
             };
 
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
 
-            //AddRow(tableLayoutPanel, new string[] { "add al, 0x2a", "->", "add al, 0x26" });
-            //AddRow(tableLayoutPanel, new string[] { "db 0x1e", "->", "adc al, 0x2b" });
-            //AddRow(tableLayoutPanel, new string[] { "add bh, byte ptr [rbx + 0xd]", "->", "or edi, esi" });
-            //AddRow(tableLayoutPanel, new string[] { "nop", "->", "db 0x16" });
-            //AddRow(tableLayoutPanel, new string[] { "add al, 0x2a", "->", "add al, 0" });
-            //AddRow(tableLayoutPanel, new string[] { "add al, 0x2a", "->", "add al, 0" });
-            //AddRow(tableLayoutPanel, new string[] { "add al, 0x2a", "->", "add al, 0" });
-            //AddScoreRow(tableLayoutPanel, 135.144);
-
-            //AddRow(tableLayoutPanel, new string[] { "nop", "->", "nop" });
-            //AddRow(tableLayoutPanel, new string[] { "add al, 0xfe", "->", "adc eax, 0x2a0a0000" });
-            //AddRow(tableLayoutPanel, new string[] { "adc eax, 0x200001d", "->", "sbb esi, dword ptr [rax]" });
-            //AddRow(tableLayoutPanel, new string[] { "add dl, byte ptr [rdi]", "->", "add eax, dword ptr [rax]" });
-            //AddRow(tableLayoutPanel, new string[] { "jge 0x4e5", "->", "jns 0x4e6" });
-            //AddScoreRow(tableLayoutPanel, 142.714);
-
-            //AddRow(tableLayoutPanel, new string[] { "push 0x2c060024", "->", "jnp 0x518" });
-            //AddRow(tableLayoutPanel, new string[] { "or eax, 0x28140202", "->", "adc al, 0x2d" });
-            //AddRow(tableLayoutPanel, new string[] { "adc byte ptr [rax], al", "->", "add dword ptr [rdx], ebp" });
-            //AddRow(tableLayoutPanel, new string[] { "nop", "->", "db 0x07" });
-            //AddRow(tableLayoutPanel, new string[] { "jge 0x520", "->", "jmp 0x520" });
-            //AddScoreRow(tableLayoutPanel, 140.565);
-
-            AddRow(tableLayoutPanel, leftTexts, rightTexts);
-            AddScoreRow(tableLayoutPanel, score);
-
-            tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
-
-            Controls.Add(tableLayoutPanel);
-            Text = "Code Alignment";
-            BackColor = Color.FromArgb(22, 25, 34);
-            AutoSize = true;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BorderStyle = BorderStyle.FixedSingle;
-        }
-
-        private void AddRow(TableLayoutPanel tableLayoutPanel, List<string> leftTexts, List<string> rightTexts)
-        {
             int maxLines = Math.Max(leftTexts.Count, rightTexts.Count);
             for (int i = 0; i < maxLines; i++)
             {
                 string leftText = i < leftTexts.Count ? leftTexts[i] : string.Empty;
                 string rightText = i < rightTexts.Count ? rightTexts[i] : string.Empty;
 
-                Label label1 = CreateLabel(leftText);
-                Label label2 = CreateLabel("->", centered: true);
-                Label label3 = CreateLabel(rightText);
-
-                tableLayoutPanel.Controls.Add(label1);
-                tableLayoutPanel.Controls.Add(label2);
-                tableLayoutPanel.Controls.Add(label3);
+                tableLayoutPanel.Controls.Add(CreateTextLabel(leftText), 0, i);
+                tableLayoutPanel.Controls.Add(CreateTextLabel("->", centered: true), 1, i);
+                tableLayoutPanel.Controls.Add(CreateTextLabel(rightText), 2, i);
             }
+
+            tableLayoutPanel.Controls.Add(new Label(), 0, maxLines);
+            tableLayoutPanel.Controls.Add(CreateTextLabel(score.ToString("0.###"), isScore: true), 1, maxLines);
+            tableLayoutPanel.Controls.Add(new Label(), 2, maxLines);
+
+            return tableLayoutPanel;
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            int borderWidth = 1;
-            Color borderColor = Color.FromArgb(25, 41, 58);
-            ControlPaint.DrawBorder(e.Graphics, ClientRectangle,
-                borderColor, borderWidth, ButtonBorderStyle.Solid,
-                borderColor, borderWidth, ButtonBorderStyle.Solid,
-                borderColor, borderWidth, ButtonBorderStyle.Solid,
-                borderColor, borderWidth, ButtonBorderStyle.Solid);
-        }
-       
-        private void AddRow(TableLayoutPanel tableLayoutPanel, string[] texts)
-        {
-            Label label1 = CreateLabel(texts[0]);
-            Label label2 = CreateLabel(texts[1], centered: true);
-            Label label3 = CreateLabel(texts[2]);
-
-            tableLayoutPanel.Controls.Add(label1);
-            tableLayoutPanel.Controls.Add(label2);
-            tableLayoutPanel.Controls.Add(label3);
-        }
-
-        private void AddScoreRow(TableLayoutPanel tableLayoutPanel, double score)
-        {
-            Label label = CreateLabel(score.ToString("0.###"), true);
-            label.Dock = DockStyle.Fill;
-            label.TextAlign = ContentAlignment.MiddleCenter;
-            tableLayoutPanel.Controls.Add(new Label());
-            tableLayoutPanel.Controls.Add(label);
-            tableLayoutPanel.Controls.Add(new Label());
-        }
-
-        private Label CreateLabel(string text, bool isScore = false, bool centered = false)
+        private Label CreateTextLabel(string text, bool isScore = false, bool centered = false)
         {
             return new Label
             {

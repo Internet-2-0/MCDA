@@ -54,6 +54,19 @@ namespace MCDA_APP.Core
             }
         }
 
+        public async Task<string> UploadFiles(string endpoint, List<byte[]> files)
+        {
+            try
+            {
+                string response = await _customHttpClient.PostRequestWithFileAsyncMock(endpoint, files);
+                return response;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
         public async Task<(string, HttpStatusCode)> GetUsage()
         {
             HttpStatusCode statusCode = HttpStatusCode.OK;

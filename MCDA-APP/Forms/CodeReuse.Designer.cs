@@ -31,6 +31,7 @@
             TextBoxFile = new Controls.IconTextBox();
             TextBoxSecondFile = new Controls.IconTextBox();
             ButtonSubmitScan = new Button();
+            LabelError = new Label();
             SuspendLayout();
             // 
             // TextBoxFile
@@ -70,13 +71,24 @@
             ButtonSubmitScan.UseVisualStyleBackColor = false;
             ButtonSubmitScan.Click += ButtonSubmitScan_Click;
             // 
+            // LabelError
+            // 
+            LabelError.AutoSize = true;
+            LabelError.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            LabelError.ForeColor = Color.Red;
+            LabelError.Location = new Point(24, 139);
+            LabelError.Name = "LabelError";
+            LabelError.Size = new Size(0, 21);
+            LabelError.TabIndex = 3;
+            // 
             // CodeReuse
             // 
             AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 34);
-            ClientSize = new Size(618, 155);
+            ClientSize = new Size(618, 169);
+            Controls.Add(LabelError);
             Controls.Add(ButtonSubmitScan);
             Controls.Add(TextBoxSecondFile);
             Controls.Add(TextBoxFile);
@@ -87,6 +99,7 @@
             Text = "%placeholder%";
             Load += CodeReuse_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -94,5 +107,6 @@
         private Controls.IconTextBox TextBoxFile;
         private Controls.IconTextBox TextBoxSecondFile;
         private Button ButtonSubmitScan;
+        private Label LabelError;
     }
 }

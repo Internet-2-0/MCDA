@@ -1,4 +1,6 @@
 ﻿using MCDA_APP.Controls;
+using MCDA_APP.Model.Api.Reuse;
+using Newtonsoft.Json;
 
 namespace MCDA_APP.Forms
 {
@@ -60,15 +62,27 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private void ButtonSubmitScan_Click(object sender, EventArgs e)
+        private async void ButtonSubmitScan_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(TextBoxFile.TextBoxText))
-                return;
+            //if (!File.Exists(TextBoxFile.TextBoxText))
+            //{
+            //    LabelError.Text = "First file does not exist!";
+            //    return;
+            //}
 
-            if (!File.Exists(TextBoxSecondFile.TextBoxText))
-                return;
+            //if (!File.Exists(TextBoxSecondFile.TextBoxText))
+            //{
+            //    LabelError.Text = "Second file does not exist!";
+            //    return;
+            //}
 
+            string json = await Program.Client!.UploadFiles("http://localhost:8080/reuse", new List<byte[]> { });
+            var parsedData = JsonConvert.DeserializeObject<ReuseResponse>(json);
 
+            CodeReuseResult codeReuseResult = new CodeReuseResult(parsedData);
+            codeReuseResult.ShowDialog();
+
+            //http://localhost:8080/reuse
         }
     }
 }
