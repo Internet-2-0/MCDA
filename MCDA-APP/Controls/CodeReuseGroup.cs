@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace MCDA_APP.Controls
 {
     public partial class CodeReuseGroup : UserControl
-    {
+    { 
         public CodeReuseGroup()
         {
             InitializeComponent();
