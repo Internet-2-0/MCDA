@@ -110,6 +110,26 @@ namespace MCDA_APP.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MIT License
+        ///
+        ///Copyright (c) 2021 Nickelony
+        ///
+        ///Permission is hereby granted, free of charge, to any person obtaining a copy
+        ///of this software and associated documentation files (the &quot;Software&quot;), to deal
+        ///in the Software without restriction, including without limitation the rights
+        ///to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        ///copies of the Software, and to permit persons to whom the Software is
+        ///furnished to do so, subject to the following conditions:
+        ///
+        ///The above copyright notice and this [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CustomTabControl_LICENSE {
+            get {
+                return ResourceManager.GetString("CustomTabControl-LICENSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Cut16 {
@@ -270,11 +290,60 @@ namespace MCDA_APP.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The MIT License
+        ///
+        ///Copyright (c) 2011 Bernhard Elbl
+        ///
+        ///Permission is hereby granted, free of charge, to any person obtaining a copy
+        ///of this software and associated documentation files (the &quot;Software&quot;), to deal
+        ///in the Software without restriction, including without limitation the rights
+        ///to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        ///copies of the Software, and to permit persons to whom the Software is
+        ///furnished to do so, subject to the following conditions:
+        ///
+        ///The above copyright notice  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string HexBox_LICENSE {
+            get {
+                return ResourceManager.GetString("HexBox-LICENSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copyright (c) 2004 Thomas Haugland Johansen
+        ///
+        ///Permission is hereby granted, free of charge, to any person obtaining
+        ///a copy of this software and associated documentation files (the
+        ///&quot;Software&quot;), to deal in the Software without restriction, including
+        ///without limitation the rights to use, copy, modify, merge, publish,
+        ///distribute, sublicense, and/or sell copies of the Software, and to
+        ///permit persons to whom the Software is furnished to do so, subject to
+        ///the following conditions:
+        ///
+        ///The above copyright notice and th [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string highlight_LICENSE {
+            get {
+                return ResourceManager.GetString("highlight-LICENSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap malcore_icon {
             get {
                 object obj = ResourceManager.GetObject("malcore-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap malcore_load {
+            get {
+                object obj = ResourceManager.GetObject("malcore-load", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -336,6 +405,28 @@ namespace MCDA_APP.Properties {
             get {
                 object obj = ResourceManager.GetObject("PasteHS", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to                     GNU GENERAL PUBLIC LICENSE
+        ///                       Version 3, 29 June 2007
+        ///
+        /// Copyright (C) 2007 Free Software Foundation, Inc. &lt;https://fsf.org/&gt;
+        /// Everyone is permitted to copy and distribute verbatim copies
+        /// of this license document, but changing it is not allowed.
+        ///
+        ///                            Preamble
+        ///
+        ///  The GNU General Public License is a free, copyleft license for
+        ///software and other kinds of works.
+        ///
+        ///  The licenses for most software and other practical works are designed
+        ///to take away y [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string radare2_COPYING {
+            get {
+                return ResourceManager.GetString("radare2-COPYING", resourceCulture);
             }
         }
         

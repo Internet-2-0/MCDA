@@ -1,4 +1,5 @@
-﻿using MCDA_APP.Highlight;
+﻿using MCDA_APP.Controls;
+using MCDA_APP.Highlight;
 using MCDA_APP.Highlight.Engines;
 using MCDA_APP.Model.Agent.Disassembler;
 using MCDA_APP.Radare2;
@@ -12,6 +13,7 @@ namespace MCDA_APP.Forms
 {
     public partial class Disasembly : Form
     {
+        private Overlay Overlay;
         private string _filePath;
         private R2Pipe _r2Pipe;
         private List<FunctionDetail> _functions;
@@ -116,6 +118,12 @@ namespace MCDA_APP.Forms
             _backgroundWorker.DoWork += BackgroundWorker_DoWork;
             _backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
             _backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+
+            Overlay = new Overlay
+            {
+                Dock = DockStyle.Fill,
+                Enabled = true,
+            };
         }
 
         private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
@@ -130,8 +138,7 @@ namespace MCDA_APP.Forms
 
             richTextBox1.Rtf = highlighter.Highlight("Assembly", result);
 
-            //richTextBox1.Rtf = AssemblyParser.SetRichText(_assemblyCode);
-            MessageBox.Show("Completed!");
+            this.Controls.Remove(Overlay);
         }
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
@@ -213,6 +220,9 @@ namespace MCDA_APP.Forms
             _r2Pipe?.Dispose();
 
             ClearControls();
+
+            this.Controls.Add(Overlay);
+            Overlay.BringToFront();
 
             _backgroundWorker.RunWorkerAsync();
         }
