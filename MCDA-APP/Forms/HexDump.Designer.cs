@@ -34,7 +34,7 @@ namespace MCDA_APP.Forms
             statusStrip = new StatusStrip();
             toolStripStatusLabel = new ToolStripStatusLabel();
             fileSizeToolStripStatusLabel = new ToolStripStatusLabel();
-            menuStrip1 = new MenuStrip();
+            OptionsMenu = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
@@ -50,7 +50,7 @@ namespace MCDA_APP.Forms
             findNextToolStripMenuItem = new ToolStripMenuItem();
             goToToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
-            toolStrip1 = new ToolStrip();
+            OptionsToolMenu = new ToolStrip();
             openToolStripButton = new ToolStripButton();
             saveToolStripButton = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
@@ -62,8 +62,8 @@ namespace MCDA_APP.Forms
             pasteToolStripMenuItem1 = new ToolStripMenuItem();
             pasteHexToolStripMenuItem1 = new ToolStripMenuItem();
             statusStrip.SuspendLayout();
-            menuStrip1.SuspendLayout();
-            toolStrip1.SuspendLayout();
+            OptionsMenu.SuspendLayout();
+            OptionsToolMenu.SuspendLayout();
             SuspendLayout();
             // 
             // statusStrip
@@ -91,22 +91,25 @@ namespace MCDA_APP.Forms
             fileSizeToolStripStatusLabel.Name = "fileSizeToolStripStatusLabel";
             fileSizeToolStripStatusLabel.Size = new Size(0, 17);
             // 
-            // menuStrip1
+            // OptionsMenu
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, searchToolStripMenuItem, toolStripMenuItem1 });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(834, 24);
-            menuStrip1.TabIndex = 1;
-            menuStrip1.Text = "menuStrip1";
+            OptionsMenu.BackColor = Color.FromArgb(26, 26, 34);
+            OptionsMenu.ForeColor = Color.White;
+            OptionsMenu.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, searchToolStripMenuItem, toolStripMenuItem1 });
+            OptionsMenu.Location = new Point(0, 0);
+            OptionsMenu.Name = "OptionsMenu";
+            OptionsMenu.Padding = new Padding(10, 7, 0, 7);
+            OptionsMenu.RenderMode = ToolStripRenderMode.System;
+            OptionsMenu.Size = new Size(834, 33);
+            OptionsMenu.TabIndex = 1;
+            OptionsMenu.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 20);
+            fileToolStripMenuItem.Size = new Size(37, 19);
             fileToolStripMenuItem.Text = "&File";
-            fileToolStripMenuItem.Click += FileToolStripMenuItem_Click;
             // 
             // openToolStripMenuItem
             // 
@@ -128,7 +131,7 @@ namespace MCDA_APP.Forms
             // 
             searchToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cutToolStripMenuItem, coToolStripMenuItem, pasteToolStripMenuItem, toolStripSeparator1, copyHexToolStripMenuItem, pasteHexToolStripMenuItem, toolStripSeparator2, findToolStripMenuItem, findNextToolStripMenuItem, goToToolStripMenuItem });
             searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            searchToolStripMenuItem.Size = new Size(39, 20);
+            searchToolStripMenuItem.Size = new Size(39, 19);
             searchToolStripMenuItem.Text = "&Edit";
             // 
             // cutToolStripMenuItem
@@ -213,17 +216,18 @@ namespace MCDA_APP.Forms
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(12, 20);
+            toolStripMenuItem1.Size = new Size(12, 19);
             // 
-            // toolStrip1
+            // OptionsToolMenu
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { openToolStripButton, saveToolStripButton, toolStripSeparator3, cutToolStripButton, copyToolStripSplitButton, pasteToolStripSplitButton });
-            toolStrip1.Location = new Point(0, 24);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.RenderMode = ToolStripRenderMode.System;
-            toolStrip1.Size = new Size(834, 25);
-            toolStrip1.TabIndex = 2;
-            toolStrip1.Text = "toolStrip1";
+            OptionsToolMenu.BackColor = Color.FromArgb(26, 26, 34);
+            OptionsToolMenu.Items.AddRange(new ToolStripItem[] { openToolStripButton, saveToolStripButton, toolStripSeparator3, cutToolStripButton, copyToolStripSplitButton, pasteToolStripSplitButton });
+            OptionsToolMenu.Location = new Point(0, 33);
+            OptionsToolMenu.Name = "OptionsToolMenu";
+            OptionsToolMenu.RenderMode = ToolStripRenderMode.System;
+            OptionsToolMenu.Size = new Size(834, 25);
+            OptionsToolMenu.TabIndex = 2;
+            OptionsToolMenu.Text = "toolStrip1";
             // 
             // openToolStripButton
             // 
@@ -232,7 +236,7 @@ namespace MCDA_APP.Forms
             openToolStripButton.ImageTransparentColor = Color.Magenta;
             openToolStripButton.Name = "openToolStripButton";
             openToolStripButton.Size = new Size(23, 22);
-            openToolStripButton.Text = "toolStripButton1";
+            openToolStripButton.Text = "Open";
             openToolStripButton.Click += openToolStripButton_Click;
             // 
             // saveToolStripButton
@@ -242,7 +246,7 @@ namespace MCDA_APP.Forms
             saveToolStripButton.ImageTransparentColor = Color.Magenta;
             saveToolStripButton.Name = "saveToolStripButton";
             saveToolStripButton.Size = new Size(23, 22);
-            saveToolStripButton.Text = "toolStripButton2";
+            saveToolStripButton.Text = "Save";
             saveToolStripButton.Click += saveToolStripButton_Click;
             // 
             // toolStripSeparator3
@@ -257,7 +261,7 @@ namespace MCDA_APP.Forms
             cutToolStripButton.ImageTransparentColor = Color.Magenta;
             cutToolStripButton.Name = "cutToolStripButton";
             cutToolStripButton.Size = new Size(23, 22);
-            cutToolStripButton.Text = "toolStripButton3";
+            cutToolStripButton.Text = "Cut";
             cutToolStripButton.Click += cutToolStripButton_Click;
             // 
             // copyToolStripSplitButton
@@ -268,7 +272,7 @@ namespace MCDA_APP.Forms
             copyToolStripSplitButton.ImageTransparentColor = Color.Magenta;
             copyToolStripSplitButton.Name = "copyToolStripSplitButton";
             copyToolStripSplitButton.Size = new Size(29, 22);
-            copyToolStripSplitButton.Text = "toolStripDropDownButton1";
+            copyToolStripSplitButton.Text = "Copy";
             // 
             // copyToolStripMenuItem1
             // 
@@ -294,7 +298,7 @@ namespace MCDA_APP.Forms
             pasteToolStripSplitButton.ImageTransparentColor = Color.Magenta;
             pasteToolStripSplitButton.Name = "pasteToolStripSplitButton";
             pasteToolStripSplitButton.Size = new Size(29, 22);
-            pasteToolStripSplitButton.Text = "toolStripDropDownButton2";
+            pasteToolStripSplitButton.Text = "Paste";
             // 
             // pasteToolStripMenuItem1
             // 
@@ -318,12 +322,12 @@ namespace MCDA_APP.Forms
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 34);
             ClientSize = new Size(834, 521);
-            Controls.Add(toolStrip1);
+            Controls.Add(OptionsToolMenu);
             Controls.Add(statusStrip);
-            Controls.Add(menuStrip1);
+            Controls.Add(OptionsMenu);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MainMenuStrip = menuStrip1;
+            MainMenuStrip = OptionsMenu;
             MaximizeBox = false;
             Name = "HexDump";
             StartPosition = FormStartPosition.CenterScreen;
@@ -331,10 +335,10 @@ namespace MCDA_APP.Forms
             Load += HexDump_Load;
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
+            OptionsMenu.ResumeLayout(false);
+            OptionsMenu.PerformLayout();
+            OptionsToolMenu.ResumeLayout(false);
+            OptionsToolMenu.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -343,7 +347,7 @@ namespace MCDA_APP.Forms
 
         private StatusStrip statusStrip;
         private ToolStripStatusLabel toolStripStatusLabel;
-        private MenuStrip menuStrip1;
+        private MenuStrip OptionsMenu;
         private ToolStripMenuItem searchToolStripMenuItem;
         private ToolStripMenuItem findToolStripMenuItem;
         private ToolStripStatusLabel fileSizeToolStripStatusLabel;
@@ -360,7 +364,7 @@ namespace MCDA_APP.Forms
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
-        private ToolStrip toolStrip1;
+        private ToolStrip OptionsToolMenu;
         private ToolStripButton openToolStripButton;
         private ToolStripButton saveToolStripButton;
         private ToolStripSeparator toolStripSeparator3;

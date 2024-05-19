@@ -185,8 +185,7 @@ namespace MCDA_APP.Forms
             if (_fileName != null && _fileName.Length > 0)
             {
                 string textFormat = "{0}{1} - {2}";
-                //string readOnly = ((DynamicByteProvider)hexBox.ByteProvider).ReadOnly
-                //    ? "[read-only]" : "";
+                
                 string text = Path.GetFileName(_fileName);
                 this.Text = string.Format(textFormat, text, "[read-only]", Constants.Name);
             }
@@ -390,11 +389,6 @@ namespace MCDA_APP.Forms
         private void PasteHexToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.hexBox.PasteHex();
-        }
-
-        private void FileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         /// <summary>

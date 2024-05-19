@@ -68,7 +68,6 @@ namespace MCDA_APP.Controls
                 TextAlign = ContentAlignment.MiddleLeft,
                 AutoSize = true,
                 Margin = new Padding(0, 10, 10, 10),
-                //BackColor = Color.FromArgb(30, 33, 40)
             };
             panel.Controls.Add(title);
 
@@ -81,7 +80,6 @@ namespace MCDA_APP.Controls
                     Font = new Font("Consolas", 10),
                     Dock = DockStyle.Fill,
                     AutoSize = true,
-                    //TextAlign = ContentAlignment.MiddleCenter
                 };
                 panel.Controls.Add(label);
             }
@@ -96,8 +94,6 @@ namespace MCDA_APP.Controls
                     double score = Convert.ToDouble(result[2]);
 
                     instructionsList.Add(new Instruction(leftInstructions, rightInstructions, score));
-                    //var comparisonControl = CreateComparisonControl(leftInstructions, rightInstructions, score);
-                    //panel.Controls.Add(comparisonControl);
                 }
 
                 var comparisonControl = CreateComparisonControl(instructionsList);
@@ -148,44 +144,6 @@ namespace MCDA_APP.Controls
 
             return tableLayoutPanel;
         }
-
-        //private Control CreateComparisonControl(List<string> leftTexts, List<string> rightTexts, double score)
-        //{
-        //    var tableLayoutPanel = new TableLayoutPanel
-        //    {
-        //        ColumnCount = 3,
-        //        AutoSize = true,
-        //        AutoSizeMode = AutoSizeMode.GrowAndShrink,
-        //        CellBorderStyle = TableLayoutPanelCellBorderStyle.None,
-        //        Dock = DockStyle.Fill,
-        //        BackColor = Color.FromArgb(36, 39, 48)
-        //    };
-
-        //    tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
-        //    tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        //    tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
-
-        //    int row = 0;
-
-        //    foreach 
-        //    int maxLines = Math.Max(leftTexts.Count, rightTexts.Count);
-        //    for (int i = 0; i < maxLines; i++)
-        //    {
-        //        string leftText = i < leftTexts.Count ? leftTexts[i] : string.Empty;
-        //        string rightText = i < rightTexts.Count ? rightTexts[i] : string.Empty;
-
-        //        tableLayoutPanel.Controls.Add(CreateTextLabel(leftText), 0, i);
-        //        tableLayoutPanel.Controls.Add(CreateTextLabel("->", centered: true), 1, i);
-        //        tableLayoutPanel.Controls.Add(CreateTextLabel(rightText), 2, i);
-        //    }
-
-        //    tableLayoutPanel.Controls.Add(new Label(), 0, maxLines);
-        //    tableLayoutPanel.Controls.Add(CreateTextLabel(score.ToString("0.###"), isScore: true), 1, maxLines);
-        //    tableLayoutPanel.Controls.Add(new Label(), 2, maxLines);
-
-        //    return tableLayoutPanel;
-        //}
-
         private Label CreateTextLabel(string text, bool isScore = false, bool centered = false)
         {
             return new Label

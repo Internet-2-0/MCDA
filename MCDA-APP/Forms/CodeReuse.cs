@@ -85,8 +85,6 @@ namespace MCDA_APP.Forms
 
             CodeReuseResult codeReuseResult = new CodeReuseResult(parsedData);
             codeReuseResult.ShowDialog();
-
-            //http://localhost:8080/reuse
         }
     }
 }

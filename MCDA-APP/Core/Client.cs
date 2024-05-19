@@ -120,12 +120,6 @@ namespace MCDA_APP.Core
 
         public async Task SendAgentStatusAsync(AgentStatus agentStatus)
         {
-            //AgentStatus agentStatus = new()
-            //{
-            //    Payload = new Payload{ Message = "Agent Started" },
-            //    Type = "started"
-            //};
-
             try
             {
                 await _customHttpClient.SendJsonRequestAsync($"{Constants.ApiBaseUrl}/agent/stat", agentStatus);

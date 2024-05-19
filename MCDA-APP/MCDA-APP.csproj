@@ -25,6 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="bin\Debug\net6.0-windows\syntaxhighlight.json" />
     <Content Include="img\icon.ico" />
   </ItemGroup>
 

@@ -469,5 +469,15 @@ namespace MCDA_APP.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] syntaxhighlight {
+            get {
+                object obj = ResourceManager.GetObject("syntaxhighlight", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

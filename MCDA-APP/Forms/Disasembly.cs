@@ -1,12 +1,12 @@
 ﻿using MCDA_APP.Controls;
 using MCDA_APP.Highlight;
-using MCDA_APP.Highlight.Engines;
 using MCDA_APP.Model.Agent.Disassembler;
 using MCDA_APP.Radare2;
 using MCDA_APP.Rendering;
 using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using static System.Windows.Forms.ListView;
 
@@ -23,12 +23,17 @@ namespace MCDA_APP.Forms
         private List<RadareImport>? _importList;
         private List<RadareExport>? _exportList;
         private RadareInformation? _information;
-        private string _assemblyCode;
+        private Dictionary<string, string> _assemblyFunctions;
+
+        HighlightingEngine highlightingEngine;
 
         public Disasembly()
         {
             InitializeComponent();
             OptionsMenu.Renderer = new CustomRender(true);
+
+            byte[] rules = Properties.Resources.syntaxhighlight;
+            highlightingEngine = new HighlightingEngine(Encoding.UTF8.GetString(rules));
         }
 
         private static List<FunctionDetail> ParseFunctionDetails(string data)
@@ -137,11 +142,8 @@ namespace MCDA_APP.Forms
             FillImports();
             FillExports();
             FillInformation();
-            Highlighter highlighter = new Highlighter(new RtfEngine());
 
-            string result = AssemblyParser.RemoveUnwantedComments(_assemblyCode);
-
-            richTextBox1.Rtf = highlighter.Highlight("Assembly", result);
+            _assemblyFunctions = new Dictionary<string, string>();
 
             this.Controls.Remove(Overlay);
         }
@@ -208,18 +210,18 @@ namespace MCDA_APP.Forms
             //set some needed options
             _r2Pipe.RunCommand("e asm.lines=false;e asm.lines.fcn=false;e asm.bytes=false");
 
-            _assemblyCode = _r2Pipe.RunCommand("pdf @@f");
+            //_assemblyCode = _r2Pipe.RunCommand("pdf @@f");
         }
 
         private void FindAndScrollToValue(string value)
         {
-            string[] lines = richTextBox1.Lines;
+            string[] lines = AssemblyTextBox.Lines;
             for (int i = 0; i < lines.Length; i++)
             {
                 if (lines[i].TrimStart().StartsWith(value))
                 {
-                    richTextBox1.SelectionStart = richTextBox1.GetFirstCharIndexFromLine(i);
-                    richTextBox1.ScrollToCaret();
+                    AssemblyTextBox.SelectionStart = AssemblyTextBox.GetFirstCharIndexFromLine(i);
+                    AssemblyTextBox.ScrollToCaret();
                     return;
                 }
             }
@@ -273,11 +275,24 @@ namespace MCDA_APP.Forms
             {
                 return;
             }
+            AssemblyTextBox.Clear();
 
-            FindAndScrollToValue(selectedList[0].Text);
-            customTabControl2.SelectedTab = DisassemblyTab;
-            //string output = _r2Pipe.RunCommand($"s {selectedList[0].Text};pdf");
-            //richTextBox1.Rtf = AssemblyParser.SetRichText(output);
+            DisassemblerTab.SelectedTab = DisassemblyTab;
+
+            if (_assemblyFunctions.ContainsKey(selectedList[0].Text))
+            {
+                AssemblyTextBox.Text = _assemblyFunctions[selectedList[0].Text];
+                highlightingEngine.ApplyHighlighting(AssemblyTextBox);
+            }
+            else
+            {
+                string output = _r2Pipe.RunCommand($"s {selectedList[0].Text};pdf");
+                string result = AssemblyParser.RemoveUnwantedComments(output);
+
+                _assemblyFunctions.Add(selectedList[0].Text, result);
+                AssemblyTextBox.Text = result;
+                highlightingEngine.ApplyHighlighting(AssemblyTextBox);
+            }
         }
 
         private List<ListViewItem> originalItems;
@@ -300,7 +315,12 @@ namespace MCDA_APP.Forms
                 StringsListView.Items.AddRange(filteredItems);
             }
 
-            
+
+        }
+
+        private void Disasembly_Resize(object sender, EventArgs e)
+        {
+            SearchStringTextbox.Width = this.flowLayoutPanel1.ClientSize.Width - SearchStringLabel.Width - 18;
         }
     }
 }
