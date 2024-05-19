@@ -2,7 +2,7 @@
 
 namespace MCDA_APP.Forms
 {
-    partial class Dissasembly
+    partial class Disasembly
     {
         /// <summary>
         /// Required designer variable.
@@ -30,12 +30,14 @@ namespace MCDA_APP.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dissasembly));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Disasembly));
             FunctionsListView = new ListView();
             FunctionNameHeader = new ColumnHeader();
             AddressHeader = new ColumnHeader();
             customTabControl2 = new TabControl.CustomTabControl();
             InformationTab = new TabPage();
+            textBox3 = new TextBox();
+            label4 = new Label();
             textBox2 = new TextBox();
             label3 = new Label();
             textBox1 = new TextBox();
@@ -65,8 +67,20 @@ namespace MCDA_APP.Forms
             FileToolStripMenuItem = new ToolStripMenuItem();
             OpenToolStripMenuItem = new ToolStripMenuItem();
             splitContainer1 = new SplitContainer();
-            textBox3 = new TextBox();
-            label4 = new Label();
+            textBox4 = new TextBox();
+            label5 = new Label();
+            textBox5 = new TextBox();
+            label6 = new Label();
+            textBox6 = new TextBox();
+            label7 = new Label();
+            textBox7 = new TextBox();
+            label8 = new Label();
+            textBox8 = new TextBox();
+            label9 = new Label();
+            textBox9 = new TextBox();
+            label10 = new Label();
+            textBox10 = new TextBox();
+            label11 = new Label();
             customTabControl2.SuspendLayout();
             InformationTab.SuspendLayout();
             ImportsTab.SuspendLayout();
@@ -187,6 +201,20 @@ namespace MCDA_APP.Forms
             // InformationTab
             // 
             InformationTab.BackColor = Color.FromArgb(26, 26, 34);
+            InformationTab.Controls.Add(textBox6);
+            InformationTab.Controls.Add(label7);
+            InformationTab.Controls.Add(textBox7);
+            InformationTab.Controls.Add(label8);
+            InformationTab.Controls.Add(textBox8);
+            InformationTab.Controls.Add(label9);
+            InformationTab.Controls.Add(textBox9);
+            InformationTab.Controls.Add(label10);
+            InformationTab.Controls.Add(textBox10);
+            InformationTab.Controls.Add(label11);
+            InformationTab.Controls.Add(textBox5);
+            InformationTab.Controls.Add(label6);
+            InformationTab.Controls.Add(textBox4);
+            InformationTab.Controls.Add(label5);
             InformationTab.Controls.Add(textBox3);
             InformationTab.Controls.Add(label4);
             InformationTab.Controls.Add(textBox2);
@@ -201,11 +229,30 @@ namespace MCDA_APP.Forms
             InformationTab.TabIndex = 0;
             InformationTab.Text = "Information";
             // 
+            // textBox3
+            // 
+            textBox3.BackColor = Color.FromArgb(46, 46, 65);
+            textBox3.ForeColor = Color.White;
+            textBox3.Location = new Point(86, 138);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(256, 23);
+            textBox3.TabIndex = 7;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.ForeColor = Color.White;
+            label4.Location = new Point(18, 141);
+            label4.Name = "label4";
+            label4.Size = new Size(30, 15);
+            label4.TabIndex = 6;
+            label4.Text = "Size:";
+            // 
             // textBox2
             // 
             textBox2.BackColor = Color.FromArgb(46, 46, 65);
             textBox2.ForeColor = Color.White;
-            textBox2.Location = new Point(72, 109);
+            textBox2.Location = new Point(86, 109);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(256, 23);
             textBox2.TabIndex = 5;
@@ -224,7 +271,7 @@ namespace MCDA_APP.Forms
             // 
             textBox1.BackColor = Color.FromArgb(46, 46, 65);
             textBox1.ForeColor = Color.White;
-            textBox1.Location = new Point(72, 80);
+            textBox1.Location = new Point(86, 80);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(256, 23);
             textBox1.TabIndex = 3;
@@ -468,24 +515,138 @@ namespace MCDA_APP.Forms
             splitContainer1.SplitterDistance = 280;
             splitContainer1.TabIndex = 1;
             // 
-            // textBox3
+            // textBox4
             // 
-            textBox3.BackColor = Color.FromArgb(46, 46, 65);
-            textBox3.ForeColor = Color.White;
-            textBox3.Location = new Point(72, 138);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(256, 23);
-            textBox3.TabIndex = 7;
+            textBox4.BackColor = Color.FromArgb(46, 46, 65);
+            textBox4.ForeColor = Color.White;
+            textBox4.Location = new Point(86, 167);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(256, 23);
+            textBox4.TabIndex = 9;
             // 
-            // label4
+            // label5
             // 
-            label4.AutoSize = true;
-            label4.ForeColor = Color.White;
-            label4.Location = new Point(18, 141);
-            label4.Name = "label4";
-            label4.Size = new Size(30, 15);
-            label4.TabIndex = 6;
-            label4.Text = "Size:";
+            label5.AutoSize = true;
+            label5.ForeColor = Color.White;
+            label5.Location = new Point(18, 170);
+            label5.Name = "label5";
+            label5.Size = new Size(34, 15);
+            label5.TabIndex = 8;
+            label5.Text = "Type:";
+            // 
+            // textBox5
+            // 
+            textBox5.BackColor = Color.FromArgb(46, 46, 65);
+            textBox5.ForeColor = Color.White;
+            textBox5.Location = new Point(86, 196);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(256, 23);
+            textBox5.TabIndex = 11;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.ForeColor = Color.White;
+            label6.Location = new Point(18, 199);
+            label6.Name = "label6";
+            label6.Size = new Size(62, 15);
+            label6.TabIndex = 10;
+            label6.Text = "Language:";
+            // 
+            // textBox6
+            // 
+            textBox6.BackColor = Color.FromArgb(46, 46, 65);
+            textBox6.ForeColor = Color.White;
+            textBox6.Location = new Point(419, 193);
+            textBox6.Name = "textBox6";
+            textBox6.Size = new Size(256, 23);
+            textBox6.TabIndex = 21;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.ForeColor = Color.White;
+            label7.Location = new Point(351, 196);
+            label7.Name = "label7";
+            label7.Size = new Size(62, 15);
+            label7.TabIndex = 20;
+            label7.Text = "Language:";
+            // 
+            // textBox7
+            // 
+            textBox7.BackColor = Color.FromArgb(46, 46, 65);
+            textBox7.ForeColor = Color.White;
+            textBox7.Location = new Point(419, 164);
+            textBox7.Name = "textBox7";
+            textBox7.Size = new Size(256, 23);
+            textBox7.TabIndex = 19;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.ForeColor = Color.White;
+            label8.Location = new Point(351, 167);
+            label8.Name = "label8";
+            label8.Size = new Size(34, 15);
+            label8.TabIndex = 18;
+            label8.Text = "Type:";
+            // 
+            // textBox8
+            // 
+            textBox8.BackColor = Color.FromArgb(46, 46, 65);
+            textBox8.ForeColor = Color.White;
+            textBox8.Location = new Point(419, 135);
+            textBox8.Name = "textBox8";
+            textBox8.Size = new Size(256, 23);
+            textBox8.TabIndex = 17;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.ForeColor = Color.White;
+            label9.Location = new Point(351, 138);
+            label9.Name = "label9";
+            label9.Size = new Size(30, 15);
+            label9.TabIndex = 16;
+            label9.Text = "Size:";
+            // 
+            // textBox9
+            // 
+            textBox9.BackColor = Color.FromArgb(46, 46, 65);
+            textBox9.ForeColor = Color.White;
+            textBox9.Location = new Point(419, 106);
+            textBox9.Name = "textBox9";
+            textBox9.Size = new Size(256, 23);
+            textBox9.TabIndex = 15;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.ForeColor = Color.White;
+            label10.Location = new Point(351, 109);
+            label10.Name = "label10";
+            label10.Size = new Size(48, 15);
+            label10.TabIndex = 14;
+            label10.Text = "Format:";
+            // 
+            // textBox10
+            // 
+            textBox10.BackColor = Color.FromArgb(46, 46, 65);
+            textBox10.ForeColor = Color.White;
+            textBox10.Location = new Point(419, 77);
+            textBox10.Name = "textBox10";
+            textBox10.Size = new Size(256, 23);
+            textBox10.TabIndex = 13;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.ForeColor = Color.White;
+            label11.Location = new Point(351, 80);
+            label11.Name = "label11";
+            label11.Size = new Size(24, 15);
+            label11.TabIndex = 12;
+            label11.Text = "FD:";
             // 
             // Dissasembly
             // 
@@ -556,5 +717,19 @@ namespace MCDA_APP.Forms
         private Label label3;
         private TextBox textBox3;
         private Label label4;
+        private TextBox textBox5;
+        private Label label6;
+        private TextBox textBox4;
+        private Label label5;
+        private TextBox textBox6;
+        private Label label7;
+        private TextBox textBox7;
+        private Label label8;
+        private TextBox textBox8;
+        private Label label9;
+        private TextBox textBox9;
+        private Label label10;
+        private TextBox textBox10;
+        private Label label11;
     }
 }

@@ -488,7 +488,7 @@ namespace MCDA_APP.Forms
                     }
                 };
                 await Program.Client!.SendAgentStatusAsync(agentStatusFailed);
-                return "";  
+                return "";
             }
             catch (Exception ex)
             {
@@ -715,7 +715,7 @@ namespace MCDA_APP.Forms
                 releaseButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     handleRelease(folderName + "\\" + fileName, false);
-                    
+
                     Program.Client?.SendAgentStatus(AgentStatusType.File_Released, fileName, pMessage: "File released");
 
                     releaseButton.Visible = false;
@@ -1143,7 +1143,7 @@ namespace MCDA_APP.Forms
                 {
                     rerunButton.Visible = false;
                     rerunScanFile(folderName, fileName, panel, false);
-                    
+
                     Program.Client?.SendAgentStatus(AgentStatusType.File_Deleted, fileName, AgentStatusPayloadType.Doc_File, "File deleted");
                 };
 
@@ -1161,7 +1161,7 @@ namespace MCDA_APP.Forms
                 releaseButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     handleRelease(folderName + "\\" + fileName, false);
-                    
+
                     Program.Client?.SendAgentStatus(AgentStatusType.File_Released, fileName, pMessage: "File released");
 
                     releaseButton.Visible = false;
@@ -1689,7 +1689,7 @@ namespace MCDA_APP.Forms
             {
                 Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
                 Program.AccountInformation?.ResetValues();
-                
+
                 Hide();
                 LoginForm loginForm = new();
                 loginForm.Show(this);
@@ -1919,6 +1919,11 @@ namespace MCDA_APP.Forms
             };
 
             Controls.Add(malcoreFooter);
+        }
+
+        private void NewScanButton_Click(object sender, EventArgs e)
+        {
+            new NewScanForm().ShowDialog();
         }
     }
 

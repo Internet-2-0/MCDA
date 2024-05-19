@@ -10,7 +10,7 @@ using static System.Windows.Forms.ListView;
 
 namespace MCDA_APP.Forms
 {
-    public partial class Dissasembly : Form
+    public partial class Disasembly : Form
     {
         private string _filePath;
         private R2Pipe _r2Pipe;
@@ -22,7 +22,7 @@ namespace MCDA_APP.Forms
         private RadareInformation? _information;
         private string _assemblyCode;
 
-        public Dissasembly()
+        public Disasembly()
         {
             InitializeComponent();
             OptionsMenu.Renderer = new CustomRender(true);
@@ -157,6 +157,8 @@ namespace MCDA_APP.Forms
 
             string information = _r2Pipe.RunCommand("ij");
             _information = JsonConvert.DeserializeObject<RadareInformation>(information);
+
+            File.WriteAllText("info.json", JsonConvert.SerializeObject(_information, Formatting.Indented));
 
             //set some needed options
             _r2Pipe.RunCommand("e asm.lines=false;e asm.lines.fcn=false;e asm.bytes=false");
