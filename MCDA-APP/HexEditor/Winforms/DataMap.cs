@@ -9,6 +9,11 @@ namespace MCDA_APP.HexEditor.Winforms
         internal DataBlock? _firstBlock;
         internal int _version;
 
+        public DataMap()
+        {
+
+        }
+
         public DataMap(IEnumerable collection)
         {
             if (collection == null)

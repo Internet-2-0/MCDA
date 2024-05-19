@@ -28,10 +28,12 @@ namespace MCDA_APP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            Dissasembly d = new Dissasembly();
-            d.Show();
+            HexDump hexDump = new HexDump();
+            hexDump.Show();
+            //Dissasembly d = new Dissasembly();
+            //d.Show();
 
-            new CodeReuse().Show();
+            //new CodeReuse().Show();
 
             try
             {

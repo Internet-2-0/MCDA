@@ -1,4 +1,6 @@
-﻿namespace MCDA_APP.Forms
+﻿using System.Windows.Forms;
+
+namespace MCDA_APP.Forms
 {
     partial class HexDump
     {
@@ -28,207 +30,166 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HexDump));
+            toolStripSeparator = new ToolStripSeparator();
+            toolStripSeparator2 = new ToolStripSeparator();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolStripSeparator3 = new ToolStripSeparator();
+            toolStripSeparator4 = new ToolStripSeparator();
+            toolStripSeparator5 = new ToolStripSeparator();
+            toolStripSeparator6 = new ToolStripSeparator();
+            encodingToolStripComboBox = new ToolStripComboBox();
             statusStrip = new StatusStrip();
             toolStripStatusLabel = new ToolStripStatusLabel();
             fileSizeToolStripStatusLabel = new ToolStripStatusLabel();
-            menuStrip1 = new MenuStrip();
-            searchToolStripMenuItem = new ToolStripMenuItem();
-            cutToolStripMenuItem = new ToolStripMenuItem();
-            coToolStripMenuItem = new ToolStripMenuItem();
-            pasteToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator1 = new ToolStripSeparator();
-            copyHexToolStripMenuItem = new ToolStripMenuItem();
-            pasteHexToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator2 = new ToolStripSeparator();
-            findToolStripMenuItem = new ToolStripMenuItem();
-            findNextToolStripMenuItem = new ToolStripMenuItem();
-            goToToolStripMenuItem = new ToolStripMenuItem();
-            toolStripMenuItem1 = new ToolStripMenuItem();
-            optionsToolStripMenuItem = new ToolStripMenuItem();
-            themeToolStripMenuItem = new ToolStripMenuItem();
+            bitToolStripStatusLabel = new ToolStripStatusLabel();
+            openFileDialog = new OpenFileDialog();
+            bodyPanel = new Panel();
             statusStrip.SuspendLayout();
-            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
-            // statusStrip
+            // toolStripSeparator
             // 
-            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel, fileSizeToolStripStatusLabel });
-            statusStrip.Location = new Point(0, 499);
-            statusStrip.Name = "statusStrip";
-            statusStrip.RenderMode = ToolStripRenderMode.ManagerRenderMode;
-            statusStrip.Size = new Size(834, 22);
-            statusStrip.TabIndex = 0;
-            statusStrip.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel
-            // 
-            toolStripStatusLabel.BackColor = Color.Transparent;
-            toolStripStatusLabel.ForeColor = Color.Black;
-            toolStripStatusLabel.Margin = new Padding(5, 3, 0, 2);
-            toolStripStatusLabel.Name = "toolStripStatusLabel";
-            toolStripStatusLabel.Size = new Size(0, 17);
-            // 
-            // fileSizeToolStripStatusLabel
-            // 
-            fileSizeToolStripStatusLabel.BackColor = Color.Transparent;
-            fileSizeToolStripStatusLabel.ForeColor = Color.Black;
-            fileSizeToolStripStatusLabel.Name = "fileSizeToolStripStatusLabel";
-            fileSizeToolStripStatusLabel.Size = new Size(0, 17);
-            // 
-            // menuStrip1
-            // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { searchToolStripMenuItem, toolStripMenuItem1, optionsToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(834, 24);
-            menuStrip1.TabIndex = 1;
-            menuStrip1.Text = "menuStrip1";
-            // 
-            // searchToolStripMenuItem
-            // 
-            searchToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cutToolStripMenuItem, coToolStripMenuItem, pasteToolStripMenuItem, toolStripSeparator1, copyHexToolStripMenuItem, pasteHexToolStripMenuItem, toolStripSeparator2, findToolStripMenuItem, findNextToolStripMenuItem, goToToolStripMenuItem });
-            searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            searchToolStripMenuItem.Size = new Size(54, 20);
-            searchToolStripMenuItem.Text = "Search";
-            // 
-            // cutToolStripMenuItem
-            // 
-            cutToolStripMenuItem.Image = Properties.Resources.Cut16;
-            cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            cutToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.X;
-            cutToolStripMenuItem.Size = new Size(200, 22);
-            cutToolStripMenuItem.Text = "&Cut";
-            cutToolStripMenuItem.Click += cutToolStripMenuItem_Click;
-            // 
-            // coToolStripMenuItem
-            // 
-            coToolStripMenuItem.Image = Properties.Resources.Copy16;
-            coToolStripMenuItem.Name = "coToolStripMenuItem";
-            coToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.C;
-            coToolStripMenuItem.Size = new Size(200, 22);
-            coToolStripMenuItem.Text = "&Copy";
-            coToolStripMenuItem.Click += coToolStripMenuItem_Click;
-            // 
-            // pasteToolStripMenuItem
-            // 
-            pasteToolStripMenuItem.Image = Properties.Resources.Paste16;
-            pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            pasteToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.V;
-            pasteToolStripMenuItem.Size = new Size(200, 22);
-            pasteToolStripMenuItem.Text = "&Paste";
-            pasteToolStripMenuItem.Click += pasteToolStripMenuItem_Click;
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(197, 6);
-            // 
-            // copyHexToolStripMenuItem
-            // 
-            copyHexToolStripMenuItem.Name = "copyHexToolStripMenuItem";
-            copyHexToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.C;
-            copyHexToolStripMenuItem.Size = new Size(200, 22);
-            copyHexToolStripMenuItem.Text = "Copy Hex";
-            copyHexToolStripMenuItem.Click += copyHexToolStripMenuItem_Click;
-            // 
-            // pasteHexToolStripMenuItem
-            // 
-            pasteHexToolStripMenuItem.Name = "pasteHexToolStripMenuItem";
-            pasteHexToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.V;
-            pasteHexToolStripMenuItem.Size = new Size(200, 22);
-            pasteHexToolStripMenuItem.Text = "Paste Hex";
-            pasteHexToolStripMenuItem.Click += pasteHexToolStripMenuItem_Click;
+            toolStripSeparator.Name = "toolStripSeparator";
+            toolStripSeparator.Size = new Size(6, 6);
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(197, 6);
+            toolStripSeparator2.Size = new Size(6, 6);
             // 
-            // findToolStripMenuItem
+            // toolStripSeparator1
             // 
-            findToolStripMenuItem.Image = Properties.Resources.Find16;
-            findToolStripMenuItem.Name = "findToolStripMenuItem";
-            findToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.F;
-            findToolStripMenuItem.Size = new Size(200, 22);
-            findToolStripMenuItem.Text = "Find";
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 6);
             // 
-            // findNextToolStripMenuItem
+            // toolStripSeparator3
             // 
-            findNextToolStripMenuItem.Image = Properties.Resources.FindNext16;
-            findNextToolStripMenuItem.Name = "findNextToolStripMenuItem";
-            findNextToolStripMenuItem.ShortcutKeys = Keys.F3;
-            findNextToolStripMenuItem.Size = new Size(200, 22);
-            findNextToolStripMenuItem.Text = "Find Next";
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(6, 6);
             // 
-            // goToToolStripMenuItem
+            // toolStripSeparator4
             // 
-            goToToolStripMenuItem.Name = "goToToolStripMenuItem";
-            goToToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.G;
-            goToToolStripMenuItem.Size = new Size(200, 22);
-            goToToolStripMenuItem.Text = "Go To";
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(6, 6);
             // 
-            // toolStripMenuItem1
+            // toolStripSeparator5
             // 
-            toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(12, 20);
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new Size(6, 6);
             // 
-            // optionsToolStripMenuItem
+            // toolStripSeparator6
             // 
-            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { themeToolStripMenuItem });
-            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            optionsToolStripMenuItem.Size = new Size(61, 20);
-            optionsToolStripMenuItem.Text = "Options";
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new Size(6, 6);
             // 
-            // themeToolStripMenuItem
+            // encodingToolStripComboBox
             // 
-            themeToolStripMenuItem.Name = "themeToolStripMenuItem";
-            themeToolStripMenuItem.Size = new Size(110, 22);
-            themeToolStripMenuItem.Text = "Theme";
+            encodingToolStripComboBox.BackColor = SystemColors.Control;
+            encodingToolStripComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            encodingToolStripComboBox.DropDownWidth = 180;
+            encodingToolStripComboBox.Name = "encodingToolStripComboBox";
+            encodingToolStripComboBox.Size = new Size(121, 23);
+            encodingToolStripComboBox.SelectedIndexChanged += toolStripEncoding_SelectedIndexChanged;
+            // 
+            // statusStrip
+            // 
+            statusStrip.BackColor = SystemColors.Control;
+            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel, fileSizeToolStripStatusLabel, bitToolStripStatusLabel });
+            statusStrip.Location = new Point(0, 239);
+            statusStrip.Name = "statusStrip";
+            statusStrip.RenderMode = ToolStripRenderMode.ManagerRenderMode;
+            statusStrip.Size = new Size(284, 22);
+            statusStrip.SizingGrip = false;
+            statusStrip.TabIndex = 1;
+            // 
+            // toolStripStatusLabel
+            // 
+            toolStripStatusLabel.Margin = new Padding(5, 3, 0, 2);
+            toolStripStatusLabel.Name = "toolStripStatusLabel";
+            toolStripStatusLabel.Padding = new Padding(7, 0, 0, 0);
+            toolStripStatusLabel.Size = new Size(7, 17);
+            // 
+            // fileSizeToolStripStatusLabel
+            // 
+            fileSizeToolStripStatusLabel.Name = "fileSizeToolStripStatusLabel";
+            fileSizeToolStripStatusLabel.Padding = new Padding(4, 0, 4, 0);
+            fileSizeToolStripStatusLabel.Size = new Size(8, 17);
+            // 
+            // bitToolStripStatusLabel
+            // 
+            bitToolStripStatusLabel.Name = "bitToolStripStatusLabel";
+            bitToolStripStatusLabel.Size = new Size(0, 17);
+            // 
+            // bodyPanel
+            // 
+            bodyPanel.Location = new Point(0, 0);
+            bodyPanel.Name = "bodyPanel";
+            bodyPanel.Size = new Size(200, 100);
+            bodyPanel.TabIndex = 0;
             // 
             // HexDump
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(26, 26, 34);
-            ClientSize = new Size(834, 521);
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = SystemColors.Control;
+            ClientSize = new Size(284, 261);
+            Controls.Add(bodyPanel);
             Controls.Add(statusStrip);
-            Controls.Add(menuStrip1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            MainMenuStrip = menuStrip1;
-            MaximizeBox = false;
             Name = "HexDump";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | HexDump";
-            Load += HexDump_Load;
+            FormClosing += FormHexEditor_FormClosing;
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private StatusStrip statusStrip;
-        private ToolStripStatusLabel toolStripStatusLabel;
-        private MenuStrip menuStrip1;
-        private ToolStripMenuItem searchToolStripMenuItem;
-        private ToolStripMenuItem findToolStripMenuItem;
-        private ToolStripStatusLabel fileSizeToolStripStatusLabel;
-        private ToolStripMenuItem findNextToolStripMenuItem;
-        private ToolStripMenuItem goToToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem1;
-        private ToolStripMenuItem optionsToolStripMenuItem;
-        private ToolStripMenuItem themeToolStripMenuItem;
-        private ToolStripMenuItem cutToolStripMenuItem;
-        private ToolStripMenuItem coToolStripMenuItem;
-        private ToolStripMenuItem pasteToolStripMenuItem;
-        private ToolStripSeparator toolStripSeparator1;
-        private ToolStripMenuItem copyHexToolStripMenuItem;
-        private ToolStripMenuItem pasteHexToolStripMenuItem;
-        private ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip toolStrip;
+        private System.Windows.Forms.ToolStripButton openToolStripButton;
+        private System.Windows.Forms.ToolStripButton saveToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton cutToolStripButton;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripStatusLabel fileSizeToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem copyHexStringToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteHexToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSplitButton copyToolStripSplitButton;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem copyHexToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSplitButton pasteToolStripSplitButton;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem pasteHexToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel bitToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripComboBox encodingToolStripComboBox;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem encodingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bitsToolStripMenuItem;
+        //private BitControl bitControl1;
+        private System.Windows.Forms.Panel bodyPanel;
     }
 }
