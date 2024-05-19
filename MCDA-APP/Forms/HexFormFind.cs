@@ -4,21 +4,8 @@ namespace MCDA_APP.Forms
 {
     public partial class HexFormFind : Form
     {
-        private HexBox hexFind;
-        private TextBox txtFind;
-        private RadioButton rbString;
-        private RadioButton rbHex;
-        private Label label1;
-        private Button btnOK;
-        private Button btnCancel;
-        private Label lblPercent;
-        private Label lblFinding;
-        private CheckBox chkMatchCase;
         private System.Windows.Forms.Timer timerPercent;
         private System.Windows.Forms.Timer timer;
-        private FlowLayoutPanel flowLayoutPanel1;
-        private FlowLayoutPanel flowLayoutPanel2;
-        private Panel line;
 
         public HexFormFind()
         {
@@ -36,7 +23,7 @@ namespace MCDA_APP.Forms
         private void rb_CheckedChanged(object? sender, System.EventArgs e)
         {
             txtFind.Enabled = rbString.Checked;
-            hexFind.Enabled = !txtFind.Enabled;
+            //hexFind.Enabled = !txtFind.Enabled;
 
             if (txtFind.Enabled)
                 txtFind.Focus();
@@ -84,21 +71,7 @@ namespace MCDA_APP.Forms
             else
                 hexFind.Focus();
         }
-
-        private void btnOK_Click(object sender, System.EventArgs e)
-        {
-            _findOptions.MatchCase = chkMatchCase.Checked;
-
-            var provider = this.hexFind.ByteProvider as DynamicByteProvider;
-            _findOptions.Hex = provider.Bytes.ToArray();
-            _findOptions.Text = txtFind.Text;
-            _findOptions.Type = rbHex.Checked ? FindType.Hex : FindType.Text;
-            _findOptions.MatchCase = chkMatchCase.Checked;
-            _findOptions.IsValid = true;
-
-            FindNext();
-        }
-
+      
         bool _finding;
 
         public void FindNext()
@@ -153,14 +126,6 @@ namespace MCDA_APP.Forms
                 = hexFind.Enabled = btnOK.Enabled = false;
         }
 
-        private void btnCancel_Click(object sender, System.EventArgs e)
-        {
-            if (_finding)
-                this.HexBox.AbortFind();
-            else
-                this.Close();
-        }
-
         private void txtString_TextChanged(object sender, EventArgs e)
         {
             ValidateFind();
@@ -176,7 +141,7 @@ namespace MCDA_APP.Forms
             this.btnOK.Enabled = isValid;
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             if (lblFinding.Text.Length == 13)
                 lblFinding.Text = "";
@@ -184,7 +149,7 @@ namespace MCDA_APP.Forms
             lblFinding.Text += ".";
         }
 
-        private void timerPercent_Tick(object sender, EventArgs e)
+        private void TimerPercent_Tick(object sender, EventArgs e)
         {
             long pos = this.HexBox.CurrentFindingPosition;
             long length = HexBox.ByteProvider.Length;
@@ -195,6 +160,28 @@ namespace MCDA_APP.Forms
 
             string text = percent.ToString("0.00", nfi) + " %";
             lblPercent.Text = text;
+        }
+
+        private void BtnOK_Click(object sender, EventArgs e)
+        {
+            _findOptions.MatchCase = chkMatchCase.Checked;
+
+            var provider = this.hexFind.ByteProvider as DynamicByteProvider;
+            _findOptions.Hex = provider.Bytes.ToArray();
+            _findOptions.Text = txtFind.Text;
+            _findOptions.Type = rbHex.Checked ? FindType.Hex : FindType.Text;
+            _findOptions.MatchCase = chkMatchCase.Checked;
+            _findOptions.IsValid = true;
+
+            FindNext();
+        }
+
+        private void BtnCancel_Click_1(object sender, EventArgs e)
+        {
+            if (_finding)
+                this.HexBox.AbortFind();
+            else
+                this.Close();
         }
     }
 }

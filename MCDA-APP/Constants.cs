@@ -2,6 +2,7 @@
 {
     public class Constants
     {
+        public static readonly string Name = "MalcoreIo";
         public static readonly string ApiBaseUrl = "https://api.malcore.io";
         public static readonly string RegistryMalcoreKey = @"SOFTWARE\\Malcore";
         public static readonly string MalcoreTerms = "https://malcore.io/terms-of-use";
