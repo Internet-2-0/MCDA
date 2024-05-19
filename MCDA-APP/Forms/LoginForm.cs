@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Reflection;
 using MCDA_APP.Controls;
-using MCDA_APP.Core;
 using MCDA_APP.Model.Agent;
 
 namespace MCDA_APP
