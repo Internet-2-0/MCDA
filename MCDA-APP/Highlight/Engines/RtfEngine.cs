@@ -21,41 +21,14 @@ namespace MCDA_APP.Highlight.Engines
 
         protected override string PostHighlight(Definition definition, string input)
         {
-            // Convert new lines to RTF paragraph breaks.
-            // Replace "\r\n" (Windows) or "\n" (Unix) line endings with "\par "
             var formattedInput = input.Replace("\r\n", @"\par ");
             formattedInput = formattedInput.Replace("\n", @"\par ");
 
-            // Build the RTF header including font and color table definitions
             var fontList = BuildFontList();
             var colorList = BuildColorList();
 
-            // Combine all parts into the final RTF string, properly enclosed in a single RTF group.
             return String.Format(@"{{\rtf1\ansi{{\fonttbl{0}}}{{\colortbl;{1}}}{2}}}", fontList, colorList, formattedInput);
         }
-
-        //new
-        //protected override string PostHighlight(Definition definition, string input)
-        //{
-        //    // Build the RTF header including font and color table definitions
-        //    var fontList = BuildFontList();
-        //    var colorList = BuildColorList();
-
-        //    return String.Format(@"{{\rtf1\ansi{{\fonttbl{0}}}{{\colortbl;{1}}}{2}}}", fontList, colorList, input);
-        //}
-
-        //protected override string PostHighlight(Definition definition, string input)
-        //{
-        //    var result = input
-        //        .Replace("{", @"\{").Replace("}", @"\}").Replace("\t", @"\tab ")
-        //        .Replace("\r\n", @"\par ");
-        //    var fontList = BuildFontList();
-        //    var colorList = BuildColorList();
-
-        //    return String.Format(@"{{\rtf1\ansi{{\fonttbl{{{0}}}}}{{\colortbl;{1}}}{2}}}", fontList, colorList, result);
-        //}
-
-       
 
         protected override string ProcessBlockPatternMatch(Definition definition, BlockPattern pattern, Match match)
         {
@@ -69,8 +42,8 @@ namespace MCDA_APP.Highlight.Engines
             var builder = new StringBuilder();
             var style = CreateRtfPatternStyle(pattern.Style.Colors.ForeColor, pattern.Style.Colors.BackColor, pattern.Style.Font);
             var bracketStyle = CreateRtfPatternStyle(pattern.BracketColors.ForeColor, pattern.BracketColors.BackColor, pattern.Style.Font);
-            string attributeNameStyle = null;
-            string attributeValueStyle = null;
+            string? attributeNameStyle = null;
+            string? attributeValueStyle = null;
             if (pattern.HighlightAttributes)
             {
                 attributeNameStyle = CreateRtfPatternStyle(pattern.AttributeNameColors.ForeColor, pattern.AttributeNameColors.BackColor, pattern.Style.Font);
@@ -104,38 +77,22 @@ namespace MCDA_APP.Highlight.Engines
         {
             var style = CreateRtfPatternStyle(pattern.Style.Colors.ForeColor, pattern.Style.Colors.BackColor, pattern.Style.Font);
 
-            // Ensure the whole line is not mistakenly encapsulated in style changes
             return String.Format(@"\cf{0} {1}", GetIndexOfColor(pattern.Style.Colors.ForeColor), match.Value);
         }
 
-        //protected override string ProcessWordPatternMatch(Definition definition, WordPattern pattern, Match match)
-        //{
-        //    var style = CreateRtfPatternStyle(pattern.Style.Colors.ForeColor, pattern.Style.Colors.BackColor, pattern.Style.Font);
-
-        //    return ("{" + String.Format(RtfFormat, style, match.Value) + "}");
-        //}
-
         private string CreateRtfPatternStyle(Color foreColor, Color backColor, SixLabors.Fonts.Font font)
         {
-            // Only create RTF control words for colors if they're actually needed
             StringBuilder styleBuilder = new StringBuilder();
             styleBuilder.Append(@"\cf").Append(GetIndexOfColor(foreColor));
 
-            // Apply background color only if it's different from default
             if (backColor != Color.Transparent)
                 styleBuilder.Append(@"\highlight").Append(GetIndexOfColor(backColor));
 
             styleBuilder.Append(@"\f").Append(GetIndexOfFont(font.Name))
-                        .Append(@"\fs").Append((int)(font.Size * 2)); // RTF expects size in half-points
+                        .Append(@"\fs").Append((int)(font.Size * 2)); 
 
             return styleBuilder.ToString();
         }
-
-
-        //private string CreateRtfPatternStyle(Color foreColor, Color backColor, SixLabors.Fonts.Font font)
-        //{
-        //    return String.Concat(new object[] { @"\cf", GetIndexOfColor(foreColor), @"\f", GetIndexOfFont(font.Name), @"\fs", font.Size * 2f });
-        //}
 
         private int GetIndexOfColor(Color color)
         {

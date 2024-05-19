@@ -36,8 +36,6 @@ namespace MCDA_APP.Forms
             }
 
             Text = "Code Reuse Analysis";
-            //AutoSize = true;
-            //AutoSizeMode = AutoSizeMode.GrowAndShrink;
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Color.FromArgb(22, 25, 34);
         }

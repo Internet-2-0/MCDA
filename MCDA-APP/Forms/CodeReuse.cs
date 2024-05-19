@@ -1,4 +1,5 @@
 ﻿using MCDA_APP.Controls;
+using MCDA_APP.Model.Agent;
 using MCDA_APP.Model.Api.Reuse;
 using Newtonsoft.Json;
 
@@ -20,9 +21,6 @@ namespace MCDA_APP.Forms
 
             TextBoxFile.Click += TextBox_Click;
             TextBoxSecondFile.Click += TextBox_Click;
-
-            //Casm c = new Casm();
-            //Controls.Add(c);
         }
 
         private void TextBox_Click(object? sender, EventArgs e)
@@ -64,19 +62,25 @@ namespace MCDA_APP.Forms
 
         private async void ButtonSubmitScan_Click(object sender, EventArgs e)
         {
-            //if (!File.Exists(TextBoxFile.TextBoxText))
-            //{
-            //    LabelError.Text = "First file does not exist!";
-            //    return;
-            //}
+            if (!File.Exists(TextBoxFile.TextBoxText))
+            {
+                LabelError.Text = "First file does not exist!";
+                return;
+            }
 
-            //if (!File.Exists(TextBoxSecondFile.TextBoxText))
-            //{
-            //    LabelError.Text = "Second file does not exist!";
-            //    return;
-            //}
+            if (!File.Exists(TextBoxSecondFile.TextBoxText))
+            {
+                LabelError.Text = "Second file does not exist!";
+                return;
+            }
 
-            string json = await Program.Client!.UploadFiles("http://localhost:8080/reuse", new List<byte[]> { });
+            List<FileToUpload> files = new()
+            {
+                new FileToUpload(Path.GetFileName(TextBoxFile.TextBoxText), File.ReadAllBytes(TextBoxFile.TextBoxText)),
+                new FileToUpload(Path.GetFileName(TextBoxSecondFile.TextBoxText), File.ReadAllBytes(TextBoxSecondFile.TextBoxText))
+            };
+
+            string json = await Program.Client!.UploadFiles($"{Constants.ApiBaseUrl}/api/reuse", files);
             var parsedData = JsonConvert.DeserializeObject<ReuseResponse>(json);
 
             CodeReuseResult codeReuseResult = new CodeReuseResult(parsedData);

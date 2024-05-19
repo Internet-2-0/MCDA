@@ -31,10 +31,6 @@
 
             Size = new Size(100, 40);
             BackColor = Color.FromArgb(40, 47, 53);
-
-            //textBox.AllowDrop = true;
-            //this.DragEnter += IconTextBox_DragEnter;
-            //this.DragDrop += IconTextBox_DragDrop;
         }
 
         private void IconTextBox_DragEnter(object? sender, DragEventArgs e)
@@ -60,12 +56,6 @@
                 }
             }
         }
-
-        //public Image Icon
-        //{
-        //    get { return pictureBox.Image; }
-        //    set { pictureBox.Image = value; }
-        //}
 
         public override Color ForeColor
         {

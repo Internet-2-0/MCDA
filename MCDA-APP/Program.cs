@@ -18,8 +18,6 @@ namespace MCDA_APP
         [STAThread]
         static void Main()
         {
-            
-            
             // Kill current process if there is already process that is running
             if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location)).Length > 1) Process.GetCurrentProcess().Kill();
 
@@ -30,8 +28,8 @@ namespace MCDA_APP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            //Dissasembly d = new Dissasembly();
-            //d.Show();
+            Dissasembly d = new Dissasembly();
+            d.Show();
 
             new CodeReuse().Show();
 

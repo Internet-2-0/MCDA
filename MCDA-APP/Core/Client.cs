@@ -54,11 +54,11 @@ namespace MCDA_APP.Core
             }
         }
 
-        public async Task<string> UploadFiles(string endpoint, List<byte[]> files)
+        public async Task<string> UploadFiles(string endpoint, List<FileToUpload> filesList)
         {
             try
             {
-                string response = await _customHttpClient.PostRequestWithFileAsyncMock(endpoint, files);
+                string response = await _customHttpClient.PostRequestWithFilesAsync(endpoint, filesList);
                 return response;
             }
             catch
