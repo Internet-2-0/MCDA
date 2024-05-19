@@ -6,6 +6,7 @@ using MCDA_APP.Radare2;
 using MCDA_APP.Rendering;
 using Newtonsoft.Json;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using static System.Windows.Forms.ListView;
 
@@ -69,6 +70,8 @@ namespace MCDA_APP.Forms
 
         private void FillStrings()
         {
+            originalItems = new List<ListViewItem>();
+
             for (int i = 0; i < _stringsList?.Count; i++)
             {
                 RadareString radareString = _stringsList[i];
@@ -79,6 +82,7 @@ namespace MCDA_APP.Forms
                 temp.SubItems.Add(radareString.Type);
                 temp.SubItems.Add(radareString.String);
 
+                originalItems.Add(temp);
                 StringsListView.Items.Add(temp);
             }
         }
@@ -132,6 +136,7 @@ namespace MCDA_APP.Forms
             FillStrings();
             FillImports();
             FillExports();
+            FillInformation();
             Highlighter highlighter = new Highlighter(new RtfEngine());
 
             string result = AssemblyParser.RemoveUnwantedComments(_assemblyCode);
@@ -141,9 +146,42 @@ namespace MCDA_APP.Forms
             this.Controls.Remove(Overlay);
         }
 
+        private string ComputeHash(HashAlgorithm hashAlgorithm, string filePath)
+        {
+            using (hashAlgorithm)
+            {
+                using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    byte[] hashBytes = hashAlgorithm.ComputeHash(fileStream);
+                    return BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
+                }
+            }
+        }
+
+        private void FillInformation()
+        {
+            FileTextbox.Text = _information.Core.File;
+            BitsTextbox.Text = _information.Bin.Bits.ToString();
+            FormatTextbox.Text = _information.Bin.Bintype;
+            SizeTextbox.Text = _information.Core.Humansz;
+            TypeTextbox.Text = _information.Core.Type;
+            LanguageTextbox.Text = _information.Bin.Lang;
+            FdTextbox.Text = _information.Core.Fd.ToString();
+
+            BaseAddrTextbox.Text = $"0x{_information.Bin.Baddr.ToString("X8").ToLower()}";
+            CanaryTextbox.Text = _information.Bin.Canary.ToString();
+            CryptoTextbox.Text = _information.Bin.Crypto.ToString();
+            NxTextbox.Text = _information.Bin.Nx.ToString();
+            PicTextbox.Text = _information.Bin.Pic.ToString();
+
+            Md5Textbox.Text = ComputeHash(MD5.Create(), _filePath);
+            Sha1Textbox.Text = ComputeHash(SHA1.Create(), _filePath);
+            Sha256Textbox.Text = ComputeHash(SHA256.Create(), _filePath);
+        }
+
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-            
+
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
@@ -240,6 +278,29 @@ namespace MCDA_APP.Forms
             customTabControl2.SelectedTab = DisassemblyTab;
             //string output = _r2Pipe.RunCommand($"s {selectedList[0].Text};pdf");
             //richTextBox1.Rtf = AssemblyParser.SetRichText(output);
+        }
+
+        private List<ListViewItem> originalItems;
+
+        private void SearchStringTextbox_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(SearchStringTextbox.Text))
+            {
+                StringsListView.Items.Clear();
+                StringsListView.Items.AddRange(originalItems.ToArray());
+            }
+            else
+            {
+                string searchText = SearchStringTextbox.Text.ToLower();
+                var filteredItems = originalItems
+                    .Where(item => item.SubItems[4].Text.ToLower().Contains(searchText))
+                    .ToArray();
+
+                StringsListView.Items.Clear();
+                StringsListView.Items.AddRange(filteredItems);
+            }
+
+            
         }
     }
 }

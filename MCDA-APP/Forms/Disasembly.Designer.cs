@@ -92,6 +92,9 @@ namespace MCDA_APP.Forms
             FileToolStripMenuItem = new ToolStripMenuItem();
             OpenToolStripMenuItem = new ToolStripMenuItem();
             splitContainer1 = new SplitContainer();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            label16 = new Label();
+            SearchStringTextbox = new TextBox();
             customTabControl2.SuspendLayout();
             InformationTab.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -105,6 +108,7 @@ namespace MCDA_APP.Forms
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // FunctionsListView
@@ -671,6 +675,7 @@ namespace MCDA_APP.Forms
             // 
             StringsTab.BackColor = Color.FromArgb(26, 26, 34);
             StringsTab.Controls.Add(StringsListView);
+            StringsTab.Controls.Add(flowLayoutPanel1);
             StringsTab.Location = new Point(4, 30);
             StringsTab.Name = "StringsTab";
             StringsTab.Padding = new Padding(3);
@@ -687,7 +692,7 @@ namespace MCDA_APP.Forms
             StringsListView.FullRowSelect = true;
             StringsListView.Location = new Point(3, 3);
             StringsListView.Name = "StringsListView";
-            StringsListView.Size = new Size(694, 539);
+            StringsListView.Size = new Size(694, 504);
             StringsListView.TabIndex = 0;
             StringsListView.UseCompatibleStateImageBehavior = false;
             StringsListView.View = View.Details;
@@ -808,6 +813,38 @@ namespace MCDA_APP.Forms
             splitContainer1.SplitterDistance = 280;
             splitContainer1.TabIndex = 1;
             // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(label16);
+            flowLayoutPanel1.Controls.Add(SearchStringTextbox);
+            flowLayoutPanel1.Dock = DockStyle.Bottom;
+            flowLayoutPanel1.Location = new Point(3, 507);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(694, 35);
+            flowLayoutPanel1.TabIndex = 1;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.ForeColor = Color.White;
+            label16.Location = new Point(5, 10);
+            label16.Margin = new Padding(5, 10, 3, 0);
+            label16.Name = "label16";
+            label16.Size = new Size(42, 15);
+            label16.TabIndex = 0;
+            label16.Text = "Search";
+            // 
+            // SearchStringTextbox
+            // 
+            SearchStringTextbox.BackColor = Color.FromArgb(46, 46, 65);
+            SearchStringTextbox.ForeColor = Color.White;
+            SearchStringTextbox.Location = new Point(53, 6);
+            SearchStringTextbox.Margin = new Padding(3, 6, 3, 3);
+            SearchStringTextbox.Name = "SearchStringTextbox";
+            SearchStringTextbox.Size = new Size(636, 23);
+            SearchStringTextbox.TabIndex = 1;
+            SearchStringTextbox.TextChanged += SearchStringTextbox_TextChanged;
+            // 
             // Disasembly
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -837,6 +874,8 @@ namespace MCDA_APP.Forms
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -905,5 +944,8 @@ namespace MCDA_APP.Forms
         private TextBox Md5Textbox;
         private Label label15;
         private Label label14;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Label label16;
+        private TextBox SearchStringTextbox;
     }
 }
