@@ -125,7 +125,6 @@ namespace MCDA_APP.Forms
 
             _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.DoWork += BackgroundWorker_DoWork;
-            _backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
             _backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
 
             Overlay = new Overlay
@@ -179,11 +178,6 @@ namespace MCDA_APP.Forms
             Md5Textbox.Text = ComputeHash(MD5.Create(), _filePath);
             Sha1Textbox.Text = ComputeHash(SHA1.Create(), _filePath);
             Sha256Textbox.Text = ComputeHash(SHA256.Create(), _filePath);
-        }
-
-        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
-        {
-
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
