@@ -35,7 +35,7 @@ namespace MCDA_APP.Forms
             timer = new System.Windows.Forms.Timer(components);
             flowLayoutPanel1 = new FlowLayoutPanel();
             label1 = new Label();
-            panel1 = new Panel();
+            line = new Panel();
             rbString = new RadioButton();
             chkMatchCase = new CheckBox();
             txtFind = new TextBox();
@@ -62,7 +62,7 @@ namespace MCDA_APP.Forms
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Controls.Add(label1);
-            flowLayoutPanel1.Controls.Add(panel1);
+            flowLayoutPanel1.Controls.Add(line);
             flowLayoutPanel1.Location = new Point(11, 19);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(515, 32);
@@ -71,24 +71,26 @@ namespace MCDA_APP.Forms
             // label1
             // 
             label1.AutoSize = true;
-            label1.ForeColor = Color.Blue;
+            label1.ForeColor = Color.DodgerBlue;
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
             label1.Size = new Size(30, 15);
             label1.TabIndex = 8;
             label1.Text = "Find";
             // 
-            // panel1
+            // line
             // 
-            panel1.Location = new Point(39, 10);
-            panel1.Margin = new Padding(3, 10, 3, 3);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(462, 1);
-            panel1.TabIndex = 8;
+            line.BackColor = Color.LightGray;
+            line.Location = new Point(39, 10);
+            line.Margin = new Padding(3, 10, 3, 3);
+            line.Name = "line";
+            line.Size = new Size(462, 1);
+            line.TabIndex = 8;
             // 
             // rbString
             // 
             rbString.AutoSize = true;
+            rbString.ForeColor = Color.White;
             rbString.Location = new Point(26, 59);
             rbString.Name = "rbString";
             rbString.Size = new Size(46, 19);
@@ -100,6 +102,7 @@ namespace MCDA_APP.Forms
             // chkMatchCase
             // 
             chkMatchCase.AutoSize = true;
+            chkMatchCase.ForeColor = Color.White;
             chkMatchCase.Location = new Point(384, 57);
             chkMatchCase.Name = "chkMatchCase";
             chkMatchCase.Size = new Size(86, 19);
@@ -109,6 +112,8 @@ namespace MCDA_APP.Forms
             // 
             // txtFind
             // 
+            txtFind.BackColor = Color.FromArgb(46, 46, 65);
+            txtFind.ForeColor = Color.White;
             txtFind.Location = new Point(26, 81);
             txtFind.Name = "txtFind";
             txtFind.Size = new Size(495, 23);
@@ -118,6 +123,7 @@ namespace MCDA_APP.Forms
             // rbHex
             // 
             rbHex.AutoSize = true;
+            rbHex.ForeColor = Color.White;
             rbHex.Location = new Point(26, 131);
             rbHex.Name = "rbHex";
             rbHex.Size = new Size(46, 19);
@@ -128,6 +134,7 @@ namespace MCDA_APP.Forms
             // 
             // hexFind
             // 
+            hexFind.BackColor = Color.FromArgb(46, 46, 65);
             // 
             // 
             // 
@@ -139,6 +146,7 @@ namespace MCDA_APP.Forms
             hexFind.BuiltInContextMenu.PasteMenuItemText = "Paste";
             hexFind.BuiltInContextMenu.SelectAllMenuItemText = "Select All";
             hexFind.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            hexFind.ForeColor = Color.White;
             hexFind.Location = new Point(26, 154);
             hexFind.Name = "hexFind";
             hexFind.ShadowSelectionColor = Color.FromArgb(100, 60, 188, 255);
@@ -161,21 +169,27 @@ namespace MCDA_APP.Forms
             // 
             btnCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnCancel.DialogResult = DialogResult.Cancel;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            btnCancel.ForeColor = Color.Red;
             btnCancel.Location = new Point(392, 3);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(120, 34);
             btnCancel.TabIndex = 14;
-            btnCancel.Text = "&Cancel";
+            btnCancel.Text = "&CANCEL";
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += BtnCancel_Click_1;
             // 
             // btnOK
             // 
+            btnOK.FlatStyle = FlatStyle.Flat;
+            btnOK.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            btnOK.ForeColor = Color.White;
             btnOK.Location = new Point(266, 3);
             btnOK.Name = "btnOK";
             btnOK.Size = new Size(120, 34);
             btnOK.TabIndex = 15;
-            btnOK.Text = "Find";
+            btnOK.Text = "FIND";
             btnOK.UseVisualStyleBackColor = true;
             btnOK.Click += BtnOK_Click;
             // 
@@ -198,7 +212,7 @@ namespace MCDA_APP.Forms
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            BackColor = SystemColors.Control;
+            BackColor = Color.FromArgb(26, 26, 34);
             ClientSize = new Size(533, 369);
             Controls.Add(flowLayoutPanel2);
             Controls.Add(hexFind);
@@ -214,6 +228,7 @@ namespace MCDA_APP.Forms
             ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
+            Text = "Find";
             Activated += FormFind_Activated;
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
@@ -226,7 +241,7 @@ namespace MCDA_APP.Forms
 
         private FlowLayoutPanel flowLayoutPanel1;
         private Label label1;
-        private Panel panel1;
+        private Panel line;
         private RadioButton rbString;
         private CheckBox chkMatchCase;
         private TextBox txtFind;

@@ -1,8 +1,8 @@
 ﻿using MCDA_APP.HexEditor;
 using MCDA_APP.HexEditor.Winforms;
+using MCDA_APP.Model.Api.Hex;
 using MCDA_APP.Properties;
-using Microsoft.VisualBasic;
-using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace MCDA_APP.Forms
 {
@@ -12,7 +12,7 @@ namespace MCDA_APP.Forms
         private string _fileName;
         HexFormFind _formFind;
         FindOptions _findOptions = new FindOptions();
-        //FormGoTo _formGoto = new FormGoTo();
+        HexFormGoTo _formGoto = new HexFormGoTo();
 
         public HexDump()
         {
@@ -23,7 +23,6 @@ namespace MCDA_APP.Forms
                 BackColor = Color.FromArgb(55, 55, 55),
                 ForeColor = Color.FromArgb(0, 230, 118),
 
-                //Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
                 Dock = DockStyle.Fill,
                 BytesPerLine = 16,
                 ColumnInfoVisible = true,
@@ -53,25 +52,11 @@ namespace MCDA_APP.Forms
             hexBox.BringToFront();
 
             ManageAbility();
-            //OpenFile(@"C:\Users\milton\Downloads\HiSuite_14.0.0.320_OVE.exe");
         }
-
-        ///// <summary>
-        ///// Manages enabling or disabling of menustrip items and toolstrip buttons for copy and paste
-        ///// </summary>
-        //void ManageAbilityForCopyAndPaste()
-        //{
-        //    copyHexToolStripMenuItem.Enabled =
-        //        copyToolStripSplitButton.Enabled = copyToolStripMenuItem.Enabled = hexBox.CanCopy();
-
-        //    cutToolStripButton.Enabled = cutToolStripMenuItem.Enabled = hexBox.CanCut();
-        //    pasteToolStripSplitButton.Enabled = pasteToolStripMenuItem.Enabled = hexBox.CanPaste();
-        //    pasteHexToolStripMenuItem.Enabled = pasteHexToolStripMenuItem1.Enabled = hexBox.CanPasteHex();
-        //}
 
         private void HexBox_SelectionLengthChanged(object? sender, EventArgs e)
         {
-            //ManageAbilityForCopyAndPaste();
+            ManageAbilityForCopyAndPaste();
         }
 
         private void HexBox_DragEnter(object? sender, DragEventArgs e)
@@ -160,7 +145,7 @@ namespace MCDA_APP.Forms
 
             try
             {
-                DynamicFileByteProvider dynamicFileByteProvider = hexBox.ByteProvider as DynamicFileByteProvider;
+                DynamicByteProvider dynamicFileByteProvider = hexBox.ByteProvider as DynamicByteProvider;
                 dynamicFileByteProvider!.ApplyChanges();
             }
             catch (Exception ex1)
@@ -200,10 +185,10 @@ namespace MCDA_APP.Forms
             if (_fileName != null && _fileName.Length > 0)
             {
                 string textFormat = "{0}{1} - {2}";
-                string readOnly = ((DynamicFileByteProvider)hexBox.ByteProvider).ReadOnly
-                    ? "[read-only]" : "";
+                //string readOnly = ((DynamicByteProvider)hexBox.ByteProvider).ReadOnly
+                //    ? "[read-only]" : "";
                 string text = Path.GetFileName(_fileName);
-                this.Text = string.Format(textFormat, text, readOnly, Constants.Name);
+                this.Text = string.Format(textFormat, text, "[read-only]", Constants.Name);
             }
             else
             {
@@ -298,6 +283,47 @@ namespace MCDA_APP.Forms
             return result;
         }
 
+        private static byte[] FileStreamToByteArray(string fileName)
+        {
+            using (FileStream fileStream = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    fileStream.CopyTo(memoryStream);
+                    return memoryStream.ToArray();
+                }
+            }
+        }
+
+        private byte[] ProcessHexResult(HexAsciiResult result)
+        {
+            var hexAsciiDataList = new List<HexAsciiData>();
+            var lines = result.Results.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                var parts = line.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length == 3)
+                {
+                    var hexAsciiData = new HexAsciiData
+                    {
+                        LineNumber = parts[0].Trim(),
+                        Hex = parts[1].Trim(),
+                        Ascii = parts[2].Trim()
+                    };
+                    hexAsciiDataList.Add(hexAsciiData);
+                }
+            }
+
+            string combinedHex = string.Concat(hexAsciiDataList.Select(data => data.Hex));
+
+            byte[] byteArray = Enumerable.Range(0, combinedHex.Length)
+                .Where(x => x % 2 == 0)
+                .Select(x => Convert.ToByte(combinedHex.Substring(x, 2), 16))
+                .ToArray();
+
+            return byteArray;
+        }
+
         public void OpenFile(string fileName)
         {
             if (!File.Exists(fileName))
@@ -311,33 +337,21 @@ namespace MCDA_APP.Forms
 
             try
             {
-                DynamicFileByteProvider dynamicFileByteProvider;
-                try
-                {
-                    dynamicFileByteProvider = new DynamicFileByteProvider(fileName);
-                    dynamicFileByteProvider.Changed += new EventHandler(byteProvider_Changed);
-                    dynamicFileByteProvider.LengthChanged += new EventHandler(byteProvider_LengthChanged);
-                }
-                catch (IOException)
-                {
-                    try
-                    {
-                        dynamicFileByteProvider = new DynamicFileByteProvider(fileName, true);
-                        if (ShowQuestion("Open read only?") == DialogResult.No)
-                        {
-                            dynamicFileByteProvider.Dispose();
-                            return;
-                        }
-                    }
-                    catch (IOException)
-                    {
-                        ShowError("Failed to open file.");
-                        return;
-                    }
-                }
+                var response = Program.Client!.UploadFile(
+                    $"{Constants.ApiBaseUrl}/api/hexdump", FileStreamToByteArray(fileName), Path.GetFileName(fileName)).GetAwaiter().GetResult();
 
-                hexBox.ByteProvider = dynamicFileByteProvider;
+                HexAsciiResult result = JsonConvert.DeserializeObject<HexAsciiResult>(response.Item1);
+
+                DynamicByteProvider dynamicByteProvider;
+                dynamicByteProvider = new DynamicByteProvider(ProcessHexResult(result));
+
+                dynamicByteProvider.Changed += new EventHandler(byteProvider_Changed);
+                dynamicByteProvider.LengthChanged += new EventHandler(byteProvider_LengthChanged);
+
+                hexBox.ByteProvider = dynamicByteProvider;
                 _fileName = fileName;
+
+                DisplayText();
 
                 UpdateFileSizeStatus();
             }
@@ -395,11 +409,11 @@ namespace MCDA_APP.Forms
 		/// Creates a new FormFind dialog
 		/// </summary>
 		/// <returns>the form find dialog</returns>
-		HexFormFind ShowFind()
+		HexFormFind ShowFind(bool hide = false)
         {
             if (_formFind == null || _formFind.IsDisposed)
             {
-                _formFind = new HexFormFind();
+                _formFind = new HexFormFind(hide);
                 _formFind.HexBox = this.hexBox;
                 _formFind.FindOptions = _findOptions;
                 _formFind.Show(this);
@@ -433,7 +447,9 @@ namespace MCDA_APP.Forms
 
         private void FindNextToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.TopMost = true;
             this.FindNext();
+            this.TopMost = false;
         }
 
         /// <summary>
@@ -441,7 +457,7 @@ namespace MCDA_APP.Forms
         /// </summary>
         void FindNext()
         {
-            ShowFind().FindNext();
+            ShowFind(true).FindNext();
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -487,6 +503,26 @@ namespace MCDA_APP.Forms
         private void pasteHexToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.hexBox.PasteHex();
+        }
+
+        private void goToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Goto();
+        }
+
+        /// <summary>
+        /// Displays the goto byte dialog.
+        /// </summary>
+        void Goto()
+        {
+            _formGoto.SetMaxByteIndex(hexBox.ByteProvider.Length);
+            _formGoto.SetDefaultValue(hexBox.SelectionStart);
+            if (_formGoto.ShowDialog() == DialogResult.OK)
+            {
+                hexBox.SelectionStart = _formGoto.GetByteIndex();
+                hexBox.SelectionLength = 1;
+                hexBox.Focus();
+            }
         }
     }
 }

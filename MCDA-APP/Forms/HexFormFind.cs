@@ -7,9 +7,16 @@ namespace MCDA_APP.Forms
         private System.Windows.Forms.Timer timerPercent;
         private System.Windows.Forms.Timer timer;
 
-        public HexFormFind()
+        public HexFormFind(bool hide = false)
         {
+            
             InitializeComponent();
+
+            if (hide)
+            {
+                this.Visible = false;
+                this.WindowState = FormWindowState.Minimized;
+            }
 
             rbString.CheckedChanged += new EventHandler(rb_CheckedChanged);
             rbHex.CheckedChanged += new EventHandler(rb_CheckedChanged);
@@ -81,7 +88,6 @@ namespace MCDA_APP.Forms
 
             UpdateUIToFindingState();
 
-            // start find process
             long res = HexBox.Find(_findOptions);
 
             UpdateUIToNormalState();

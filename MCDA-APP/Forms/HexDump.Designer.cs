@@ -208,6 +208,7 @@ namespace MCDA_APP.Forms
             goToToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.G;
             goToToolStripMenuItem.Size = new Size(200, 22);
             goToToolStripMenuItem.Text = "Go To";
+            goToToolStripMenuItem.Click += goToToolStripMenuItem_Click;
             // 
             // toolStripMenuItem1
             // 
@@ -219,6 +220,7 @@ namespace MCDA_APP.Forms
             toolStrip1.Items.AddRange(new ToolStripItem[] { openToolStripButton, saveToolStripButton, toolStripSeparator3, cutToolStripButton, copyToolStripSplitButton, pasteToolStripSplitButton });
             toolStrip1.Location = new Point(0, 24);
             toolStrip1.Name = "toolStrip1";
+            toolStrip1.RenderMode = ToolStripRenderMode.System;
             toolStrip1.Size = new Size(834, 25);
             toolStrip1.TabIndex = 2;
             toolStrip1.Text = "toolStrip1";
@@ -298,7 +300,7 @@ namespace MCDA_APP.Forms
             // 
             pasteToolStripMenuItem1.Image = Properties.Resources.PasteHS;
             pasteToolStripMenuItem1.Name = "pasteToolStripMenuItem1";
-            pasteToolStripMenuItem1.Size = new Size(180, 22);
+            pasteToolStripMenuItem1.Size = new Size(126, 22);
             pasteToolStripMenuItem1.Text = "Paste";
             pasteToolStripMenuItem1.Click += pasteToolStripMenuItem1_Click;
             // 
@@ -306,7 +308,7 @@ namespace MCDA_APP.Forms
             // 
             pasteHexToolStripMenuItem1.Image = Properties.Resources.PasteHS;
             pasteHexToolStripMenuItem1.Name = "pasteHexToolStripMenuItem1";
-            pasteHexToolStripMenuItem1.Size = new Size(180, 22);
+            pasteHexToolStripMenuItem1.Size = new Size(126, 22);
             pasteHexToolStripMenuItem1.Text = "Paste Hex";
             pasteHexToolStripMenuItem1.Click += pasteHexToolStripMenuItem1_Click;
             // 
