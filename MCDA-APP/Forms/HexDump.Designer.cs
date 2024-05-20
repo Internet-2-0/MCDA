@@ -325,6 +325,7 @@ namespace MCDA_APP.Forms
             Controls.Add(OptionsToolMenu);
             Controls.Add(statusStrip);
             Controls.Add(OptionsMenu);
+            DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = OptionsMenu;
