@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeReuseResult));
             SuspendLayout();
             // 
             // CodeReuseResult
@@ -35,9 +36,12 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 639);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
             Name = "CodeReuseResult";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "CodeReuseResult";
+            Text = "Result";
             ResumeLayout(false);
         }
 
