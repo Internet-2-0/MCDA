@@ -49,7 +49,6 @@ namespace MCDA_APP.Forms
             findToolStripMenuItem = new ToolStripMenuItem();
             findNextToolStripMenuItem = new ToolStripMenuItem();
             goToToolStripMenuItem = new ToolStripMenuItem();
-            toolStripMenuItem1 = new ToolStripMenuItem();
             OptionsToolMenu = new ToolStrip();
             openToolStripButton = new ToolStripButton();
             saveToolStripButton = new ToolStripButton();
@@ -95,7 +94,7 @@ namespace MCDA_APP.Forms
             // 
             OptionsMenu.BackColor = Color.FromArgb(26, 26, 34);
             OptionsMenu.ForeColor = Color.White;
-            OptionsMenu.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, searchToolStripMenuItem, toolStripMenuItem1 });
+            OptionsMenu.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, searchToolStripMenuItem });
             OptionsMenu.Location = new Point(0, 0);
             OptionsMenu.Name = "OptionsMenu";
             OptionsMenu.Padding = new Padding(10, 7, 0, 7);
@@ -116,14 +115,14 @@ namespace MCDA_APP.Forms
             openToolStripMenuItem.Image = Properties.Resources.FolderOpen_16;
             openToolStripMenuItem.Name = "openToolStripMenuItem";
             openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            openToolStripMenuItem.Size = new Size(146, 22);
+            openToolStripMenuItem.Size = new Size(180, 22);
             openToolStripMenuItem.Text = "&Open";
             openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(146, 22);
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
@@ -212,11 +211,6 @@ namespace MCDA_APP.Forms
             goToToolStripMenuItem.Size = new Size(200, 22);
             goToToolStripMenuItem.Text = "Go To";
             goToToolStripMenuItem.Click += goToToolStripMenuItem_Click;
-            // 
-            // toolStripMenuItem1
-            // 
-            toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(12, 19);
             // 
             // OptionsToolMenu
             // 
@@ -354,7 +348,6 @@ namespace MCDA_APP.Forms
         private ToolStripStatusLabel fileSizeToolStripStatusLabel;
         private ToolStripMenuItem findNextToolStripMenuItem;
         private ToolStripMenuItem goToToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem1;
         private ToolStripMenuItem cutToolStripMenuItem;
         private ToolStripMenuItem coToolStripMenuItem;
         private ToolStripMenuItem pasteToolStripMenuItem;

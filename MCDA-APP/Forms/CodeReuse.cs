@@ -7,7 +7,7 @@ namespace MCDA_APP.Forms
 {
     public partial class CodeReuse : Form
     {
-        private Overlay _overlay;
+        private Overlay? _overlay;
 
         public CodeReuse() => InitializeComponent();
 
@@ -68,7 +68,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private async void ButtonSubmitScan_Click(object sender, EventArgs e)
+        private void ButtonSubmitScan_Click(object sender, EventArgs e)
         {
             if (!File.Exists(TextBoxFile.TextBoxText))
             {
@@ -102,18 +102,28 @@ namespace MCDA_APP.Forms
                 string json = await Program.Client!.UploadFiles($"{Constants.ApiBaseUrl}/api/reuse", files);
                 var parsedData = JsonConvert.DeserializeObject<ReuseResponse>(json);
 
+                RemoveOverlay();
+
                 CodeReuseResult codeReuseResult = new CodeReuseResult(parsedData);
                 codeReuseResult.ShowDialog();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Malcore.io", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RemoveOverlay();
             }
         }
 
-        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        private void RemoveOverlay()
         {
-            this.Controls.Remove(_overlay);
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(RemoveOverlay));
+            }
+            else
+            {
+                this.Controls.Remove(_overlay);
+            }
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeReuse));
             TextBoxFile = new Controls.IconTextBox();
             TextBoxSecondFile = new Controls.IconTextBox();
             ButtonSubmitScan = new Button();
@@ -87,7 +88,6 @@
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-            backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
             // 
             // CodeReuse
             // 
@@ -102,6 +102,7 @@
             Controls.Add(TextBoxFile);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "CodeReuse";
             StartPosition = FormStartPosition.CenterScreen;

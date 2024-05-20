@@ -19,8 +19,11 @@ namespace MCDA_APP.Controls
 
     public partial class Casm : UserControl
     {
+        private Color _defaultColor = Color.Green;
+
         public Casm(string groupName, DataGroup dataGroup)
         {
+            
             var tableLayoutPanel = new TableLayoutPanel
             {
                 ColumnCount = 1,
@@ -122,21 +125,22 @@ namespace MCDA_APP.Controls
             foreach (var instruction in instructionsList)
             {
                 int maxLines = Math.Max(instruction.LeftInstructions.Count, instruction.RightInstructions.Count);
+                Color scoreColor = instruction.Score < 120 ? _defaultColor : Color.Yellow;
 
                 for (int i = 0; i < maxLines; i++)
                 {
                     string leftText = i < instruction.LeftInstructions.Count ? instruction.LeftInstructions[i] : string.Empty;
                     string rightText = i < instruction.RightInstructions.Count ? instruction.RightInstructions[i] : string.Empty;
 
-                    tableLayoutPanel.Controls.Add(CreateTextLabel(leftText), 0, row);
-                    tableLayoutPanel.Controls.Add(CreateTextLabel("->", centered: true), 1, row);
-                    tableLayoutPanel.Controls.Add(CreateTextLabel(rightText), 2, row);
+                    tableLayoutPanel.Controls.Add(CreateTextLabel(leftText, _defaultColor), 0, row);
+                    tableLayoutPanel.Controls.Add(CreateTextLabel("->", scoreColor, centered: true), 1, row);
+                    tableLayoutPanel.Controls.Add(CreateTextLabel(rightText, _defaultColor), 2, row);
 
                     row += 1;
                 }
 
                 tableLayoutPanel.Controls.Add(new Label(), 0, row);
-                tableLayoutPanel.Controls.Add(CreateTextLabel(instruction.Score.ToString("0.###"), isScore: true), 1, row);
+                tableLayoutPanel.Controls.Add(CreateTextLabel(instruction.Score.ToString("0.###"), scoreColor, isScore: true), 1, row);
                 tableLayoutPanel.Controls.Add(new Label(), 2, row);
 
                 row += 1;
@@ -144,12 +148,13 @@ namespace MCDA_APP.Controls
 
             return tableLayoutPanel;
         }
-        private Label CreateTextLabel(string text, bool isScore = false, bool centered = false)
+
+        private Label CreateTextLabel(string text, Color color, bool isScore = false, bool centered = false)
         {
             return new Label
             {
                 Text = text,
-                ForeColor = isScore ? Color.Yellow : Color.Green,
+                ForeColor = color,
                 Font = new Font("Consolas", 10),
                 AutoSize = true,
                 Dock = DockStyle.Fill,

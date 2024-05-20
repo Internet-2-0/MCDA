@@ -199,8 +199,6 @@ namespace MCDA_APP.Forms
             string information = _r2Pipe.RunCommand("ij");
             _information = JsonConvert.DeserializeObject<RadareInformation>(information);
 
-            File.WriteAllText("info.json", JsonConvert.SerializeObject(_information, Formatting.Indented));
-
             //set some needed options
             _r2Pipe.RunCommand("e asm.lines=false;e asm.lines.fcn=false;e asm.bytes=false");
 
