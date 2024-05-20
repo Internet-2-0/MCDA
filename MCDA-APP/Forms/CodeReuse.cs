@@ -7,7 +7,7 @@ namespace MCDA_APP.Forms
 {
     public partial class CodeReuse : Form
     {
-        private Overlay _overlay;
+        private Overlay? _overlay;
 
         public CodeReuse() => InitializeComponent();
 
@@ -68,7 +68,7 @@ namespace MCDA_APP.Forms
             }
         }
 
-        private async void ButtonSubmitScan_Click(object sender, EventArgs e)
+        private void ButtonSubmitScan_Click(object sender, EventArgs e)
         {
             if (!File.Exists(TextBoxFile.TextBoxText))
             {
