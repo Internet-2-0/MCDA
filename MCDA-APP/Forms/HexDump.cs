@@ -64,13 +64,13 @@ namespace MCDA_APP.Forms
             e.Effect = DragDropEffects.All;
         }
 
-        private void HexBox_DragDrop(object? sender, DragEventArgs e)
+        private async void HexBox_DragDrop(object? sender, DragEventArgs e)
         {
             object oFileNames = e.Data.GetData(DataFormats.FileDrop);
             string[] fileNames = (string[])oFileNames;
             if (fileNames.Length == 1)
             {
-                OpenFile(fileNames[0]);
+                await OpenFile(fileNames[0]);
             }
         }
 
@@ -323,7 +323,7 @@ namespace MCDA_APP.Forms
             return byteArray;
         }
 
-        public void OpenFile(string fileName)
+        public async Task OpenFile(string fileName)
         {
             if (!File.Exists(fileName))
             {
@@ -336,23 +336,30 @@ namespace MCDA_APP.Forms
 
             try
             {
-                var response = Program.Client!.UploadFile(
-                    $"{Constants.ApiBaseUrl}/api/hexdump", FileStreamToByteArray(fileName), Path.GetFileName(fileName)).GetAwaiter().GetResult();
+                var response = await Program.Client!.UploadFile(
+                    $"{Constants.ApiBaseUrl}/api/hexdump", FileStreamToByteArray(fileName), Path.GetFileName(fileName));
 
                 HexAsciiResult result = JsonConvert.DeserializeObject<HexAsciiResult>(response.Item1);
 
-                DynamicByteProvider dynamicByteProvider;
-                dynamicByteProvider = new DynamicByteProvider(ProcessHexResult(result));
+                if (result.Results == null)
+                {
+                    ShowError("An error occurred. Received a wrong response!");
+                }
+                else
+                {
+                    DynamicByteProvider dynamicByteProvider;
+                    dynamicByteProvider = new DynamicByteProvider(ProcessHexResult(result));
 
-                dynamicByteProvider.Changed += new EventHandler(byteProvider_Changed);
-                dynamicByteProvider.LengthChanged += new EventHandler(byteProvider_LengthChanged);
+                    dynamicByteProvider.Changed += new EventHandler(byteProvider_Changed);
+                    dynamicByteProvider.LengthChanged += new EventHandler(byteProvider_LengthChanged);
 
-                hexBox.ByteProvider = dynamicByteProvider;
-                _fileName = fileName;
+                    hexBox.ByteProvider = dynamicByteProvider;
+                    _fileName = fileName;
 
-                DisplayText();
+                    DisplayText();
 
-                UpdateFileSizeStatus();
+                    UpdateFileSizeStatus();
+                }
             }
             catch (Exception ex1)
             {
@@ -422,16 +429,15 @@ namespace MCDA_APP.Forms
         /// <summary>
         /// Shows the open file dialog.
         /// </summary>
-        void OpenFile()
+        async Task OpenFile()
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    OpenFile(ofd.FileName);
+                    await OpenFile(ofd.FileName);
                 }
             }
-
         }
 
         private void FindToolStripMenuItem_Click(object sender, EventArgs e)
@@ -459,14 +465,14 @@ namespace MCDA_APP.Forms
             this.Close();
         }
 
-        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFile();
+            await OpenFile();
         }
 
-        private void openToolStripButton_Click(object sender, EventArgs e)
+        private async void openToolStripButton_Click(object sender, EventArgs e)
         {
-            OpenFile();
+            await OpenFile();
         }
 
         private void saveToolStripButton_Click(object sender, EventArgs e)

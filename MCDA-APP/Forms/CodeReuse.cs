@@ -7,6 +7,8 @@ namespace MCDA_APP.Forms
 {
     public partial class CodeReuse : Form
     {
+        private Overlay _overlay;
+
         public CodeReuse() => InitializeComponent();
 
         private void CodeReuse_Load(object sender, EventArgs e)
@@ -21,6 +23,12 @@ namespace MCDA_APP.Forms
 
             TextBoxFile.Click += TextBox_Click;
             TextBoxSecondFile.Click += TextBox_Click;
+
+            _overlay = new Overlay
+            {
+                Dock = DockStyle.Fill,
+                Enabled = true,
+            };
         }
 
         private void TextBox_Click(object? sender, EventArgs e)
@@ -74,17 +82,38 @@ namespace MCDA_APP.Forms
                 return;
             }
 
+            this.Controls.Add(_overlay);
+            _overlay.BringToFront();
+
+            backgroundWorker1.RunWorkerAsync();
+
+        }
+
+        private async void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
             List<FileToUpload> files = new()
             {
                 new FileToUpload(Path.GetFileName(TextBoxFile.TextBoxText), File.ReadAllBytes(TextBoxFile.TextBoxText)),
                 new FileToUpload(Path.GetFileName(TextBoxSecondFile.TextBoxText), File.ReadAllBytes(TextBoxSecondFile.TextBoxText))
             };
 
-            string json = await Program.Client!.UploadFiles($"{Constants.ApiBaseUrl}/api/reuse", files);
-            var parsedData = JsonConvert.DeserializeObject<ReuseResponse>(json);
+            try
+            {
+                string json = await Program.Client!.UploadFiles($"{Constants.ApiBaseUrl}/api/reuse", files);
+                var parsedData = JsonConvert.DeserializeObject<ReuseResponse>(json);
 
-            CodeReuseResult codeReuseResult = new CodeReuseResult(parsedData);
-            codeReuseResult.ShowDialog();
+                CodeReuseResult codeReuseResult = new CodeReuseResult(parsedData);
+                codeReuseResult.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Malcore.io", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            this.Controls.Remove(_overlay);
         }
     }
 }

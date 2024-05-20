@@ -32,6 +32,7 @@
             TextBoxSecondFile = new Controls.IconTextBox();
             ButtonSubmitScan = new Button();
             LabelError = new Label();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             SuspendLayout();
             // 
             // TextBoxFile
@@ -81,6 +82,13 @@
             LabelError.Size = new Size(0, 21);
             LabelError.TabIndex = 3;
             // 
+            // backgroundWorker1
+            // 
+            backgroundWorker1.WorkerReportsProgress = true;
+            backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+            backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
+            // 
             // CodeReuse
             // 
             AllowDrop = true;
@@ -92,6 +100,7 @@
             Controls.Add(ButtonSubmitScan);
             Controls.Add(TextBoxSecondFile);
             Controls.Add(TextBoxFile);
+            DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "CodeReuse";
@@ -108,5 +117,6 @@
         private Controls.IconTextBox TextBoxSecondFile;
         private Button ButtonSubmitScan;
         private Label LabelError;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
