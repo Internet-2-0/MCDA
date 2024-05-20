@@ -105,7 +105,7 @@
             btnLogout.TabIndex = 15;
             btnLogout.Text = "Log Out";
             btnLogout.UseVisualStyleBackColor = false;
-            btnLogout.Click += btnLogout_Click;
+            btnLogout.Click += BtnLogout_Click;
             // 
             // label2
             // 
@@ -365,7 +365,7 @@
             MaximizeBox = false;
             Name = "SettingsForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Settings";
+            Text = "%placeholder%";
             FormClosing += SettingsForm_FormClosing;
             Load += SettingsForm_Load;
             Resize += SettingsForm_Resize;

@@ -21,8 +21,8 @@ namespace MCDA_APP.Forms
             this.folderName = folderName;
             this.fileName = fileName;
             this.type = type;
-            labelEmail.Text = Program.USEREMAIL; 
-            labelPlan.Text = Program.SUBSCRIPTION; 
+            labelEmail.Text = Program.AccountInformation?.UserEmail;
+            labelPlan.Text = Program.AccountInformation?.Subscription;
 
             try
             {
@@ -50,7 +50,7 @@ namespace MCDA_APP.Forms
             {
                 Debug.Write("DetailsForm.............." + ex.Message);
             }
-            
+
 
         }
 
@@ -77,9 +77,9 @@ namespace MCDA_APP.Forms
             else
             {
                 JObject jsonObject = JObject.Parse(this.responseString);
-                success = (bool)jsonObject["success"]; 
+                success = (bool)jsonObject["success"];
 
-                if (jsonObject["data"]["data"].ToString() == "{}" || jsonObject["data"]["data"].ToString() == "")
+                if (jsonObject["data"]?["data"]?.ToString() == "{}" || jsonObject["data"]?["data"]?.ToString() == "")
                 {
                     success = false;
                 }
@@ -253,7 +253,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Width = 80;
                 rerunButton.Height = 31;
                 rerunButton.Location = new System.Drawing.Point(445, 7);
-                rerunButton.Click += delegate (object obj, EventArgs ea)
+                rerunButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     this.Close();
                     monitoringForm.rerunScanFile(folderName, fileName, listPanel, true);
@@ -262,7 +262,7 @@ namespace MCDA_APP.Forms
                 percentLabel.Visible = false;
             }
 
-            removeButton.Click += delegate (object obj, EventArgs ea)
+            removeButton.Click += delegate (object? obj, EventArgs ea)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
@@ -283,7 +283,7 @@ namespace MCDA_APP.Forms
                 }
             };
 
-            releaseButton.Click += delegate (object obj, EventArgs ea)
+            releaseButton.Click += delegate (object? obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);
                 releaseButton.Visible = false;
@@ -429,7 +429,7 @@ namespace MCDA_APP.Forms
                 rerunButton.Width = 80;
                 rerunButton.Height = 31;
                 rerunButton.Location = new System.Drawing.Point(445, 7);
-                rerunButton.Click += delegate (object obj, EventArgs ea)
+                rerunButton.Click += delegate (object? obj, EventArgs ea)
                 {
                     this.Close();
                     monitoringForm.rerunScanFile(folderName, fileName, listPanel, false);
@@ -438,7 +438,7 @@ namespace MCDA_APP.Forms
                 percentLabel.Visible = false;
             }
 
-            removeButton.Click += delegate (object obj, EventArgs ea)
+            removeButton.Click += delegate (object? obj, EventArgs ea)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this file?", "DELETE", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
@@ -458,7 +458,7 @@ namespace MCDA_APP.Forms
                 }
             };
 
-            releaseButton.Click += delegate (object obj, EventArgs ea)
+            releaseButton.Click += delegate (object? obj, EventArgs ea)
             {
                 handleRelease(folderName + "\\" + fileName, false);
                 releaseButton.Visible = false;
@@ -503,6 +503,7 @@ namespace MCDA_APP.Forms
 
         private void DetailsForm_Load(object sender, EventArgs e)
         {
+            Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Details");
             MalcoreFooter malcoreFooter = new()
             {
                 Dock = DockStyle.Bottom
@@ -533,22 +534,17 @@ namespace MCDA_APP.Forms
         {
             try
             {
-                RegistryKey? key = Registry.CurrentUser.OpenSubKey(Constants.RegistryMalcoreKey, true);
-                key.DeleteValue("API_KEY");
-                key.DeleteValue("SETTINGS");
-                key.Close();
-
-                Program.APIKEY = "";
-                Program.USEREMAIL = "";
-                Program.SUBSCRIPTION = "";
+                Helper.DeleteKeys(new string[] { "API_KEY", "SETTINGS", "EMAIL", "SUBSCRIPTION" });
+                Program.AccountInformation!.ResetValues();
 
                 Hide();
-                LoginForm loginForm = new LoginForm();
+                LoginForm loginForm = new();
                 loginForm.Show(this);
 
                 foreach (Form f in Application.OpenForms)
                 {
-                    if (f.Name != "LoginForm") {
+                    if (f.Name != "LoginForm")
+                    {
                         f.Close();
                     }
                 }

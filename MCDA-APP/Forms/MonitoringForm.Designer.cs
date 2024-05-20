@@ -70,6 +70,7 @@
             notifyIcon1 = new NotifyIcon(components);
             contextMenuStrip1 = new ContextMenuStrip(components);
             exitToolStripMenuItem = new ToolStripMenuItem();
+            NewScanButton = new Button();
             monitoringFlowLayoutPanel.SuspendLayout();
             queuePanel.SuspendLayout();
             panelInactive.SuspendLayout();
@@ -168,7 +169,7 @@
             btnLogout.TabIndex = 38;
             btnLogout.Text = "Log Out";
             btnLogout.UseVisualStyleBackColor = false;
-            btnLogout.Click += btnLogout_Click_1;
+            btnLogout.Click += BtnLogout_Click;
             // 
             // btnSettings
             // 
@@ -455,12 +456,28 @@
             exitToolStripMenuItem.Text = "Quit Malcore Agent";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
+            // NewScanButton
+            // 
+            NewScanButton.BackColor = Color.FromArgb(26, 26, 34);
+            NewScanButton.FlatAppearance.BorderColor = Color.White;
+            NewScanButton.FlatStyle = FlatStyle.Flat;
+            NewScanButton.Font = new Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            NewScanButton.ForeColor = Color.White;
+            NewScanButton.Location = new Point(473, 21);
+            NewScanButton.Name = "NewScanButton";
+            NewScanButton.Size = new Size(103, 31);
+            NewScanButton.TabIndex = 40;
+            NewScanButton.Text = "New Scan";
+            NewScanButton.UseVisualStyleBackColor = false;
+            NewScanButton.Click += NewScanButton_Click;
+            // 
             // MonitoringForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 34);
             ClientSize = new Size(830, 517);
+            Controls.Add(NewScanButton);
             Controls.Add(panelInactive);
             Controls.Add(monitoringFlowLayoutPanel);
             Controls.Add(btnLogout);
@@ -478,7 +495,7 @@
             MaximizeBox = false;
             Name = "MonitoringForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Monitoring";
+            Text = "%placeholder%";
             FormClosing += MonitoringForm_FormClosing;
             Load += MonitoringForm_Load;
             Resize += MonitoringForm_Resize;
@@ -554,5 +571,6 @@
         private Panel queuePanel;
         private Label labelQueuedFiles;
         private Button btnViewQueue;
+        private Button NewScanButton;
     }
 }

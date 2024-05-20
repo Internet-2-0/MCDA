@@ -261,7 +261,7 @@
             MaximizeBox = false;
             Name = "DetailsForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Malcore Agent 1.1.1 | Details";
+            Text = "%placeholder%";
             Load += DetailsForm_Load;
             panelDetailItem.ResumeLayout(false);
             ResumeLayout(false);

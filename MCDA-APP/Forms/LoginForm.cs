@@ -1,11 +1,8 @@
 ﻿using MCDA_APP.Forms;
-using Microsoft.Win32;
-using Newtonsoft.Json.Linq;
 using System.Diagnostics;
-using System.Text;
 using System.Reflection;
-using MCDA_APP.Model;
 using MCDA_APP.Controls;
+using MCDA_APP.Model.Agent;
 
 namespace MCDA_APP
 {
@@ -13,7 +10,6 @@ namespace MCDA_APP
     {
         public LoginForm() => InitializeComponent();
 
-        //TODO: HTTP requests should be handled in it's own class
         private async void BtnLogin_Click(object sender, EventArgs e)
         {
             LabelError.Visible = false;
@@ -34,6 +30,7 @@ namespace MCDA_APP
                 LabelError.Text = "Please enter your password";
                 return;
             }
+
             if (!CheckAgree.Checked)
             {
                 LabelError.Visible = true;
@@ -43,64 +40,40 @@ namespace MCDA_APP
 
             try
             {
-                HttpClient client = new HttpClient();
-                string url = System.Configuration.ConfigurationManager.AppSettings["URI"] + "/auth/login";
+                Program.AccountInformation = await Program.Client?.Login(username, password)!;
 
-                var data = new UserData() { Email = username, Password = password };
-                var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-
-                var requestContent = new StringContent(jsonData, Encoding.Unicode, "application/json");
-                var response = await client.PostAsync(url, requestContent);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (!Program.AccountInformation!.Success)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    JObject json = JObject.Parse(content);
-                    var authdata = "";
-                    var userdata = json["data"];
-                    Boolean success = json["success"] != null ? (Boolean)json["success"] : false;
+                    LabelError.Visible = true;
+                    LabelError.Text = Program.AccountInformation.Message;
 
-                    Debug.WriteLine("btnLogin_Click_1################################################" + userdata);
-
-                    if (success == true && userdata != null)
-                    {
-                        authdata = userdata["user"].ToString();
-
-                        if (authdata != "")
-                        {
-                            // store API Key and settings info to registory
-                            RegistryKey key = Registry.CurrentUser.CreateSubKey(Constants.RegistryMalcoreKey);
-                            key.SetValue("API_KEY", authdata);
-                            key.SetValue("SETTINGS", "");
-                            key.Close();
-
-                            Program.APIKEY = userdata["user"]["apiKey"].ToString();
-                            Program.USEREMAIL = userdata["user"]["email"].ToString();
-                            Program.SUBSCRIPTION = userdata["user"]["subscription"]["name"].ToString();
-
-                            Hide();
-                            SettingsForm settingsForm = new SettingsForm();
-                            settingsForm.Show(this);
-                        }
-                        else
-                        {
-                            LabelError.Visible = true;
-                            LabelError.Text = "Something went wrong";
-                        }
-                    }
-                    else
-                    {
-                        var errorMsg = json["messages"][0]["message"];
-                        LabelError.Visible = true;
-                        LabelError.Text = errorMsg.ToString();
-                    }
+                    return;
                 }
-                else
+
+                if (string.IsNullOrEmpty(Program.AccountInformation.ApiKey))
                 {
                     LabelError.Visible = true;
                     LabelError.Text = "Something went wrong";
+
+                    return;
                 }
 
+                Helper.SetRegistryKey("API_KEY", Program.AccountInformation.ApiKey);
+                Helper.SetRegistryKey("EMAIL", Program.AccountInformation.UserEmail!);
+                Helper.SetRegistryKey("SUBSCRIPTION", Program.AccountInformation.Subscription!);
+                Helper.SetRegistryKey("SETTINGS", "");
+
+                AgentStatus agentStatus = new()
+                {
+                    Payload = new Payload { Message = "Agent Started" },
+                    Type = "started"
+                };
+                await Program.Client.SendAgentStatusAsync(agentStatus);
+
+                Hide();
+
+                SettingsForm settingsForm = new();
+                settingsForm.Show(this);
             }
             catch (Exception ex)
             {
@@ -151,6 +124,7 @@ namespace MCDA_APP
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
+            Text = string.Format(Constants.MalcoreFormTitle, Helper.GetAgentVersion(), "Log in");
             MalcoreFooter malcoreFooter = new()
             {
                 Dock = DockStyle.Bottom

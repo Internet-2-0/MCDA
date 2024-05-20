@@ -21,10 +21,11 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <FileAlignment>512</FileAlignment>
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="bin\Debug\net6.0-windows\syntaxhighlight.json" />
     <Content Include="img\icon.ico" />
   </ItemGroup>
 
