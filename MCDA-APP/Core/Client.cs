@@ -54,6 +54,19 @@ namespace MCDA_APP.Core
             }
         }
 
+        public async Task<string> UploadFiles(string endpoint, List<FileToUpload> filesList)
+        {
+            try
+            {
+                string response = await _customHttpClient.PostRequestWithFilesAsync(endpoint, filesList);
+                return response;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
         public async Task<(string, HttpStatusCode)> GetUsage()
         {
             HttpStatusCode statusCode = HttpStatusCode.OK;
@@ -107,12 +120,6 @@ namespace MCDA_APP.Core
 
         public async Task SendAgentStatusAsync(AgentStatus agentStatus)
         {
-            //AgentStatus agentStatus = new()
-            //{
-            //    Payload = new Payload{ Message = "Agent Started" },
-            //    Type = "started"
-            //};
-
             try
             {
                 await _customHttpClient.SendJsonRequestAsync($"{Constants.ApiBaseUrl}/agent/stat", agentStatus);
