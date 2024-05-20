@@ -2,6 +2,7 @@
 using MCDA_APP.Model.Agent;
 using MCDA_APP.Model.Api.Reuse;
 using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MCDA_APP.Forms
 {
@@ -80,11 +81,18 @@ namespace MCDA_APP.Forms
                 new FileToUpload(Path.GetFileName(TextBoxSecondFile.TextBoxText), File.ReadAllBytes(TextBoxSecondFile.TextBoxText))
             };
 
-            string json = await Program.Client!.UploadFiles($"{Constants.ApiBaseUrl}/api/reuse", files);
-            var parsedData = JsonConvert.DeserializeObject<ReuseResponse>(json);
+            try
+            {
+                string json = await Program.Client!.UploadFiles($"{Constants.ApiBaseUrl}/api/reuse", files);
+                var parsedData = JsonConvert.DeserializeObject<ReuseResponse>(json);
 
-            CodeReuseResult codeReuseResult = new CodeReuseResult(parsedData);
-            codeReuseResult.ShowDialog();
+                CodeReuseResult codeReuseResult = new CodeReuseResult(parsedData);
+                codeReuseResult.ShowDialog();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Malcore.io", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
